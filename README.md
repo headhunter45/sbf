@@ -1,0 +1,1 @@
+This is a reimplementation of the first program I ever released on the internet. I've long since lost the source. It was written in QuickBasic 4.5 for DOS and I'm trying to reimplement it in the same language. The original binaries are located in the dos/old-sbf folder.
