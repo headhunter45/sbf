@@ -1,0 +1,40 @@
+/------------------------------------------------------------------------------\
+| Name: sadf                           | Sex: Male       Generation: 12        |
+| Clan: Brujah                         | Age: mmmmmm                           |
+|--------------------------------------| Player: fdsa                          |
+|              Attributes              | Chronicle: jfjf                       |
+|   Physical     Social      Mental    | Haven: kkkkkk                         |
+| Str. 5       App. 2       Int. 1     | Concept: llllll                       |
+| Dex. 3       Cha. 2       Per. 1     |---------------------------------------|
+| Sta. 2       Man. 4       Wit. 4     | Derangements:                         |
+|--------------------------------------| _____________________________________ |
+| Disciplines:                         | _____________________________________ |
+| Obtenebration                        | _____________________________________ |
+| Obtenebration                        | _____________________________________ |
+| Obtenebration                        | _____________________________________ |
+|------------------------------------------------------------------------------|
+| Beast:  8                            | Nature: Fanatic                       |
+| Willpower: 2                         | Demeanor: Architect                   |
+|------------------------------------------------------------------------------|
+|                                  Abilities                                   |
+|          Talents                  Skills                  Knowledges         |
+| Acting:       6            Animal Ken: 2              Bureaucracy:   1       |
+| Alertness:    2            Drive:      2              Computer:      2       |
+| Athletics:    2            Etiquette:  2              Finance:       1       |
+| Brawl:        1            Firearms:   1              Investigation: 1       |
+| Dodge:        1            Melee:      1              Law:           0       |
+| Empathy:      1            Music:      1              Linguistics:   0       |
+| Intimidation: 0            Repair:     0              Medecine:      0       |
+| Leadership:   0            Security:   0              Occult:        0       |
+| Streetwise:   0            Stealth:    0              Politics:      0       |
+| Subterfuge:   0            Survival:   0              Science:       0       |
+|------------------------------------------------------------------------------|
+| Backgrounds:                         | Virtues:                              |
+| Allies                               | Conscience:   0                       |
+| Contacts                             | Conviction:   3                       |
+| Contacts                             | Instinct:     5                       |
+| Fame                                 | Self-Control: 0                       |
+| Generation                           | Courage:      2                       |
+|--------------------------------------/                                       |
+|                                                                              |
+\------------------------------------------------------------------------------/
