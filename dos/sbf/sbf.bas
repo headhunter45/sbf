@@ -19,150 +19,150 @@ Randomize Timer
 'End
 
 ' TODO: maybe make these some kind of typedef with an id and a label. Constants or enums would be great.
-Const All_Clans_Count = 18
-Dim Shared All_Clans(1 To All_Clans_Count) As String
-All_Clans(1) = "Anarch"
-All_Clans(2) = "Assamite"
-All_Clans(3) = "Baali"
-All_Clans(4) = "Brujah"
-All_Clans(5) = "Caitiff"
-All_Clans(6) = "Cappadocian"
-All_Clans(7) = "Gangrel"
-All_Clans(8) = "Giovanni"
-All_Clans(9) = "Inconnu"
-All_Clans(10) = "Lasombra"
-All_Clans(11) = "Malkavian"
-All_Clans(12) = "Nosferatu"
-All_Clans(13) = "Ravanos"
-All_Clans(14) = "Settite"
-All_Clans(15) = "Tremere"
-All_Clans(16) = "Toreador"
-All_Clans(17) = "Tzismice"
-All_Clans(18) = "Ventrue"
+Const Clans_Count = 18
+Dim Shared Clans(1 To Clans_Count) As String
+Clans(1) = "Anarch"
+Clans(2) = "Assamite"
+Clans(3) = "Baali"
+Clans(4) = "Brujah"
+Clans(5) = "Caitiff"
+Clans(6) = "Cappadocian"
+Clans(7) = "Gangrel"
+Clans(8) = "Giovanni"
+Clans(9) = "Inconnu"
+Clans(10) = "Lasombra"
+Clans(11) = "Malkavian"
+Clans(12) = "Nosferatu"
+Clans(13) = "Ravanos"
+Clans(14) = "Settite"
+Clans(15) = "Tremere"
+Clans(16) = "Toreador"
+Clans(17) = "Tzismice"
+Clans(18) = "Ventrue"
 
-Const All_Archetypes_Count = 30
-Dim Shared All_Archetypes(1 To All_Archetypes_Count) As String
-All_Archetypes(1) = "Architect"
-All_Archetypes(2) = "Autocrat"
-All_Archetypes(3) = "Barbarian"
-All_Archetypes(4) = "Bon Vivant"
-All_Archetypes(5) = "Bravo"
-All_Archetypes(6) = "Caregiver"
-All_Archetypes(7) = "Caretaker"
-All_Archetypes(8) = "Celebrant"
-All_Archetypes(9) = "Child"
-All_Archetypes(10) = "Conformist"
-All_Archetypes(11) = "Conniver"
-All_Archetypes(12) = "Curmudgeon"
-All_Archetypes(13) = "Defender"
-All_Archetypes(14) = "Deviant"
-All_Archetypes(15) = "Director"
-All_Archetypes(16) = "Fanatic"
-All_Archetypes(17) = "Gallant"
-All_Archetypes(18) = "Innovator"
-All_Archetypes(19) = "Jester"
-All_Archetypes(20) = "Judge"
-All_Archetypes(21) = "Loner"
-All_Archetypes(22) = "Martyr"
-All_Archetypes(23) = "Monster"
-All_Archetypes(24) = "Penitent"
-All_Archetypes(25) = "Rebel"
-All_Archetypes(26) = "Rogue"
-All_Archetypes(27) = "Survivor"
-All_Archetypes(28) = "Traditionalist"
-All_Archetypes(29) = "Tyrant"
-All_Archetypes(30) = "Visionary"
+Const Archetypes_Count = 30
+Dim Shared Archetypes(1 To Archetypes_Count) As String
+Archetypes(1) = "Architect"
+Archetypes(2) = "Autocrat"
+Archetypes(3) = "Barbarian"
+Archetypes(4) = "Bon Vivant"
+Archetypes(5) = "Bravo"
+Archetypes(6) = "Caregiver"
+Archetypes(7) = "Caretaker"
+Archetypes(8) = "Celebrant"
+Archetypes(9) = "Child"
+Archetypes(10) = "Conformist"
+Archetypes(11) = "Conniver"
+Archetypes(12) = "Curmudgeon"
+Archetypes(13) = "Defender"
+Archetypes(14) = "Deviant"
+Archetypes(15) = "Director"
+Archetypes(16) = "Fanatic"
+Archetypes(17) = "Gallant"
+Archetypes(18) = "Innovator"
+Archetypes(19) = "Jester"
+Archetypes(20) = "Judge"
+Archetypes(21) = "Loner"
+Archetypes(22) = "Martyr"
+Archetypes(23) = "Monster"
+Archetypes(24) = "Penitent"
+Archetypes(25) = "Rebel"
+Archetypes(26) = "Rogue"
+Archetypes(27) = "Survivor"
+Archetypes(28) = "Traditionalist"
+Archetypes(29) = "Tyrant"
+Archetypes(30) = "Visionary"
 
-Const All_Disciplines_Count = 24
-Dim Shared All_Disciplines(1 To All_Disciplines_Count) As String
-All_Disciplines(1) = "Animalism"
-All_Disciplines(2) = "Auspex"
-All_Disciplines(3) = "Bardo"
-All_Disciplines(4) = "Celerity"
-All_Disciplines(5) = "Chimestry"
-All_Disciplines(6) = "Dementation"
-All_Disciplines(7) = "Dominate"
-All_Disciplines(8) = "Fortitude"
-All_Disciplines(9) = "Melpominee"
-All_Disciplines(10) = "Mortis"
-All_Disciplines(11) = "Mytherceria"
-All_Disciplines(12) = "Necromancy"
-All_Disciplines(13) = "Obeah"
-All_Disciplines(14) = "Obfuscate"
-All_Disciplines(15) = "Obtenebration"
-All_Disciplines(16) = "Potence"
-All_Disciplines(17) = "Presence"
-All_Disciplines(18) = "Protean"
-All_Disciplines(19) = "Quietus"
-All_Disciplines(20) = "Serpentis"
-All_Disciplines(21) = "Spiritus"
-All_Disciplines(22) = "Thanantosis"
-All_Disciplines(23) = "Thaumaturgy"
-All_Disciplines(24) = "Vicissitude"
+Const Disciplines_Count = 24
+Dim Shared Disciplines(1 To Disciplines_Count) As String
+Disciplines(1) = "Animalism"
+Disciplines(2) = "Auspex"
+Disciplines(3) = "Bardo"
+Disciplines(4) = "Celerity"
+Disciplines(5) = "Chimestry"
+Disciplines(6) = "Dementation"
+Disciplines(7) = "Dominate"
+Disciplines(8) = "Fortitude"
+Disciplines(9) = "Melpominee"
+Disciplines(10) = "Mortis"
+Disciplines(11) = "Mytherceria"
+Disciplines(12) = "Necromancy"
+Disciplines(13) = "Obeah"
+Disciplines(14) = "Obfuscate"
+Disciplines(15) = "Obtenebration"
+Disciplines(16) = "Potence"
+Disciplines(17) = "Presence"
+Disciplines(18) = "Protean"
+Disciplines(19) = "Quietus"
+Disciplines(20) = "Serpentis"
+Disciplines(21) = "Spiritus"
+Disciplines(22) = "Thanantosis"
+Disciplines(23) = "Thaumaturgy"
+Disciplines(24) = "Vicissitude"
 
-Const All_Attributes_Count = 3
-Dim Shared All_Attributes(1 To All_Attributes_Count) As String
-All_Attributes(1) = "Physical"
-All_Attributes(2) = "Social"
-All_Attributes(3) = "Mental"
+Const AttributeGroups_Count = 3
+Dim Shared AttributeGroups(1 To AttributeGroups_Count) As String
+AttributeGroups(1) = "Physical"
+AttributeGroups(2) = "Social"
+AttributeGroups(3) = "Mental"
 
-Const All_Abilities_Count = 3
-Dim Shared All_Abilities(1 To All_Attributes_Count) As String
-All_Abilities(1) = "Talents"
-All_Abilities(2) = "Skills"
-All_Abilities(3) = "Knowledges"
+Const Abilities_Count = 3
+Dim Shared Abilities(1 To Abilities_Count) As String
+Abilities(1) = "Talents"
+Abilities(2) = "Skills"
+Abilities(3) = "Knowledges"
 
-Const All_Talents_Count = 10
-Dim Shared All_Talents(1 To All_Talents_Count) As String
-All_Talents(1) = "Acting"
-All_Talents(2) = "Alertness"
-All_Talents(3) = "Athletics"
-All_Talents(4) = "Brawl"
-All_Talents(5) = "Dodge"
-All_Talents(6) = "Empathy"
-All_Talents(7) = "Intimidation"
-All_Talents(8) = "Leadership"
-All_Talents(9) = "Streetwise"
-All_Talents(10) = "Subterfuge"
+Const Talents_Count = 10
+Dim Shared Talents(1 To Talents_Count) As String
+Talents(1) = "Acting"
+Talents(2) = "Alertness"
+Talents(3) = "Athletics"
+Talents(4) = "Brawl"
+Talents(5) = "Dodge"
+Talents(6) = "Empathy"
+Talents(7) = "Intimidation"
+Talents(8) = "Leadership"
+Talents(9) = "Streetwise"
+Talents(10) = "Subterfuge"
 
-Const All_Skills_Count = 10
-Dim Shared All_Skills(1 To All_Skills_Count) As String
-All_Skills(1) = "Animal Ken"
-All_Skills(2) = "Drive"
-All_Skills(3) = "Etiquette"
-All_Skills(4) = "Firearms"
-All_Skills(5) = "Melee"
-All_Skills(6) = "Music"
-All_Skills(7) = "Repair"
-All_Skills(8) = "Security"
-All_Skills(9) = "Stealth"
-All_Skills(10) = "Survival"
+Const Skills_Count = 10
+Dim Shared Skills(1 To Skills_Count) As String
+Skills(1) = "Animal Ken"
+Skills(2) = "Drive"
+Skills(3) = "Etiquette"
+Skills(4) = "Firearms"
+Skills(5) = "Melee"
+Skills(6) = "Music"
+Skills(7) = "Repair"
+Skills(8) = "Security"
+Skills(9) = "Stealth"
+Skills(10) = "Survival"
 
-Const All_Knowledges_Count = 10
-Dim Shared All_Knowledges(1 To All_Knowledges_Count) As String
-All_Knowledges(1) = "Bureaucracy"
-All_Knowledges(2) = "Computer"
-All_Knowledges(3) = "Finance"
-All_Knowledges(4) = "Investigation"
-All_Knowledges(5) = "Law"
-All_Knowledges(6) = "Linguistics"
-All_Knowledges(7) = "Medicine"
-All_Knowledges(8) = "Occult"
-All_Knowledges(9) = "Politics"
-All_Knowledges(10) = "Science"
+Const Knowledges_Count = 10
+Dim Shared Knowledges(1 To Knowledges_Count) As String
+Knowledges(1) = "Bureaucracy"
+Knowledges(2) = "Computer"
+Knowledges(3) = "Finance"
+Knowledges(4) = "Investigation"
+Knowledges(5) = "Law"
+Knowledges(6) = "Linguistics"
+Knowledges(7) = "Medicine"
+Knowledges(8) = "Occult"
+Knowledges(9) = "Politics"
+Knowledges(10) = "Science"
 
-Const All_Backgrounds_Count = 10
-Dim Shared All_Backgrounds(1 To All_Backgrounds_Count) As String
-All_Backgrounds(1) = "Allies"
-All_Backgrounds(2) = "Contacts"
-All_Backgrounds(3) = "Fame"
-All_Backgrounds(4) = "Generation"
-All_Backgrounds(5) = "Herd"
-All_Backgrounds(6) = "Influence"
-All_Backgrounds(7) = "Mentor"
-All_Backgrounds(8) = "Resources"
-All_Backgrounds(9) = "Retainers"
-All_Backgrounds(10) = "Status"
+Const Backgrounds_Count = 10
+Dim Shared Backgrounds(1 To Backgrounds_Count) As String
+Backgrounds(1) = "Allies"
+Backgrounds(2) = "Contacts"
+Backgrounds(3) = "Fame"
+Backgrounds(4) = "Generation"
+Backgrounds(5) = "Herd"
+Backgrounds(6) = "Influence"
+Backgrounds(7) = "Mentor"
+Backgrounds(8) = "Resources"
+Backgrounds(9) = "Retainers"
+Backgrounds(10) = "Status"
 
 Type CharacterType
     name As String
@@ -523,7 +523,7 @@ Function GetDiscipline (ch As CharacterType, index As Integer)
 End Function
 
 Sub FillDisciplines (ch As CharacterType, disciplines() As Integer)
-    For index = 1 To All_Disciplines_Count
+    For index = 1 To Disciplines_Count
         disciplines(index) = GetDiscipline(ch, index)
     Next
 End Sub
@@ -729,7 +729,7 @@ Function GetBackground (ch As CharacterType, index As Integer)
 End Function
 
 Sub FillBackgrounds (ch As CharacterType, backgrounds() As Integer)
-    For index = 1 To All_Backgrounds_Count
+    For index = 1 To Backgrounds_Count
         backgrounds(index) = GetBackground(ch, index)
     Next
 End Sub
@@ -846,19 +846,19 @@ Sub CharacterGenerator ()
     If ch.sex > 2 Or ch.sex < 1 Then ch.sex = GetRandomInt(1, 2)
     Cls
     Print "What Clan is the character from?"
-    Call PrintMenu(All_Clans(), All_Clans_Count)
-    ch.clan = GetChoice(0, All_Clans_Count)
-    If ch.clan > All_Clans_Count Or ch.clan < 1 Then ch.clan = GetRandomInt(1, All_Clans_Count)
+    Call PrintMenu(Clans(), Clans_Count)
+    ch.clan = GetChoice(0, Clans_Count)
+    If ch.clan > Clans_Count Or ch.clan < 1 Then ch.clan = GetRandomInt(1, Clans_Count)
     Cls
     Print "What is your character's Nature?"
-    Call PrintMenu(All_Archetypes(), All_Archetypes_Count)
-    ch.nature = GetChoice(0, All_Archetypes_Count)
-    If ch.nature > All_Archetypes_Count Or ch.nature < 1 Then ch.nature = GetRandomInt(1, All_Archetypes_Count)
+    Call PrintMenu(Archetypes(), Archetypes_Count)
+    ch.nature = GetChoice(0, Archetypes_Count)
+    If ch.nature > Archetypes_Count Or ch.nature < 1 Then ch.nature = GetRandomInt(1, Archetypes_Count)
     Cls
     Print "What is your character's Demeanor?"
-    Call PrintMenu(All_Archetypes(), All_Archetypes_Count)
-    ch.demeanor = GetChoice(0, All_Archetypes_Count)
-    If ch.demeanor > All_Archetypes_Count Or ch.demeanor < 1 Then ch.demeanor = GetRandomInt(1, All_Archetypes_Count)
+    Call PrintMenu(Archetypes(), Archetypes_Count)
+    ch.demeanor = GetChoice(0, Archetypes_Count)
+    If ch.demeanor > Archetypes_Count Or ch.demeanor < 1 Then ch.demeanor = GetRandomInt(1, Archetypes_Count)
 
     ' The character starts with 3 discipline points and they can spend them on one or more disciplines
     DisciplinePoints = 3
@@ -868,28 +868,28 @@ Sub CharacterGenerator ()
     ' I don't want it to exist. I want a formatting function there that takes the character and the index then prints "1 = Bullshit: 3" or something like that.
     ' But we can't have nice things like nested custom types, arrays in custom types, or function objects/pointers.
     ' TODO: Try to find a better way to do this.
-    Dim disciplines(All_Disciplines_Count) As Integer
+    Dim disciplines(Disciplines_Count) As Integer
     While DisciplinePoints > 0
         Cls
         Print "Which discipline do you want to spend 1 of your " + Str$(DisciplinePoints) + " discipline points on?"
         Call FillDisciplines(ch, disciplines())
-        Call PrintMenuWithValues(All_Disciplines(), disciplines(), All_Disciplines_Count)
-        discipline = GetChoice(0, All_Disciplines_Count)
-        If discipline = 0 Then discipline = GetRandomInt(1, All_Disciplines_Count)
+        Call PrintMenuWithValues(Disciplines(), disciplines(), Disciplines_Count)
+        discipline = GetChoice(0, Disciplines_Count)
+        If discipline = 0 Then discipline = GetRandomInt(1, Disciplines_Count)
         Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
         DisciplinePoints = DisciplinePoints - 1
     Wend
 
     ' This would work, but I want a Print... function to print something like a sparse array to hide the already selected option.
     ' It seems like a lot of work to support other sets of attributes and the code is only reused once for abilities.
-    'Const All_Attribute_Groups_Count = 3
-    'Dim All_Attribute_Groups(1 To All_Attribute_Groups_Count) As String
+    'Const AttributeGroups_Count = 3
+    'Dim AttributeGroups(1 To AttributeGroups_Count) As String
     'Const ATTRIBUTE_GROUP_PHYSICAL = 1
     'Const ATTRIBUTE_GROUP_SOCIAL = 2
     'Const ATTRIBUTE_GROUP_MENTAL = 3
-    'All_Attribute_Groups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
-    'All_Attribute_Groups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
-    'All_Attribute_Groups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
+    'AttributeGroups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
+    'AttributeGroups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
+    'AttributeGroups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
     'Const ATTRIBUTE_STRENGTH = 1
     'Const ATTRIBUTE_DEXTERITY = 2
     'Const ATTRIBUTE_STAMINA = 3
@@ -902,13 +902,13 @@ Sub CharacterGenerator ()
     'Dim PrimaryAttributeGroup As Integer
     'Do
     '    Cls
-    '    For index = 1 To All_Attribute_Groups_Count
-    '        Print Str$(index) + " = " + All_Attribute_Groups(index) + " ";
+    '    For index = 1 To AttributeGroups_Count
+    '        Print Str$(index) + " = " + AttributeGroups(index) + " ";
     '    Next
     '    Print "0 = Random"
     '    Input "Choose your primary attribute?", PrimaryAttribute
-    '    If PrimaryAttribute = 0 Then PrimaryAttribute = GetRandomInt(1, All_Attribute_Groups_Count)
-    'Loop While PrimaryAttribute > All_Attribute_Groups_Count And PrimaryAttribute < 1
+    '    If PrimaryAttribute = 0 Then PrimaryAttribute = GetRandomInt(1, AttributeGroups_Count)
+    'Loop While PrimaryAttribute > AttributeGroups_Count And PrimaryAttribute < 1
 
 
     'SetAttribute(ch, group, attr, value)
@@ -919,25 +919,25 @@ Sub CharacterGenerator ()
     Dim PrimaryAttribute As Integer
     Do
         Cls
-        Print "1 = " + All_Attributes(1) + " ";
-        Print "2 = " + All_Attributes(2) + " ";
-        Print "3 = " + All_Attributes(3) + " ";
+        Print "1 = " + AttributeGroups(1) + " ";
+        Print "2 = " + AttributeGroups(2) + " ";
+        Print "3 = " + AttributeGroups(3) + " ";
         Print "0 = Random"
         Input "Choose your primary attribute?", PrimaryAttribute
-        If PrimaryAttribute = 0 Then PrimaryAttribute = GetRandomInt(1, All_Attributes_Count)
-    Loop While (PrimaryAttribute > All_Attributes_Count And PrimaryAttribute < 1)
+        If PrimaryAttribute = 0 Then PrimaryAttribute = GetRandomInt(1, AttributeGroups_Count)
+    Loop While (PrimaryAttribute > AttributeGroups_Count And PrimaryAttribute < 1)
 
     Dim SecondaryAttribute As Integer
     Dim TertiaryAttribute As Integer
     Do
         Cls
-        If PrimaryAttribute <> 1 Then Print "1 = " + All_Attributes(1) + " ";
-        If PrimaryAttribute <> 2 Then Print "2 = " + All_Attributes(2) + " ";
-        If PrimaryAttribute <> 3 Then Print "3 = " + All_Attributes(3) + " ";
+        If PrimaryAttribute <> 1 Then Print "1 = " + AttributeGroups(1) + " ";
+        If PrimaryAttribute <> 2 Then Print "2 = " + AttributeGroups(2) + " ";
+        If PrimaryAttribute <> 3 Then Print "3 = " + AttributeGroups(3) + " ";
         Print "0 = Random"
         Input "Choose your secondary attribute?", SecondaryAttribute
         If SecondaryAttribute = 0 Or SecondaryAttribute = PrimaryAttribute Then
-            SecondaryAttribute = GetRandomInt(1, All_Attributes_Count - 1)
+            SecondaryAttribute = GetRandomInt(1, AttributeGroups_Count - 1)
             If SecondaryAttribute >= PrimaryAttribute Then
                 SecondaryAttribute = SecondaryAttribute + 1
             End If
@@ -945,7 +945,7 @@ Sub CharacterGenerator ()
     Loop Until SecondaryAttribute >= 1 And SecondaryAttribute <= 3 And SecondaryAttribute <> PrimaryAttribute
     ' General formula for last choice is
     ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
-    TertiaryAttribute = 2 * All_Attributes_Count - PrimaryAttribute - SecondaryAttribute
+    TertiaryAttribute = 2 * AttributeGroups_Count - PrimaryAttribute - SecondaryAttribute
 
     ' TODO: Make this less annoying. I want three assignments not three switches. I also want it to be tied to a const instead of 3.
     ' TODO: The point values themselves (7, 5, and 3) should be consts themselves or a formula.
@@ -978,7 +978,7 @@ Sub CharacterGenerator ()
     ' Spend physical points
     Do
         Cls
-        ' TODO: Make this less hard-coded. Attribute names should be pulled from All_* arrays. The menu should be printed with PrintMenu.
+        ' TODO: Make this less hard-coded. Attribute names should be pulled from const arrays. The menu should be printed with PrintMenu.
         ' We have 6 uses of this block and I want them to be 6 sub calls passing in arrays. Something like:
         ' Call SpendPoint(ch, attrGroup) that could lookup GetAllAttributesInGroup(group) to get Str, dex, sta, ...
         ' That could "return" an array filled with {index, value} pairs and then use PrintMenuWithValues to actually print the values
@@ -1060,31 +1060,31 @@ Sub CharacterGenerator ()
     Dim PrimaryAbility As Integer
     Do
         Cls
-        Print "1 = " + All_Abilities(1) + " ";
-        Print "2 = " + All_Abilities(2) + " ";
-        Print "3 = " + All_Abilities(3) + " ";
+        Print "1 = " + Abilities(1) + " ";
+        Print "2 = " + Abilities(2) + " ";
+        Print "3 = " + Abilities(3) + " ";
         Print "0 = Random"
         Input "Choose your primary ability?", PrimaryAbility
-        If PrimaryAbility = 0 Then PrimaryAbility = GetRandomInt(1, All_Abilities_Count)
-    Loop While (PrimaryAbility > All_Abilities_Count And PrimaryAbility < 1)
+        If PrimaryAbility = 0 Then PrimaryAbility = GetRandomInt(1, Abilities_Count)
+    Loop While (PrimaryAbility > Abilities_Count And PrimaryAbility < 1)
 
     Dim SecondaryAbility As Integer
     Dim TertiaryAbility As Integer
     Do
         Cls
-        If PrimaryAbility <> 1 Then Print "1 = " + All_Abilities(1) + " ";
-        If PrimaryAbility <> 2 Then Print "2 = " + All_Abilities(2) + " ";
-        If PrimaryAbility <> 3 Then Print "3 = " + All_Abilities(3) + " ";
+        If PrimaryAbility <> 1 Then Print "1 = " + Abilities(1) + " ";
+        If PrimaryAbility <> 2 Then Print "2 = " + Abilities(2) + " ";
+        If PrimaryAbility <> 3 Then Print "3 = " + Abilities(3) + " ";
         Print "0 = Random"
         Input "Choose your secondary ability?", SecondaryAbility
         If SecondaryAbility = 0 Or SecondaryAbility = PrimaryAbility Then
-            SecondaryAbility = GetRandomInt(1, All_Abilities_Count - 1)
+            SecondaryAbility = GetRandomInt(1, Abilities_Count - 1)
             If SecondaryAbility >= PrimaryAbility Then
                 SecondaryAbility = SecondaryAbility + 1
             End If
         End If
     Loop Until SecondaryAbility >= 1 And SecondaryAbility <= 3 And SecondaryAbility <> PrimaryAbility
-    TertiaryAbility = 2 * All_Abilities_Count - PrimaryAbility - SecondaryAbility
+    TertiaryAbility = 2 * Abilities_Count - PrimaryAbility - SecondaryAbility
 
     ' Initialize talent, skill, knowledge points
     Select Case PrimaryAbility
@@ -1121,11 +1121,11 @@ Sub CharacterGenerator ()
         Cls
         Print "Which talent would you like to spend 1 of your " + Str$(TalentPoints) + " points on?"
         Print " 0 = Random"
-        For index = 1 To All_Talents_Count
-            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(All_Talents(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetTalent(ch, index)), 3, " ")
+        For index = 1 To Talents_Count
+            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(Talents(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetTalent(ch, index)), 3, " ")
         Next
-        talent = GetChoice(0, All_Talents_Count)
-        If talent = 0 Then talent = GetRandomInt(1, All_Talents_Count)
+        talent = GetChoice(0, Talents_Count)
+        If talent = 0 Then talent = GetRandomInt(1, Talents_Count)
         Call SetTalent(ch, talent, GetTalent(ch, talent) + 1)
         TalentPoints = TalentPoints - 1
     Loop While TalentPoints > 0
@@ -1135,11 +1135,11 @@ Sub CharacterGenerator ()
         Cls
         Print "Which skill would you like to spend 1 of your " + Str$(SkillPoints) + " points on?"
         Print " 0 = Random"
-        For index = 1 To All_Skills_Count
-            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(All_Skills(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetSkill(ch, index)), 3, " ")
+        For index = 1 To Skills_Count
+            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(Skills(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetSkill(ch, index)), 3, " ")
         Next
-        skill = GetChoice(0, All_Skills_Count)
-        If skill = 0 Then skill = GetRandomInt(1, All_Skills_Count)
+        skill = GetChoice(0, Skills_Count)
+        If skill = 0 Then skill = GetRandomInt(1, Skills_Count)
         Call SetSkill(ch, skill, GetSkill(ch, skill) + 1)
         SkillPoints = SkillPoints - 1
     Loop While SkillPoints > 0
@@ -1149,25 +1149,25 @@ Sub CharacterGenerator ()
         Cls
         Print "Which knowledge would you like to spend 1 of your " + Str$(KnowledgePoints) + " points on?"
         Print " 0 = Random"
-        For index = 1 To All_Knowledges_Count
-            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(All_Knowledges(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetKnowledge(ch, index)), 3, " ")
+        For index = 1 To Knowledges_Count
+            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(Knowledges(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetKnowledge(ch, index)), 3, " ")
         Next
-        knowledge = GetChoice(0, All_Knowledges_Count)
-        If knowledge = 0 Then knowledge = GetRandomInt(1, All_Knowledges_Count)
+        knowledge = GetChoice(0, Knowledges_Count)
+        If knowledge = 0 Then knowledge = GetRandomInt(1, Knowledges_Count)
         Call SetKnowledge(ch, knowledge, GetKnowledge(ch, knowledge) + 1)
         KnowledgePoints = KnowledgePoints - 1
     Loop While KnowledgePoints > 0
 
     ' Spend background points
     BackgroundPoints = 5
-    Dim backgrounds(All_Backgrounds_Count) As Integer
+    Dim backgrounds(Backgrounds_Count) As Integer
     While BackgroundPoints > 0
         Cls
         Print "Which background do you want to spend 1 of your " + Str$(BackgroundPoints) + " background points on?"
         Call FillBackgrounds(ch, backgrounds())
-        Call PrintMenuWithValues(All_Backgrounds(), backgrounds(), All_Backgrounds_Count)
-        background = GetChoice(0, All_Backgrounds_Count)
-        If background = 0 Then background = GetRandomInt(1, All_Backgrounds_Count)
+        Call PrintMenuWithValues(Backgrounds(), backgrounds(), Backgrounds_Count)
+        background = GetChoice(0, Backgrounds_Count)
+        If background = 0 Then background = GetRandomInt(1, Backgrounds_Count)
         Call SetBackground(ch, background, GetBackground(ch, background) + 1)
         BackgroundPoints = BackgroundPoints - 1
     Wend
@@ -1206,29 +1206,29 @@ Sub CharacterGenerator ()
     ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
     generation$ = "13"
     If ch.sex = 1 Then sex_string$ = "Male" Else sex_string$ = "Female"
-    clan_string$ = All_Clans(ch.clan)
+    clan_string$ = Clans(ch.clan)
 
     Dim discipline_strings(3) As String
     discipline_strings_index = 0
-    For index = 1 To All_Disciplines_Count
+    For index = 1 To Disciplines_Count
         If disciplines(index) > 0 Then
             suffix$ = ""
             If disciplines(index) > 1 Then
                 suffix$ = " x" + Str$(disciplines(index))
             End If
-            discipline_strings(discipline_strings_index) = All_Disciplines(index) + suffix$
+            discipline_strings(discipline_strings_index) = Disciplines(index) + suffix$
         End If
     Next
 
     Dim background_strings(5) As String
     background_strings_index = 0
-    For index = 1 To All_Backgrounds_Count
+    For index = 1 To Backgrounds_Count
         If backgrounds(index) > 0 Then
             suffix$ = ""
             If backgrounds(index) > 1 Then
                 suffix$ = " x" + Str$(backgrounds(index))
             End If
-            background_strings$(background_strings_index) = All_Backgrounds(index) + suffix$
+            background_strings$(background_strings_index) = Backgrounds(index) + suffix$
         End If
     Next
 
@@ -1248,8 +1248,8 @@ Sub CharacterGenerator ()
     Print "บ " + MakeFitL$(discipline_strings(1), 36, " ") + " บ _____________________________________ บ"
     Print "บ " + MakeFitL$(discipline_strings(2), 36, " ") + " บ _____________________________________ บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออฮอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ Typhon:  7                           บ Nature: " + MakeFitL$(All_Archetypes(ch.nature), 29, " ") + " บ"
-    Print "บ Willpower: 3                         บ Demeanor: " + MakeFitL$(All_Archetypes(ch.demeanor), 27, " ") + " บ"
+    Print "บ Typhon:  7                           บ Nature: " + MakeFitL$(Archetypes(ch.nature), 29, " ") + " บ"
+    Print "บ Willpower: 3                         บ Demeanor: " + MakeFitL$(Archetypes(ch.demeanor), 27, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
     Print "บ                                                                              บ"
     Print "บ                                                                              บ"
@@ -1261,7 +1261,7 @@ Sub CharacterGenerator ()
     Print "บ " + MakeFitC$("Abilities", 76, " ") + " บ"
     Print "บ " + MakeFitC$("Talents", 25, " ") + " " + MakeFitC$("Skills", 25, " ") + " " + MakeFitC$("Knowledges", 24, " ") + " บ"
     For index = 1 To 10
-        Print "บ " + MakeFitC(MakeFitL$(All_Talents(index) + ":", 14, " ") + Str$(GetTalent(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(All_Skills(index) + ":", 14, " ") + Str$(GetSkill(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(All_Knowledges(index) + ":", 14, " ") + Str$(GetKnowledge(ch, index)), 24, " ") + " บ"
+        Print "บ " + MakeFitC(MakeFitL$(Talents(index) + ":", 14, " ") + Str$(GetTalent(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Skills(index) + ":", 14, " ") + Str$(GetSkill(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Knowledges(index) + ":", 14, " ") + Str$(GetKnowledge(ch, index)), 24, " ") + " บ"
     Next
     Print "ฬออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออน"
     Print "บ Backgrounds:                         บ Virtues:                              บ"
