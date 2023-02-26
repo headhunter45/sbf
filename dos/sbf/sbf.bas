@@ -278,29 +278,29 @@ Wend
 Let choice = 0
 Do
     Cls
-    Print "โ•”โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•—"
-    Print "โ•‘ What are you going to do?                                                    โ•‘"
-    Print "โ•‘        1 = Character Generator                                               โ•‘"
-    Print "โ•‘        2 = Character Generator for Dummies                                   โ•‘"
-    Print "โ•‘        3 = Combat Computer                                                   โ•‘"
-    Print "โ•‘        4 = Dice Roller                                                       โ•‘"
-    Print "โ•‘        5 = Random Character Generator                                        โ•‘"
-    Print "โ•‘        6 =                                                                   โ•‘"
-    Print "โ•‘        7 = Vehicle Generator                                                 โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘        0 = End                                                               โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•"
+    Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
+    Print "บ What are you going to do?                                                    บ"
+    Print "บ        1 = Character Generator                                               บ"
+    Print "บ        2 = Character Generator for Dummies                                   บ"
+    Print "บ        3 = Combat Computer                                                   บ"
+    Print "บ        4 = Dice Roller                                                       บ"
+    Print "บ        5 = Random Character Generator                                        บ"
+    Print "บ        6 =                                                                   บ"
+    Print "บ        7 = Vehicle Generator                                                 บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ        0 = End                                                               บ"
+    Print "บ                                                                              บ"
+    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
     choice = GetChoice(0, 7)
     Select Case choice
         Case 1
@@ -319,29 +319,29 @@ Do
 Loop Until choice = 0
 
 Sub BlankScreen
-    Print "โ•”โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•—"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•"
+    Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
 End Sub
 
 Function GetChoice (min As Integer, max As Integer)
@@ -358,7 +358,7 @@ End Function
 
 Sub PrintMenu (items() As String, num_items As Integer)
     ' TODO: allow opting out of the random item.
-    ' TODO: allow printing inside of a box โ•‘ 1 = item โ•‘.
+    ' TODO: allow printing inside of a box บ 1 = item บ.
     index_length = Len(Str$(num_items))
     max_item_length = Len("Random")
     For i = 1 To num_items
@@ -880,13 +880,42 @@ Sub CharacterGenerator ()
         DisciplinePoints = DisciplinePoints - 1
     Wend
 
-    Const All_Attributes_Count = 3
-    Dim All_Attributes(1 To All_Attributes_Count) As String
-    All_Attributes(1) = "Physical"
-    All_Attributes(2) = "Social"
-    All_Attributes(3) = "Mental"
+    ' This would work, but I want a Print... function to print something like a sparse array to hide the already selected option.
+    ' It seems like a lot of work to support other sets of attributes and the code is only reused once for abilities.
+    'Const All_Attribute_Groups_Count = 3
+    'Dim All_Attribute_Groups(1 To All_Attribute_Groups_Count) As String
+    'Const ATTRIBUTE_GROUP_PHYSICAL = 1
+    'Const ATTRIBUTE_GROUP_SOCIAL = 2
+    'Const ATTRIBUTE_GROUP_MENTAL = 3
+    'All_Attribute_Groups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
+    'All_Attribute_Groups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
+    'All_Attribute_Groups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
+    'Const ATTRIBUTE_STRENGTH = 1
+    'Const ATTRIBUTE_DEXTERITY = 2
+    'Const ATTRIBUTE_STAMINA = 3
+    'Const ATTRIBUTE_APPEARANCE = 1
+    'Const ATTRIBUTE_CHARISMA = 2
+    'Const ATTRIBUTE_MANIPULATION = 3
+    'Const ATTRIBUTE_INTELLIGENCE = 1
+    'Const ATTRIBUTE_PERCEPTION = 2
+    'Const ATTRIBUTE_WITS = 3
+    'Dim PrimaryAttributeGroup As Integer
+    'Do
+    '    Cls
+    '    For index = 1 To All_Attribute_Groups_Count
+    '        Print Str$(index) + " = " + All_Attribute_Groups(index) + " ";
+    '    Next
+    '    Print "0 = Random"
+    '    Input "Choose your primary attribute?", PrimaryAttribute
+    '    If PrimaryAttribute = 0 Then PrimaryAttribute = GetRandomInt(1, All_Attribute_Groups_Count)
+    'Loop While PrimaryAttribute > All_Attribute_Groups_Count And PrimaryAttribute < 1
+
+
+    'SetAttribute(ch, group, attr, value)
 
     ' TODO: Find a more general form for this that stores the chosen attributes in an array
+    ' Most of the way this works just pisses me off. The second do loop is the worst part. I want it to be 1 = ..., 2 = ..., 0 = Random
+    ' If I can't have that then maybe at least something with less code or less reliance on there being 3 attribute groups.
     Dim PrimaryAttribute As Integer
     Do
         Cls
@@ -970,6 +999,22 @@ Sub CharacterGenerator ()
         End Select
         PhysicalPoints = PhysicalPoints - 1
     Loop While PhysicalPoints > 0
+
+    ' Something like this might work better
+    'attr_group_index = 0 ' for 1 to all_attribute_groups_count
+    'Points = 0
+    'Do
+    '    Cls
+    '    attr_count = GetAttributeCountInAttributeGroup(attr_group_index)
+    '    Dim attrs(attr_count) As String
+    '    Call FillAttributesFromGroup(attrs, attr_group_index)
+    '    Print "Which attribute would you like to spend 1 of your " + Str$(Points) + " points on?"
+    '    PrintMenuWithValues(attrs, values, states, showRandom)
+    '    attr = GetChoice(states, showRandom)
+    '    if (attr = 0 then attr = GetRandomIndex(1, attr_count, states)
+    '    SetAttribute(ch, attr_group_index, attr, GetAttribute(ch, attr_group_index, attr) + 1)
+    '    points = points - 1
+    'Loop While Points > 0
 
     ' Spend social points
     Do
@@ -1145,18 +1190,18 @@ Sub CharacterGenerator ()
     'Which virtue do you wish to add one of your 7 points to?
 
     '... 0123456789
-    '160 รกรญรณรบรฑร‘ยชยบยฟโ
-    '170 ยฌยฝยผยกยซยปโ–‘โ–’โ–“โ”
-    '180 โ”คโ•กโ•ขโ•–โ••โ•ฃโ•‘โ•—โ•โ•
-    '190 โ•โ”โ””โ”ดโ”ฌโ”โ”€โ”ผโ•โ•
-    '200 โ•โ•”โ•ฉโ•ฆโ• โ•โ•ฌโ•งโ•จโ•ค
-    '210 โ•ฅโ•โ•โ•’โ•“โ•ซโ•ชโ”โ”โ–
-    '220 โ–โ–โ–โ–€ฮฑรฮ“ฯ€ฮฃฯฯ
-    '230 ยตฯฮฆฮฮฉฮด2โฯฮตโฉ
+    '160  กขฃคฅฆงจฉ
+    '170 ชซฌญฎฏฐฑฒณ
+    '180 ดตถทธนบปผฝ
+    '190 พฟภมยรฤลฦว
+    '200 ศษสหฬอฮฯะั
+    '210 าำิีึืฺุูÛ
+    '220 ÜÝÞ฿เแโใไๅๅ
+    '230 ๆ็่้๊๋2์ํ๎๏
     ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
     ' What do you want the file to be called? (default is CHAR1)?
 
-    ' enquote forms s/^([โ•”โ•‘โ•โ•โ• ].*[โ•—โ•‘โ•โ•ฃ])$/print "$1"/g
+    ' enquote forms s/^([ษบศอฬ].*[ปบผน])$/print "$1"/g
 
     ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
     generation$ = "13"
@@ -1188,46 +1233,46 @@ Sub CharacterGenerator ()
     Next
 
     Cls
-    Print "โ•”โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฆโ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•—"
-    Print "โ•‘ Name: " + MakeFitL$(ch.name, 30, " ") + " โ•‘ Sex: " + MakeFitL$(sex_string$, 10, " ") + " Generation: " + MakeFitL$(generation$, 9, " ") + " โ•‘"
-    Print "โ•‘ Clan: " + MakeFitL$(clan_string$, 30, " ") + " โ•‘ Age: " + MakeFitL$(age$, 32, " ") + " โ•‘"
-    Print "โ• โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฃ Player: " + MakeFitL$(player$, 29, " ") + " โ•‘"
-    Print "โ•‘              Attributes              โ•‘ Chronicle: " + MakeFitL$(chronicle$, 26, " ") + " โ•‘"
-    Print "โ•‘   Physical     Social      Mental    โ•‘ Haven: " + MakeFitL$(haven$, 30, " ") + " โ•‘"
-    Print "โ•‘ Str. " + MakeFitL$(Str$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(Str$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(Str$(ch.attr_intelligence), 5, " ") + " โ•‘ Concept: " + MakeFitL$(concept$, 28, " ") + " โ•‘"
-    Print "โ•‘ Dex. " + MakeFitL$(Str$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(Str$(ch.attr_charisma), 7, " ") + " Per. " + MakeFitL$(Str$(ch.attr_perception), 5, " ") + " โ• โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฃ"
-    Print "โ•‘ Sta. " + MakeFitL$(Str$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(Str$(ch.attr_manipulation), 7, " ") + " Wit. " + MakeFitL$(Str$(ch.attr_wits), 5, " ") + " โ•‘ Derangements:                         โ•‘"
-    Print "โ• โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฃ Regression,__________________________ โ•‘"
-    Print "โ•‘ Disciplines:                         โ•‘ _____________________________________ โ•‘"
-    Print "โ•‘ " + MakeFitL$(discipline_strings(0), 36, " ") + " โ•‘ _____________________________________ โ•‘"
-    Print "โ•‘ " + MakeFitL$(discipline_strings(1), 36, " ") + " โ•‘ _____________________________________ โ•‘"
-    Print "โ•‘ " + MakeFitL$(discipline_strings(2), 36, " ") + " โ•‘ _____________________________________ โ•‘"
-    Print "โ• โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฌโ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฃ"
-    Print "โ•‘ Typhon:  7                           โ•‘ Nature: " + MakeFitL$(All_Archetypes(ch.nature), 29, " ") + " โ•‘"
-    Print "โ•‘ Willpower: 3                         โ•‘ Demeanor: " + MakeFitL$(All_Archetypes(ch.demeanor), 27, " ") + " โ•‘"
-    Print "โ• โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฉโ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฃ"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                                                                              โ•‘"
-    Print "โ•‘                        <<PRESS ANY KEY TO CONTINUE>>                         โ•‘"
-    Print "โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•"
+    Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
+    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(sex_string$, 10, " ") + " Generation: " + MakeFitL$(generation$, 9, " ") + " บ"
+    Print "บ Clan: " + MakeFitL$(clan_string$, 30, " ") + " บ Age: " + MakeFitL$(age$, 32, " ") + " บ"
+    Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(player$, 29, " ") + " บ"
+    Print "บ              Attributes              บ Chronicle: " + MakeFitL$(chronicle$, 26, " ") + " บ"
+    Print "บ   Physical     Social      Mental    บ Haven: " + MakeFitL$(haven$, 30, " ") + " บ"
+    Print "บ Str. " + MakeFitL$(Str$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(Str$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(Str$(ch.attr_intelligence), 5, " ") + " บ Concept: " + MakeFitL$(concept$, 28, " ") + " บ"
+    Print "บ Dex. " + MakeFitL$(Str$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(Str$(ch.attr_charisma), 7, " ") + " Per. " + MakeFitL$(Str$(ch.attr_perception), 5, " ") + " ฬอออออออออออออออออออออออออออออออออออออออน"
+    Print "บ Sta. " + MakeFitL$(Str$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(Str$(ch.attr_manipulation), 7, " ") + " Wit. " + MakeFitL$(Str$(ch.attr_wits), 5, " ") + " บ Derangements:                         บ"
+    Print "ฬออออออออออออออออออออออออออออออออออออออน Regression,__________________________ บ"
+    Print "บ Disciplines:                         บ _____________________________________ บ"
+    Print "บ " + MakeFitL$(discipline_strings(0), 36, " ") + " บ _____________________________________ บ"
+    Print "บ " + MakeFitL$(discipline_strings(1), 36, " ") + " บ _____________________________________ บ"
+    Print "บ " + MakeFitL$(discipline_strings(2), 36, " ") + " บ _____________________________________ บ"
+    Print "ฬออออออออออออออออออออออออออออออออออออออฮอออออออออออออออออออออออออออออออออออออออน"
+    Print "บ Typhon:  7                           บ Nature: " + MakeFitL$(All_Archetypes(ch.nature), 29, " ") + " บ"
+    Print "บ Willpower: 3                         บ Demeanor: " + MakeFitL$(All_Archetypes(ch.demeanor), 27, " ") + " บ"
+    Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                                                                              บ"
+    Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
+    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
     Input A
-    Print "โ•”โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•—"
-    Print "โ•‘ " + MakeFitC$("Abilities", 76, " ") + " โ•‘"
-    Print "โ•‘ " + MakeFitC$("Talents", 25, " ") + " " + MakeFitC$("Skills", 25, " ") + " " + MakeFitC$("Knowledges", 24, " ") + " โ•‘"
+    Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
+    Print "บ " + MakeFitC$("Abilities", 76, " ") + " บ"
+    Print "บ " + MakeFitC$("Talents", 25, " ") + " " + MakeFitC$("Skills", 25, " ") + " " + MakeFitC$("Knowledges", 24, " ") + " บ"
     For index = 1 To 10
-        Print "โ•‘ " + MakeFitC(MakeFitL$(All_Talents(index) + ":", 14, " ") + Str$(GetTalent(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(All_Skills(index) + ":", 14, " ") + Str$(GetSkill(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(All_Knowledges(index) + ":", 14, " ") + Str$(GetKnowledge(ch, index)), 24, " ") + " โ•‘"
+        Print "บ " + MakeFitC(MakeFitL$(All_Talents(index) + ":", 14, " ") + Str$(GetTalent(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(All_Skills(index) + ":", 14, " ") + Str$(GetSkill(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(All_Knowledges(index) + ":", 14, " ") + Str$(GetKnowledge(ch, index)), 24, " ") + " บ"
     Next
-    Print "โ• โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฆโ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฃ"
-    Print "โ•‘ Backgrounds:                         โ•‘ Virtues:                              โ•‘"
-    Print "โ•‘ " + MakeFitL$(background_strings(0), 36, " ") + " โ•‘ " + MakeFitL$(MakeFitL$("Conscience:", 14, " ") + MakeFitR$(Str$(ch.conscience), 2, " "), 37, " ") + " โ•‘"
-    Print "โ•‘ " + MakeFitL$(background_strings(1), 36, " ") + " โ•‘ " + MakeFitL$(MakeFitR$("Conviction:", 14, " ") + MakeFitR$(Str$(ch.conviction), 2, " "), 37, " ") + " โ•‘"
-    Print "โ•‘ " + MakeFitL$(background_strings(2), 36, " ") + " โ•‘ " + MakeFitL$(MakeFitR$("Instinct:", 14, " ") + MakeFitR$(Str$(ch.instinct), 2, " "), 37, " ") + " โ•‘"
-    Print "โ•‘ " + MakeFitL$(background_strings(3), 36, " ") + " โ•‘ " + MakeFitL$(MakeFitR$("Self-Control:", 14, " ") + MakeFitR$(Str$(ch.selfControl), 2, " "), 37, " ") + " โ•‘"
-    Print "โ•‘ " + MakeFitL$(background_strings(4), 36, " ") + " โ•‘ " + MakeFitL$(MakeFitR$("Courage:", 14, " ") + MakeFitR$(Str$(ch.courage), 2, " "), 37, " ") + " โ•‘"
-    Print "โ• โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฉโ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•ฃ"
-    Print "โ•‘                        <<PRESS ANY KEY TO CONTINUE>>                         โ•‘"
-    Print "โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•โ•"
+    Print "ฬออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออน"
+    Print "บ Backgrounds:                         บ Virtues:                              บ"
+    Print "บ " + MakeFitL$(background_strings(0), 36, " ") + " บ " + MakeFitL$(MakeFitL$("Conscience:", 14, " ") + MakeFitR$(Str$(ch.conscience), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(background_strings(1), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Conviction:", 14, " ") + MakeFitR$(Str$(ch.conviction), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(background_strings(2), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Instinct:", 14, " ") + MakeFitR$(Str$(ch.instinct), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(background_strings(3), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Self-Control:", 14, " ") + MakeFitR$(Str$(ch.selfControl), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(background_strings(4), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Courage:", 14, " ") + MakeFitR$(Str$(ch.courage), 2, " "), 37, " ") + " บ"
+    Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
+    Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
+    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
 
     While InKey$ = "": Wend
 End Sub
