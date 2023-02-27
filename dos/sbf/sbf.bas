@@ -1122,7 +1122,7 @@ Sub CharacterGenerator ()
 
     Print "Primary: " + itos$(PrimaryAbility) + ", Secondary: " + itos$(SecondaryAbility) + ", Tertiary: " + itos$(TertiaryAbility)
     Print "Talents: " + itos$(TalentPoints) + ", Skills: " + itos$(SkillPoints) + ", Knowledges: " + itos$(KnowledgePoints)
-    Input a
+    Input A
 
     ' Spend talent points
     Do
@@ -1381,16 +1381,4 @@ Sub FillAttributeAbbreviationsInGroup (group As Integer, abbreviations() As Stri
 End Sub
 
 Sub Test
-    Print "|" + MakeFitL$("a left aligned string", 50, " ") + "|"
-    Print "|" + MakeFitC$("a center aligned string", 50, " ") + "|"
-    Print "|" + MakeFitR$("a right aligned string", 50, " ") + "|"
-    Print "test"
-    Print "|" + MakeFitC$("This is a long string", 10, " ") + "|"
-    Print "|" + MakeFitC$("hello", 10, " ") + "|"
-    Print "|" + MakeFitC$("1234567890", 10, " ") + "|"
-    Print "|" + Mid$("1234567890", 1, 10) + "|" '  123456789
-    Print "|" + Mid$("12345678901", 1, 10) + "|" ' 123456789
-    Print "|" + Mid$("A1234567890", 2, 10) + "|" ' A123456789
-    Print "|" + Mid$("A1234567890Z", 2, 10) + "|" 'A123456789
-
 End Sub
