@@ -751,30 +751,9 @@ Sub InitializeCharacter (ch As CharacterType)
     ch.conviction = 0
     ch.instinct = 0
     ' Disciplines
-    ch.discipline_animalism = 0
-    ch.discipline_auspex = 0
-    ch.discipline_bardo = 0
-    ch.discipline_celerity = 0
-    ch.discipline_chimestry = 0
-    ch.discipline_dementation = 0
-    ch.discipline_dominate = 0
-    ch.discipline_fortitude = 0
-    ch.discipline_melpominee = 0
-    ch.discipline_mortis = 0
-    ch.discipline_mytherceria = 0
-    ch.discipline_necromancy = 0
-    ch.discipline_obeah = 0
-    ch.discipline_obfuscate = 0
-    ch.discipline_obtenebration = 0
-    ch.discipline_potence = 0
-    ch.discipline_presence = 0
-    ch.discipline_protean = 0
-    ch.discipline_quietus = 0
-    ch.discipline_serpentis = 0
-    ch.discipline_spiritus = 0
-    ch.discipline_thanantosis = 0
-    ch.discipline_thaumaturgy = 0
-    ch.discipline_vicissitude = 0
+    For index = 1 To Disciplines_Count
+        Call SetDiscipline(ch, index, 0)
+    Next
     ' Attributes
     ch.attr_strength = 1
     ch.attr_dexterity = 1
@@ -786,49 +765,21 @@ Sub InitializeCharacter (ch As CharacterType)
     ch.attr_perception = 1
     ch.attr_wits = 1
     ' Talents
-    ch.talent_acting = 0
-    ch.talent_alertness = 0
-    ch.talent_athletics = 0
-    ch.talent_brawl = 0
-    ch.talent_dodge = 0
-    ch.talent_empathy = 0
-    ch.talent_intimidation = 0
-    ch.talent_leadership = 0
-    ch.talent_streetwise = 0
-    ch.talent_subterfuge = 0
+    For index = 1 To Talents_Count
+        Call SetTalent(ch, index, 0)
+    Next
     ' Skills
-    ch.skill_animalKen = 0
-    ch.skill_drive = 0
-    ch.skill_etiquette = 0
-    ch.skill_firearms = 0
-    ch.skill_melee = 0
-    ch.skill_music = 0
-    ch.skill_repair = 0
-    ch.skill_security = 0
-    ch.skill_stealth = 0
-    ch.skill_survival = 0
+    For index = 1 To Skills_Count
+        Call SetSkill(ch, index, 0)
+    Next
     ' Knowledges
-    ch.knowledge_bureaucracy = 0
-    ch.knowledge_computer = 0
-    ch.knowledge_finance = 0
-    ch.knowledge_investigation = 0
-    ch.knowledge_law = 0
-    ch.knowledge_linguistics = 0
-    ch.knowledge_medicine = 0
-    ch.knowledge_occult = 0
-    ch.knowledge_politics = 0
-    ch.knowledge_science = 0
+    For index = 1 To Knowledges_Count
+        Call SetKnowledge(ch, index, 0)
+    Next
     ' Backgrounds
-    ch.background_allies = 0
-    ch.background_contacts = 0
-    ch.background_fame = 0
-    ch.background_generation = 0
-    ch.background_herd = 0
-    ch.background_influence = 0
-    ch.background_mentor = 0
-    ch.background_resources = 0
-    ch.background_retainers = 0
-    ch.background_status = 0
+    For index = 1 To Backgrounds_Count
+        Call SetBackground(ch, index, 0)
+    Next
 End Sub
 
 Sub CharacterGenerator ()
@@ -868,12 +819,12 @@ Sub CharacterGenerator ()
     ' I don't want it to exist. I want a formatting function there that takes the character and the index then prints "1 = Bullshit: 3" or something like that.
     ' But we can't have nice things like nested custom types, arrays in custom types, or function objects/pointers.
     ' TODO: Try to find a better way to do this.
-    Dim disciplines(Disciplines_Count) As Integer
+    Dim TempDisciplines(Disciplines_Count) As Integer
     While DisciplinePoints > 0
         Cls
         Print "Which discipline do you want to spend 1 of your " + Str$(DisciplinePoints) + " discipline points on?"
-        Call FillDisciplines(ch, disciplines())
-        Call PrintMenuWithValues(Disciplines(), disciplines(), Disciplines_Count)
+        Call FillDisciplines(ch, TempDisciplines())
+        Call PrintMenuWithValues(Disciplines(), TempDisciplines(), Disciplines_Count)
         discipline = GetChoice(0, Disciplines_Count)
         If discipline = 0 Then discipline = GetRandomInt(1, Disciplines_Count)
         Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
@@ -1160,12 +1111,12 @@ Sub CharacterGenerator ()
 
     ' Spend background points
     BackgroundPoints = 5
-    Dim backgrounds(Backgrounds_Count) As Integer
+    Dim TempBackgrounds(Backgrounds_Count) As Integer
     While BackgroundPoints > 0
         Cls
         Print "Which background do you want to spend 1 of your " + Str$(BackgroundPoints) + " background points on?"
-        Call FillBackgrounds(ch, backgrounds())
-        Call PrintMenuWithValues(Backgrounds(), backgrounds(), Backgrounds_Count)
+        Call FillBackgrounds(ch, TempBackgrounds())
+        Call PrintMenuWithValues(Backgrounds(), TempBackgrounds(), Backgrounds_Count)
         background = GetChoice(0, Backgrounds_Count)
         If background = 0 Then background = GetRandomInt(1, Backgrounds_Count)
         Call SetBackground(ch, background, GetBackground(ch, background) + 1)
@@ -1211,10 +1162,10 @@ Sub CharacterGenerator ()
     Dim discipline_strings(3) As String
     discipline_strings_index = 0
     For index = 1 To Disciplines_Count
-        If disciplines(index) > 0 Then
+        If TempDisciplines(index) > 0 Then
             suffix$ = ""
-            If disciplines(index) > 1 Then
-                suffix$ = " x" + Str$(disciplines(index))
+            If TempDisciplines(index) > 1 Then
+                suffix$ = " x" + Str$(TempDisciplines(index))
             End If
             discipline_strings(discipline_strings_index) = Disciplines(index) + suffix$
         End If
@@ -1223,10 +1174,10 @@ Sub CharacterGenerator ()
     Dim background_strings(5) As String
     background_strings_index = 0
     For index = 1 To Backgrounds_Count
-        If backgrounds(index) > 0 Then
+        If TempBackgrounds(index) > 0 Then
             suffix$ = ""
-            If backgrounds(index) > 1 Then
-                suffix$ = " x" + Str$(backgrounds(index))
+            If TempBackgrounds(index) > 1 Then
+                suffix$ = " x" + Str$(TempBackgrounds(index))
             End If
             background_strings$(background_strings_index) = Backgrounds(index) + suffix$
         End If
@@ -1315,5 +1266,3 @@ Sub Test
     Print "|" + Mid$("A1234567890Z", 2, 10) + "|" 'A123456789
 
 End Sub
-
-
