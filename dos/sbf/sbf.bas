@@ -100,11 +100,54 @@ Disciplines(22) = "Thanantosis"
 Disciplines(23) = "Thaumaturgy"
 Disciplines(24) = "Vicissitude"
 
+Const ATTRIBUTE_STRENGTH = 1
+Const ATTRIBUTE_DEXTERITY = 2
+Const ATTRIBUTE_STAMINA = 3
+Const ATTRIBUTE_CHARISMA = 1
+Const ATTRIBUTE_MANIPULATION = 2
+Const ATTRIBUTE_APPEARANCE = 3
+Const ATTRIBUTE_INTELLIGENCE = 1
+Const ATTRIBUTE_PERCEPTION = 2
+Const ATTRIBUTE_WITS = 3
+Const ATTRIBUTE_GROUP_PHYSICAL = 1
+Const ATTRIBUTE_GROUP_SOCIAL = 2
+Const ATTRIBUTE_GROUP_MENTAL = 3
+
+Const PHYSICAL_ATTRIBUTES_COUNT = 3
+Dim Shared PhysicalAttributes(1 To PHYSICAL_ATTRIBUTES_COUNT) As String
+Dim Shared PhysicalAttributeAbbreviations(1 To PHYSICAL_ATTRIBUTES_COUNT) As String
+PhysicalAttributes(ATTRIBUTE_STRENGTH) = "Strength"
+PhysicalAttributeAbbreviations(ATTRIBUTE_STRENGTH) = "Str."
+PhysicalAttributes(ATTRIBUTE_DEXTERITY) = "Dexterity"
+PhysicalAttributeAbbreviations(ATTRIBUTE_DEXTERITY) = "Dex."
+PhysicalAttributes(ATTRIBUTE_STAMINA) = "Stamina"
+PhysicalAttributeAbbreviations(ATTRIBUTE_STAMINA) = "Sta."
+
+Const SOCIAL_ATTRIBUTES_COUNT = 3
+Dim Shared SocialAttributes(1 To SOCIAL_ATTRIBUTES_COUNT) As String
+Dim Shared SocialAttributeAbbreviations(1 To SOCIAL_ATTRIBUTES_COUNT) As String
+SocialAttributes(ATTRIBUTE_CHARISMA) = "Charisma"
+SocialAttributeAbbreviations(ATTRIBUTE_CHARISMA) = "Cha."
+SocialAttributes(ATTRIBUTE_MANIPULATION) = "Manipulation"
+SocialAttributeAbbreviations(ATTRIBUTE_MANIPULATION) = "Man."
+SocialAttributes(ATTRIBUTE_APPEARANCE) = "Appearance"
+SocialAttributeAbbreviations(ATTRIBUTE_APPEARANCE) = "App."
+
+Const MENTAL_ATTRIBUTES_COUNT = 3
+Dim Shared MentalAttributes(1 To MENTAL_ATTRIBUTES_COUNT) As String
+Dim Shared MentalAttributeAbbreviations(1 To MENTAL_ATTRIBUTES_COUNT) As String
+MentalAttributes(ATTRIBUTE_INTELLIGENCE) = "Intelligence"
+MentalAttributeAbbreviations(ATTRIBUTE_INTELLIGENCE) = "Int."
+MentalAttributes(ATTRIBUTE_PERCEPTION) = "Perception"
+MentalAttributeAbbreviations(ATTRIBUTE_PERCEPTION) = "Per."
+MentalAttributes(ATTRIBUTE_WITS) = "Wits"
+MentalAttributeAbbreviations(ATTRIBUTE_WITS) = "Wits"
+
 Const AttributeGroups_Count = 3
 Dim Shared AttributeGroups(1 To AttributeGroups_Count) As String
-AttributeGroups(1) = "Physical"
-AttributeGroups(2) = "Social"
-AttributeGroups(3) = "Mental"
+AttributeGroups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
+AttributeGroups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
+AttributeGroups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
 
 Const Abilities_Count = 3
 Dim Shared Abilities(1 To Abilities_Count) As String
@@ -344,6 +387,10 @@ Sub BlankScreen
     Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
 End Sub
 
+Function itos$ (num As Integer)
+    itos$ = LTrim$(Str$(num))
+End Function
+
 Function GetChoice (min As Integer, max As Integer)
     Dim choice
     Do
@@ -359,14 +406,14 @@ End Function
 Sub PrintMenu (items() As String, num_items As Integer)
     ' TODO: allow opting out of the random item.
     ' TODO: allow printing inside of a box บ 1 = item บ.
-    index_length = Len(Str$(num_items))
+    index_length = Len(itos$(num_items))
     max_item_length = Len("Random")
     For i = 1 To num_items
         max_item_length = MaxI(max_item_length, Len(items(i)))
     Next
 
     For i = 1 To num_items
-        Print MakeFitR$(Str$(i), index_length, " ") + " = " + MakeFitL$(items(i), max_item_length, " ");
+        Print MakeFitR$(itos$(i), index_length, " ") + " = " + MakeFitL$(items(i), max_item_length, " ");
     Next
     Print MakeFitR$("0", index_length, " ") + " = " + MakeFitL$("Random", max_item_length, " ")
 End Sub
@@ -374,16 +421,16 @@ End Sub
 Sub PrintMenuWithValues (items() As String, values() As Integer, num_items As Integer)
     ' TODO: @see PrintMenu
     ' TODO: Make a better separation between index, item, value triples
-    max_index_length = Len(Str$(num_items))
+    max_index_length = Len(itos$(num_items))
     max_item_length = Len("Random")
     max_value_length = 0
     For i = 1 To num_items
         max_item_length = MaxI(max_item_length, Len(items(i)))
-        max_value_length = MaxI(max_value_length, Len(Str$(values(i))))
+        max_value_length = MaxI(max_value_length, Len(itos$(values(i))))
     Next
 
     For i = 1 To num_items
-        Print MakeFitR$(Str$(i), max_index_length, " ") + " = " + MakeFitL$(items(i), max_item_length, " ") + MakeFitR$(Str$(values(i)), max_value_length, " ");
+        Print MakeFitR$(itos$(i), max_index_length, " ") + " = " + MakeFitL$(items(i), max_item_length, " ") + MakeFitR$(itos$(values(i)), max_value_length, " ");
     Next
     Print MakeFitR$("0", index_length, " ") + " = " + MakeFitL$("Random", max_item_length, " ")
 End Sub
@@ -734,7 +781,85 @@ Sub FillBackgrounds (ch As CharacterType, backgrounds() As Integer)
     Next
 End Sub
 
+Sub SetAttribute (ch As CharacterType, AttributeGroupIndex As Integer, AttributeIndex As Integer, Value As Integer)
+    Select Case AttributeGroupIndex
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            Select Case AttributeIndex
+                Case ATTRIBUTE_STRENGTH
+                    ch.attr_strength = Value
+                Case ATTRIBUTE_DEXTERITY
+                    ch.attr_dexterity = Value
+                Case ATTRIBUTE_STAMINA
+                    ch.attr_stamina = Value
+            End Select
+        Case ATTRIBUTE_GROUP_SOCIAL
+            Select Case AttributeIndex
+                Case ATTRIBUTE_CHARISMA
+                    ch.attr_charisma = Value
+                Case ATTRIBUTE_MANIPULATION
+                    ch.attr_manipulation = Value
+                Case ATTRIBUTE_APPEARANCE
+                    ch.attr_appearance = Value
+            End Select
+        Case ATTRIBUTE_GROUP_MENTAL
+            Select Case AttributeIndex
+                Case ATTRIBUTE_INTELLIGENCE
+                    ch.attr_intelligence = Value
+                Case ATTRIBUTE_PERCEPTION
+                    ch.attr_perception = Value
+                Case ATTRIBUTE_WITS
+                    ch.attr_wits = Value
+            End Select
+    End Select
+End Sub
+
+Function GetAttributeValue (ch As CharacterType, attributeGroupIndex As Integer, attributeIndex As Integer)
+    Select Case attributeGroupIndex
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            Select Case attributeIndex
+                Case ATTRIBUTE_STRENGTH
+                    GetAttributeValue = ch.attr_strength
+                Case ATTRIBUTE_DEXTERITY
+                    GetAttributeValue = ch.attr_dexterity
+                Case ATTRIBUTE_STAMINA
+                    GetAttributeValue = ch.attr_stamina
+            End Select
+        Case ATTRIBUTE_GROUP_SOCIAL
+            Select Case attributeIndex
+                Case ATTRIBUTE_CHARISMA
+                    GetAttributeValue = ch.attr_charisma
+                Case ATTRIBUTE_MANIPULATION
+                    GetAttributeValue = ch.attr_manipulation
+                Case ATTRIBUTE_APPEARANCE
+                    GetAttributeValue = ch.attr_appearance
+            End Select
+        Case ATTRIBUTE_GROUP_MENTAL
+            Select Case attributeIndex
+                Case ATTRIBUTE_INTELLIGENCE
+                    GetAttributeValue = ch.attr_intelligence
+                Case ATTRIBUTE_PERCEPTION
+                    GetAttributeValue = ch.attr_perception
+                Case ATTRIBUTE_WITS
+                    GetAttributeValue = ch.attr_wits
+            End Select
+    End Select
+    GetAttributeValue = 0
+End Function
+
+Function GetAttributePointsForRank (rank As Integer)
+    GetAttributePointsForRank = 0
+    Select Case rank
+        Case 1
+            GetAttributePointsForRank = 7
+        Case 2
+            GetAttributePointsForRank = 5
+        Case 3
+            GetAttributePointsForRank = 3
+    End Select
+End Function
+
 Sub InitializeCharacter (ch As CharacterType)
+    ' Scalars
     ch.name = ""
     ch.player = ""
     ch.chronicle = ""
@@ -750,20 +875,17 @@ Sub InitializeCharacter (ch As CharacterType)
     ch.courage = 0
     ch.conviction = 0
     ch.instinct = 0
+    ' Arrays/Objects
     ' Disciplines
     For index = 1 To Disciplines_Count
         Call SetDiscipline(ch, index, 0)
     Next
     ' Attributes
-    ch.attr_strength = 1
-    ch.attr_dexterity = 1
-    ch.attr_stamina = 1
-    ch.attr_appearance = 1
-    ch.attr_charisma = 1
-    ch.attr_manipulation = 1
-    ch.attr_intelligence = 1
-    ch.attr_perception = 1
-    ch.attr_wits = 1
+    For GroupIndex = 1 To AttributeGroups_Count
+        For AttributeIndex = 1 To GetNumAttributesInGroup(GroupIndex)
+            Call SetAttribute(ch, GroupIndex, AttributeIndex, 1)
+        Next
+    Next
     ' Talents
     For index = 1 To Talents_Count
         Call SetTalent(ch, index, 0)
@@ -822,7 +944,7 @@ Sub CharacterGenerator ()
     Dim TempDisciplines(Disciplines_Count) As Integer
     While DisciplinePoints > 0
         Cls
-        Print "Which discipline do you want to spend 1 of your " + Str$(DisciplinePoints) + " discipline points on?"
+        Print "Which discipline do you want to spend 1 of your " + itos$(DisciplinePoints) + " discipline points on?"
         Call FillDisciplines(ch, TempDisciplines())
         Call PrintMenuWithValues(Disciplines(), TempDisciplines(), Disciplines_Count)
         discipline = GetChoice(0, Disciplines_Count)
@@ -854,7 +976,7 @@ Sub CharacterGenerator ()
     'Do
     '    Cls
     '    For index = 1 To AttributeGroups_Count
-    '        Print Str$(index) + " = " + AttributeGroups(index) + " ";
+    '        Print itos$(index) + " = " + AttributeGroups(index) + " ";
     '    Next
     '    Print "0 = Random"
     '    Input "Choose your primary attribute?", PrimaryAttribute
@@ -900,112 +1022,47 @@ Sub CharacterGenerator ()
 
     ' TODO: Make this less annoying. I want three assignments not three switches. I also want it to be tied to a const instead of 3.
     ' TODO: The point values themselves (7, 5, and 3) should be consts themselves or a formula.
-    ' Initialize physical, social, and mental points
-    Select Case PrimaryAttribute
-        Case 1
-            PhysicalPoints = 7
-        Case 2
-            SocialPoints = 7
-        Case 3
-            MentalPoints = 7
-    End Select
-    Select Case SecondaryAttribute
-        Case 1
-            PhysicalPoints = 5
-        Case 2
-            SocialPoints = 5
-        Case 3
-            MentalPoints = 5
-    End Select
-    Select Case TertiaryAttribute
-        Case 1
-            PhysicalPoints = 3
-        Case 2
-            SocialPoints = 3
-        Case 3
-            MentalPoints = 3
-    End Select
-
     ' Spend physical points
-    Do
-        Cls
-        ' TODO: Make this less hard-coded. Attribute names should be pulled from const arrays. The menu should be printed with PrintMenu.
-        ' We have 6 uses of this block and I want them to be 6 sub calls passing in arrays. Something like:
-        ' Call SpendPoint(ch, attrGroup) that could lookup GetAllAttributesInGroup(group) to get Str, dex, sta, ...
-        ' That could "return" an array filled with {index, value} pairs and then use PrintMenuWithValues to actually print the values
-        ' Still need a way to handle GetChoice([0, 1, 3]) or whatever it looks like. Maybe an array of another struct like {index, hidden}.
-        Print "Your physical attributes are:"
-        Print "Strength " + Str$(ch.attr_strength) + ", Dexterity " + Str$(ch.attr_dexterity) + ", Stamina " + Str$(ch.attr_stamina)
-        Print "Which attribute would you like to add 1 of your " + Str$(PhysicalPoints) + " points to?"
-        Print "1 = Strength     2 = Dexterity    3 = Stamina      0 = Random"
-        attr = GetChoice(0, 3)
-        If attr = 0 Then attr = GetRandomInt(1, 3)
-        Select Case attr
-            Case 1
-                ch.attr_strength = ch.attr_strength + 1
-            Case 2
-                ch.attr_dexterity = ch.attr_dexterity + 1
-            Case 3
-                ch.attr_stamina = ch.attr_stamina + 1
-        End Select
-        PhysicalPoints = PhysicalPoints - 1
-    Loop While PhysicalPoints > 0
+    For attrGroup = 1 To AttributeGroups_Count
+        attrCount = GetNumAttributesInGroup(attrGroup)
+        ReDim attributes(1 To attrCount) As String
+        Call FillAttributesInGroup(attrGroup, attributes(), attrCount)
+        rank = 0
+        If attrGroup = PrimaryAttribute Then
+            rank = 1
+        ElseIf attrGroup = SecondaryAttribute Then
+            rank = 2
+        ElseIf attrGroup = TertiaryAttribute Then
+            rank = 3
+        End If
+        attrPoints = GetAttributePointsForRank(rank)
+        Do ' for attrPoints = attrPoints to 1 step -1
+            Cls
+            ' TODO: Make this less hard-coded. The menu should be printed with PrintMenu.
+            ' We have 4 uses of this block and I want them to be 2 sub calls passing in arrays. Something like:
+            ' Call SpendPoint(ch, attrGroup, attrPoints) or a call to SpendPoints(ch, attrGroup, rank) and move this do loop in there
+            ' That could "return" an array filled with {index, value} pairs and then use PrintMenuWithValues to actually print the values
+            ' Still need a way to handle GetChoice([0, 1, 3]) or whatever it looks like. Maybe an array of another struct like {index, hidden}.
+            '        GetAttributeValue(ch, 1, 1)
+            Print "Your " + LCase$(AttributeGroups(attrGroup)) + " attributes are:"
+            ' TODO: replace this block next 7 lines with something like
+            ' FillAttributeValues(attributes(), values(), attrCount)
+            ' PrintValuesWithLabels(values(), attributes(), attrCount)
+            For index = 1 To attrCount
+                If index = 1 Then Print ", ";
+                Print GetAttributeName$(attrGroup, index) + " ";
+                Print itos$(GetAttributeValue(ch, attrGroup, index));
+            Next
+            Print ""
 
-    ' Something like this might work better
-    'attr_group_index = 0 ' for 1 to all_attribute_groups_count
-    'Points = 0
-    'Do
-    '    Cls
-    '    attr_count = GetAttributeCountInAttributeGroup(attr_group_index)
-    '    Dim attrs(attr_count) As String
-    '    Call FillAttributesFromGroup(attrs, attr_group_index)
-    '    Print "Which attribute would you like to spend 1 of your " + Str$(Points) + " points on?"
-    '    PrintMenuWithValues(attrs, values, states, showRandom)
-    '    attr = GetChoice(states, showRandom)
-    '    if (attr = 0 then attr = GetRandomIndex(1, attr_count, states)
-    '    SetAttribute(ch, attr_group_index, attr, GetAttribute(ch, attr_group_index, attr) + 1)
-    '    points = points - 1
-    'Loop While Points > 0
-
-    ' Spend social points
-    Do
-        Cls
-        Print "Your social attributes are:"
-        Print "Appearance " + Str$(appearance) + ", Charisma " + Str$(charisma) + ", Manipulation " + Str$(manipulation)
-        Print "Which attribute would you like to add 1 of your " + Str$(SocialPoints) + " points to?"
-        Print "1 = Appearance   2 = Charisma     3 = Manipulation 0 = Random"
-        attr = GetChoice(0, 3)
-        If attr = 0 Then attr = GetRandomInt(1, 3)
-        Select Case attr
-            Case 1
-                ch.attr_appearance = ch.attr_appearance + 1
-            Case 2
-                ch.attr_charisma = ch.attr_charisma + 1
-            Case 3
-                ch.attr_manipulation = ch.attr_manipulation + 1
-        End Select
-        SocialPoints = SocialPoints - 1
-    Loop While SocialPoints > 0
-
-    ' Spend mental points
-    Do
-        Cls
-        Print "Your mental attributes are:"
-        Print "Intelligence " + Str$(intelligence) + ", Perception " + Str$(perception) + ", Wits " + Str$(wits)
-        Print "Which attribute would you like to add 1 of you " + Str$(MentalPoints) + " points to?"
-        Print "1 = Intelligence 2 = Perception   3 = Wits         0 = Random"
-        attr = GetChoice(0, 3)
-        If attr = 0 Then attr = GetRandomInt(1, 3)
-        Select Case attr
-            Case 1
-                ch.attr_intelligence = ch.attr_intelligence + 1
-            Case 2
-                ch.attr_perception = ch.attr_perception + 1
-            Case 3
-                ch.attr_wits = ch.attr_wits + 1
-        End Select
-        MentalPoints = MentalPoints - 1
-    Loop While MentalPoints > 0
+            Print "Which attribute would you like to spend 1 of your " + itos$(attrPoints) + " points on?"
+            Call PrintMenu(attributes(), attrCount)
+            attr = GetChoice(0, attrCount)
+            If attr = 0 Then attr = GetRandomInt(1, attrCount)
+            Call SetAttribute(ch, attrGroup, attr, GetAttributeValue(ch, attrGroup, attr) + 1)
+            attrPoints = attrPoints - 1
+        Loop While attrPoints > 0
+    Next
 
     ' TODO: Find a more general form for this that stores the chosen abilities in an array
     Dim PrimaryAbility As Integer
@@ -1063,17 +1120,17 @@ Sub CharacterGenerator ()
             KnowledgePoints = 5
     End Select
 
-    Print "Primary: " + Str$(PrimaryAbility) + ", Secondary: " + Str$(SecondaryAbility) + ", Tertiary: " + Str$(TertiaryAbility)
-    Print "Talents: " + Str$(TalentPoints) + ", Skills: " + Str$(SkillPoints) + ", Knowledges: " + Str$(KnowledgePoints)
-    Input A
+    Print "Primary: " + itos$(PrimaryAbility) + ", Secondary: " + itos$(SecondaryAbility) + ", Tertiary: " + itos$(TertiaryAbility)
+    Print "Talents: " + itos$(TalentPoints) + ", Skills: " + itos$(SkillPoints) + ", Knowledges: " + itos$(KnowledgePoints)
+    Input a
 
     ' Spend talent points
     Do
         Cls
-        Print "Which talent would you like to spend 1 of your " + Str$(TalentPoints) + " points on?"
+        Print "Which talent would you like to spend 1 of your " + itos$(TalentPoints) + " points on?"
         Print " 0 = Random"
         For index = 1 To Talents_Count
-            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(Talents(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetTalent(ch, index)), 3, " ")
+            Print MakeFitR$(itos$(index), 2, " ") + " = " + MakeFitL$(Talents(index) + ":", 20, " ") + " " + MakeFitR$(itos$(GetTalent(ch, index)), 3, " ")
         Next
         talent = GetChoice(0, Talents_Count)
         If talent = 0 Then talent = GetRandomInt(1, Talents_Count)
@@ -1084,10 +1141,10 @@ Sub CharacterGenerator ()
     ' Spend skill points
     Do
         Cls
-        Print "Which skill would you like to spend 1 of your " + Str$(SkillPoints) + " points on?"
+        Print "Which skill would you like to spend 1 of your " + itos$(SkillPoints) + " points on?"
         Print " 0 = Random"
         For index = 1 To Skills_Count
-            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(Skills(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetSkill(ch, index)), 3, " ")
+            Print MakeFitR$(itos$(index), 2, " ") + " = " + MakeFitL$(Skills(index) + ":", 20, " ") + " " + MakeFitR$(itos$(GetSkill(ch, index)), 3, " ")
         Next
         skill = GetChoice(0, Skills_Count)
         If skill = 0 Then skill = GetRandomInt(1, Skills_Count)
@@ -1098,10 +1155,10 @@ Sub CharacterGenerator ()
     'Spend knowledge points
     Do
         Cls
-        Print "Which knowledge would you like to spend 1 of your " + Str$(KnowledgePoints) + " points on?"
+        Print "Which knowledge would you like to spend 1 of your " + itos$(KnowledgePoints) + " points on?"
         Print " 0 = Random"
         For index = 1 To Knowledges_Count
-            Print MakeFitR$(Str$(index), 2, " ") + " = " + MakeFitL$(Knowledges(index) + ":", 20, " ") + " " + MakeFitR$(Str$(GetKnowledge(ch, index)), 3, " ")
+            Print MakeFitR$(itos$(index), 2, " ") + " = " + MakeFitL$(Knowledges(index) + ":", 20, " ") + " " + MakeFitR$(itos$(GetKnowledge(ch, index)), 3, " ")
         Next
         knowledge = GetChoice(0, Knowledges_Count)
         If knowledge = 0 Then knowledge = GetRandomInt(1, Knowledges_Count)
@@ -1114,7 +1171,7 @@ Sub CharacterGenerator ()
     Dim TempBackgrounds(Backgrounds_Count) As Integer
     While BackgroundPoints > 0
         Cls
-        Print "Which background do you want to spend 1 of your " + Str$(BackgroundPoints) + " background points on?"
+        Print "Which background do you want to spend 1 of your " + itos$(BackgroundPoints) + " background points on?"
         Call FillBackgrounds(ch, TempBackgrounds())
         Call PrintMenuWithValues(Backgrounds(), TempBackgrounds(), Backgrounds_Count)
         background = GetChoice(0, Backgrounds_Count)
@@ -1165,7 +1222,7 @@ Sub CharacterGenerator ()
         If TempDisciplines(index) > 0 Then
             suffix$ = ""
             If TempDisciplines(index) > 1 Then
-                suffix$ = " x" + Str$(TempDisciplines(index))
+                suffix$ = " x" + itos$(TempDisciplines(index))
             End If
             discipline_strings(discipline_strings_index) = Disciplines(index) + suffix$
         End If
@@ -1177,7 +1234,7 @@ Sub CharacterGenerator ()
         If TempBackgrounds(index) > 0 Then
             suffix$ = ""
             If TempBackgrounds(index) > 1 Then
-                suffix$ = " x" + Str$(TempBackgrounds(index))
+                suffix$ = " x" + itos$(TempBackgrounds(index))
             End If
             background_strings$(background_strings_index) = Backgrounds(index) + suffix$
         End If
@@ -1250,6 +1307,77 @@ End Sub
 
 Sub VehicleGenerator
     Print "VehicleGenerator"
+End Sub
+
+Function GetNumAttributesInGroup (index As Integer)
+    Select Case index
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            GetNumAttributesInGroup = PHYSICAL_ATTRIBUTES_COUNT
+        Case ATTRIBUTE_GROUP_SOCIAL
+            GetNumAttributesInGroup = SOCIAL_ATTRIBUTES_COUNT
+        Case ATTRIBUTE_GROUP_MENTAL
+            GetNumAttributesInGroup = MENTAL_ATTRIBUTES_COUNT
+        Case Else
+            GetNumAttributesInGroup = 0
+    End Select
+End Function
+
+Function GetAttributeName$ (groupIndex As Integer, attributeIndex As Integer)
+    GetAttributeName = ""
+    Select Case groupIndex
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            GetAttributeName = PhysicalAttributes(attributeIndex)
+        Case ATTRIBUTE_GROUP_SOCIAL
+            GetAttributeName = SocialAttributes(attributeIndex)
+        Case ATTRIBUTE_GROUP_MENTAL
+            GetAttributeName = MentalAttributes(attributeIndex)
+    End Select
+End Function
+
+Sub FillAttributesInGroup (group As Integer, attributes() As String, count As Integer)
+    count = GetNumAttributesInGroup(group)
+    If count > 0 Then
+        ReDim attributes(1 To count) As String
+    Else
+        ReDim attributes(0) As String
+    End If
+    Select Case group
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            For i = 1 To count
+                attributes(i) = PhysicalAttributes(i)
+            Next
+        Case ATTRIBUTE_GROUP_SOCIAL
+            For i = 1 To count
+                attributes(i) = SocialAttributes(i)
+            Next
+        Case ATTRIBUTE_GROUP_MENTAL
+            For i = 1 To count
+                attributes(i) = MentalAttributes(i)
+            Next
+    End Select
+End Sub
+
+Sub FillAttributeAbbreviationsInGroup (group As Integer, abbreviations() As String, count As Integer)
+    count = GetNumAttributesInGroup(group)
+    If count > 0 Then
+        ReDim abbreviations(1 To count) As String
+    Else
+        ReDim abbreviations(0) As String
+    End If
+    Select Case group
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            For i = 1 To count
+                abbreviations(i) = PhysicalAttributeAbbreviations(i)
+            Next
+        Case ATTRIBUTE_GROUP_SOCIAL
+            For i = 1 To count
+                abbreviations(i) = SocialAttributeAbbreviations(i)
+            Next
+        Case ATTRIBUTE_GROUP_MENTAL
+            For i = 1 To count
+                abbreviations(i) = MentalAttributeAbbreviations(i)
+            Next
+    End Select
 End Sub
 
 Sub Test
