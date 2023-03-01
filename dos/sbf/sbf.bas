@@ -1157,9 +1157,7 @@ Sub NewCharacter (ch As CharacterType)
     Next
 End Sub
 
-Sub CharacterGenerator ()
-    Dim ch As CharacterType
-    Call NewCharacter(ch)
+Sub CGGetHeader (ch As CharacterType)
     Cls
     Input "What is the character's name? ", ch.name
     Input "Who is the player? ", ch.player
@@ -1185,8 +1183,11 @@ Sub CharacterGenerator ()
     Call PrintMenu(Archetypes(), ARCHETYPES_COUNT)
     ch.demeanor = GetChoice(0, ARCHETYPES_COUNT)
     If ch.demeanor = 0 Then ch.demeanor = GetRandomInt(1, ARCHETYPES_COUNT)
+End Sub
 
+Sub CGGetDisciplines (ch As CharacterType)
     ' The character starts with 3 discipline points and they can spend them on one or more disciplines
+    ' TODO: Make this a ruleset defined const
     disciplinePoints = 3
 
     ' I don't like having to build an empty array for return values here. Ideally PrintMenuWithValues could take the character and a mapping fn(index) that
@@ -1205,7 +1206,9 @@ Sub CharacterGenerator ()
         Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
         disciplinePoints = disciplinePoints - 1
     Wend
+End Sub
 
+Sub CGGetAttributes (ch As CharacterType)
     Dim mi As MenuItem
     ' Attributes
     Dim attributeGroupsMenuStyle As MenuStyle
@@ -1254,7 +1257,10 @@ Sub CharacterGenerator ()
             Call SetAttributeValue(ch, attrGroup, attr, GetAttributeValue(ch, attrGroup, attr) + 1)
         Next
     Next
+End Sub
 
+Sub CGGetAbilities (ch As CharacterType)
+    Dim mi As MenuItem
     ' Abilities
     Dim abilityGroupsMenuStyle As MenuStyle
     Call NewMenuStyle(abilityGroupsMenuStyle)
@@ -1303,7 +1309,9 @@ Sub CharacterGenerator ()
             Call SetAbilityValue(ch, abiityGroup, abiity, GetAbilityValue(ch, abiityGroup, abiity) + 1)
         Next
     Next
+End Sub
 
+Sub CGGetBackgrounds (ch As CharacterType)
     ' Spend background points
     backgroundPoints = 5
     Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
@@ -1317,7 +1325,9 @@ Sub CharacterGenerator ()
         Call SetBackground(ch, background, GetBackground(ch, background) + 1)
         backgroundPoints = backgroundPoints - 1
     Wend
+End Sub
 
+Sub CGGetRoad (ch As CharacterType)
     ' TODO: Choose your road. This is only for dark ages so skip for now
     '1 = Road of the Beast - Feed the beast so it will not break loose.
     '2 = Road of Blood - Blood grants the power for revenge.
@@ -1329,16 +1339,39 @@ Sub CharacterGenerator ()
     '8 = Road of Typhon - Sin and corruption are the keys to understanding.
     'Which road does the character follow?
 
+    ' TODO: figure out how to calculate road/humanity (typhon below)
+    ch.roadName = "Humanity"
+    ch.roadValue = 5
+End Sub
+
+Sub CGSpendVirtuePoints (ch As CharacterType)
     ' TODO: Spend virtue points
     'Conscience   1
     'Self-Control 1
     'Courage      1
     'Which virtue do you wish to add one of your 7 points to?
     ch.conscience = 1
-    ch.conviction = 2
-    ch.instinct = 3
     ch.selfControl = 4
     ch.courage = 5
+End Sub
+
+Sub SaveCharacterSheet (ch As CharacterType)
+    ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
+    ' What do you want the file to be called? (default is CHAR1)?
+End Sub
+
+Sub CharacterGenerator ()
+    Dim ch As CharacterType
+    Call NewCharacter(ch)
+    Call CGGetHeader(ch)
+    Call CGGetDisciplines(ch)
+    Call CGGetAttributes(ch)
+    Call CGGetAbilities(ch)
+    Call CGGetRoad(ch)
+    Call CGSpendVirtuePoints(ch)
+    ' TODO: Don't know what to call these two. Figure that out and maybe make it a sub.
+    ch.conviction = 2
+    ch.instinct = 3
 
     ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
     ch.generation = 13
@@ -1346,16 +1379,10 @@ Sub CharacterGenerator ()
     ' TODO: figure out how to calculate willpower
     ch.willpower = 10
 
-    ' TODO: figure out how to calculate road/humanity (typhon below)
-    ch.roadName = "Humanity"
-    ch.roadValue = 5
-
-    ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
-    ' What do you want the file to be called? (default is CHAR1)?
-
+    Call SaveCharacterSheet(ch)
     Call ShowCharacterSheet(ch)
-
 End Sub
+
 Sub ShowCharacterSheet (ch As CharacterType)
     Dim disciplineValues(DISCIPLINES_COUNT) As Integer
     Call FillDisciplines(ch, disciplineValues())

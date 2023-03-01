@@ -17,7 +17,6 @@
 * Spending virtue points
 * Support genders other than male/female.
     * Change all references to sex to gender instead.
-* Split up the character generator into subs so it's easier to navigate the code.
 
 # Low Priority
 * Calculating values not directly queried for.
