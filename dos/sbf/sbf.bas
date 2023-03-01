@@ -17,6 +17,9 @@ Randomize Timer
 Const FALSE = 0
 Const TRUE = Not FALSE
 
+Const DISCIPLINE_POINTS = 3
+Const BACKGROUND_POINTS = 5
+
 ' Each set of these index constants "NAME_*" should start at 1 and go up to NAMES_COUNT without leaving any holes.
 ' This also goes the same for sub indexes like NAME_GROUP_SUBGROUP_* each NAME_GROUP_* set should have GetNumNamesInGroup(NAME_GROUP) items.
 Const CLAN_ANARCH = 1
@@ -128,11 +131,11 @@ Const ATTRIBUTE_GROUP_MENTAL = 3
 Const ATTRIBUTE_GROUPS_COUNT = 3
 Dim Shared AttributeGroups(1 To ATTRIBUTE_GROUPS_COUNT) As String
 
-Const ABILITY_TALENTS = 1
-Const ABILITY_SKILLS = 2
-Const ABILITY_KNOWLEDGES = 3
-Const ABILITIES_COUNT = 3
-Dim Shared Abilities(1 To ABILITIES_COUNT) As String
+Const ABILITY_GROUP_TALENTS = 1
+Const ABILITY_GROUP_SKILLS = 2
+Const ABILITY_GROUP_KNOWLEDGES = 3
+Const ABILITY_GROUPS_COUNT = 3
+Dim Shared AbilityGroups(1 To ABILITY_GROUPS_COUNT) As String
 
 Const TALENT_ACTING = 1
 Const TALENT_ALERTNESS = 2
@@ -439,9 +442,9 @@ Sub InitializeMemory
     AttributeGroups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
 
     ' Abilities
-    Abilities(ABILITY_TALENTS) = "Talents"
-    Abilities(ABILITY_SKILLS) = "Skills"
-    Abilities(ABILITY_KNOWLEDGES) = "Knowledges"
+    AbilityGroups(ABILITY_GROUP_TALENTS) = "Talents"
+    AbilityGroups(ABILITY_GROUP_SKILLS) = "Skills"
+    AbilityGroups(ABILITY_GROUP_KNOWLEDGES) = "Knowledges"
 
     ' Talents
     Talents(TALENT_ACTING) = "Acting"
@@ -619,10 +622,7 @@ Function GetRandomInt (min As Integer, max As Integer)
     GetRandomInt = Int(Rnd * (max - min + 1)) + min
 End Function
 
-' style is not used yet, but is here in case we want to in the future.
-' It's easier to ignore it here than to add it to each call later.
-' It's also available any place we would call this from because we're calling pm from there.
-Function GetRandomMenuItemId (items() As MenuItem, style As MenuStyle, count As Integer)
+Function GetRandomMenuItemId (items() As MenuItem, count As Integer)
     numVisibleItems = 0
     Dim visibleItems(count) As Integer
     For i = 1 To count
@@ -634,34 +634,6 @@ Function GetRandomMenuItemId (items() As MenuItem, style As MenuStyle, count As 
     i = GetRandomInt(0, numVisibleItems - 1)
     GetRandomMenuItemId = visibleItems(i)
 End Function
-
-Sub PrintMenu (items() As String, count As Integer)
-    ' TODO: allow printing inside of a box บ 1 = item บ.
-    Dim ms As MenuStyle
-    Call NewMenuStyle(ms)
-    Dim menuItems(1 To count) As MenuItem
-    For i = 1 To count
-        Dim mi As MenuItem
-        Call NewMenuItem(mi, items(i), i)
-        menuItems(i) = mi
-    Next
-    Call AdjustMenuStyle(ms, menuItems(), count, TRUE)
-    Call pm(menuItems(), count, ms)
-End Sub
-
-Sub PrintMenuWithValues (items() As String, values() As Integer, count As Integer)
-    ' TODO: @see PrintMenu
-    Dim ms As MenuStyle
-    Call NewMenuStyle(ms)
-    Dim menuItems(1 To count) As MenuItem
-    For i = 1 To count
-        Dim mi As MenuItem
-        Call NewMenuItemWithValue(mi, items(i), i, values(i))
-        menuItems(i) = mi
-    Next
-    Call AdjustMenuStyle(ms, menuItems(), count, FALSE)
-    Call pm(menuItems(), count, ms)
-End Sub
 
 Function MakeFitL$ (text As String, length As Integer, pad As String)
     MakeFitL = Left$(text + String$(length, pad), length)
@@ -1042,11 +1014,11 @@ End Sub
 
 Sub SetAbilityValue (ch As CharacterType, groupIndex As Integer, index As Integer, value As Integer)
     Select Case groupIndex
-        Case ABILITY_TALENTS
+        Case ABILITY_GROUP_TALENTS
             Call SetTalent(ch, index, value)
-        Case ABILITY_SKILLS
+        Case ABILITY_GROUP_SKILLS
             Call SetSkill(ch, index, value)
-        Case ABILITY_KNOWLEDGES
+        Case ABILITY_GROUP_KNOWLEDGES
             Call SetKnowledge(ch, index, value)
     End Select
 End Sub
@@ -1087,11 +1059,11 @@ End Function
 Function GetAbilityValue (ch As CharacterType, abilityIndex As Integer, itemIndex As Integer)
     GetAbilityValue = 0
     Select Case abilityIndex
-        Case ABILITY_TALENTS
+        Case ABILITY_GROUP_TALENTS
             GetAbilityValue = GetTalent(ch, itemIndex)
-        Case ABILITY_SKILLS
+        Case ABILITY_GROUP_SKILLS
             GetAbilityValue = GetSkill(ch, itemIndex)
-        Case ABILITY_KNOWLEDGES
+        Case ABILITY_GROUP_KNOWLEDGES
             GetAbilityValue = GetKnowledge(ch, itemIndex)
     End Select
 End Function
@@ -1195,10 +1167,32 @@ Function ChooseStringId (labels() As String, style As MenuStyle, count As Intege
     Call BuildMenu(mnuItems(), labels(), count)
     Call AdjustMenuStyle(style, mnuItems(), count, TRUE)
     Print prompt
-    Call pm(mnuItems(), count, style)
+    Call PrintMenu(mnuItems(), count, style)
     choice = GetMenuChoice(mnuItems(), style, count)
-    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), style, count)
+    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count)
     ChooseStringId = choice
+End Function
+
+Function ChooseStringIdWithValues (labels() As String, values() As Integer, style As MenuStyle, count As Integer, prompt As String)
+    Cls
+    Dim mnuItems(1 To count) As MenuItem
+    Call BuildMenuWithValues(mnuItems(), labels(), values(), count)
+    Call AdjustMenuStyle(style, mnuItems(), count, FALSE)
+    Print prompt
+    Call PrintMenu(mnuItems(), count, style)
+    choice = GetMenuChoice(mnuItems(), style, count)
+    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count)
+    ChooseStringIdWithValues = choice
+End Function
+
+Function ChooseMenuItemId (items() As MenuItem, style As MenuStyle, count As Integer, prompt As String, ignoreValue As Integer)
+    Cls
+    Call AdjustMenuStyle(style, items(), count, ignoreValue)
+    Print prompt
+    Call PrintMenu(items(), count, style)
+    choice = GetMenuChoice(items(), style, count)
+    If choice = style.randomItemId Then choice = GetRandomMenuItemId(items(), count)
+    ChooseMenuItemId = choice
 End Function
 
 Sub CGGetHeader (ch As CharacterType)
@@ -1218,142 +1212,146 @@ Sub CGGetHeader (ch As CharacterType)
 End Sub
 
 Sub CGGetDisciplines (ch As CharacterType)
-    ' The character starts with 3 discipline points and they can spend them on one or more disciplines
-    ' TODO: Make this a ruleset defined const
-    disciplinePoints = 3
-
-    ' I don't like having to build an empty array for return values here. Ideally PrintMenuWithValues could take the character and a mapping fn(index) that
-    ' calls GetDiscipline(ch, index) to fetch the value. At least for BASIC this seems like a better solution. PrintMenuWithValues does piss me off though.
-    ' I don't want it to exist. I want a formatting function there that takes the character and the index then prints "1 = Bullshit: 3" or something like that.
-    ' But we can't have nice things like nested custom types, arrays in custom types, or function objects/pointers.
-    ' TODO: Try to find a better way to do this.
+    ' Spend discipline points.
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    disciplinePoints = GetDisciplinePoints
     Dim disciplineValues(DISCIPLINES_COUNT) As Integer
     While disciplinePoints > 0
         Cls
         Print "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " discipline points on?"
         Call FillDisciplines(ch, disciplineValues())
-        Call PrintMenuWithValues(Disciplines(), disciplineValues(), DISCIPLINES_COUNT)
-        discipline = GetChoice(0, DISCIPLINES_COUNT)
-        If discipline = 0 Then discipline = GetRandomInt(1, DISCIPLINES_COUNT)
+        discipline = ChooseStringIdWithValues(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?")
         Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
         disciplinePoints = disciplinePoints - 1
     Wend
 End Sub
 
 Sub CGGetAttributes (ch As CharacterType)
-    Dim mi As MenuItem
-    ' Attributes
-    Dim attributeGroupsMenuStyle As MenuStyle
-    Call NewMenuStyle(attributeGroupsMenuStyle)
+    Dim msWithoutValues As MenuStyle
+    Call NewMenuStyle(msWithoutValues)
+    Dim msWithValues As MenuStyle
+    Call NewMenuStyle(msWithValues)
+    Dim ranks(1 To ATTRIBUTE_GROUPS_COUNT) As Integer
+
+    ' Attribute groups menu (physical/social/mental)
     Dim mnuAttributeGroups(1 To ATTRIBUTE_GROUPS_COUNT) As MenuItem
+    Dim mi As MenuItem
     For i = 1 To ATTRIBUTE_GROUPS_COUNT
         Call NewMenuItem(mi, AttributeGroups(i), i)
         mnuAttributeGroups(i) = mi
     Next
 
-    ' General formula for last choice is
-    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
-    Dim attributeGroupRanks(1 To ATTRIBUTE_GROUPS_COUNT) As Integer
-    attrSum = 0
+    ' Choose attribute group priorities.
+    groupSum = 0
     rankSum = 1
     For i = 1 To ATTRIBUTE_GROUPS_COUNT - 1
-        Cls
-        Call AdjustMenuStyle(attributeGroupsMenuStyle, mnuAttributeGroups(), ATTRIBUTE_GROUPS_COUNT, TRUE)
         ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary attribute?" instead
-        Print "Choose your next attribute?"
-        Call pm(mnuAttributeGroups(), ATTRIBUTE_GROUPS_COUNT, attributeGroupsMenuStyle)
-        nextAttr = GetMenuChoice(mnuAttributeGroups(), attributeGroupsMenuStyle, ATTRIBUTE_GROUPS_COUNT)
-        If nextAttr = 0 Then nextAttr = GetRandomMenuItemId(mnuAttributeGroups(), attributeGroupsMenuStyle, ATTRIBUTE_GROUPS_COUNT)
-        mnuAttributeGroups(i).isVisible = FALSE
-        attributeGroupRanks(nextAttr) = i
+        nextGroup = ChooseMenuItemId(mnuAttributeGroups(), msWithoutValues, ATTRIBUTE_GROUPS_COUNT, "Choose your next attribute?", TRUE)
+        mnuAttributeGroups(nextGroup).isVisible = FALSE
+        ranks(nextGroup) = i
         rankSum = rankSum + i + 1
-        attrSum = attrSum + nextAttr
+        groupSum = groupSum + nextGroup
+        Print "rank: " + itos$(i) + ", nextGroup: " + itos$(nextGroup) + ", rankSum: " + itos$(rankSum) + ", groupSum: " + itos$(groupSum)
+        Input a
     Next
-    lastAttr = rankSum - attrSum
-    attributeGroupRanks(lastAttr) = ATTRIBUTE_GROUPS_COUNT
+    ' General formula for last choice given 1 to count based indexing is this
+    ' (Sum from 1 to count) - (Sum of all previous choice IDs)
+    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
+    Print "rank: " + itos$(i) + ", nextGroup: " + itos$(nextGroup) + ", rankSum: " + itos$(rankSum) + ", groupSum: " + itos$(groupSum) + ", lastGroup: " + itos$(lastGroup)
+    lastGroup = rankSum - groupSum
+    ranks(lastGroup) = ATTRIBUTE_GROUPS_COUNT
+    For i = 1 To ATTRIBUTE_GROUPS_COUNT
+        Print "ranks(" + itos$(i) + "): " + itos$(ranks(i))
+    Next
+
+    For i = 1 To ATTRIBUTE_GROUPS_COUNT
+        Print "ranks(" + AttributeGroups(i) + "): " + itos$(ranks(i))
+    Next
+    Input a
 
     ' Spend attribute points
-    For attrGroup = 1 To ATTRIBUTE_GROUPS_COUNT
-        attrCount = GetNumAttributesInGroup(attrGroup)
-        ReDim attributes(1 To attrCount) As String
-        Call FillAttributesInGroup(attrGroup, attributes())
-        rank = attributeGroupRanks(attrGroup)
+    For group = 1 To ATTRIBUTE_GROUPS_COUNT
+        count = GetNumAttributesInGroup(group)
+        ReDim attributes(1 To count) As String
+        Call FillAttributesInGroup(group, attributes())
+        rank = ranks(group)
+        ReDim values(1 To count) As Integer
         For attrPoints = GetAttributePointsForRank(rank) To 1 Step -1
-            Cls
-            Print "Which attribute would you like to spend 1 of your " + itos$(attrPoints) + " points on?"
-            ReDim attrValues(1 To attrCount) As Integer
-            Call FillAttributeValues(ch, attrValues(), attrGroup)
-            Call PrintMenuWithValues(attributes(), attrValues(), attrCount)
-            attr = GetChoice(0, attrCount)
-            If attr = 0 Then attr = GetRandomInt(1, attrCount)
-            Call SetAttributeValue(ch, attrGroup, attr, GetAttributeValue(ch, attrGroup, attr) + 1)
+            Call FillAttributeValues(ch, values(), group)
+            attribute = ChooseStringIdWithValues(attributes(), values(), msWithValues, count, "Which attribute do you want to spend 1 of your " + itos$(attrPoints) + " points on?")
+            Call SetAttributeValue(ch, group, attribute, GetAttributeValue(ch, group, attribute) + 1)
         Next
     Next
 End Sub
 
 Sub CGGetAbilities (ch As CharacterType)
+    Dim msWithoutValues As MenuStyle
+    Call NewMenuStyle(msWithoutValues)
+    Dim msWithValues As MenuStyle
+    Call NewMenuStyle(msWithValues)
+    Dim ranks(1 To ABILITY_GROUPS_COUNT) As Integer
+
+    ' Ability groups menu (talents/skills/knowledges)
+    Dim mnuAbilityGroups(1 To ABILITY_GROUPS_COUNT) As MenuItem
     Dim mi As MenuItem
-    ' Abilities
-    Dim abilityGroupsMenuStyle As MenuStyle
-    Call NewMenuStyle(abilityGroupsMenuStyle)
-    Dim mnuAbilityGroups(1 To ABILITIES_COUNT) As MenuItem
-    For i = 1 To ABILITIES_COUNT
-        Call NewMenuItem(mi, Abilities(i), i)
+    For i = 1 To ABILITY_GROUPS_COUNT
+        Call NewMenuItem(mi, AbilityGroups(i), i)
         mnuAbilityGroups(i) = mi
     Next
 
-    ' General formula for last choice is
-    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
-    Dim abilityGroupRanks(1 To ABILITIES_COUNT) As Integer
-    abilitySum = 0
+    ' Choose ability group priorities
+    groupSum = 0
     rankSum = 1
-    For i = 1 To ABILITIES_COUNT - 1
-        Cls
-        Call AdjustMenuStyle(abilityGroupsMenuStyle, mnuAbilityGroups(), ABILITIES_COUNT, TRUE)
+    For i = 1 To ABILITY_GROUPS_COUNT - 1
         ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary ability?" instead
-        Print "Choose your next ability?"
-        Call pm(mnuAbilityGroups(), ABILITIES_COUNT, abilityGroupsMenuStyle)
-        nextAbility = GetMenuChoice(mnuAbilityGroups(), abilityGroupsMenuStyle, ABILITIES_COUNT)
-        If nextAbility = 0 Then nextAbility = GetRandomMenuItemId(mnuAbilityGroups(), abilityGroupsMenuStyle, ABILITIES_COUNT)
-        mnuAbilityGroups(i).isVisible = FALSE
-        abilityGroupRanks(nextAbility) = i
+        nextAbility = ChooseMenuItemId(mnuAbilityGroups(), msWithoutValues, ABILITY_GROUPS_COUNT, "Choose your next ability?", TRUE)
+        mnuAbilityGroups(nextAbility).isVisible = FALSE
+        ranks(nextAbility) = i
         rankSum = rankSum + i + 1
-        abilitySum = abilitySum + nextAbility
+        groupSum = groupSum + nextAbility
     Next
-    lastAbility = rankSum - abilitySum
-    abilityGroupRanks(lastAbility) = ABILITIES_COUNT
+    ' General formula for last choice given 1 to count based indexing is this
+    ' (Sum from 1 to count) - (Sum of all previous choice IDs)
+    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
+    lastGroup = rankSum - groupSum
+    ranks(lastGroup) = ABILITY_GROUPS_COUNT
+    For i = 1 To ABILITY_GROUPS_COUNT
+        Print "ranks(" + itos$(i) + "): " + itos$(ranks(i))
+    Next
+
+    For i = 1 To ABILITY_GROUPS_COUNT
+        Print "ranks(" + AbilityGroups(i) + "): " + itos$(ranks(i))
+    Next
+    Input a
 
     ' Spend ability points
-    For abiityGroup = 1 To ABILITIES_COUNT
-        abiityCount = GetNumItemsForAbility(abiityGroup)
-        ReDim items(1 To abiityCount) As String
-        Call FillItemsForAbility(abiityGroup, items())
-        rank = abilityGroupRanks(abiityGroup)
-        For abiityPoints = GetAbilityPointsForRank(rank) To 1 Step -1
-            Cls
+    For group = 1 To ABILITY_GROUPS_COUNT
+        count = GetNumItemsForAbilityGroup(group)
+        ReDim abilities(1 To count) As String
+        Call FillAbilitiesForAbilityGroup(group, abilities())
+        rank = ranks(group)
+        ReDim values(1 To count) As Integer
+        For abilityPoints = GetAbilityPointsForRank(rank) To 1 Step -1
+            Call FillAbilityValues(ch, values(), group)
             ' TODO: Pull this from an array like AbilityGroupsSingle so "Which talent would you like to spend 1 of your 5 points on?"
-            Print "Which ability would you like to spend 1 of your " + itos$(abiityPoints) + " points on?"
-            ReDim abiityValues(1 To abiityCount) As Integer
-            Call FillAbilityValues(ch, abiityValues(), abiityGroup)
-            Call PrintMenuWithValues(items(), abiityValues(), abiityCount)
-            abiity = GetChoice(0, abiityCount)
-            If abiity = 0 Then abiity = GetRandomInt(1, abiityCount)
-            Call SetAbilityValue(ch, abiityGroup, abiity, GetAbilityValue(ch, abiityGroup, abiity) + 1)
+            ability = ChooseStringIdWithValues(abilities(), values(), msWithValues, count, "Which ability would you like to spend 1 of your " + itos$(abilityPoints) + " points on?")
+            Call SetAbilityValue(ch, group, ability, GetAbilityValue(ch, group, ability) + 1)
         Next
     Next
 End Sub
 
 Sub CGGetBackgrounds (ch As CharacterType)
     ' Spend background points
-    backgroundPoints = 5
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    backgroundPoints = GetBackgroundPoints
     Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
     While backgroundPoints > 0
         Cls
         Print "Which background do you want to spend 1 of your " + itos$(backgroundPoints) + " background points on?"
         Call FillBackgrounds(ch, backgroundValues())
-        Call PrintMenuWithValues(Backgrounds(), backgroundValues(), BACKGROUNDS_COUNT)
-        background = GetChoice(0, BACKGROUNDS_COUNT)
-        If background = 0 Then background = GetRandomInt(1, BACKGROUNDS_COUNT)
+        background = ChooseStringIdWithValues(Backgrounds(), backgroundValues(), ms, BACKGROUNDS_COUNT, "Which background do you want to spend 1 of your " + itos$(backgroundPoints) + " points on?")
         Call SetBackground(ch, background, GetBackground(ch, background) + 1)
         backgroundPoints = backgroundPoints - 1
     Wend
@@ -1387,6 +1385,7 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
     ch.courage = 5
 End Sub
 
+' Ignore this warning ch is not used yet because the sub is not implemented yet.
 Sub SaveCharacterSheet (ch As CharacterType)
     ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
     ' What do you want the file to be called? (default is CHAR1)?
@@ -1401,7 +1400,8 @@ Sub CharacterGenerator ()
     Call CGGetAbilities(ch)
     Call CGGetRoad(ch)
     Call CGSpendVirtuePoints(ch)
-    ' TODO: Don't know what to call these two. Figure that out and maybe make it a sub.
+
+    ' TODO: We don't know what to call these two. Figure that out and maybe make it a sub. These next few could all be one sub if related.
     ch.conviction = 2
     ch.instinct = 3
 
@@ -1433,6 +1433,8 @@ Sub ShowCharacterSheet (ch As CharacterType)
     '230 ๆ็่้๊๋2์ํ๎๏
     ' enquote forms s/^([ษบศอฬ].*[ปบผน])$/print "$1"/g
 
+    ' TODO: Try to make disciplines and backgrounds support multiple columns for overflow
+    ' i.e. >3 discipline strings or >5 background strings
     Dim disciplineStrings(3) As String
     disciplineStringsIndex = 0
     For index = 1 To DISCIPLINES_COUNT
@@ -1459,6 +1461,8 @@ Sub ShowCharacterSheet (ch As CharacterType)
         End If
     Next
 
+    ' TODO: Add derangements to this sheet.
+    ' TODO: Make the string fields show a full width "_" string for "empty lines" when printed.
     Cls
     Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
     Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(Genders(ch.gender), 10, " ") + " Generation: " + MakeFitL$(itos$(ch.generation), 9, " ") + " บ"
@@ -1513,7 +1517,7 @@ Sub FillAttributeValues (ch As CharacterType, values() As Integer, groupIndex As
 End Sub
 
 Sub FillAbilityValues (ch As CharacterType, values() As Integer, groupIndex As Integer)
-    count = GetNumItemsForAbility(groupIndex)
+    count = GetNumItemsForAbilityGroup(groupIndex)
     ReDim values(1 To count) As Integer
     For i = 1 To count
         values(i) = GetAbilityValue(ch, groupIndex, i)
@@ -1547,51 +1551,55 @@ End Sub
 Function GetNumAttributesInGroup (index As Integer)
     Select Case index
         Case ATTRIBUTE_GROUP_PHYSICAL
-            GetNumAttributesInGroup = PHYSICAL_ATTRIBUTES_COUNT
+            count = PHYSICAL_ATTRIBUTES_COUNT
         Case ATTRIBUTE_GROUP_SOCIAL
-            GetNumAttributesInGroup = SOCIAL_ATTRIBUTES_COUNT
+            count = SOCIAL_ATTRIBUTES_COUNT
         Case ATTRIBUTE_GROUP_MENTAL
-            GetNumAttributesInGroup = MENTAL_ATTRIBUTES_COUNT
+            count = MENTAL_ATTRIBUTES_COUNT
         Case Else
-            GetNumAttributesInGroup = 0
+            count = 0
     End Select
+    GetNumAttributesInGroup = count
 End Function
 
-Function GetNumItemsForAbility (index As Integer)
+Function GetNumItemsForAbilityGroup (index As Integer)
     Select Case index
-        Case ABILITY_TALENTS
-            GetNumItemsForAbility = TALENTS_COUNT
-        Case ABILITY_SKILLS
-            GetNumItemsForAbility = SKILLS_COUNT
-        Case ABILITY_KNOWLEDGES
-            GetNumItemsForAbility = KNOWLEDGES_COUNT
+        Case ABILITY_GROUP_TALENTS
+            count = TALENTS_COUNT
+        Case ABILITY_GROUP_SKILLS
+            count = SKILLS_COUNT
+        Case ABILITY_GROUP_KNOWLEDGES
+            count = KNOWLEDGES_COUNT
         Case Else
-            GetNumItemsForAbility = 0
+            count = 0
     End Select
+    GetNumItemsForAbilityGroup = count
 End Function
 
 Function GetAttributeName$ (groupIndex As Integer, attributeIndex As Integer)
-    GetAttributeName = ""
+    attributeName$ = ""
     Select Case groupIndex
         Case ATTRIBUTE_GROUP_PHYSICAL
-            GetAttributeName = PhysicalAttributes(attributeIndex)
+            attributeName$ = PhysicalAttributes(attributeIndex)
         Case ATTRIBUTE_GROUP_SOCIAL
-            GetAttributeName = SocialAttributes(attributeIndex)
+            attributeName$ = SocialAttributes(attributeIndex)
         Case ATTRIBUTE_GROUP_MENTAL
-            GetAttributeName = MentalAttributes(attributeIndex)
+            attributeName$ = MentalAttributes(attributeIndex)
     End Select
+    GetAttributeName = attributeName$
 End Function
 
 Function GetAbilityName$ (groupIndex As Integer, abilityIndex As Integer)
-    GetAbilityName = ""
+    abilityName$ = ""
     Select Case groupIndex
-        Case ABILITY_TALENTS
-            GetAbilityName = Talents(abilityIndex)
-        Case ABILITY_SKILLS
-            GetAbilityName = Skills(abilityIndex)
-        Case ABILITY_KNOWLEDGES
-            GetAbilityName = Knowledges(abilityIndex)
+        Case ABILITY_GROUP_TALENTS
+            abilityName$ = Talents(abilityIndex)
+        Case ABILITY_GROUP_SKILLS
+            abilityName$ = Skills(abilityIndex)
+        Case ABILITY_GROUP_KNOWLEDGES
+            abilityName$ = Knowledges(abilityIndex)
     End Select
+    GetAbilityName = abilityName$
 End Function
 
 Sub FillAttributesInGroup (group As Integer, attributes() As String)
@@ -1617,8 +1625,8 @@ Sub FillAttributesInGroup (group As Integer, attributes() As String)
     End Select
 End Sub
 
-Sub FillItemsForAbility (ability As Integer, items() As String)
-    count = GetNumItemsForAbility(ability)
+Sub FillAbilitiesForAbilityGroup (ability As Integer, items() As String)
+    count = GetNumItemsForAbilityGroup(ability)
     ReDim items(1 To count) As String
     If count > 0 Then
         ReDim items(1 To count) As String
@@ -1626,15 +1634,15 @@ Sub FillItemsForAbility (ability As Integer, items() As String)
         ReDim items(0) As String
     End If
     Select Case ability
-        Case ABILITY_TALENTS
+        Case ABILITY_GROUP_TALENTS
             For i = 1 To count
                 items(i) = Talents(i)
             Next
-        Case ABILITY_SKILLS
+        Case ABILITY_GROUP_SKILLS
             For i = 1 To count
                 items(i) = Skills(i)
             Next
-        Case ABILITY_KNOWLEDGES
+        Case ABILITY_GROUP_KNOWLEDGES
             For i = 1 To count
                 items(i) = Knowledges(i)
             Next
@@ -1688,7 +1696,7 @@ Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer, 
     If Not ignoreValue Then style.valueWidth = maxValueWidth Else style.valueWidth = 0
 End Sub
 
-Sub pm (items() As MenuItem, count As Integer, style As MenuStyle)
+Sub PrintMenu (items() As MenuItem, count As Integer, style As MenuStyle)
     Dim randomItem As MenuItem
     Call NewMenuItem(randomItem, style.randomItemName, style.randomItemId)
     If count <= 10 Then
@@ -1767,3 +1775,10 @@ Sub NewMenuItemWithValue (mi As MenuItem, label As String, id As Integer, value 
     mi.isVisible = TRUE
 End Sub
 
+Function GetDisciplinePoints ()
+    GetDisciplinePoints = DISCIPLINE_POINTS
+End Function
+
+Function GetBackgroundPoints ()
+    GetBackgroundPoints = BACKGROUND_POINTS
+End Function
