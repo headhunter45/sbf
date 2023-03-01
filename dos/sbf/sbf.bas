@@ -631,8 +631,7 @@ Sub PrintMenu (items() As String, count As Integer)
         Call NewMenuItem(mi, items(i), i)
         menuItems(i) = mi
     Next
-    Call AdjustMenuStyle(ms, menuItems(), count)
-    ms.valueWidth = 0
+    Call AdjustMenuStyle(ms, menuItems(), count, TRUE)
     Call pm(menuItems(), count, ms)
 End Sub
 
@@ -646,7 +645,7 @@ Sub PrintMenuWithValues (items() As String, values() As Integer, count As Intege
         Call NewMenuItemWithValue(mi, items(i), i, values(i))
         menuItems(i) = mi
     Next
-    Call AdjustMenuStyle(ms, menuItems(), count)
+    Call AdjustMenuStyle(ms, menuItems(), count, FALSE)
     Call pm(menuItems(), count, ms)
 End Sub
 
@@ -1224,8 +1223,7 @@ Sub CharacterGenerator ()
     rankSum = 1
     For i = 1 To ATTRIBUTE_GROUPS_COUNT - 1
         Cls
-        Call AdjustMenuStyle(attributeGroupsMenuStyle, mnuAttributeGroups(), ATTRIBUTE_GROUPS_COUNT)
-        attributeGroupsMenuStyle.valueWidth = 0
+        Call AdjustMenuStyle(attributeGroupsMenuStyle, mnuAttributeGroups(), ATTRIBUTE_GROUPS_COUNT, TRUE)
         ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary attribute?" instead
         Print "Choose your next attribute?"
         Call pm(mnuAttributeGroups(), ATTRIBUTE_GROUPS_COUNT, attributeGroupsMenuStyle)
@@ -1273,8 +1271,7 @@ Sub CharacterGenerator ()
     rankSum = 1
     For i = 1 To ABILITIES_COUNT - 1
         Cls
-        Call AdjustMenuStyle(abilityGroupsMenuStyle, mnuAbilityGroups(), ABILITIES_COUNT)
-        abilityGroupsMenuStyle.valueWidth = 0
+        Call AdjustMenuStyle(abilityGroupsMenuStyle, mnuAbilityGroups(), ABILITIES_COUNT, TRUE)
         ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary ability?" instead
         Print "Choose your next ability?"
         Call pm(mnuAbilityGroups(), ABILITIES_COUNT, abilityGroupsMenuStyle)
@@ -1615,7 +1612,7 @@ End Sub
 Sub Test
 End Sub
 
-Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer)
+Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer, ignoreValue As Integer)
     maxIdWidth = 0
     maxItemWidth = 0
     maxValueWidth = 0
@@ -1633,7 +1630,7 @@ Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer)
     End If
     style.idWidth = maxIdWidth
     style.labelWidth = maxItemWidth
-    style.valueWidth = maxValueWidth
+    If Not ignoreValue Then style.valueWidth = maxValueWidth Else style.valueWidth = 0
 End Sub
 
 Sub pm (items() As MenuItem, count As Integer, style As MenuStyle)
