@@ -1212,21 +1212,9 @@ Sub CGGetHeader (ch As CharacterType)
     Input "What is the character's concept? ", ch.concept
     Input "How old is the character? ", ch.age
     ch.gender = ChooseStringId(Genders(), ms, GENDERS_COUNT, "What is the character's gender?")
-    Cls
-    Print "What Clan is the character from?"
-    Call PrintMenu(Clans(), CLANS_COUNT)
-    ch.clan = GetChoice(0, CLANS_COUNT)
-    If ch.clan = 0 Then ch.clan = GetRandomInt(1, CLANS_COUNT)
-    Cls
-    Print "What is your character's Nature?"
-    Call PrintMenu(Archetypes(), ARCHETYPES_COUNT)
-    ch.nature = GetChoice(0, ARCHETYPES_COUNT)
-    If ch.nature = 0 Then ch.nature = GetRandomInt(1, ARCHETYPES_COUNT)
-    Cls
-    Print "What is your character's Demeanor?"
-    Call PrintMenu(Archetypes(), ARCHETYPES_COUNT)
-    ch.demeanor = GetChoice(0, ARCHETYPES_COUNT)
-    If ch.demeanor = 0 Then ch.demeanor = GetRandomInt(1, ARCHETYPES_COUNT)
+    ch.clan = ChooseStringId(Clans(), ms, CLANS_COUNT, "What clan is the character from?")
+    ch.nature = ChooseStringId(Archetypes(), ms, ARCHETYPES_COUNT, "What is the character's nature?")
+    ch.demeanor = ChooseStringId(Archetypes(), ms, ARCHETYPES_COUNT, "What is the character's demeanor?")
 End Sub
 
 Sub CGGetDisciplines (ch As CharacterType)
@@ -1445,8 +1433,6 @@ Sub ShowCharacterSheet (ch As CharacterType)
     '230 ๆ็่้๊๋2์ํ๎๏
     ' enquote forms s/^([ษบศอฬ].*[ปบผน])$/print "$1"/g
 
-    clanName$ = Clans(ch.clan)
-
     Dim disciplineStrings(3) As String
     disciplineStringsIndex = 0
     For index = 1 To DISCIPLINES_COUNT
@@ -1476,7 +1462,7 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Cls
     Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
     Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(Genders(ch.gender), 10, " ") + " Generation: " + MakeFitL$(itos$(ch.generation), 9, " ") + " บ"
-    Print "บ Clan: " + MakeFitL$(clanName$, 30, " ") + " บ Age: " + MakeFitL$(ch.age$, 32, " ") + " บ"
+    Print "บ Clan: " + MakeFitL$(Clans(ch.clan), 30, " ") + " บ Age: " + MakeFitL$(ch.age$, 32, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(ch.player$, 29, " ") + " บ"
     Print "บ              Attributes              บ Chronicle: " + MakeFitL$(ch.chronicle$, 26, " ") + " บ"
     Print "บ   Physical     Social      Mental    บ Haven: " + MakeFitL$(ch.haven$, 30, " ") + " บ"
