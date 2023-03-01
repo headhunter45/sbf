@@ -11,201 +11,180 @@ $Debug
 ' TODO: Calculate willpower
 ' TODO: Add blood pool to sheet
 ' TODO: Input/Print derangements
-' TODO: Some input prompts/messages have an extra space before the numeric variable in the string. Why? e.g. Which thingy to you want to spend 1 of your  3 remaining points on.
-' TODO: Abstract the ALL_* stuff some more to support differences in VtDA and WtA stuff.
+' TODO: Create a way to choose between VtM, VtDA, and WtA then load the appropriate lookup tables.
 Randomize Timer
 
-'Call Test
-'End
+Const FALSE = 0
+Const TRUE = Not FALSE
 
-' TODO: maybe make these some kind of typedef with an id and a label. Constants or enums would be great.
-Const Clans_Count = 18
-Dim Shared Clans(1 To Clans_Count) As String
-Clans(1) = "Anarch"
-Clans(2) = "Assamite"
-Clans(3) = "Baali"
-Clans(4) = "Brujah"
-Clans(5) = "Caitiff"
-Clans(6) = "Cappadocian"
-Clans(7) = "Gangrel"
-Clans(8) = "Giovanni"
-Clans(9) = "Inconnu"
-Clans(10) = "Lasombra"
-Clans(11) = "Malkavian"
-Clans(12) = "Nosferatu"
-Clans(13) = "Ravanos"
-Clans(14) = "Settite"
-Clans(15) = "Tremere"
-Clans(16) = "Toreador"
-Clans(17) = "Tzismice"
-Clans(18) = "Ventrue"
+' Each set of these index constants "NAME_*" should start at 1 and go up to NAMES_COUNT without leaving any holes.
+' This also goes the same for sub indexes like NAME_GROUP_SUBGROUP_* each NAME_GROUP_* set should have GetNumNamesInGroup(NAME_GROUP) items.
+Const CLAN_ANARCH = 1
+Const CLAN_ASSAMITE = 2
+Const CLAN_BAALI = 3
+Const CLAN_BRUJAH = 4
+Const CLAN_CAITIFF = 5
+Const CLAN_CAPPADOCIAN = 6
+Const CLAN_GANGREL = 7
+Const CLAN_GIOVANNI = 8
+Const CLAN_INCONNU = 9
+Const CLAN_LASOMBRA = 10
+Const CLAN_MALKAVIAN = 11
+Const CLAN_NOSFERATU = 12
+Const CLAN_RAVANOS = 13
+Const CLAN_SETTITE = 14
+Const CLAN_TREMERE = 15
+Const CLAN_TOREADOR = 16
+Const CLAN_TZISMICE = 17
+Const CLAN_VENTRUE = 18
+Const CLANS_COUNT = 18
+Dim Shared Clans(1 To CLANS_COUNT) As String
 
-Const Archetypes_Count = 30
-Dim Shared Archetypes(1 To Archetypes_Count) As String
-Archetypes(1) = "Architect"
-Archetypes(2) = "Autocrat"
-Archetypes(3) = "Barbarian"
-Archetypes(4) = "Bon Vivant"
-Archetypes(5) = "Bravo"
-Archetypes(6) = "Caregiver"
-Archetypes(7) = "Caretaker"
-Archetypes(8) = "Celebrant"
-Archetypes(9) = "Child"
-Archetypes(10) = "Conformist"
-Archetypes(11) = "Conniver"
-Archetypes(12) = "Curmudgeon"
-Archetypes(13) = "Defender"
-Archetypes(14) = "Deviant"
-Archetypes(15) = "Director"
-Archetypes(16) = "Fanatic"
-Archetypes(17) = "Gallant"
-Archetypes(18) = "Innovator"
-Archetypes(19) = "Jester"
-Archetypes(20) = "Judge"
-Archetypes(21) = "Loner"
-Archetypes(22) = "Martyr"
-Archetypes(23) = "Monster"
-Archetypes(24) = "Penitent"
-Archetypes(25) = "Rebel"
-Archetypes(26) = "Rogue"
-Archetypes(27) = "Survivor"
-Archetypes(28) = "Traditionalist"
-Archetypes(29) = "Tyrant"
-Archetypes(30) = "Visionary"
+Const ARCHETYPE_ARCHITECT = 1
+Const ARCHETYPE_AUTOCRAT = 2
+Const ARCHETYPE_BARBARIAN = 3
+Const ARCHETYPE_BON_VIVANT = 4
+Const ARCHETYPE_BRAVO = 5
+Const ARCHETYPE_CAREGIVER = 6
+Const ARCHETYPE_CARETAKER = 7
+Const ARCHETYPE_CELEBRANT = 8
+Const ARCHETYPE_CHILD = 9
+Const ARCHETYPE_CONFORMIST = 10
+Const ARCHETYPE_CONNIVER = 11
+Const ARCHETYPE_CURMUDGEON = 12
+Const ARCHETYPE_DEFENDER = 13
+Const ARCHETYPE_DEVIANT = 14
+Const ARCHETYPE_DIRECTOR = 15
+Const ARCHETYPE_FANATIC = 16
+Const ARCHETYPE_GALLANT = 17
+Const ARCHETYPE_INNOVATOR = 18
+Const ARCHETYPE_JESTER = 19
+Const ARCHETYPE_JUDGE = 20
+Const ARCHETYPE_LONER = 21
+Const ARCHETYPE_MARTYR = 22
+Const ARCHETYPE_MONSTER = 23
+Const ARCHETYPE_PENITENT = 24
+Const ARCHETYPE_REBEL = 25
+Const ARCHETYPE_ROGUE = 26
+Const ARCHETYPE_SURVIVOR = 27
+Const ARCHETYPE_TRADITIONALIST = 28
+Const ARCHETYPE_TYRANT = 29
+Const ARCHETYPE_VISIONARY = 30
+Const ARCHETYPES_COUNT = 30
+Dim Shared Archetypes(1 To ARCHETYPES_COUNT) As String
 
-Const Disciplines_Count = 24
-Dim Shared Disciplines(1 To Disciplines_Count) As String
-Disciplines(1) = "Animalism"
-Disciplines(2) = "Auspex"
-Disciplines(3) = "Bardo"
-Disciplines(4) = "Celerity"
-Disciplines(5) = "Chimestry"
-Disciplines(6) = "Dementation"
-Disciplines(7) = "Dominate"
-Disciplines(8) = "Fortitude"
-Disciplines(9) = "Melpominee"
-Disciplines(10) = "Mortis"
-Disciplines(11) = "Mytherceria"
-Disciplines(12) = "Necromancy"
-Disciplines(13) = "Obeah"
-Disciplines(14) = "Obfuscate"
-Disciplines(15) = "Obtenebration"
-Disciplines(16) = "Potence"
-Disciplines(17) = "Presence"
-Disciplines(18) = "Protean"
-Disciplines(19) = "Quietus"
-Disciplines(20) = "Serpentis"
-Disciplines(21) = "Spiritus"
-Disciplines(22) = "Thanantosis"
-Disciplines(23) = "Thaumaturgy"
-Disciplines(24) = "Vicissitude"
+Const DISCIPLINE_ANIMALISM = 1
+Const DISCIPLINE_AUSPEX = 2
+Const DISCIPLINE_BARDO = 3
+Const DISCIPLINE_CELERITY = 4
+Const DISCIPLINE_CHIMESTRY = 5
+Const DISCIPLINE_DEMENTATION = 6
+Const DISCIPLINE_DOMINATE = 7
+Const DISCIPLINE_FORTITUDE = 8
+Const DISCIPLINE_MELPOMINEE = 9
+Const DISCIPLINE_MORTIS = 10
+Const DISCIPLINE_MYTHERCERIA = 11
+Const DISCIPLINE_NECROMANCY = 12
+Const DISCIPLINE_OBEAH = 13
+Const DISCIPLINE_OBFUSCATE = 14
+Const DISCIPLINE_OBTENEBRATION = 15
+Const DISCIPLINE_POTENCE = 16
+Const DISCIPLINE_PRESENCE = 17
+Const DISCIPLINE_PROTEAN = 18
+Const DISCIPLINE_QUIETUS = 19
+Const DISCIPLINE_SERPENTIS = 20
+Const DISCIPLINE_SPIRITUS = 21
+Const DISCIPLINE_THANANTOSIS = 22
+Const DISCIPLINE_THAUMATURGY = 23
+Const DISCIPLINE_VICISSITUDE = 24
+Const DISCIPLINES_COUNT = 24
+Dim Shared Disciplines(1 To DISCIPLINES_COUNT) As String
 
+' These should probably be renamed like PHYSICAL_ATTRIBUTE_STRENGTH instead.
 Const ATTRIBUTE_STRENGTH = 1
 Const ATTRIBUTE_DEXTERITY = 2
 Const ATTRIBUTE_STAMINA = 3
-Const ATTRIBUTE_CHARISMA = 1
-Const ATTRIBUTE_MANIPULATION = 2
-Const ATTRIBUTE_APPEARANCE = 3
-Const ATTRIBUTE_INTELLIGENCE = 1
-Const ATTRIBUTE_PERCEPTION = 2
-Const ATTRIBUTE_WITS = 3
-Const ATTRIBUTE_GROUP_PHYSICAL = 1
-Const ATTRIBUTE_GROUP_SOCIAL = 2
-Const ATTRIBUTE_GROUP_MENTAL = 3
-
 Const PHYSICAL_ATTRIBUTES_COUNT = 3
 Dim Shared PhysicalAttributes(1 To PHYSICAL_ATTRIBUTES_COUNT) As String
 Dim Shared PhysicalAttributeAbbreviations(1 To PHYSICAL_ATTRIBUTES_COUNT) As String
-PhysicalAttributes(ATTRIBUTE_STRENGTH) = "Strength"
-PhysicalAttributeAbbreviations(ATTRIBUTE_STRENGTH) = "Str."
-PhysicalAttributes(ATTRIBUTE_DEXTERITY) = "Dexterity"
-PhysicalAttributeAbbreviations(ATTRIBUTE_DEXTERITY) = "Dex."
-PhysicalAttributes(ATTRIBUTE_STAMINA) = "Stamina"
-PhysicalAttributeAbbreviations(ATTRIBUTE_STAMINA) = "Sta."
 
+Const ATTRIBUTE_CHARISMA = 1
+Const ATTRIBUTE_MANIPULATION = 2
+Const ATTRIBUTE_APPEARANCE = 3
 Const SOCIAL_ATTRIBUTES_COUNT = 3
 Dim Shared SocialAttributes(1 To SOCIAL_ATTRIBUTES_COUNT) As String
 Dim Shared SocialAttributeAbbreviations(1 To SOCIAL_ATTRIBUTES_COUNT) As String
-SocialAttributes(ATTRIBUTE_CHARISMA) = "Charisma"
-SocialAttributeAbbreviations(ATTRIBUTE_CHARISMA) = "Cha."
-SocialAttributes(ATTRIBUTE_MANIPULATION) = "Manipulation"
-SocialAttributeAbbreviations(ATTRIBUTE_MANIPULATION) = "Man."
-SocialAttributes(ATTRIBUTE_APPEARANCE) = "Appearance"
-SocialAttributeAbbreviations(ATTRIBUTE_APPEARANCE) = "App."
 
+Const ATTRIBUTE_INTELLIGENCE = 1
+Const ATTRIBUTE_PERCEPTION = 2
+Const ATTRIBUTE_WITS = 3
 Const MENTAL_ATTRIBUTES_COUNT = 3
 Dim Shared MentalAttributes(1 To MENTAL_ATTRIBUTES_COUNT) As String
 Dim Shared MentalAttributeAbbreviations(1 To MENTAL_ATTRIBUTES_COUNT) As String
-MentalAttributes(ATTRIBUTE_INTELLIGENCE) = "Intelligence"
-MentalAttributeAbbreviations(ATTRIBUTE_INTELLIGENCE) = "Int."
-MentalAttributes(ATTRIBUTE_PERCEPTION) = "Perception"
-MentalAttributeAbbreviations(ATTRIBUTE_PERCEPTION) = "Per."
-MentalAttributes(ATTRIBUTE_WITS) = "Wits"
-MentalAttributeAbbreviations(ATTRIBUTE_WITS) = "Wits"
 
-Const AttributeGroups_Count = 3
-Dim Shared AttributeGroups(1 To AttributeGroups_Count) As String
-AttributeGroups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
-AttributeGroups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
-AttributeGroups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
+Const ATTRIBUTE_GROUP_PHYSICAL = 1
+Const ATTRIBUTE_GROUP_SOCIAL = 2
+Const ATTRIBUTE_GROUP_MENTAL = 3
+Const ATTRIBUTE_GROUPS_COUNT = 3
+Dim Shared AttributeGroups(1 To ATTRIBUTE_GROUPS_COUNT) As String
 
-Const Abilities_Count = 3
-Dim Shared Abilities(1 To Abilities_Count) As String
-Abilities(1) = "Talents"
-Abilities(2) = "Skills"
-Abilities(3) = "Knowledges"
+Const ABILITY_TALENTS = 1
+Const ABILITY_SKILLS = 2
+Const ABILITY_KNOWLEDGES = 3
+Const ABILITIES_COUNT = 3
+Dim Shared Abilities(1 To ABILITIES_COUNT) As String
 
-Const Talents_Count = 10
-Dim Shared Talents(1 To Talents_Count) As String
-Talents(1) = "Acting"
-Talents(2) = "Alertness"
-Talents(3) = "Athletics"
-Talents(4) = "Brawl"
-Talents(5) = "Dodge"
-Talents(6) = "Empathy"
-Talents(7) = "Intimidation"
-Talents(8) = "Leadership"
-Talents(9) = "Streetwise"
-Talents(10) = "Subterfuge"
+Const TALENT_ACTING = 1
+Const TALENT_ALERTNESS = 2
+Const TALENT_ATHLETICS = 3
+Const TALENT_BRAWL = 4
+Const TALENT_DODGE = 5
+Const TALENT_EMPATHY = 6
+Const TALENT_INTIMIDATION = 7
+Const TALENT_LEADERSHIP = 8
+Const TALENT_STREETWISE = 9
+Const TALENT_SUBTERFUGE = 10
+Const TALENTS_COUNT = 10
+Dim Shared Talents(1 To TALENTS_COUNT) As String
 
-Const Skills_Count = 10
-Dim Shared Skills(1 To Skills_Count) As String
-Skills(1) = "Animal Ken"
-Skills(2) = "Drive"
-Skills(3) = "Etiquette"
-Skills(4) = "Firearms"
-Skills(5) = "Melee"
-Skills(6) = "Music"
-Skills(7) = "Repair"
-Skills(8) = "Security"
-Skills(9) = "Stealth"
-Skills(10) = "Survival"
+Const SKILL_ANIMAL_KEN = 1
+Const SKILL_DRIVE = 2
+Const SKILL_ETIQUETTE = 3
+Const SKILL_FIREARMS = 4
+Const SKILL_MELEE = 5
+Const SKILL_MUSIC = 6
+Const SKILL_REPAIR = 7
+Const SKILL_SECURITY = 8
+Const SKILL_STEALTH = 9
+Const SKILL_SURVIVAL = 10
+Const SKILLS_COUNT = 10
+Dim Shared Skills(1 To SKILLS_COUNT) As String
 
-Const Knowledges_Count = 10
-Dim Shared Knowledges(1 To Knowledges_Count) As String
-Knowledges(1) = "Bureaucracy"
-Knowledges(2) = "Computer"
-Knowledges(3) = "Finance"
-Knowledges(4) = "Investigation"
-Knowledges(5) = "Law"
-Knowledges(6) = "Linguistics"
-Knowledges(7) = "Medicine"
-Knowledges(8) = "Occult"
-Knowledges(9) = "Politics"
-Knowledges(10) = "Science"
+Const KNOWLEDGE_BUREAUCRACY = 1
+Const KNOWLEDGE_COMPUTER = 2
+Const KNOWLEDGE_FINANCE = 3
+Const KNOWLEDGE_INVESTIGATION = 4
+Const KNOWLEDGE_LAW = 5
+Const KNOWLEDGE_LINGUISTICS = 6
+Const KNOWLEDGE_MEDICINE = 7
+Const KNOWLEDGE_OCCULT = 8
+Const KNOWLEDGE_POLITICS = 9
+Const KNOWLEDGE_SCIENCE = 10
+Const KNOWLEDGES_COUNT = 10
+Dim Shared Knowledges(1 To KNOWLEDGES_COUNT) As String
 
-Const Backgrounds_Count = 10
-Dim Shared Backgrounds(1 To Backgrounds_Count) As String
-Backgrounds(1) = "Allies"
-Backgrounds(2) = "Contacts"
-Backgrounds(3) = "Fame"
-Backgrounds(4) = "Generation"
-Backgrounds(5) = "Herd"
-Backgrounds(6) = "Influence"
-Backgrounds(7) = "Mentor"
-Backgrounds(8) = "Resources"
-Backgrounds(9) = "Retainers"
-Backgrounds(10) = "Status"
+Const BACKGROUND_ALLIES = 1
+Const BACKGROUND_CONTACTS = 2
+Const BACKGROUND_FAME = 3
+Const BACKGROUND_GENERATION = 4
+Const BACKGROUND_HERD = 5
+Const BACKGROUND_INFLUENCE = 6
+Const BACKGROUND_MENTOR = 7
+Const BACKGROUND_RESOURCES = 8
+Const BACKGROUND_RETAINERS = 9
+Const BACKGROUND_STATUS = 10
+Const BACKGROUNDS_COUNT = 10
+Dim Shared Backgrounds(1 To BACKGROUNDS_COUNT) As String
 
 Type CharacterType
     name As String
@@ -214,13 +193,17 @@ Type CharacterType
     haven As String
     concept As String
     age As String
-    sex As Integer
+    gender As Integer
     clan As Integer
     nature As Integer
     demeanor As Integer
     conscience As Integer
     selfControl As Integer
     courage As Integer
+    generation As Integer
+    roadName As String
+    roadValue As Integer
+    willpower As Integer
     ' Special but don't know why
     conviction As Integer
     instinct As Integer
@@ -305,62 +288,263 @@ Type CharacterType
     background_status As Integer
 End Type
 
-' Splash screen
-Cls
-Print "  Welcome to Tom's Storyteller's Best Friend.  This is a program  that is meant"
-Print "to aid Storytellers in running Vampire: the Masquerade Chronicles and Vampire:"
-Print "the Dark Ages Chronicles.  It is distributed as freeware until I think it is"
-Print "worth something.This program could aid in running campaigns for other"
-Print "role-playing games especially those from White Wolf(tm).  If you would like"
-Print "anything added please e-mail me at locutus2001@hotmail.com."
-Print "     Press any key to continue"
-While InKey$ = ""
-Wend
+Type MenuStyle
+    idWidth As Integer
+    labelWidth As Integer
+    valueWidth As Integer
+    screenWidth As Integer
+    randomItemName As String
+    randomItemId As Integer
+    idLabelSeparator As String
+    labelValueSeparator As String
+    menuItemSpacer As String
+    showRandom As Integer
+End Type
+Type MenuItem
+    label As String
+    id As Integer
+    value As Integer
+    isVisible As Integer
+End Type
 
-' Main menu
-Let choice = 0
-Do
+
+Call InitializeMemory
+
+' Run "tests" at startup. Uncomment the end instruction to see the output and not run the rest of the program.
+Call Test
+'End
+
+Call SplashScreen
+Call MainMenu
+
+' This initializes shared variables.
+Sub InitializeMemory
+    ' For all of these lookup tables they should look something like this to know the mapping is correct
+    ' Names(NAME_ITEM1) = "Item1"
+    ' The index constants should start at 1 and go up to NAMES_COUNT without leaving any holes.
+
+    ' Clans
+    Clans(CLAN_ANARCH) = "Anarch"
+    Clans(CLAN_ASSAMITE) = "Assamite"
+    Clans(CLAN_BAALI) = "Baali"
+    Clans(CLAN_BRUJAH) = "Brujah"
+    Clans(CLAN_CAITIFF) = "Caitiff"
+    Clans(CLAN_CAPPADOCIAN) = "Cappadocian"
+    Clans(CLAN_GANGREL) = "Gangrel"
+    Clans(CLAN_GIOVANNI) = "Giovanni"
+    Clans(CLAN_INCONNU) = "Inconnu"
+    Clans(CLAN_LASOMBRA) = "Lasombra"
+    Clans(CLAN_MALKAVIAN) = "Malkavian"
+    Clans(CLAN_NOSFERATU) = "Nosferatu"
+    Clans(CLAN_RAVANOS) = "Ravanos"
+    Clans(CLAN_SETTITE) = "Settite"
+    Clans(CLAN_TREMERE) = "Tremere"
+    Clans(CLAN_TOREADOR) = "Toreador"
+    Clans(CLAN_TZISMICE) = "Tzismice"
+    Clans(CLAN_VENTRUE) = "Ventrue"
+
+    ' Archetypes
+    Archetypes(ARCHETYPE_ARCHITECT) = "Architect"
+    Archetypes(ARCHETYPE_AUTOCRAT) = "Autocrat"
+    Archetypes(ARCHETYPE_BARBARIAN) = "Barbarian"
+    Archetypes(ARCHETYPE_BON_VIVANT) = "Bon Vivant"
+    Archetypes(ARCHETYPE_BRAVO) = "Bravo"
+    Archetypes(ARCHETYPE_CAREGIVER) = "Caregiver"
+    Archetypes(ARCHETYPE_CARETAKER) = "Caretaker"
+    Archetypes(ARCHETYPE_CELEBRANT) = "Celebrant"
+    Archetypes(ARCHETYPE_CHILD) = "Child"
+    Archetypes(ARCHETYPE_CONFORMIST) = "Conformist"
+    Archetypes(ARCHETYPE_CONNIVER) = "Conniver"
+    Archetypes(ARCHETYPE_CURMUDGEON) = "Curmudgeon"
+    Archetypes(ARCHETYPE_DEFENDER) = "Defender"
+    Archetypes(ARCHETYPE_DEVIANT) = "Deviant"
+    Archetypes(ARCHETYPE_DIRECTOR) = "Director"
+    Archetypes(ARCHETYPE_FANATIC) = "Fanatic"
+    Archetypes(ARCHETYPE_GALLANT) = "Gallant"
+    Archetypes(ARCHETYPE_INNOVATOR) = "Innovator"
+    Archetypes(ARCHETYPE_JESTER) = "Jester"
+    Archetypes(ARCHETYPE_JUDGE) = "Judge"
+    Archetypes(ARCHETYPE_LONER) = "Loner"
+    Archetypes(ARCHETYPE_MARTYR) = "Martyr"
+    Archetypes(ARCHETYPE_MONSTER) = "Monster"
+    Archetypes(ARCHETYPE_PENITENT) = "Penitent"
+    Archetypes(ARCHETYPE_REBEL) = "Rebel"
+    Archetypes(ARCHETYPE_ROGUE) = "Rogue"
+    Archetypes(ARCHETYPE_SURVIVOR) = "Survivor"
+    Archetypes(ARCHETYPE_TRADITIONALIST) = "Traditionalist"
+    Archetypes(ARCHETYPE_TYRANT) = "Tyrant"
+    Archetypes(ARCHETYPE_VISIONARY) = "Visionary"
+
+    ' Disciplines
+    Disciplines(DISCIPLINE_ANIMALISM) = "Animalism"
+    Disciplines(DISCIPLINE_AUSPEX) = "Auspex"
+    Disciplines(DISCIPLINE_BARDO) = "Bardo"
+    Disciplines(DISCIPLINE_CELERITY) = "Celerity"
+    Disciplines(DISCIPLINE_CHIMESTRY) = "Chimestry"
+    Disciplines(DISCIPLINE_DEMENTATION) = "Dementation"
+    Disciplines(DISCIPLINE_DOMINATE) = "Dominate"
+    Disciplines(DISCIPLINE_FORTITUDE) = "Fortitude"
+    Disciplines(DISCIPLINE_MELPOMINEE) = "Melpominee"
+    Disciplines(DISCIPLINE_MORTIS) = "Mortis"
+    Disciplines(DISCIPLINE_MYTHERCERIA) = "Mytherceria"
+    Disciplines(DISCIPLINE_NECROMANCY) = "Necromancy"
+    Disciplines(DISCIPLINE_OBEAH) = "Obeah"
+    Disciplines(DISCIPLINE_OBFUSCATE) = "Obfuscate"
+    Disciplines(DISCIPLINE_OBTENEBRATION) = "Obtenebration"
+    Disciplines(DISCIPLINE_POTENCE) = "Potence"
+    Disciplines(DISCIPLINE_PRESENCE) = "Presence"
+    Disciplines(DISCIPLINE_PROTEAN) = "Protean"
+    Disciplines(DISCIPLINE_QUIETUS) = "Quietus"
+    Disciplines(DISCIPLINE_SERPENTIS) = "Serpentis"
+    Disciplines(DISCIPLINE_SPIRITUS) = "Spiritus"
+    Disciplines(DISCIPLINE_THANANTOSIS) = "Thanantosis"
+    Disciplines(DISCIPLINE_THAUMATURGY) = "Thaumaturgy"
+    Disciplines(DISCIPLINE_VICISSITUDE) = "Vicissitude"
+
+    ' Physical Attributes
+    PhysicalAttributes(ATTRIBUTE_STRENGTH) = "Strength"
+    PhysicalAttributeAbbreviations(ATTRIBUTE_STRENGTH) = "Str."
+    PhysicalAttributes(ATTRIBUTE_DEXTERITY) = "Dexterity"
+    PhysicalAttributeAbbreviations(ATTRIBUTE_DEXTERITY) = "Dex."
+    PhysicalAttributes(ATTRIBUTE_STAMINA) = "Stamina"
+    PhysicalAttributeAbbreviations(ATTRIBUTE_STAMINA) = "Sta."
+
+    ' Social Attributes
+    SocialAttributes(ATTRIBUTE_CHARISMA) = "Charisma"
+    SocialAttributeAbbreviations(ATTRIBUTE_CHARISMA) = "Cha."
+    SocialAttributes(ATTRIBUTE_MANIPULATION) = "Manipulation"
+    SocialAttributeAbbreviations(ATTRIBUTE_MANIPULATION) = "Man."
+    SocialAttributes(ATTRIBUTE_APPEARANCE) = "Appearance"
+    SocialAttributeAbbreviations(ATTRIBUTE_APPEARANCE) = "App."
+
+    ' Mental Attributes
+    MentalAttributes(ATTRIBUTE_INTELLIGENCE) = "Intelligence"
+    MentalAttributeAbbreviations(ATTRIBUTE_INTELLIGENCE) = "Int."
+    MentalAttributes(ATTRIBUTE_PERCEPTION) = "Perception"
+    MentalAttributeAbbreviations(ATTRIBUTE_PERCEPTION) = "Per."
+    MentalAttributes(ATTRIBUTE_WITS) = "Wits"
+    MentalAttributeAbbreviations(ATTRIBUTE_WITS) = "Wits"
+
+    ' Attribute Groups
+    AttributeGroups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
+    AttributeGroups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
+    AttributeGroups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
+
+    ' Abilities
+    Abilities(ABILITY_TALENTS) = "Talents"
+    Abilities(ABILITY_SKILLS) = "Skills"
+    Abilities(ABILITY_KNOWLEDGES) = "Knowledges"
+
+    ' Talents
+    Talents(TALENT_ACTING) = "Acting"
+    Talents(TALENT_ALERTNESS) = "Alertness"
+    Talents(TALENT_ATHLETICS) = "Athletics"
+    Talents(TALENT_BRAWL) = "Brawl"
+    Talents(TALENT_DODGE) = "Dodge"
+    Talents(TALENT_EMPATHY) = "Empathy"
+    Talents(TALENT_INTIMIDATION) = "Intimidation"
+    Talents(TALENT_LEADERSHIP) = "Leadership"
+    Talents(TALENT_STREETWISE) = "Streetwise"
+    Talents(TALENT_SUBTERFUGE) = "Subterfuge"
+
+    ' Skills
+    Skills(SKILL_ANIMAL_KEN) = "Animal Ken"
+    Skills(SKILL_DRIVE) = "Drive"
+    Skills(SKILL_ETIQUETTE) = "Etiquette"
+    Skills(SKILL_FIREARMS) = "Firearms"
+    Skills(SKILL_MELEE) = "Melee"
+    Skills(SKILL_MUSIC) = "Music"
+    Skills(SKILL_REPAIR) = "Repair"
+    Skills(SKILL_SECURITY) = "Security"
+    Skills(SKILL_STEALTH) = "Stealth"
+    Skills(SKILL_SURVIVAL) = "Survival"
+
+    ' Knowwledges
+    Knowledges(KNOWLEDGE_BUREAUCRACY) = "Bureaucracy"
+    Knowledges(KNOWLEDGE_COMPUTER) = "Computer"
+    Knowledges(KNOWLEDGE_FINANCE) = "Finance"
+    Knowledges(KNOWLEDGE_INVESTIGATION) = "Investigation"
+    Knowledges(KNOWLEDGE_LAW) = "Law"
+    Knowledges(KNOWLEDGE_LINGUISTICS) = "Linguistics"
+    Knowledges(KNOWLEDGE_MEDICINE) = "Medicine"
+    Knowledges(KNOWLEDGE_OCCULT) = "Occult"
+    Knowledges(KNOWLEDGE_POLITICS) = "Politics"
+    Knowledges(KNOWLEDGE_SCIENCE) = "Science"
+
+    ' Backgrounds
+    Backgrounds(BACKGROUND_ALLIES) = "Allies"
+    Backgrounds(BACKGROUND_CONTACTS) = "Contacts"
+    Backgrounds(BACKGROUND_FAME) = "Fame"
+    Backgrounds(BACKGROUND_GENERATION) = "Generation"
+    Backgrounds(BACKGROUND_HERD) = "Herd"
+    Backgrounds(BACKGROUND_INFLUENCE) = "Influence"
+    Backgrounds(BACKGROUND_MENTOR) = "Mentor"
+    Backgrounds(BACKGROUND_RESOURCES) = "Resources"
+    Backgrounds(BACKGROUND_RETAINERS) = "Retainers"
+    Backgrounds(BACKGROUND_STATUS) = "Status"
+End Sub
+
+Sub SplashScreen
+    ' Splash screen
     Cls
-    Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
-    Print "บ What are you going to do?                                                    บ"
-    Print "บ        1 = Character Generator                                               บ"
-    Print "บ        2 = Character Generator for Dummies                                   บ"
-    Print "บ        3 = Combat Computer                                                   บ"
-    Print "บ        4 = Dice Roller                                                       บ"
-    Print "บ        5 = Random Character Generator                                        บ"
-    Print "บ        6 =                                                                   บ"
-    Print "บ        7 = Vehicle Generator                                                 บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ        0 = End                                                               บ"
-    Print "บ                                                                              บ"
-    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
-    choice = GetChoice(0, 7)
-    Select Case choice
-        Case 1
-            CharacterGenerator
-        Case 2
-            CharacterGeneratorForDummies
-        Case 3
-            CombatComputer
-        Case 4
-            DiceRoller
-        Case 5
-            RandomCharacterGenerator
-        Case 7
-            VehicleGenerator
-    End Select
-Loop Until choice = 0
+    Print "  Welcome to Tom's Storyteller's Best Friend.  This is a program  that is meant"
+    Print "to aid Storytellers in running Vampire: the Masquerade Chronicles and Vampire:"
+    Print "the Dark Ages Chronicles.  It is distributed as freeware until I think it is"
+    Print "worth something.This program could aid in running campaigns for other"
+    Print "role-playing games especially those from White Wolf(tm).  If you would like"
+    Print "anything added please e-mail me at locutus2001@hotmail.com."
+    Print "     Press any key to continue"
+    While InKey$ = ""
+    Wend
+End Sub
 
+Sub MainMenu
+    ' Main menu
+    choice = 0
+    Do
+        Cls
+        Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
+        Print "บ What are you going to do?                                                    บ"
+        Print "บ        1 = Character Generator                                               บ"
+        Print "บ        2 = Character Generator for Dummies                                   บ"
+        Print "บ        3 = Combat Computer                                                   บ"
+        Print "บ        4 = Dice Roller                                                       บ"
+        Print "บ        5 = Random Character Generator                                        บ"
+        Print "บ        6 =                                                                   บ"
+        Print "บ        7 = Vehicle Generator                                                 บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ                                                                              บ"
+        Print "บ        0 = End                                                               บ"
+        Print "บ                                                                              บ"
+        Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
+        choice = GetChoice(0, 7)
+        Select Case choice
+            Case 1
+                CharacterGenerator
+            Case 2
+                CharacterGeneratorForDummies
+            Case 3
+                CombatComputer
+            Case 4
+                DiceRoller
+            Case 5
+                RandomCharacterGenerator
+            Case 7
+                VehicleGenerator
+        End Select
+    Loop Until choice = 0
+End Sub
+
+' This sub is not called. It is here so it can be copied whenever I need to make a new bordered screen.
 Sub BlankScreen
     Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
     Print "บ                                                                              บ"
@@ -399,40 +583,71 @@ Function GetChoice (min As Integer, max As Integer)
     GetChoice = choice
 End Function
 
+Function GetMenuChoice (items() As MenuItem, style As MenuStyle, count As Integer)
+    ' pull showrandom from style
+    ' only allow random id or an id from a visible menuitem
+    choice = -1
+    acceptChoice = FALSE
+    Do
+        Input choice
+        If style.showRandom And choice = style.randomItemId Then acceptChoice = TRUE
+        For i = 1 To count
+            If choice = items(i).id And items(i).isVisible Then
+                acceptChoice = TRUE
+                Exit For
+            End If
+        Next
+    Loop Until acceptChoice
+    GetMenuChoice = choice
+End Function
+
 Function GetRandomInt (min As Integer, max As Integer)
     GetRandomInt = Int(Rnd * (max - min + 1)) + min
 End Function
 
-Sub PrintMenu (items() As String, num_items As Integer)
-    ' TODO: allow opting out of the random item.
-    ' TODO: allow printing inside of a box บ 1 = item บ.
-    index_length = Len(itos$(num_items))
-    max_item_length = Len("Random")
-    For i = 1 To num_items
-        max_item_length = MaxI(max_item_length, Len(items(i)))
+' style is not used yet, but is here in case we want to in the future.
+' It's easier to ignore it here than to add it to each call later.
+' It's also available any place we would call this from because we're calling pm from there.
+Function GetRandomMenuItemId (items() As MenuItem, style As MenuStyle, count As Integer)
+    numVisibleItems = 0
+    Dim visibleItems(count) As Integer
+    For i = 1 To count
+        If items(i).isVisible Then
+            visibleItems(numVisibleItems) = i
+            numVisibleItems = numVisibleItems + 1
+        End If
     Next
+    i = GetRandomInt(0, numVisibleItems - 1)
+    GetRandomMenuItemId = visibleItems(i)
+End Function
 
-    For i = 1 To num_items
-        Print MakeFitR$(itos$(i), index_length, " ") + " = " + MakeFitL$(items(i), max_item_length, " ");
+Sub PrintMenu (items() As String, count As Integer)
+    ' TODO: allow printing inside of a box บ 1 = item บ.
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    Dim menuItems(1 To count) As MenuItem
+    For i = 1 To count
+        Dim mi As MenuItem
+        Call NewMenuItem(mi, items(i), i)
+        menuItems(i) = mi
     Next
-    Print MakeFitR$("0", index_length, " ") + " = " + MakeFitL$("Random", max_item_length, " ")
+    Call AdjustMenuStyle(ms, menuItems(), count)
+    ms.valueWidth = 0
+    Call pm(menuItems(), count, ms)
 End Sub
 
-Sub PrintMenuWithValues (items() As String, values() As Integer, num_items As Integer)
+Sub PrintMenuWithValues (items() As String, values() As Integer, count As Integer)
     ' TODO: @see PrintMenu
-    ' TODO: Make a better separation between index, item, value triples
-    max_index_length = Len(itos$(num_items))
-    max_item_length = Len("Random")
-    max_value_length = 0
-    For i = 1 To num_items
-        max_item_length = MaxI(max_item_length, Len(items(i)))
-        max_value_length = MaxI(max_value_length, Len(itos$(values(i))))
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    Dim menuItems(1 To count) As MenuItem
+    For i = 1 To count
+        Dim mi As MenuItem
+        Call NewMenuItemWithValue(mi, items(i), i, values(i))
+        menuItems(i) = mi
     Next
-
-    For i = 1 To num_items
-        Print MakeFitR$(itos$(i), max_index_length, " ") + " = " + MakeFitL$(items(i), max_item_length, " ") + MakeFitR$(itos$(values(i)), max_value_length, " ");
-    Next
-    Print MakeFitR$("0", index_length, " ") + " = " + MakeFitL$("Random", max_item_length, " ")
+    Call AdjustMenuStyle(ms, menuItems(), count)
+    Call pm(menuItems(), count, ms)
 End Sub
 
 Function MakeFitL$ (text As String, length As Integer, pad As String)
@@ -440,7 +655,6 @@ Function MakeFitL$ (text As String, length As Integer, pad As String)
 End Function
 
 Function MakeFitC$ (text As String, length As Integer, pad As String)
-    'Chop text if necessary
     TextLength = Len(text)
     LeftPadLength = MaxI(0, length - TextLength) \ 2
     RightPadLength = MaxI(0, length - TextLength - LeftPadLength)
@@ -465,323 +679,323 @@ End Function
 
 Sub SetDiscipline (ch As CharacterType, index As Integer, value As Integer)
     Select Case index
-        Case 1
+        Case DISCIPLINE_ANIMALISM
             ch.discipline_animalism = value
-        Case 2
+        Case DISCIPLINE_AUSPEX
             ch.discipline_auspex = value
-        Case 3
+        Case DISCIPLINE_BARDO
             ch.discipline_bardo = value
-        Case 4
+        Case DISCIPLINE_CELERITY
             ch.discipline_celerity = value
-        Case 5
+        Case DISCIPLINE_CHIMESTRY
             ch.discipline_chimestry = value
-        Case 6
+        Case DISCIPLINE_DEMENTATION
             ch.discipline_dementation = value
-        Case 7
+        Case DISCIPLINE_DOMINATE
             ch.discipline_dominate = value
-        Case 8
+        Case DISCIPLINE_FORTITUDE
             ch.discipline_fortitude = value
-        Case 9
+        Case DISCIPLINE_MELPOMINEE
             ch.discipline_melpominee = value
-        Case 10
+        Case DISCIPLINE_MORTIS
             ch.discipline_mortis = value
-        Case 11
+        Case DISCIPLINE_MYTHERCERIA
             ch.discipline_mytherceria = value
-        Case 12
+        Case DISCIPLINE_NECROMANCY
             ch.discipline_necromancy = value
-        Case 13
+        Case DISCIPLINE_OBEAH
             ch.discipline_obeah = value
-        Case 14
+        Case DISCIPLINE_OBFUSCATE
             ch.discipline_obfuscate = value
-        Case 15
+        Case DISCIPLINE_OBTENEBRATION
             ch.discipline_obtenebration = value
-        Case 16
+        Case DISCIPLINE_POTENCE
             ch.discipline_potence = value
-        Case 17
+        Case DISCIPLINE_PRESENCE
             ch.discipline_presence = value
-        Case 18
+        Case DISCIPLINE_PROTEAN
             ch.discipline_protean = value
-        Case 19
+        Case DISCIPLINE_QUIETUS
             ch.discipline_quietus = value
-        Case 20
+        Case DISCIPLINE_SERPENTIS
             ch.discipline_serpentis = value
-        Case 21
+        Case DISCIPLINE_SPIRITUS
             ch.discipline_spiritus = value
-        Case 22
+        Case DISCIPLINE_THANANTOSIS
             ch.discipline_thanantosis = value
-        Case 23
+        Case DISCIPLINE_THAUMATURGY
             ch.discipline_thaumaturgy = value
-        Case 24
+        Case DISCIPLINE_VICISSITUDE
             ch.discipline_vicissitude = value
     End Select
 End Sub
 
 Function GetDiscipline (ch As CharacterType, index As Integer)
     Select Case index
-        Case 1
+        Case DISCIPLINE_ANIMALISM
             GetDiscipline = ch.discipline_animalism
-        Case 2
+        Case DISCIPLINE_AUSPEX
             GetDiscipline = ch.discipline_auspex
-        Case 3
+        Case discipline_barde
             GetDiscipline = ch.discipline_bardo
-        Case 4
+        Case DISCIPLINE_CELERITY
             GetDiscipline = ch.discipline_celerity
-        Case 5
+        Case DISCIPLINE_CHIMESTRY
             GetDiscipline = ch.discipline_chimestry
-        Case 6
+        Case DISCIPLINE_DEMENTATION
             GetDiscipline = ch.discipline_dementation
-        Case 7
+        Case DISCIPLINE_DOMINATE
             GetDiscipline = ch.discipline_dominate
-        Case 8
+        Case DISCIPLINE_FORTITUDE
             GetDiscipline = ch.discipline_fortitude
-        Case 9
+        Case DISCIPLINE_MELPOMINEE
             GetDiscipline = ch.discipline_melpominee
-        Case 10
+        Case DISCIPLINE_MORTIS
             GetDiscipline = ch.discipline_mortis
-        Case 11
+        Case DISCIPLINE_MYTHERCERIA
             GetDiscipline = ch.discipline_mytherceria
-        Case 12
+        Case DISCIPLINE_NECROMANCY
             GetDiscipline = ch.discipline_necromancy
-        Case 13
+        Case DISCIPLINE_OBEAH
             GetDiscipline = ch.discipline_obeah
-        Case 14
+        Case DISCIPLINE_OBFUSCATE
             GetDiscipline = ch.discipline_obfuscate
-        Case 15
+        Case DISCIPLINE_OBTENEBRATION
             GetDiscipline = ch.discipline_obtenebration
-        Case 16
+        Case DISCIPLINE_POTENCE
             GetDiscipline = ch.discipline_potence
-        Case 17
+        Case DISCIPLINE_PRESENCE
             GetDiscipline = ch.discipline_presence
-        Case 18
+        Case DISCIPLINE_PROTEAN
             GetDiscipline = ch.discipline_protean
-        Case 19
+        Case DISCIPLINE_QUIETUS
             GetDiscipline = ch.discipline_quietus
-        Case 20
+        Case DISCIPLINE_SERPENTIS
             GetDiscipline = ch.discipline_serpentis
-        Case 21
+        Case DISCIPLINE_SPIRITUS
             GetDiscipline = ch.discipline_spiritus
-        Case 22
+        Case DISCIPLINE_THANANTOSIS
             GetDiscipline = ch.discipline_thanantosis
-        Case 23
+        Case DISCIPLINE_THAUMATURGY
             GetDiscipline = ch.discipline_thaumaturgy
-        Case 24
+        Case DISCIPLINE_VICISSITUDE
             GetDiscipline = ch.discipline_vicissitude
     End Select
 End Function
 
 Sub FillDisciplines (ch As CharacterType, disciplines() As Integer)
-    For index = 1 To Disciplines_Count
+    For index = 1 To DISCIPLINES_COUNT
         disciplines(index) = GetDiscipline(ch, index)
     Next
 End Sub
 
 Sub SetTalent (ch As CharacterType, index As Integer, value As Integer)
     Select Case index
-        Case 1
+        Case TALENT_ACTING
             ch.talent_acting = value
-        Case 2
+        Case TALENT_ALERTNESS
             ch.talent_alertness = value
-        Case 3
+        Case TALENT_ATHLETICS
             ch.talent_athletics = value
-        Case 4
+        Case TALENT_BRAWL
             ch.talent_brawl = value
-        Case 5
+        Case TALENT_DODGE
             ch.talent_dodge = value
-        Case 6
+        Case TALENT_EMPATHY
             ch.talent_empathy = value
-        Case 7
+        Case TALENT_INTIMIDATION
             ch.talent_intimidation = value
-        Case 8
+        Case TALENT_LEADERSHIP
             ch.talent_leadership = value
-        Case 9
+        Case TALENT_STREETWISE
             ch.talent_streetwise = value
-        Case 10
+        Case TALENT_SUBTERFUGE
             ch.talent_subterfuge = value
     End Select
 End Sub
 
 Function GetTalent (ch As CharacterType, index As Integer)
     Select Case index
-        Case 1
+        Case TALENT_ACTING
             GetTalent = ch.talent_acting
-        Case 2
+        Case TALENT_ALERTNESS
             GetTalent = ch.talent_alertness
-        Case 3
+        Case TALENT_ATHLETICS
             GetTalent = ch.talent_athletics
-        Case 4
+        Case TALENT_BRAWL
             GetTalent = ch.talent_brawl
-        Case 5
+        Case TALENT_DODGE
             GetTalent = ch.talent_dodge
-        Case 6
+        Case TALENT_EMPATHY
             GetTalent = ch.talent_empathy
-        Case 7
+        Case TALENT_INTIMIDATION
             GetTalent = ch.talent_intimidation
-        Case 8
+        Case TALENT_LEADERSHIP
             GetTalent = ch.talent_leadership
-        Case 9
+        Case TALENT_STREETWISE
             GetTalent = ch.talent_streetwise
-        Case 10
+        Case TALENT_SUBTERFUGE
             GetTalent = ch.talent_subterfuge
     End Select
 End Function
 
 Sub SetSkill (ch As CharacterType, index As Integer, value As Integer)
     Select Case index
-        Case 1
+        Case SKILL_ANIMAL_KEN
             ch.skill_animalKen = value
-        Case 2
+        Case SKILL_DRIVE
             ch.skill_drive = value
-        Case 3
+        Case SKILL_ETIQUETTE
             ch.skill_etiquette = value
-        Case 4
+        Case SKILL_FIREARMS
             ch.skill_firearms = value
-        Case 5
+        Case SKILL_MELEE
             ch.skill_melee = value
-        Case 6
+        Case SKILL_MUSIC
             ch.skill_music = value
-        Case 7
+        Case SKILL_REPAIR
             ch.skill_repair = value
-        Case 8
+        Case SKILL_SECURITY
             ch.skill_security = value
-        Case 9
+        Case SKILL_STEALTH
             ch.skill_stealth = value
-        Case 10
+        Case SKILL_SURVIVAL
             ch.skill_survival = value
     End Select
 End Sub
 
 Function GetSkill (ch As CharacterType, index As Integer)
     Select Case index
-        Case 1
+        Case SKILL_ANIMAL_KEN
             GetSkill = ch.skill_animalKen
-        Case 2
+        Case SKILL_DRIVE
             GetSkill = ch.skill_drive
-        Case 3
+        Case SKILL_ETIQUETTE
             GetSkill = ch.skill_etiquette
-        Case 4
+        Case SKILL_FIREARMS
             GetSkill = ch.skill_firearms
-        Case 5
+        Case SKILL_MELEE
             GetSkill = ch.skill_melee
-        Case 6
+        Case SKILL_MUSIC
             GetSkill = ch.skill_music
-        Case 7
+        Case SKILL_REPAIR
             GetSkill = ch.skill_repair
-        Case 8
+        Case SKILL_SECURITY
             GetSkill = ch.skill_security
-        Case 9
+        Case SKILL_STEALTH
             GetSkill = ch.skill_stealth
-        Case 10
+        Case SKILL_SURVIVAL
             GetSkill = ch.skill_survival
     End Select
 End Function
 
 Sub SetKnowledge (ch As CharacterType, index As Integer, value As Integer)
     Select Case index
-        Case 1
+        Case KNOWLEDGE_BUREAUCRACY
             ch.knowledge_bureaucracy = value
-        Case 2
+        Case KNOWLEDGE_COMPUTER
             ch.knowledge_computer = value
-        Case 3
+        Case KNOWLEDGE_FINANCE
             ch.knowledge_finance = value
-        Case 4
+        Case KNOWLEDGE_INVESTIGATION
             ch.knowledge_investigation = value
-        Case 5
+        Case KNOWLEDGE_LAW
             ch.knowledge_law = value
-        Case 6
+        Case KNOWLEDGE_LINGUISTICS
             ch.knowledge_linguistics = value
-        Case 7
+        Case KNOWLEDGE_MEDICINE
             ch.knowledge_medicine = value
-        Case 8
+        Case KNOWLEDGE_OCCULT
             ch.knowledge_occult = value
-        Case 9
+        Case KNOWLEDGE_POLITICS
             ch.knowledge_politics = value
-        Case 10
+        Case KNOWLEDGE_SCIENCE
             ch.knowledge_science = value
     End Select
 End Sub
 
 Function GetKnowledge (ch As CharacterType, index As Integer)
     Select Case index
-        Case 1
+        Case KNOWLEDGE_BUREAUCRACY
             GetKnowledge = ch.knowledge_bureaucracy
-        Case 2
+        Case KNOWLEDGE_COMPUTER
             GetKnowledge = ch.knowledge_computer
-        Case 3
+        Case KNOWLEDGE_FINANCE
             GetKnowledge = ch.knowledge_finance
-        Case 4
+        Case KNOWLEDGE_INVESTIGATION
             GetKnowledge = ch.knowledge_investigation
-        Case 5
+        Case KNOWLEDGE_LAW
             GetKnowledge = ch.knowledge_law
-        Case 6
+        Case KNOWLEDGE_LINGUISTICS
             GetKnowledge = ch.knowledge_linguistics
-        Case 7
+        Case KNOWLEDGE_MEDICINE
             GetKnowledge = ch.knowledge_medicine
-        Case 8
+        Case KNOWLEDGE_OCCULT
             GetKnowledge = ch.knowledge_occult
-        Case 9
+        Case KNOWLEDGE_POLITICS
             GetKnowledge = ch.knowledge_politics
-        Case 10
+        Case KNOWLEDGE_SCIENCE
             GetKnowledge = ch.knowledge_science
     End Select
 End Function
 
 Sub SetBackground (ch As CharacterType, index As Integer, value As Integer)
     Select Case index
-        Case 1
+        Case BACKGROUND_ALLIES
             ch.background_allies = value
-        Case 2
+        Case BACKGROUND_CONTACTS
             ch.background_contacts = value
-        Case 3
+        Case BACKGROUND_FAME
             ch.background_fame = value
-        Case 4
+        Case BACKGROUND_GENERATION
             ch.background_generation = value
-        Case 5
+        Case BACKGROUND_HERD
             ch.background_herd = value
-        Case 6
+        Case BACKGROUND_INFLUENCE
             ch.background_influence = value
-        Case 7
+        Case BACKGROUND_MENTOR
             ch.background_mentor = value
-        Case 8
+        Case BACKGROUND_RESOURCES
             ch.background_resources = value
-        Case 9
+        Case BACKGROUND_RETAINERS
             ch.background_retainers = value
-        Case 10
+        Case BACKGROUND_STATUS
             ch.background_status = value
     End Select
 End Sub
 
 Function GetBackground (ch As CharacterType, index As Integer)
     Select Case index
-        Case 1
+        Case BACKGROUND_ALLIES
             GetBackground = ch.background_allies
-        Case 2
+        Case BACKGROUND_CONTACTS
             GetBackground = ch.background_contacts
-        Case 3
+        Case BACKGROUND_FAME
             GetBackground = ch.background_fame
-        Case 4
+        Case BACKGROUND_GENERATION
             GetBackground = ch.background_generation
-        Case 5
+        Case BACKGROUND_HERD
             GetBackground = ch.background_herd
-        Case 6
+        Case BACKGROUND_INFLUENCE
             GetBackground = ch.background_influence
-        Case 7
+        Case BACKGROUND_MENTOR
             GetBackground = ch.background_mentor
-        Case 8
+        Case BACKGROUND_RESOURCES
             GetBackground = ch.background_resources
-        Case 9
+        Case BACKGROUND_RETAINERS
             GetBackground = ch.background_retainers
-        Case 10
+        Case BACKGROUND_STATUS
             GetBackground = ch.background_status
     End Select
 End Function
 
 Sub FillBackgrounds (ch As CharacterType, backgrounds() As Integer)
-    For index = 1 To Backgrounds_Count
+    For index = 1 To BACKGROUNDS_COUNT
         backgrounds(index) = GetBackground(ch, index)
     Next
 End Sub
 
-Sub SetAttribute (ch As CharacterType, AttributeGroupIndex As Integer, AttributeIndex As Integer, Value As Integer)
+Sub SetAttributeValue (ch As CharacterType, AttributeGroupIndex As Integer, AttributeIndex As Integer, Value As Integer)
     Select Case AttributeGroupIndex
         Case ATTRIBUTE_GROUP_PHYSICAL
             Select Case AttributeIndex
@@ -813,7 +1027,19 @@ Sub SetAttribute (ch As CharacterType, AttributeGroupIndex As Integer, Attribute
     End Select
 End Sub
 
+Sub SetAbilityValue (ch As CharacterType, groupIndex As Integer, index As Integer, value As Integer)
+    Select Case groupIndex
+        Case ABILITY_TALENTS
+            Call SetTalent(ch, index, value)
+        Case ABILITY_SKILLS
+            Call SetSkill(ch, index, value)
+        Case ABILITY_KNOWLEDGES
+            Call SetKnowledge(ch, index, value)
+    End Select
+End Sub
+
 Function GetAttributeValue (ch As CharacterType, attributeGroupIndex As Integer, attributeIndex As Integer)
+    GetAttributeValue = 0
     Select Case attributeGroupIndex
         Case ATTRIBUTE_GROUP_PHYSICAL
             Select Case attributeIndex
@@ -843,7 +1069,18 @@ Function GetAttributeValue (ch As CharacterType, attributeGroupIndex As Integer,
                     GetAttributeValue = ch.attr_wits
             End Select
     End Select
-    GetAttributeValue = 0
+End Function
+
+Function GetAbilityValue (ch As CharacterType, abilityIndex As Integer, itemIndex As Integer)
+    GetAbilityValue = 0
+    Select Case abilityIndex
+        Case ABILITY_TALENTS
+            GetAbilityValue = GetTalent(ch, itemIndex)
+        Case ABILITY_SKILLS
+            GetAbilityValue = GetSkill(ch, itemIndex)
+        Case ABILITY_KNOWLEDGES
+            GetAbilityValue = GetKnowledge(ch, itemIndex)
+    End Select
 End Function
 
 Function GetAttributePointsForRank (rank As Integer)
@@ -858,7 +1095,19 @@ Function GetAttributePointsForRank (rank As Integer)
     End Select
 End Function
 
-Sub InitializeCharacter (ch As CharacterType)
+Function GetAbilityPointsForRank (rank As Integer)
+    GetAbilityPointsForRank = 0
+    Select Case rank
+        Case 1
+            GetAbilityPointsForRank = 13
+        Case 2
+            GetAbilityPointsForRank = 9
+        Case 3
+            GetAbilityPointsForRank = 5
+    End Select
+End Function
+
+Sub NewCharacter (ch As CharacterType)
     ' Scalars
     ch.name = ""
     ch.player = ""
@@ -866,7 +1115,7 @@ Sub InitializeCharacter (ch As CharacterType)
     ch.haven = ""
     ch.concept = ""
     ch.age = ""
-    ch.sex = 0
+    ch.gender = 0
     ch.clan = 0
     ch.nature = 0
     ch.demeanor = 0
@@ -875,39 +1124,44 @@ Sub InitializeCharacter (ch As CharacterType)
     ch.courage = 0
     ch.conviction = 0
     ch.instinct = 0
+    ch.generation = 13
+    ch.roadName = ""
+    ch.roadValue = 0
+    ch.willpower = 0
+
     ' Arrays/Objects
     ' Disciplines
-    For index = 1 To Disciplines_Count
+    For index = 1 To DISCIPLINES_COUNT
         Call SetDiscipline(ch, index, 0)
     Next
     ' Attributes
-    For GroupIndex = 1 To AttributeGroups_Count
+    For GroupIndex = 1 To ATTRIBUTE_GROUPS_COUNT
         For AttributeIndex = 1 To GetNumAttributesInGroup(GroupIndex)
-            Call SetAttribute(ch, GroupIndex, AttributeIndex, 1)
+            Call SetAttributeValue(ch, GroupIndex, AttributeIndex, 1)
         Next
     Next
     ' Talents
-    For index = 1 To Talents_Count
+    For index = 1 To TALENTS_COUNT
         Call SetTalent(ch, index, 0)
     Next
     ' Skills
-    For index = 1 To Skills_Count
+    For index = 1 To SKILLS_COUNT
         Call SetSkill(ch, index, 0)
     Next
     ' Knowledges
-    For index = 1 To Knowledges_Count
+    For index = 1 To KNOWLEDGES_COUNT
         Call SetKnowledge(ch, index, 0)
     Next
     ' Backgrounds
-    For index = 1 To Backgrounds_Count
+    For index = 1 To BACKGROUNDS_COUNT
         Call SetBackground(ch, index, 0)
     Next
 End Sub
 
 Sub CharacterGenerator ()
     Dim ch As CharacterType
-    Call InitializeCharacter(ch)
-
+    Call NewCharacter(ch)
+    Cls
     Input "What is the character's name? ", ch.name
     Input "Who is the player? ", ch.player
     Input "What chronicle is the character going to be used for? ", ch.chronicle
@@ -915,269 +1169,156 @@ Sub CharacterGenerator ()
     Input "What is the character's concept? ", ch.concept
     Input "How old is the character? ", ch.age
     Print "What is the sex of the character? 1 = Male  2 = Female 0 = Random"
-    ch.sex = GetChoice(0, 2)
-    If ch.sex > 2 Or ch.sex < 1 Then ch.sex = GetRandomInt(1, 2)
+    ch.gender = GetChoice(0, 2)
+    If ch.gender = 0 Then ch.gender = GetRandomInt(1, 2)
     Cls
     Print "What Clan is the character from?"
-    Call PrintMenu(Clans(), Clans_Count)
-    ch.clan = GetChoice(0, Clans_Count)
-    If ch.clan > Clans_Count Or ch.clan < 1 Then ch.clan = GetRandomInt(1, Clans_Count)
+    Call PrintMenu(Clans(), CLANS_COUNT)
+    ch.clan = GetChoice(0, CLANS_COUNT)
+    If ch.clan = 0 Then ch.clan = GetRandomInt(1, CLANS_COUNT)
     Cls
     Print "What is your character's Nature?"
-    Call PrintMenu(Archetypes(), Archetypes_Count)
-    ch.nature = GetChoice(0, Archetypes_Count)
-    If ch.nature > Archetypes_Count Or ch.nature < 1 Then ch.nature = GetRandomInt(1, Archetypes_Count)
+    Call PrintMenu(Archetypes(), ARCHETYPES_COUNT)
+    ch.nature = GetChoice(0, ARCHETYPES_COUNT)
+    If ch.nature = 0 Then ch.nature = GetRandomInt(1, ARCHETYPES_COUNT)
     Cls
     Print "What is your character's Demeanor?"
-    Call PrintMenu(Archetypes(), Archetypes_Count)
-    ch.demeanor = GetChoice(0, Archetypes_Count)
-    If ch.demeanor > Archetypes_Count Or ch.demeanor < 1 Then ch.demeanor = GetRandomInt(1, Archetypes_Count)
+    Call PrintMenu(Archetypes(), ARCHETYPES_COUNT)
+    ch.demeanor = GetChoice(0, ARCHETYPES_COUNT)
+    If ch.demeanor = 0 Then ch.demeanor = GetRandomInt(1, ARCHETYPES_COUNT)
 
     ' The character starts with 3 discipline points and they can spend them on one or more disciplines
-    DisciplinePoints = 3
+    disciplinePoints = 3
 
     ' I don't like having to build an empty array for return values here. Ideally PrintMenuWithValues could take the character and a mapping fn(index) that
     ' calls GetDiscipline(ch, index) to fetch the value. At least for BASIC this seems like a better solution. PrintMenuWithValues does piss me off though.
     ' I don't want it to exist. I want a formatting function there that takes the character and the index then prints "1 = Bullshit: 3" or something like that.
     ' But we can't have nice things like nested custom types, arrays in custom types, or function objects/pointers.
     ' TODO: Try to find a better way to do this.
-    Dim TempDisciplines(Disciplines_Count) As Integer
-    While DisciplinePoints > 0
+    Dim disciplineValues(DISCIPLINES_COUNT) As Integer
+    While disciplinePoints > 0
         Cls
-        Print "Which discipline do you want to spend 1 of your " + itos$(DisciplinePoints) + " discipline points on?"
-        Call FillDisciplines(ch, TempDisciplines())
-        Call PrintMenuWithValues(Disciplines(), TempDisciplines(), Disciplines_Count)
-        discipline = GetChoice(0, Disciplines_Count)
-        If discipline = 0 Then discipline = GetRandomInt(1, Disciplines_Count)
+        Print "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " discipline points on?"
+        Call FillDisciplines(ch, disciplineValues())
+        Call PrintMenuWithValues(Disciplines(), disciplineValues(), DISCIPLINES_COUNT)
+        discipline = GetChoice(0, DISCIPLINES_COUNT)
+        If discipline = 0 Then discipline = GetRandomInt(1, DISCIPLINES_COUNT)
         Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
-        DisciplinePoints = DisciplinePoints - 1
+        disciplinePoints = disciplinePoints - 1
     Wend
 
-    ' This would work, but I want a Print... function to print something like a sparse array to hide the already selected option.
-    ' It seems like a lot of work to support other sets of attributes and the code is only reused once for abilities.
-    'Const AttributeGroups_Count = 3
-    'Dim AttributeGroups(1 To AttributeGroups_Count) As String
-    'Const ATTRIBUTE_GROUP_PHYSICAL = 1
-    'Const ATTRIBUTE_GROUP_SOCIAL = 2
-    'Const ATTRIBUTE_GROUP_MENTAL = 3
-    'AttributeGroups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
-    'AttributeGroups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
-    'AttributeGroups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
-    'Const ATTRIBUTE_STRENGTH = 1
-    'Const ATTRIBUTE_DEXTERITY = 2
-    'Const ATTRIBUTE_STAMINA = 3
-    'Const ATTRIBUTE_APPEARANCE = 1
-    'Const ATTRIBUTE_CHARISMA = 2
-    'Const ATTRIBUTE_MANIPULATION = 3
-    'Const ATTRIBUTE_INTELLIGENCE = 1
-    'Const ATTRIBUTE_PERCEPTION = 2
-    'Const ATTRIBUTE_WITS = 3
-    'Dim PrimaryAttributeGroup As Integer
-    'Do
-    '    Cls
-    '    For index = 1 To AttributeGroups_Count
-    '        Print itos$(index) + " = " + AttributeGroups(index) + " ";
-    '    Next
-    '    Print "0 = Random"
-    '    Input "Choose your primary attribute?", PrimaryAttribute
-    '    If PrimaryAttribute = 0 Then PrimaryAttribute = GetRandomInt(1, AttributeGroups_Count)
-    'Loop While PrimaryAttribute > AttributeGroups_Count And PrimaryAttribute < 1
-
-
-    'SetAttribute(ch, group, attr, value)
-
-    ' TODO: Find a more general form for this that stores the chosen attributes in an array
-    ' Most of the way this works just pisses me off. The second do loop is the worst part. I want it to be 1 = ..., 2 = ..., 0 = Random
-    ' If I can't have that then maybe at least something with less code or less reliance on there being 3 attribute groups.
-    Dim PrimaryAttribute As Integer
-    Do
-        Cls
-        Print "1 = " + AttributeGroups(1) + " ";
-        Print "2 = " + AttributeGroups(2) + " ";
-        Print "3 = " + AttributeGroups(3) + " ";
-        Print "0 = Random"
-        Input "Choose your primary attribute?", PrimaryAttribute
-        If PrimaryAttribute = 0 Then PrimaryAttribute = GetRandomInt(1, AttributeGroups_Count)
-    Loop While (PrimaryAttribute > AttributeGroups_Count And PrimaryAttribute < 1)
-
-    Dim SecondaryAttribute As Integer
-    Dim TertiaryAttribute As Integer
-    Do
-        Cls
-        If PrimaryAttribute <> 1 Then Print "1 = " + AttributeGroups(1) + " ";
-        If PrimaryAttribute <> 2 Then Print "2 = " + AttributeGroups(2) + " ";
-        If PrimaryAttribute <> 3 Then Print "3 = " + AttributeGroups(3) + " ";
-        Print "0 = Random"
-        Input "Choose your secondary attribute?", SecondaryAttribute
-        If SecondaryAttribute = 0 Or SecondaryAttribute = PrimaryAttribute Then
-            SecondaryAttribute = GetRandomInt(1, AttributeGroups_Count - 1)
-            If SecondaryAttribute >= PrimaryAttribute Then
-                SecondaryAttribute = SecondaryAttribute + 1
-            End If
-        End If
-    Loop Until SecondaryAttribute >= 1 And SecondaryAttribute <= 3 And SecondaryAttribute <> PrimaryAttribute
-    ' General formula for last choice is
-    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
-    TertiaryAttribute = 2 * AttributeGroups_Count - PrimaryAttribute - SecondaryAttribute
-
-    ' TODO: Make this less annoying. I want three assignments not three switches. I also want it to be tied to a const instead of 3.
-    ' TODO: The point values themselves (7, 5, and 3) should be consts themselves or a formula.
-    ' Spend physical points
-    For attrGroup = 1 To AttributeGroups_Count
-        attrCount = GetNumAttributesInGroup(attrGroup)
-        ReDim attributes(1 To attrCount) As String
-        Call FillAttributesInGroup(attrGroup, attributes(), attrCount)
-        rank = 0
-        If attrGroup = PrimaryAttribute Then
-            rank = 1
-        ElseIf attrGroup = SecondaryAttribute Then
-            rank = 2
-        ElseIf attrGroup = TertiaryAttribute Then
-            rank = 3
-        End If
-        attrPoints = GetAttributePointsForRank(rank)
-        Do ' for attrPoints = attrPoints to 1 step -1
-            Cls
-            ' TODO: Make this less hard-coded. The menu should be printed with PrintMenu.
-            ' We have 4 uses of this block and I want them to be 2 sub calls passing in arrays. Something like:
-            ' Call SpendPoint(ch, attrGroup, attrPoints) or a call to SpendPoints(ch, attrGroup, rank) and move this do loop in there
-            ' That could "return" an array filled with {index, value} pairs and then use PrintMenuWithValues to actually print the values
-            ' Still need a way to handle GetChoice([0, 1, 3]) or whatever it looks like. Maybe an array of another struct like {index, hidden}.
-            '        GetAttributeValue(ch, 1, 1)
-            Print "Your " + LCase$(AttributeGroups(attrGroup)) + " attributes are:"
-            ' TODO: replace this block next 7 lines with something like
-            ' FillAttributeValues(attributes(), values(), attrCount)
-            ' PrintValuesWithLabels(values(), attributes(), attrCount)
-            For index = 1 To attrCount
-                If index = 1 Then Print ", ";
-                Print GetAttributeName$(attrGroup, index) + " ";
-                Print itos$(GetAttributeValue(ch, attrGroup, index));
-            Next
-            Print ""
-
-            Print "Which attribute would you like to spend 1 of your " + itos$(attrPoints) + " points on?"
-            Call PrintMenu(attributes(), attrCount)
-            attr = GetChoice(0, attrCount)
-            If attr = 0 Then attr = GetRandomInt(1, attrCount)
-            Call SetAttribute(ch, attrGroup, attr, GetAttributeValue(ch, attrGroup, attr) + 1)
-            attrPoints = attrPoints - 1
-        Loop While attrPoints > 0
+    Dim mi As MenuItem
+    ' Attributes
+    Dim attributeGroupsMenuStyle As MenuStyle
+    Call NewMenuStyle(attributeGroupsMenuStyle)
+    Dim mnuAttributeGroups(1 To ATTRIBUTE_GROUPS_COUNT) As MenuItem
+    For i = 1 To ATTRIBUTE_GROUPS_COUNT
+        Call NewMenuItem(mi, AttributeGroups(i), i)
+        mnuAttributeGroups(i) = mi
     Next
 
-    ' TODO: Find a more general form for this that stores the chosen abilities in an array
-    Dim PrimaryAbility As Integer
-    Do
+    ' General formula for last choice is
+    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
+    Dim attributeGroupRanks(1 To ATTRIBUTE_GROUPS_COUNT) As Integer
+    attrSum = 0
+    rankSum = 1
+    For i = 1 To ATTRIBUTE_GROUPS_COUNT - 1
         Cls
-        Print "1 = " + Abilities(1) + " ";
-        Print "2 = " + Abilities(2) + " ";
-        Print "3 = " + Abilities(3) + " ";
-        Print "0 = Random"
-        Input "Choose your primary ability?", PrimaryAbility
-        If PrimaryAbility = 0 Then PrimaryAbility = GetRandomInt(1, Abilities_Count)
-    Loop While (PrimaryAbility > Abilities_Count And PrimaryAbility < 1)
+        Call AdjustMenuStyle(attributeGroupsMenuStyle, mnuAttributeGroups(), ATTRIBUTE_GROUPS_COUNT)
+        attributeGroupsMenuStyle.valueWidth = 0
+        ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary attribute?" instead
+        Print "Choose your next attribute?"
+        Call pm(mnuAttributeGroups(), ATTRIBUTE_GROUPS_COUNT, attributeGroupsMenuStyle)
+        nextAttr = GetMenuChoice(mnuAttributeGroups(), attributeGroupsMenuStyle, ATTRIBUTE_GROUPS_COUNT)
+        If nextAttr = 0 Then nextAttr = GetRandomMenuItemId(mnuAttributeGroups(), attributeGroupsMenuStyle, ATTRIBUTE_GROUPS_COUNT)
+        mnuAttributeGroups(i).isVisible = FALSE
+        attributeGroupRanks(nextAttr) = i
+        rankSum = rankSum + i + 1
+        attrSum = attrSum + nextAttr
+    Next
+    lastAttr = rankSum - attrSum
+    attributeGroupRanks(lastAttr) = ATTRIBUTE_GROUPS_COUNT
 
-    Dim SecondaryAbility As Integer
-    Dim TertiaryAbility As Integer
-    Do
-        Cls
-        If PrimaryAbility <> 1 Then Print "1 = " + Abilities(1) + " ";
-        If PrimaryAbility <> 2 Then Print "2 = " + Abilities(2) + " ";
-        If PrimaryAbility <> 3 Then Print "3 = " + Abilities(3) + " ";
-        Print "0 = Random"
-        Input "Choose your secondary ability?", SecondaryAbility
-        If SecondaryAbility = 0 Or SecondaryAbility = PrimaryAbility Then
-            SecondaryAbility = GetRandomInt(1, Abilities_Count - 1)
-            If SecondaryAbility >= PrimaryAbility Then
-                SecondaryAbility = SecondaryAbility + 1
-            End If
-        End If
-    Loop Until SecondaryAbility >= 1 And SecondaryAbility <= 3 And SecondaryAbility <> PrimaryAbility
-    TertiaryAbility = 2 * Abilities_Count - PrimaryAbility - SecondaryAbility
-
-    ' Initialize talent, skill, knowledge points
-    Select Case PrimaryAbility
-        Case 1
-            TalentPoints = 13
-        Case 2
-            SkillPoints = 13
-        Case 3
-            KnowledgePoints = 13
-    End Select
-    Select Case SecondaryAbility
-        Case 1
-            TalentPoints = 9
-        Case 2
-            SkillPoints = 9
-        Case 3
-            KnowledgePoints = 9
-    End Select
-    Select Case TertiaryAbility
-        Case 1
-            TalentPoints = 5
-        Case 2
-            SkillPoints = 5
-        Case 3
-            KnowledgePoints = 5
-    End Select
-
-    Print "Primary: " + itos$(PrimaryAbility) + ", Secondary: " + itos$(SecondaryAbility) + ", Tertiary: " + itos$(TertiaryAbility)
-    Print "Talents: " + itos$(TalentPoints) + ", Skills: " + itos$(SkillPoints) + ", Knowledges: " + itos$(KnowledgePoints)
-    Input A
-
-    ' Spend talent points
-    Do
-        Cls
-        Print "Which talent would you like to spend 1 of your " + itos$(TalentPoints) + " points on?"
-        Print " 0 = Random"
-        For index = 1 To Talents_Count
-            Print MakeFitR$(itos$(index), 2, " ") + " = " + MakeFitL$(Talents(index) + ":", 20, " ") + " " + MakeFitR$(itos$(GetTalent(ch, index)), 3, " ")
+    ' Spend attribute points
+    For attrGroup = 1 To ATTRIBUTE_GROUPS_COUNT
+        attrCount = GetNumAttributesInGroup(attrGroup)
+        ReDim attributes(1 To attrCount) As String
+        Call FillAttributesInGroup(attrGroup, attributes())
+        rank = attributeGroupRanks(attrGroup)
+        For attrPoints = GetAttributePointsForRank(rank) To 1 Step -1
+            Cls
+            Print "Which attribute would you like to spend 1 of your " + itos$(attrPoints) + " points on?"
+            ReDim attrValues(1 To attrCount) As Integer
+            Call FillAttributeValues(ch, attrValues(), attrGroup)
+            Call PrintMenuWithValues(attributes(), attrValues(), attrCount)
+            attr = GetChoice(0, attrCount)
+            If attr = 0 Then attr = GetRandomInt(1, attrCount)
+            Call SetAttributeValue(ch, attrGroup, attr, GetAttributeValue(ch, attrGroup, attr) + 1)
         Next
-        talent = GetChoice(0, Talents_Count)
-        If talent = 0 Then talent = GetRandomInt(1, Talents_Count)
-        Call SetTalent(ch, talent, GetTalent(ch, talent) + 1)
-        TalentPoints = TalentPoints - 1
-    Loop While TalentPoints > 0
+    Next
 
-    ' Spend skill points
-    Do
-        Cls
-        Print "Which skill would you like to spend 1 of your " + itos$(SkillPoints) + " points on?"
-        Print " 0 = Random"
-        For index = 1 To Skills_Count
-            Print MakeFitR$(itos$(index), 2, " ") + " = " + MakeFitL$(Skills(index) + ":", 20, " ") + " " + MakeFitR$(itos$(GetSkill(ch, index)), 3, " ")
-        Next
-        skill = GetChoice(0, Skills_Count)
-        If skill = 0 Then skill = GetRandomInt(1, Skills_Count)
-        Call SetSkill(ch, skill, GetSkill(ch, skill) + 1)
-        SkillPoints = SkillPoints - 1
-    Loop While SkillPoints > 0
+    ' Abilities
+    Dim abilityGroupsMenuStyle As MenuStyle
+    Call NewMenuStyle(abilityGroupsMenuStyle)
+    Dim mnuAbilityGroups(1 To ABILITIES_COUNT) As MenuItem
+    For i = 1 To ABILITIES_COUNT
+        Call NewMenuItem(mi, Abilities(i), i)
+        mnuAbilityGroups(i) = mi
+    Next
 
-    'Spend knowledge points
-    Do
+    ' General formula for last choice is
+    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
+    Dim abilityGroupRanks(1 To ABILITIES_COUNT) As Integer
+    abilitySum = 0
+    rankSum = 1
+    For i = 1 To ABILITIES_COUNT - 1
         Cls
-        Print "Which knowledge would you like to spend 1 of your " + itos$(KnowledgePoints) + " points on?"
-        Print " 0 = Random"
-        For index = 1 To Knowledges_Count
-            Print MakeFitR$(itos$(index), 2, " ") + " = " + MakeFitL$(Knowledges(index) + ":", 20, " ") + " " + MakeFitR$(itos$(GetKnowledge(ch, index)), 3, " ")
+        Call AdjustMenuStyle(abilityGroupsMenuStyle, mnuAbilityGroups(), ABILITIES_COUNT)
+        abilityGroupsMenuStyle.valueWidth = 0
+        ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary ability?" instead
+        Print "Choose your next ability?"
+        Call pm(mnuAbilityGroups(), ABILITIES_COUNT, abilityGroupsMenuStyle)
+        nextAbility = GetMenuChoice(mnuAbilityGroups(), abilityGroupsMenuStyle, ABILITIES_COUNT)
+        If nextAbility = 0 Then nextAbility = GetRandomMenuItemId(mnuAbilityGroups(), abilityGroupsMenuStyle, ABILITIES_COUNT)
+        mnuAbilityGroups(i).isVisible = FALSE
+        abilityGroupRanks(nextAbility) = i
+        rankSum = rankSum + i + 1
+        abilitySum = abilitySum + nextAbility
+    Next
+    lastAbility = rankSum - abilitySum
+    abilityGroupRanks(lastAbility) = ABILITIES_COUNT
+
+    ' Spend ability points
+    For abiityGroup = 1 To ABILITIES_COUNT
+        abiityCount = GetNumItemsForAbility(abiityGroup)
+        ReDim items(1 To abiityCount) As String
+        Call FillItemsForAbility(abiityGroup, items())
+        rank = abilityGroupRanks(abiityGroup)
+        For abiityPoints = GetAbilityPointsForRank(rank) To 1 Step -1
+            Cls
+            ' TODO: Pull this from an array like AbilityGroupsSingle so "Which talent would you like to spend 1 of your 5 points on?"
+            Print "Which ability would you like to spend 1 of your " + itos$(abiityPoints) + " points on?"
+            ReDim abiityValues(1 To abiityCount) As Integer
+            Call FillAbilityValues(ch, abiityValues(), abiityGroup)
+            Call PrintMenuWithValues(items(), abiityValues(), abiityCount)
+            abiity = GetChoice(0, abiityCount)
+            If abiity = 0 Then abiity = GetRandomInt(1, abiityCount)
+            Call SetAbilityValue(ch, abiityGroup, abiity, GetAbilityValue(ch, abiityGroup, abiity) + 1)
         Next
-        knowledge = GetChoice(0, Knowledges_Count)
-        If knowledge = 0 Then knowledge = GetRandomInt(1, Knowledges_Count)
-        Call SetKnowledge(ch, knowledge, GetKnowledge(ch, knowledge) + 1)
-        KnowledgePoints = KnowledgePoints - 1
-    Loop While KnowledgePoints > 0
+    Next
 
     ' Spend background points
-    BackgroundPoints = 5
-    Dim TempBackgrounds(Backgrounds_Count) As Integer
-    While BackgroundPoints > 0
+    backgroundPoints = 5
+    Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
+    While backgroundPoints > 0
         Cls
-        Print "Which background do you want to spend 1 of your " + itos$(BackgroundPoints) + " background points on?"
-        Call FillBackgrounds(ch, TempBackgrounds())
-        Call PrintMenuWithValues(Backgrounds(), TempBackgrounds(), Backgrounds_Count)
-        background = GetChoice(0, Backgrounds_Count)
-        If background = 0 Then background = GetRandomInt(1, Backgrounds_Count)
+        Print "Which background do you want to spend 1 of your " + itos$(backgroundPoints) + " background points on?"
+        Call FillBackgrounds(ch, backgroundValues())
+        Call PrintMenuWithValues(Backgrounds(), backgroundValues(), BACKGROUNDS_COUNT)
+        background = GetChoice(0, BACKGROUNDS_COUNT)
+        If background = 0 Then background = GetRandomInt(1, BACKGROUNDS_COUNT)
         Call SetBackground(ch, background, GetBackground(ch, background) + 1)
-        BackgroundPoints = BackgroundPoints - 1
+        backgroundPoints = backgroundPoints - 1
     Wend
 
     ' TODO: Choose your road. This is only for dark ages so skip for now
@@ -1196,6 +1337,34 @@ Sub CharacterGenerator ()
     'Self-Control 1
     'Courage      1
     'Which virtue do you wish to add one of your 7 points to?
+    ch.conscience = 1
+    ch.conviction = 2
+    ch.instinct = 3
+    ch.selfControl = 4
+    ch.courage = 5
+
+    ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
+    ch.generation = 13
+
+    ' TODO: figure out how to calculate willpower
+    ch.willpower = 10
+
+    ' TODO: figure out how to calculate road/humanity (typhon below)
+    ch.roadName = "Humanity"
+    ch.roadValue = 5
+
+    ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
+    ' What do you want the file to be called? (default is CHAR1)?
+
+    Call ShowCharacterSheet(ch)
+
+End Sub
+Sub ShowCharacterSheet (ch As CharacterType)
+    Dim disciplineValues(DISCIPLINES_COUNT) As Integer
+    Call FillDisciplines(ch, disciplineValues())
+
+    Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
+    Call FillBackgrounds(ch, backgroundValues())
 
     '... 0123456789
     '160  กขฃคฅฆงจฉ
@@ -1206,65 +1375,64 @@ Sub CharacterGenerator ()
     '210 าำิีึืฺุูÛ
     '220 ÜÝÞ฿เแโใไๅๅ
     '230 ๆ็่้๊๋2์ํ๎๏
-    ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
-    ' What do you want the file to be called? (default is CHAR1)?
-
     ' enquote forms s/^([ษบศอฬ].*[ปบผน])$/print "$1"/g
 
-    ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
-    generation$ = "13"
-    If ch.sex = 1 Then sex_string$ = "Male" Else sex_string$ = "Female"
-    clan_string$ = Clans(ch.clan)
+    ' TODO: make this a string or pull from an array like Genders so we can suppor enby and maybe make trans explicit
+    If ch.gender = 1 Then genderString$ = "Male" Else genderString$ = "Female"
+    clanName$ = Clans(ch.clan)
 
-    Dim discipline_strings(3) As String
-    discipline_strings_index = 0
-    For index = 1 To Disciplines_Count
-        If TempDisciplines(index) > 0 Then
+    Dim disciplineStrings(3) As String
+    disciplineStringsIndex = 0
+    For index = 1 To DISCIPLINES_COUNT
+        If disciplineValues(index) > 0 Then
             suffix$ = ""
-            If TempDisciplines(index) > 1 Then
-                suffix$ = " x" + itos$(TempDisciplines(index))
+            If disciplineValues(index) > 1 Then
+                suffix$ = " x" + itos$(disciplineValues(index))
             End If
-            discipline_strings(discipline_strings_index) = Disciplines(index) + suffix$
+            disciplineStrings(disciplineStringsIndex) = Disciplines(index) + suffix$
+            disciplineStringsIndex = disciplineStringsIndex + 1
         End If
     Next
 
-    Dim background_strings(5) As String
-    background_strings_index = 0
-    For index = 1 To Backgrounds_Count
-        If TempBackgrounds(index) > 0 Then
+    Dim backgroundStrings(5) As String
+    backgroundStringsIndex = 0
+    For index = 1 To BACKGROUNDS_COUNT
+        If backgroundValues(index) > 0 Then
             suffix$ = ""
-            If TempBackgrounds(index) > 1 Then
-                suffix$ = " x" + itos$(TempBackgrounds(index))
+            If backgroundValues(index) > 1 Then
+                suffix$ = " x" + itos$(backgroundValues(index))
             End If
-            background_strings$(background_strings_index) = Backgrounds(index) + suffix$
+            backgroundStrings$(backgroundStringsIndex) = Backgrounds(index) + suffix$
+            backgroundStringsIndex = backgroundStringsIndex + 1
         End If
     Next
 
     Cls
     Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
-    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(sex_string$, 10, " ") + " Generation: " + MakeFitL$(generation$, 9, " ") + " บ"
-    Print "บ Clan: " + MakeFitL$(clan_string$, 30, " ") + " บ Age: " + MakeFitL$(age$, 32, " ") + " บ"
-    Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(player$, 29, " ") + " บ"
-    Print "บ              Attributes              บ Chronicle: " + MakeFitL$(chronicle$, 26, " ") + " บ"
-    Print "บ   Physical     Social      Mental    บ Haven: " + MakeFitL$(haven$, 30, " ") + " บ"
-    Print "บ Str. " + MakeFitL$(Str$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(Str$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(Str$(ch.attr_intelligence), 5, " ") + " บ Concept: " + MakeFitL$(concept$, 28, " ") + " บ"
+    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(genderString$, 10, " ") + " Generation: " + MakeFitL$(itos$(ch.generation), 9, " ") + " บ"
+    Print "บ Clan: " + MakeFitL$(clanName$, 30, " ") + " บ Age: " + MakeFitL$(ch.age$, 32, " ") + " บ"
+    Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(ch.player$, 29, " ") + " บ"
+    Print "บ              Attributes              บ Chronicle: " + MakeFitL$(ch.chronicle$, 26, " ") + " บ"
+    Print "บ   Physical     Social      Mental    บ Haven: " + MakeFitL$(ch.haven$, 30, " ") + " บ"
+    Print "บ Str. " + MakeFitL$(Str$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(Str$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(Str$(ch.attr_intelligence), 5, " ") + " บ Concept: " + MakeFitL$(ch.concept$, 28, " ") + " บ"
     Print "บ Dex. " + MakeFitL$(Str$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(Str$(ch.attr_charisma), 7, " ") + " Per. " + MakeFitL$(Str$(ch.attr_perception), 5, " ") + " ฬอออออออออออออออออออออออออออออออออออออออน"
     Print "บ Sta. " + MakeFitL$(Str$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(Str$(ch.attr_manipulation), 7, " ") + " Wit. " + MakeFitL$(Str$(ch.attr_wits), 5, " ") + " บ Derangements:                         บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออน Regression,__________________________ บ"
     Print "บ Disciplines:                         บ _____________________________________ บ"
-    Print "บ " + MakeFitL$(discipline_strings(0), 36, " ") + " บ _____________________________________ บ"
-    Print "บ " + MakeFitL$(discipline_strings(1), 36, " ") + " บ _____________________________________ บ"
-    Print "บ " + MakeFitL$(discipline_strings(2), 36, " ") + " บ _____________________________________ บ"
+    Print "บ " + MakeFitL$(disciplineStrings(0), 36, " ") + " บ _____________________________________ บ"
+    Print "บ " + MakeFitL$(disciplineStrings(1), 36, " ") + " บ _____________________________________ บ"
+    Print "บ " + MakeFitL$(disciplineStrings(2), 36, " ") + " บ _____________________________________ บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออฮอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ Typhon:  7                           บ Nature: " + MakeFitL$(Archetypes(ch.nature), 29, " ") + " บ"
-    Print "บ Willpower: 3                         บ Demeanor: " + MakeFitL$(Archetypes(ch.demeanor), 27, " ") + " บ"
+    Print "บ " + MakeFitL$(ch.roadName + ": " + itos$(ch.roadValue), 36, " ") + " บ Nature: " + MakeFitL$(Archetypes(ch.nature), 29, " ") + " บ"
+    Print "บ Willpower: " + MakeFitL$(itos$(ch.willpower), 25, " ") + " บ Demeanor: " + MakeFitL$(Archetypes(ch.demeanor), 27, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
     Print "บ                                                                              บ"
     Print "บ                                                                              บ"
     Print "บ                                                                              บ"
     Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
     Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
-    Input A
+    While InKey$ = "": Wend
+
     Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
     Print "บ " + MakeFitC$("Abilities", 76, " ") + " บ"
     Print "บ " + MakeFitC$("Talents", 25, " ") + " " + MakeFitC$("Skills", 25, " ") + " " + MakeFitC$("Knowledges", 24, " ") + " บ"
@@ -1273,16 +1441,31 @@ Sub CharacterGenerator ()
     Next
     Print "ฬออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออน"
     Print "บ Backgrounds:                         บ Virtues:                              บ"
-    Print "บ " + MakeFitL$(background_strings(0), 36, " ") + " บ " + MakeFitL$(MakeFitL$("Conscience:", 14, " ") + MakeFitR$(Str$(ch.conscience), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(background_strings(1), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Conviction:", 14, " ") + MakeFitR$(Str$(ch.conviction), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(background_strings(2), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Instinct:", 14, " ") + MakeFitR$(Str$(ch.instinct), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(background_strings(3), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Self-Control:", 14, " ") + MakeFitR$(Str$(ch.selfControl), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(background_strings(4), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Courage:", 14, " ") + MakeFitR$(Str$(ch.courage), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(0), 36, " ") + " บ " + MakeFitL$(MakeFitL$("Conscience:", 14, " ") + MakeFitR$(Str$(ch.conscience), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(1), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Conviction:", 14, " ") + MakeFitR$(Str$(ch.conviction), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(2), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Instinct:", 14, " ") + MakeFitR$(Str$(ch.instinct), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(3), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Self-Control:", 14, " ") + MakeFitR$(Str$(ch.selfControl), 2, " "), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(4), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Courage:", 14, " ") + MakeFitR$(Str$(ch.courage), 2, " "), 37, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
     Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
     Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
-
     While InKey$ = "": Wend
+End Sub
+
+Sub FillAttributeValues (ch As CharacterType, values() As Integer, groupIndex As Integer)
+    count = GetNumAttributesInGroup(groupIndex)
+    ReDim values(1 To count) As Integer
+    For i = 1 To count
+        values(i) = GetAttributeValue(ch, groupIndex, i)
+    Next
+End Sub
+
+Sub FillAbilityValues (ch As CharacterType, values() As Integer, groupIndex As Integer)
+    count = GetNumItemsForAbility(groupIndex)
+    ReDim values(1 To count) As Integer
+    For i = 1 To count
+        values(i) = GetAbilityValue(ch, groupIndex, i)
+    Next
 End Sub
 
 Sub CharacterGeneratorForDummies
@@ -1322,6 +1505,19 @@ Function GetNumAttributesInGroup (index As Integer)
     End Select
 End Function
 
+Function GetNumItemsForAbility (index As Integer)
+    Select Case index
+        Case ABILITY_TALENTS
+            GetNumItemsForAbility = TALENTS_COUNT
+        Case ABILITY_SKILLS
+            GetNumItemsForAbility = SKILLS_COUNT
+        Case ABILITY_KNOWLEDGES
+            GetNumItemsForAbility = KNOWLEDGES_COUNT
+        Case Else
+            GetNumItemsForAbility = 0
+    End Select
+End Function
+
 Function GetAttributeName$ (groupIndex As Integer, attributeIndex As Integer)
     GetAttributeName = ""
     Select Case groupIndex
@@ -1334,7 +1530,19 @@ Function GetAttributeName$ (groupIndex As Integer, attributeIndex As Integer)
     End Select
 End Function
 
-Sub FillAttributesInGroup (group As Integer, attributes() As String, count As Integer)
+Function GetAbilityName$ (groupIndex As Integer, abilityIndex As Integer)
+    GetAbilityName = ""
+    Select Case groupIndex
+        Case ABILITY_TALENTS
+            GetAbilityName = Talents(abilityIndex)
+        Case ABILITY_SKILLS
+            GetAbilityName = Skills(abilityIndex)
+        Case ABILITY_KNOWLEDGES
+            GetAbilityName = Knowledges(abilityIndex)
+    End Select
+End Function
+
+Sub FillAttributesInGroup (group As Integer, attributes() As String)
     count = GetNumAttributesInGroup(group)
     If count > 0 Then
         ReDim attributes(1 To count) As String
@@ -1353,6 +1561,30 @@ Sub FillAttributesInGroup (group As Integer, attributes() As String, count As In
         Case ATTRIBUTE_GROUP_MENTAL
             For i = 1 To count
                 attributes(i) = MentalAttributes(i)
+            Next
+    End Select
+End Sub
+
+Sub FillItemsForAbility (ability As Integer, items() As String)
+    count = GetNumItemsForAbility(ability)
+    ReDim items(1 To count) As String
+    If count > 0 Then
+        ReDim items(1 To count) As String
+    Else
+        ReDim items(0) As String
+    End If
+    Select Case ability
+        Case ABILITY_TALENTS
+            For i = 1 To count
+                items(i) = Talents(i)
+            Next
+        Case ABILITY_SKILLS
+            For i = 1 To count
+                items(i) = Skills(i)
+            Next
+        Case ABILITY_KNOWLEDGES
+            For i = 1 To count
+                items(i) = Knowledges(i)
             Next
     End Select
 End Sub
@@ -1382,3 +1614,104 @@ End Sub
 
 Sub Test
 End Sub
+
+Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer)
+    maxIdWidth = 0
+    maxItemWidth = 0
+    maxValueWidth = 0
+
+    For i = 1 To count
+        If items(i).isVisible Then
+            maxIdWidth = MaxI(maxIdWidth, Len(itos$(items(i).id)))
+            maxItemWidth = MaxI(maxItemWidth, Len(items(i).label + style.labelValueSeparator))
+            maxValueWidth = MaxI(maxValueWidth, Len(itos$(items(i).value)))
+        End If
+    Next
+    If style.showRandom Then
+        maxIdWidth = MaxI(maxIdWidth, Len("0"))
+        maxItemWidth = MaxI(maxItemWidth, Len(style.randomItemName))
+    End If
+    style.idWidth = maxIdWidth
+    style.labelWidth = maxItemWidth
+    style.valueWidth = maxValueWidth
+End Sub
+
+Sub pm (items() As MenuItem, count As Integer, style As MenuStyle)
+    Dim randomItem As MenuItem
+    Call NewMenuItem(randomItem, style.randomItemName, style.randomItemId)
+    If count <= 10 Then
+        For i = 1 To count
+            If items(i).isVisible Then
+                Print GetTitle$(items(i), style)
+            End If
+        Next
+        If style.showRandom Then
+            Print GetTitleWithoutValue$(randomItem, style)
+        End If
+    Else
+        Dim emptyItem As MenuItem
+        Call NewMenuItem(emptyItem, "", 0)
+        itemWidth = Len(GetTitle$(emptyItem, style))
+        itemsPerRow = style.screenWidth \ (itemWidth + Len(style.menuItemSpacer))
+        columnWidth = style.screenWidth \ itemsPerRow
+
+        column = 0
+        For i = 1 To count
+            If items(i).isVisible Then
+                itemText$ = GetTitle$(items(i), style)
+                If column <> (itemsPerRow - 1) Then
+                    If i <> count Or style.showRandom Then
+                        textLength = Len(itemText$)
+                        itemText$ = MakeFitL$(RTrim$(itemText$) + style.menuItemSpacer, textLength + Len(style.menuItemSpacer), " ")
+                    End If
+                End If
+                Print MakeFitC$(itemText$, columnWidth, " ");
+            End If
+            column = (column + 1) Mod itemsPerRow
+            If column = 0 Then Print ""
+        Next
+        If style.showRandom Then
+            Print MakeFitC$(GetTitleWithoutValue$(randomItem, style), columnWidth, " ")
+        End If
+    End If
+End Sub
+
+Function GetTitle$ (mi As MenuItem, ms As MenuStyle)
+    id$ = itos$(mi.id)
+    label$ = mi.label
+    If ms.valueWidth > 0 Then label$ = label$ + ms.labelValueSeparator
+    value$ = itos$(mi.value)
+    GetTitle$ = MakeFitR$(id$, ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(label$, ms.labelWidth, " ") + MakeFitR$(value$, ms.valueWidth, " ")
+End Function
+
+Function GetTitleWithoutValue$ (mi As MenuItem, ms As MenuStyle)
+    GetTitleWithoutValue$ = MakeFitR$(itos(mi.id), ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(mi.label, ms.labelWidth + ms.valueWidth + Len(ms.labelValueSeparator), " ")
+End Function
+
+Sub NewMenuStyle (ms As MenuStyle)
+    ms.idWidth = 0
+    ms.labelWidth = 0
+    ms.valueWidth = 0
+    ms.screenWidth = 80
+    ms.randomItemName = "Random"
+    ms.randomItemId = 0
+    ms.idLabelSeparator = " = "
+    ms.labelValueSeparator = ": "
+    ms.menuItemSpacer = ", "
+    ms.showRandom = TRUE
+End Sub
+
+Sub NewMenuItem (mi As MenuItem, label As String, id As Integer)
+    mi.id = id
+    mi.label = label
+    mi.value = 0
+    mi.isVisible = TRUE
+End Sub
+
+Sub NewMenuItemWithValue (mi As MenuItem, label As String, id As Integer, value As Integer)
+    mi.id = id
+    mi.label = label
+    mi.value = value
+    mi.isVisible = TRUE
+End Sub
+
