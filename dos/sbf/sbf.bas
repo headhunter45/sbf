@@ -186,6 +186,14 @@ Const BACKGROUND_STATUS = 10
 Const BACKGROUNDS_COUNT = 10
 Dim Shared Backgrounds(1 To BACKGROUNDS_COUNT) As String
 
+Const GENDER_MALE = 1
+Const GENDER_FEMALE = 2
+Const GENDER_TRANS_MALE = 3
+Const GENDER_TRANS_FEMALE = 4
+Const GENDER_NON_BINARY = 5
+Const GENDERS_COUNT = 5
+Dim Shared Genders(1 To GENDERS_COUNT) As String
+
 Type CharacterType
     name As String
     player As String
@@ -482,6 +490,13 @@ Sub InitializeMemory
     Backgrounds(BACKGROUND_RESOURCES) = "Resources"
     Backgrounds(BACKGROUND_RETAINERS) = "Retainers"
     Backgrounds(BACKGROUND_STATUS) = "Status"
+
+    ' Genders
+    Genders(GENDER_MALE) = "Male"
+    Genders(GENDER_FEMALE) = "Female"
+    Genders(GENDER_TRANS_MALE) = "Trans-Male"
+    Genders(GENDER_TRANS_FEMALE) = "Trans-Female"
+    Genders(GENDER_NON_BINARY) = "Non-Binary"
 End Sub
 
 Sub SplashScreen
@@ -584,8 +599,7 @@ Function GetChoice (min As Integer, max As Integer)
 End Function
 
 Function GetMenuChoice (items() As MenuItem, style As MenuStyle, count As Integer)
-    ' pull showrandom from style
-    ' only allow random id or an id from a visible menuitem
+    ' Only allow random id or an id from a visible menuitem.
     choice = -1
     acceptChoice = FALSE
     Do
@@ -1157,17 +1171,47 @@ Sub NewCharacter (ch As CharacterType)
     Next
 End Sub
 
+Sub BuildMenu (items() As MenuItem, labels() As String, count As Integer)
+    ReDim items(1 To count) As MenuItem
+    For i = 1 To count
+        Dim mi As MenuItem
+        Call NewMenuItem(mi, labels(i), i)
+        items(i) = mi
+    Next
+End Sub
+
+Sub BuildMenuWithValues (items() As MenuItem, labels() As String, values() As Integer, count As Integer)
+    ReDim items(1 To count) As MenuItem
+    For i = 1 To count
+        Dim mi As MenuItem
+        Call NewMenuItemWithValue(mi, labels(i), i, values(i))
+        items(i) = mi
+    Next
+End Sub
+
+Function ChooseStringId (labels() As String, style As MenuStyle, count As Integer, prompt As String)
+    Cls
+    Dim mnuItems(1 To count) As MenuItem
+    Call BuildMenu(mnuItems(), labels(), count)
+    Call AdjustMenuStyle(style, mnuItems(), count, TRUE)
+    Print prompt
+    Call pm(mnuItems(), count, style)
+    choice = GetMenuChoice(mnuItems(), style, count)
+    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), style, count)
+    ChooseStringId = choice
+End Function
+
 Sub CGGetHeader (ch As CharacterType)
     Cls
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
     Input "What is the character's name? ", ch.name
     Input "Who is the player? ", ch.player
     Input "What chronicle is the character going to be used for? ", ch.chronicle
     Input "What is the character's Haven? ", ch.haven
     Input "What is the character's concept? ", ch.concept
     Input "How old is the character? ", ch.age
-    Print "What is the sex of the character? 1 = Male  2 = Female 0 = Random"
-    ch.gender = GetChoice(0, 2)
-    If ch.gender = 0 Then ch.gender = GetRandomInt(1, 2)
+    ch.gender = ChooseStringId(Genders(), ms, GENDERS_COUNT, "What is the character's gender?")
     Cls
     Print "What Clan is the character from?"
     Call PrintMenu(Clans(), CLANS_COUNT)
@@ -1401,8 +1445,6 @@ Sub ShowCharacterSheet (ch As CharacterType)
     '230 ๆ็่้๊๋2์ํ๎๏
     ' enquote forms s/^([ษบศอฬ].*[ปบผน])$/print "$1"/g
 
-    ' TODO: make this a string or pull from an array like Genders so we can suppor enby and maybe make trans explicit
-    If ch.gender = 1 Then genderString$ = "Male" Else genderString$ = "Female"
     clanName$ = Clans(ch.clan)
 
     Dim disciplineStrings(3) As String
@@ -1433,7 +1475,7 @@ Sub ShowCharacterSheet (ch As CharacterType)
 
     Cls
     Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
-    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(genderString$, 10, " ") + " Generation: " + MakeFitL$(itos$(ch.generation), 9, " ") + " บ"
+    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(Genders(ch.gender), 10, " ") + " Generation: " + MakeFitL$(itos$(ch.generation), 9, " ") + " บ"
     Print "บ Clan: " + MakeFitL$(clanName$, 30, " ") + " บ Age: " + MakeFitL$(ch.age$, 32, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(ch.player$, 29, " ") + " บ"
     Print "บ              Attributes              บ Chronicle: " + MakeFitL$(ch.chronicle$, 26, " ") + " บ"

@@ -15,8 +15,6 @@
 * Replace all uses of PrintMenu and PrintMenuWithValues use pm and specific MenuStyles
     * Rename pm to PrintMenu after this is done.
 * Spending virtue points
-* Support genders other than male/female.
-    * Change all references to sex to gender instead.
 
 # Low Priority
 * Calculating values not directly queried for.
@@ -81,8 +79,14 @@
     * This will probably just go away by converting to pm over PrintMenu and PrintMenuWithValues, because we'll be creating an array of MenuItems for each one. We still have to fill the array each time, but we can look into making that suck less afterwards.
 * Get attribute/ability/rank names from arrays when to print them (plural and singular) in loops like "Choose your tertiary attribute?" and "Which talent would you like to spend 1 of your 6 points on?"
 * Reorganize functions/subs so the order/grouping makes more sense. move all global dims together and group them with their constants.
-
-# Uncategorized
+* Consider supporting freeform gender strings.
+    * The main reason for not doing this is limiting the string length.
+    * We don't do it for other strings, but we don't want to add more until we have a good way to handle them.
+    * Should we let you know on input that it's too long.
+    * How/where can se store the specific length in a way that allows for multiple character sheet formats.
+    * Maybe just say fuck it and leave that up to the user to know it's too long when it gets cut off.
+    * We also like keeping it like this because it suggests "other" genders better than a freeform string.
+        * In a text-based ui it may seem like male/female are the expected options and users would likely not even consider that there are other options.
 * Move the ruleset dims/constants/getters/setters out into separate bas files.
     * Probably 1 file per system
     * Maybe keep stubs for the functions in the main bas that call the rulset specific versions.
@@ -93,3 +97,5 @@
         * Have the stubs use a select case to call the specific ruleset variant based on the RULESET_* constant passed in.
         * Maybe only load the ruleset bas files as they are required to save memory. If we can't unload this could still suck.
             * Imagine telling someone you've created to many classes of character. You need to close and reopen the program if you want to create any new classes, but you can create more of the old ones.
+
+# Uncategorized
