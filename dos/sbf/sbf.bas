@@ -224,6 +224,7 @@ Type CharacterType
     roadName As String
     roadValue As Integer
     willpower As Integer
+    bloodPool As Integer
     ' Special but don't know why
     conviction As Integer
     instinct As Integer
@@ -1160,6 +1161,7 @@ Sub NewCharacter (ch As CharacterType)
     ch.roadName = ""
     ch.roadValue = 0
     ch.willpower = 0
+    ch.bloodPool = 0
     ' Virtues
     ch.selfControl = 1
     ch.courage = 1
@@ -1396,7 +1398,7 @@ Sub CGGetRoad (ch As CharacterType)
 
     ' TODO: figure out how to calculate road/humanity (typhon below)
     ch.roadName = "Humanity"
-    ch.roadValue = 5
+    'ch.roadValue = 5
 End Sub
 
 Sub CGSpendVirtuePoints (ch As CharacterType)
@@ -1419,6 +1421,9 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
     ch.instinct = 3
 End Sub
 
+Sub CGSpendFreebiePoints (ch As CharacterType)
+End Sub
+
 ' Ignore this warning ch is not used yet because the sub is not implemented yet.
 Sub SaveCharacterSheet (ch As CharacterType)
     ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
@@ -1436,12 +1441,18 @@ Sub CharacterGenerator ()
     Call CGGetRoad(ch)
     Call CGSpendVirtuePoints(ch)
 
-    ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
     ' Generation starts at 13 and goes down 1 point per point of the "generation" background.
     ch.generation = INITIAL_GENERATION - GetBackground(ch, BACKGROUND_GENERATION)
 
-    ' TODO: figure out how to calculate willpower
-    ch.willpower = 10
+    ' Willpower
+    ch.willpower = ch.courage
+    ' Humanity
+    ch.roadValue = ch.conscience + ch.selfControl
+    ' Blood Pool - The only die roll.
+    ch.bloodPool = GetRandomInt(1, 10)
+
+    ' Spend freebie points
+    Call CGSpendFreebiePoints(ch)
 
     Call SaveCharacterSheet(ch)
     Call ShowCharacterSheet(ch)
@@ -1557,29 +1568,39 @@ Sub FillAbilityValues (ch As CharacterType, values() As Integer, groupIndex As I
     Next
 End Sub
 
+' Simpler character generator with fewer questions and more things done randomly without asking.
 Sub CharacterGeneratorForDummies
     Print "CharacterGeneratorForDummies"
 End Sub
 
+' Maybe just remove this. It's kinda pointless. It asks some questions and calculates a contested roll.
+' C1 dice pool, C1 difficulty, C2 dice pool, C2 difficulty, then rolls all the dice and does the math.
+' In practice it's just slower than rolling the dice
 Sub CombatComputer
     Print "CombatComputer"
 End Sub
 
+' Asks for a number of dice and a difficulty. Rolls the dice, calculates botches and successes.
 Sub DiceRoller
     Print "DiceRoller"
 End Sub
 
+' Like the character generator if you choose random for everything. Should do random names/ages too, but doesn't yet.
 Sub RandomCharacterGenerator
     Print "RandomCharacterGenerator"
 End Sub
 
+' This had a function at one point but got taken out. Will only come back if the disassembly can figure it out.
 Sub Choice6
     Print "Unnamed choice 6"
 End Sub
 
+' Like the character generator but for vehicles. Much simpler with fewer questions. Prints a vehicle sheet when done. Never finished and crashes mid way through currently.
 Sub VehicleGenerator
     Print "VehicleGenerator"
 End Sub
+
+' TODO: Look for other options that make sense in the menu. Random NPC generator. Spending experience points on a character. Some sort of character library.
 
 Sub PressAnyKeyToContinue ()
     While InKey$ = "": Wend
