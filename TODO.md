@@ -162,6 +162,10 @@
 * Consider removing the pad parameter from all the MakeFit* functions.
     * We're only ever using a single space char.
 * Support other screen sizes and running in a proper resizable terminal.
+* Check input types/validation on the old app.
+    * Is age a freeform string or not.
+    * How are the saved characters getting things like "lllllll" for a demeanor.
+    * How are the saved characters getting blank lines "________" for age/name/nature/demeanor/clan/...?
 
 # Reference
 * QB64 Wiki [https://qb64.com/wiki]

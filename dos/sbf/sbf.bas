@@ -1428,6 +1428,132 @@ End Sub
 Sub SaveCharacterSheet (ch As CharacterType)
     ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
     ' What do you want the file to be called? (default is CHAR1)?
+
+    'CHAR1.TXT
+    '/------------------------------------------------------------------------------\
+    '| Name: sadf                           | Sex: Male       Generation: 12        |
+    '| Clan: Brujah                         | Age: mmmmmm                           |
+    '|--------------------------------------| Player: fdsa                          |
+    '|              Attributes              | Chronicle: jfjf                       |
+    '|   Physical     Social      Mental    | Haven: kkkkkk                         |
+    '| Str. 5       App. 2       Int. 1     | Concept: llllll                       |
+    '| Dex. 3       Cha. 2       Per. 1     |---------------------------------------|
+    '| Sta. 2       Man. 4       Wit. 4     | Derangements:                         |
+    '|--------------------------------------| _____________________________________ |
+    '| Disciplines:                         | _____________________________________ |
+    '| Obtenebration                        | _____________________________________ |
+    '| Obtenebration                        | _____________________________________ |
+    '| Obtenebration                        | _____________________________________ |
+    '|------------------------------------------------------------------------------|
+    '| Beast:  8                            | Nature: Fanatic                       |
+    '| Willpower: 2                         | Demeanor: Architect                   |
+    '|------------------------------------------------------------------------------|
+    '|                                  Abilities                                   |
+    '|          Talents                  Skills                  Knowledges         |
+    '| Acting:       6            Animal Ken: 2              Bureaucracy:   1       |
+    '| Alertness:    2            Drive:      2              Computer:      2       |
+    '| Athletics:    2            Etiquette:  2              Finance:       1       |
+    '| Brawl:        1            Firearms:   1              Investigation: 1       |
+    '| Dodge:        1            Melee:      1              Law:           0       |
+    '| Empathy:      1            Music:      1              Linguistics:   0       |
+    '| Intimidation: 0            Repair:     0              Medecine:      0       |
+    '| Leadership:   0            Security:   0              Occult:        0       |
+    '| Streetwise:   0            Stealth:    0              Politics:      0       |
+    '| Subterfuge:   0            Survival:   0              Science:       0       |
+    '|------------------------------------------------------------------------------|
+    '| Backgrounds:                         | Virtues:                              |
+    '| Allies                               | Conscience:   0                       |
+    '| Contacts                             | Conviction:   3                       |
+    '| Contacts                             | Instinct:     5                       |
+    '| Fame                                 | Self-Control: 0                       |
+    '| Generation                           | Courage:      2                       |
+    '|--------------------------------------/                                       |
+    '|                                                                              |
+    '\------------------------------------------------------------------------------/
+    'CHAR2.TXT
+    '/------------------------------------------------------------------------------\
+    '| Name: _______________________________| Sex: Female     Generation: 13        |
+    '| Clan: Lasombra                       | Age: ________________________________ |
+    '|--------------------------------------| Player: _____________________________ |
+    '|              Attributes              | Chronicle: __________________________ |
+    '|   Physical     Social      Mental    | Haven: ______________________________ |
+    '| Str. 2       App. 3       Int. 3     | Concept: ____________________________ |
+    '| Dex. 1       Cha. 2       Per. 5     |---------------------------------------|
+    '| Sta. 3       Man. 3       Wit. 2     | Derangements:                         |
+    '|--------------------------------------| _____________________________________ |
+    '| Disciplines:                         | _____________________________________ |
+    '| Vicissitude                          | _____________________________________ |
+    '| Spiritus                             | _____________________________________ |
+    '| Auspex                               | _____________________________________ |
+    '|------------------------------------------------------------------------------|
+    '| Chivalry:  7                         | Nature: Autocrat                      |
+    '| Willpower: 3                         | Demeanor: Defender                    |
+    '|------------------------------------------------------------------------------|
+    '|                                  Abilities                                   |
+    '|          Talents                  Skills                  Knowledges         |
+    '| Acting:       0            Animal Ken: 0              Bureaucracy:   2       |
+    '| Alertness:    2            Drive:      0              Computer:      3       |
+    '| Athletics:    1            Etiquette:  1              Finance:       2       |
+    '| Brawl:        1            Firearms:   1              Investigation: 1       |
+    '| Dodge:        2            Melee:      1              Law:           0       |
+    '| Empathy:      0            Music:      0              Linguistics:   2       |
+    '| Intimidation: 1            Repair:     1              Medecine:      1       |
+    '| Leadership:   0            Security:   1              Occult:        1       |
+    '| Streetwise:   0            Stealth:    0              Politics:      0       |
+    '| Subterfuge:   2            Survival:   0              Science:       1       |
+    '|------------------------------------------------------------------------------|
+    '| Backgrounds:                         | Virtues:                              |
+    '| Contacts                             | Conscience:   2                       |
+    '| Influence                            | Conviction:   0                       |
+    '| Allies                               | Instinct:     0                       |
+    '| Herd                                 | Self-Control: 5                       |
+    '| Status                               | Courage:      3                       |
+    '|--------------------------------------/                                       |
+    '|                                                                              |
+    '\------------------------------------------------------------------------------/
+    'RANDY.TXT
+    '/------------------------------------------------------------------------------\
+    '| Name: Randy                          | Sex: Female     Generation: 12        |
+    '| Clan: Gangrel                        | Age: ________________________________ |
+    '|--------------------------------------| Player: _____________________________ |
+    '|              Attributes              | Chronicle: __________________________ |
+    '|   Physical     Social      Mental    | Haven: ______________________________ |
+    '| Str. 3       App. 1       Int. 2     | Concept: ____________________________         |
+    '| Dex. 6       Cha. 3       Per. 3     |---------------------------------------|
+    '| Sta. 1       Man. 2       Wit. 3     | Derangements:                         |
+    '|--------------------------------------| _____________________________________ |
+    '| Disciplines:                         | _____________________________________ |
+    '| Animalism                            | _____________________________________ |
+    '| Celerity                             | _____________________________________ |
+    '| Mortis                               | _____________________________________ |
+    '|------------------------------------------------------------------------------|
+    '| Devil:  7                            | Nature: Traditionalist                |
+    '| Willpower: 3                         | Demeanor: Bon vivant                  |
+    '|------------------------------------------------------------------------------|
+    '|                                  Abilities                                   |
+    '|          Talents                  Skills                  Knowledges         |
+    '| Acting:       1            Animal Ken: 0              Bureaucracy:   1       |
+    '| Alertness:    2            Drive:      0              Computer:      0       |
+    '| Athletics:    1            Etiquette:  0              Finance:       1       |
+    '| Brawl:        1            Firearms:   0              Investigation: 3       |
+    '| Dodge:        1            Melee:      0              Law:           1       |
+    '| Empathy:      1            Music:      0              Linguistics:   3       |
+    '| Intimidation: 1            Repair:     0              Medecine:      0       |
+    '| Leadership:   0            Security:   2              Occult:        2       |
+    '| Streetwise:   0            Stealth:    1              Politics:      2       |
+    '| Subterfuge:   1            Survival:   2              Science:       0       |
+    '|------------------------------------------------------------------------------|
+    '| Backgrounds:                         | Virtues:                              |
+    '| Retainers                            | Conscience:   0                       |
+    '| Contacts                             | Conviction:   2                       |
+    '| Retainers                            | Instinct:     5                       |
+    '| Generation                           | Self-Control: 0                       |
+    '| Herd                                 | Courage:       3                      |
+    '|--------------------------------------/                                       |
+    '|                                                                              |
+    '\------------------------------------------------------------------------------/
+
+
 End Sub
 
 Sub CharacterGenerator ()
