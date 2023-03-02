@@ -19,6 +19,7 @@ Const TRUE = Not FALSE
 
 Const DISCIPLINE_POINTS = 3
 Const BACKGROUND_POINTS = 5
+Const VIRTUE_POINTS = 7
 Const INITIAL_GENERATION = 13
 
 ' Each set of these index constants "NAME_*" should start at 1 and go up to NAMES_COUNT without leaving any holes.
@@ -103,6 +104,13 @@ Const DISCIPLINE_THAUMATURGY = 23
 Const DISCIPLINE_VICISSITUDE = 24
 Const DISCIPLINES_COUNT = 24
 Dim Shared Disciplines(1 To DISCIPLINES_COUNT) As String
+
+' Virtues
+Const VIRTUE_SELF_CONTROL = 1
+Const VIRTUE_COURAGE = 2
+Const VIRTUE_CONSCIENCE = 3
+Const VIRTUES_COUNT = 3
+Dim Shared Virtues(1 To VIRTUES_COUNT) As String
 
 ' These should probably be renamed like PHYSICAL_ATTRIBUTE_STRENGTH instead.
 Const ATTRIBUTE_STRENGTH = 1
@@ -413,6 +421,11 @@ Sub InitializeMemory
     Disciplines(DISCIPLINE_THAUMATURGY) = "Thaumaturgy"
     Disciplines(DISCIPLINE_VICISSITUDE) = "Vicissitude"
 
+    ' Virtues
+    Virtues(VIRTUE_SELF_CONTROL) = "Self-Control"
+    Virtues(VIRTUE_COURAGE) = "Courage"
+    Virtues(VIRTUE_CONSCIENCE) = "Conscience"
+
     ' Physical Attributes
     PhysicalAttributes(ATTRIBUTE_STRENGTH) = "Strength"
     PhysicalAttributeAbbreviations(ATTRIBUTE_STRENGTH) = "Str."
@@ -656,7 +669,7 @@ Function MakeFitR$ (text As String, length As Integer, pad As String)
 End Function
 
 Function MakeFitB$ (prefix As String, suffix As String, length As Integer, pad As String)
-    MakeFitB$ = MakeFitL$(MakeFitL$(prefix, length - Len(suffix), pad), length, pad)
+    MakeFitB$ = MakeFitL$(MakeFitL$(prefix, length - Len(suffix), pad) + suffix, length, pad)
 End Function
 
 Function MaxI (val1 As Integer, val2 As Integer)
@@ -666,6 +679,17 @@ Function MaxI (val1 As Integer, val2 As Integer)
         MaxI = val2
     End If
 End Function
+
+Sub SetVirtue (ch As CharacterType, index As Integer, value As Integer)
+    Select Case index
+        Case VIRTUE_SELF_CONTROL
+            ch.selfControl = value
+        Case VIRTUE_COURAGE
+            ch.courage = value
+        Case VIRTUE_CONSCIENCE
+            ch.conscience = value
+    End Select
+End Sub
 
 Sub SetDiscipline (ch As CharacterType, index As Integer, value As Integer)
     Select Case index
@@ -719,6 +743,19 @@ Sub SetDiscipline (ch As CharacterType, index As Integer, value As Integer)
             ch.discipline_vicissitude = value
     End Select
 End Sub
+
+Function GetVirtue (ch As CharacterType, index As Integer)
+    value = 0
+    Select Case index
+        Case VIRTUE_SELF_CONTROL
+            value = ch.selfControl
+        Case VIRTUE_COURAGE
+            value = ch.courage
+        Case VIRTUE_CONSCIENCE
+            value = ch.conscience
+    End Select
+    GetVirtue = value
+End Function
 
 Function GetDiscipline (ch As CharacterType, index As Integer)
     Select Case index
@@ -774,8 +811,16 @@ Function GetDiscipline (ch As CharacterType, index As Integer)
 End Function
 
 Sub FillDisciplines (ch As CharacterType, disciplines() As Integer)
+    ReDim disciplines(1 To DISCIPLINES_COUNT) As Integer
     For index = 1 To DISCIPLINES_COUNT
         disciplines(index) = GetDiscipline(ch, index)
+    Next
+End Sub
+
+Sub FillVirtues (ch As CharacterType, values() As Integer)
+    ReDim values(1 To VIRTUES_COUNT) As Integer
+    For index = 1 To VIRTUES_COUNT
+        values(index) = GetVirtue(ch, index)
     Next
 End Sub
 
@@ -1109,15 +1154,16 @@ Sub NewCharacter (ch As CharacterType)
     ch.clan = 0
     ch.nature = 0
     ch.demeanor = 0
-    ch.conscience = 0
-    ch.selfControl = 0
-    ch.courage = 0
     ch.conviction = 0
     ch.instinct = 0
     ch.generation = 13
     ch.roadName = ""
     ch.roadValue = 0
     ch.willpower = 0
+    ' Virtues
+    ch.selfControl = 1
+    ch.courage = 1
+    ch.conscience = 1
 
     ' Arrays/Objects
     ' Abilities (Talents/Skills/Knowledges)
@@ -1329,7 +1375,6 @@ Sub CGGetBackgrounds (ch As CharacterType)
     Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
     While backgroundPoints > 0
         Cls
-        Print "Which background do you want to spend 1 of your " + itos$(backgroundPoints) + " background points on?"
         Call FillBackgrounds(ch, backgroundValues())
         background = ChooseStringIdWithValues(Backgrounds(), backgroundValues(), ms, BACKGROUNDS_COUNT, "Which background do you want to spend 1 of your " + itos$(backgroundPoints) + " points on?")
         Call SetBackground(ch, background, GetBackground(ch, background) + 1)
@@ -1355,14 +1400,23 @@ Sub CGGetRoad (ch As CharacterType)
 End Sub
 
 Sub CGSpendVirtuePoints (ch As CharacterType)
-    ' TODO: Spend virtue points
-    'Conscience   1
-    'Self-Control 1
-    'Courage      1
-    'Which virtue do you wish to add one of your 7 points to?
-    ch.conscience = 1
-    ch.selfControl = 4
-    ch.courage = 5
+    ' Spend virtue points
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    virtuePoints = GetVirtuePoints
+
+    Dim values(1 To VIRTUES_COUNT) As Integer
+    While virtuePoints > 0
+        Call FillVirtues(ch, values())
+        virtue = ChooseStringIdWithValues(Virtues(), values(), ms, VIRTUES_COUNT, "Which virtue do you want to spend 1 of your " + itos$(virtuePoints) + " points on?")
+        Call SetVirtue(ch, virtue, GetVirtue(ch, virtue) + 1)
+        virtuePoints = virtuePoints - 1
+    Wend
+
+    ' These are VtDA specific. Conscience/Conviction, Self-Control/Instinct, and Courage are the virtues there.
+    ' TODO: figure out what to do about them.
+    ch.conviction = 2
+    ch.instinct = 3
 End Sub
 
 ' Ignore this warning ch is not used yet because the sub is not implemented yet.
@@ -1381,10 +1435,6 @@ Sub CharacterGenerator ()
     Call CGGetBackgrounds(ch)
     Call CGGetRoad(ch)
     Call CGSpendVirtuePoints(ch)
-
-    ' TODO: We don't know what to call these two. Figure that out and maybe make it a sub. These next few could all be one sub if related.
-    ch.conviction = 2
-    ch.instinct = 3
 
     ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
     ' Generation starts at 13 and goes down 1 point per point of the "generation" background.
@@ -1452,9 +1502,9 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(ch.player$, 29, " ") + " บ"
     Print "บ              Attributes              บ Chronicle: " + MakeFitL$(ch.chronicle$, 26, " ") + " บ"
     Print "บ   Physical     Social      Mental    บ Haven: " + MakeFitL$(ch.haven$, 30, " ") + " บ"
-    Print "บ Str. " + MakeFitL$(Str$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(Str$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(Str$(ch.attr_intelligence), 5, " ") + " บ Concept: " + MakeFitL$(ch.concept$, 28, " ") + " บ"
-    Print "บ Dex. " + MakeFitL$(Str$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(Str$(ch.attr_charisma), 7, " ") + " Per. " + MakeFitL$(Str$(ch.attr_perception), 5, " ") + " ฬอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ Sta. " + MakeFitL$(Str$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(Str$(ch.attr_manipulation), 7, " ") + " Wit. " + MakeFitL$(Str$(ch.attr_wits), 5, " ") + " บ Derangements:                         บ"
+    Print "บ Str. " + MakeFitL$(itos$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(itos$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(itos$(ch.attr_intelligence), 5, " ") + " บ Concept: " + MakeFitL$(ch.concept$, 28, " ") + " บ"
+    Print "บ Dex. " + MakeFitL$(itos$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(itos$(ch.attr_charisma), 7, " ") + " Per. " + MakeFitL$(itos$(ch.attr_perception), 5, " ") + " ฬอออออออออออออออออออออออออออออออออออออออน"
+    Print "บ Sta. " + MakeFitL$(itos$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(itos$(ch.attr_manipulation), 7, " ") + " Wit. " + MakeFitL$(itos$(ch.attr_wits), 5, " ") + " บ Derangements:                         บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออน Regression,__________________________ บ"
     Print "บ Disciplines:                         บ _____________________________________ บ"
     Print "บ " + MakeFitL$(disciplineStrings(0), 36, " ") + " บ _____________________________________ บ"
@@ -1475,15 +1525,16 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Print "บ " + MakeFitC$("Abilities", 76, " ") + " บ"
     Print "บ " + MakeFitC$("Talents", 25, " ") + " " + MakeFitC$("Skills", 25, " ") + " " + MakeFitC$("Knowledges", 24, " ") + " บ"
     For index = 1 To 10
-        Print "บ " + MakeFitC(MakeFitL$(Talents(index) + ":", 14, " ") + Str$(GetTalent(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Skills(index) + ":", 14, " ") + Str$(GetSkill(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Knowledges(index) + ":", 14, " ") + Str$(GetKnowledge(ch, index)), 24, " ") + " บ"
+        Print "บ " + MakeFitC(MakeFitL$(Talents(index) + ":", 14, " ") + itos$(GetTalent(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Skills(index) + ":", 14, " ") + itos$(GetSkill(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Knowledges(index) + ":", 14, " ") + itos$(GetKnowledge(ch, index)), 24, " ") + " บ"
     Next
     Print "ฬออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออน"
     Print "บ Backgrounds:                         บ Virtues:                              บ"
-    Print "บ " + MakeFitL$(backgroundStrings(0), 36, " ") + " บ " + MakeFitL$(MakeFitL$("Conscience:", 14, " ") + MakeFitR$(Str$(ch.conscience), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(1), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Conviction:", 14, " ") + MakeFitR$(Str$(ch.conviction), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(2), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Instinct:", 14, " ") + MakeFitR$(Str$(ch.instinct), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(3), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Self-Control:", 14, " ") + MakeFitR$(Str$(ch.selfControl), 2, " "), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(4), 36, " ") + " บ " + MakeFitL$(MakeFitR$("Courage:", 14, " ") + MakeFitR$(Str$(ch.courage), 2, " "), 37, " ") + " บ"
+    Print "                                         " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(0), 36, " ") + " บ " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(1), 36, " ") + " บ " + MakeFitB$("Conviction:", itos$(ch.conviction), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(2), 36, " ") + " บ " + MakeFitB$("Instinct:", itos$(ch.instinct), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(3), 36, " ") + " บ " + MakeFitB$("Self-Control:", itos$(ch.selfControl), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(4), 36, " ") + " บ " + MakeFitB$("Courage:", itos$(ch.courage), 37, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
     Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
     Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
@@ -1659,6 +1710,7 @@ Sub FillAttributeAbbreviationsInGroup (group As Integer, abbreviations() As Stri
 End Sub
 
 Sub Test
+    'End
 End Sub
 
 Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer, ignoreValue As Integer)
@@ -1768,3 +1820,8 @@ End Function
 Function GetBackgroundPoints ()
     GetBackgroundPoints = BACKGROUND_POINTS
 End Function
+
+Function GetVirtuePoints ()
+    GetVirtuePoints = VIRTUE_POINTS
+End Function
+

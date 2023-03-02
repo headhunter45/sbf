@@ -1,9 +1,6 @@
 # High Priority
-* Calculate conscience.
 * Calculate conviction.
 * Calculate instinct.
-* Calculate self-control.
-* Calculate courage.
 * Calculate roadValue aka humanity in VtM, and something else in WtA.
 * Calculate willpower.
 * Input/Print derangements. These are only for Malkavian vampires.
@@ -14,7 +11,6 @@
     * VtDA has malks so it would need this.
     * WtA doesn't obviously have them, but it may have something else that requires a specific question/addition to CharacterType.
     * Make this generic if possible.
-* Spending virtue points
 
 # Low Priority
 * Add freebie points see page 92 VtM
@@ -40,12 +36,21 @@
         * Would be a neat thing to do it by character age where an old enough VtM character either gets additional access to VtDA stuff or for certain things only has access to VtDA stuff.
         * Allowing them to also spend points on any of the VtDA talents/skills/knowledges/backgrounds/disciplines, but only let them choose VtDA clans.
 * Extract the menu stuff to it's own bas file.
+    * https://qb64.com/wiki/TYPE
+    * https://qb64.com/wiki/$INCLUDE
+        * lib.BI - Type definitions. Include at the beginning of program.
+            * Include any dim, const, shared, or data.
+        * lib.BM - Sub/Function definitions. Include at the end of program.
     * pm, PrintMenu, PrintMenuWithValues
     * MenuItem/NewMenuItem
     * MenuStyle/NewMenuStyle
     * GetRandomMenuItem
     * GetChoice?
     * GetRandomInt?    
+* Extract each of the top-level menu items into their own files.
+* Extract CharacterType and it's associated funcs/subs to their own files. (CharacterType.bi, CharacterType.bm)
+* Extract show character sheet and save character to their own files or maybe put them in the CharacterType files.
+* Extract the ui utility funcs/subs into their own files. MakeFit*, itos$, ...
 * Add support for roads.
     * VtM only has one. Humanity.
         * If there is only one like this then choose it and don't ask.
@@ -85,8 +90,9 @@
     * Maybe just say fuck it and leave that up to the user to know it's too long when it gets cut off.
     * We also like keeping it like this because it suggests "other" genders better than a freeform string.
         * In a text-based ui it may seem like male/female are the expected options and users would likely not even consider that there are other options.
-* Move the ruleset dims/constants/getters/setters out into separate bas files.
-    * Probably 1 file per system
+* Move the ruleset dims/constants/getters/setters out into separate bi/bm files.
+    * Probably 1 pair of files per system
+    * Really wish we had function pointers so each ruleset object could be a bunch of fn pointers instead of each stub method being a giant ass select case.
     * Maybe keep stubs for the functions in the main bas that call the rulset specific versions.
         * This would work if we can't sanely load/unload the other bas files at runtime.
         * Create a Rulesets array and RULESET_* constants.
@@ -97,3 +103,65 @@
             * Imagine telling someone you've created to many classes of character. You need to close and reopen the program if you want to create any new classes, but you can create more of the old ones.
 
 # Uncategorized
+* Remove count being passed in and instead check UBOUND and LBOUND.
+    * Add an assert for when labels() and values() arrays don't have the same bounds.
+* Look into DECLARE LIBRARY to add ruleset plugin support.
+* Consider using _MEM to put arrays into CharacterType for things like attributes, abilities, disciplines, backgrounds, ...
+* Add an icon with $EXEICON
+* Look into _TITLE.
+    * Assuming it lets us set the window title.
+    * Wiki page currently 404's
+        * https://qb64.com/wiki/_TITLE
+        * https://qb64.com/wiki/_TITLE$
+* Add version info with $VERSIONINFO:key=value
+    * Keys are
+        * Comments
+        * CompanyName
+        * FileDescription
+        * FileVersion
+        * InternalName
+        * LegalCopyright
+        * LegalTrademarks
+        * OriginalFilename
+        * ProductName
+        * ProductVersion
+        * Web
+        * FILEVERSION#
+        * PRODUCTVERSION#
+        * `$VERSIONINFO:CompanyName=Your company name goes here`
+        * `$VERSIONINFO:FILEVERSION#=1,0,0,0`
+        * `$VERSIONINFO:PRODUCTVERSION#=1,0,0,0`
+* Look into error logging.
+    * Ideally create an abstracted LogError sub that throws an error in debug mode but silently does nothing in a non-debug build.
+    * _ASSERT
+    * https://qb64.com/wiki/ERROR
+    * https://qb64.com/wiki/ERROR-Codes
+    * Custom error codes from 100 to 199
+    * Maybe use 27 - Out of paper.
+* Use LogError in all of the SELECT CASE blocks without a CASE ELSE to throw an unknown index error.
+* Sort virtues better on the character sheet.
+    * Why are conviction and instinct between them?
+* Start work on ports
+    * Mainly the C++ port.
+    * Consider a python port to refresh my python skills.
+    * Assembly port?
+        * For what arch though? x86, x86_64, aarch64
+    * NDS/3DS
+    * PSP/PSVita
+    * Wii/WiiU
+    * Xbox One
+    * PS4/PS5? Not sure if there's an easily available dev mode.
+    * Switch hehe
+    * Maybe nes, but text input will suck.
+    * Add a GUI. ick.
+* MakeFitS
+    * Spread inputs
+    * `MakeFitS$(strings$ as string, length as integer, padChar as string)
+    * No real good way to use this without array literals.
+    * Building an array of strings to call it just makes the code less readable
+* Consider removing the pad parameter from all the MakeFit* functions.
+    * We're only ever using a single space char.
+* Support other screen sizes and running in a proper resizable terminal.
+
+# Reference
+* QB64 Wiki [https://qb64.com/wiki]
