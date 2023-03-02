@@ -1115,31 +1115,25 @@ Sub NewCharacter (ch As CharacterType)
     ch.willpower = 0
 
     ' Arrays/Objects
-    ' Disciplines
-    For index = 1 To DISCIPLINES_COUNT
-        Call SetDiscipline(ch, index, 0)
-    Next
-    ' Attributes
-    For GroupIndex = 1 To ATTRIBUTE_GROUPS_COUNT
-        For AttributeIndex = 1 To GetNumAttributesInGroup(GroupIndex)
-            Call SetAttributeValue(ch, GroupIndex, AttributeIndex, 1)
+    ' Abilities (Talents/Skills/Knowledges)
+    For groupIndex = 1 To ABILITY_GROUPS_COUNT
+        For index = 1 To GetNumItemsForAbilityGroup(groupIndex)
+            Call SetAbilityValue(ch, groupIndex, index, 0)
         Next
     Next
-    ' Talents
-    For index = 1 To TALENTS_COUNT
-        Call SetTalent(ch, index, 0)
-    Next
-    ' Skills
-    For index = 1 To SKILLS_COUNT
-        Call SetSkill(ch, index, 0)
-    Next
-    ' Knowledges
-    For index = 1 To KNOWLEDGES_COUNT
-        Call SetKnowledge(ch, index, 0)
+    ' Attributes
+    For groupIndex = 1 To ATTRIBUTE_GROUPS_COUNT
+        For index = 1 To GetNumAttributesInGroup(groupIndex)
+            Call SetAttributeValue(ch, groupIndex, index, 1)
+        Next
     Next
     ' Backgrounds
     For index = 1 To BACKGROUNDS_COUNT
         Call SetBackground(ch, index, 0)
+    Next
+    ' Disciplines
+    For index = 1 To DISCIPLINES_COUNT
+        Call SetDiscipline(ch, index, 0)
     Next
 End Sub
 

@@ -18,13 +18,6 @@
 * Spending virtue points
 
 # Low Priority
-* Calculating values not directly queried for.
-    * Conviction
-    * Instinct
-    * Generation
-    * Willpower
-    * Humanity/RoadValue
-* Change character initializer to use abilityGroups/abilities instead of individual setTalent, setSkill, setKnowledge
 * Rename items, abilities/abilities, abilityGroups rename the shared arrays and constants too
 * Change CharacterType to use fields like attribute_1_1 instead of attr_strength
     * Same for abilities like knowledge_computer -> ability_3_2, background_allies -> background_1, and discipline_obeah -> discipline_13.
