@@ -19,6 +19,7 @@ Const TRUE = Not FALSE
 
 Const DISCIPLINE_POINTS = 3
 Const BACKGROUND_POINTS = 5
+Const INITIAL_GENERATION = 13
 
 ' Each set of these index constants "NAME_*" should start at 1 and go up to NAMES_COUNT without leaving any holes.
 ' This also goes the same for sub indexes like NAME_GROUP_SUBGROUP_* each NAME_GROUP_* set should have GetNumNamesInGroup(NAME_GROUP) items.
@@ -654,6 +655,10 @@ Function MakeFitR$ (text As String, length As Integer, pad As String)
     MakeFitR = Right$(String$(length, pad) + text, length)
 End Function
 
+Function MakeFitB$ (prefix As String, suffix As String, length As Integer, pad As String)
+    MakeFitB$ = MakeFitL$(MakeFitL$(prefix, length - Len(suffix), pad), length, pad)
+End Function
+
 Function MaxI (val1 As Integer, val2 As Integer)
     If (val1 > val2) Then
         MaxI = val1
@@ -1246,23 +1251,12 @@ Sub CGGetAttributes (ch As CharacterType)
         ranks(nextGroup) = i
         rankSum = rankSum + i + 1
         groupSum = groupSum + nextGroup
-        Print "rank: " + itos$(i) + ", nextGroup: " + itos$(nextGroup) + ", rankSum: " + itos$(rankSum) + ", groupSum: " + itos$(groupSum)
-        Input a
     Next
     ' General formula for last choice given 1 to count based indexing is this
     ' (Sum from 1 to count) - (Sum of all previous choice IDs)
     ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
-    Print "rank: " + itos$(i) + ", nextGroup: " + itos$(nextGroup) + ", rankSum: " + itos$(rankSum) + ", groupSum: " + itos$(groupSum) + ", lastGroup: " + itos$(lastGroup)
     lastGroup = rankSum - groupSum
     ranks(lastGroup) = ATTRIBUTE_GROUPS_COUNT
-    For i = 1 To ATTRIBUTE_GROUPS_COUNT
-        Print "ranks(" + itos$(i) + "): " + itos$(ranks(i))
-    Next
-
-    For i = 1 To ATTRIBUTE_GROUPS_COUNT
-        Print "ranks(" + AttributeGroups(i) + "): " + itos$(ranks(i))
-    Next
-    Input a
 
     ' Spend attribute points
     For group = 1 To ATTRIBUTE_GROUPS_COUNT
@@ -1310,14 +1304,6 @@ Sub CGGetAbilities (ch As CharacterType)
     ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
     lastGroup = rankSum - groupSum
     ranks(lastGroup) = ABILITY_GROUPS_COUNT
-    For i = 1 To ABILITY_GROUPS_COUNT
-        Print "ranks(" + itos$(i) + "): " + itos$(ranks(i))
-    Next
-
-    For i = 1 To ABILITY_GROUPS_COUNT
-        Print "ranks(" + AbilityGroups(i) + "): " + itos$(ranks(i))
-    Next
-    Input a
 
     ' Spend ability points
     For group = 1 To ABILITY_GROUPS_COUNT
@@ -1392,6 +1378,7 @@ Sub CharacterGenerator ()
     Call CGGetDisciplines(ch)
     Call CGGetAttributes(ch)
     Call CGGetAbilities(ch)
+    Call CGGetBackgrounds(ch)
     Call CGGetRoad(ch)
     Call CGSpendVirtuePoints(ch)
 
@@ -1400,7 +1387,8 @@ Sub CharacterGenerator ()
     ch.instinct = 3
 
     ' TODO: figure out how to actually calculate generation; seems like a combination of 13 or 15 depending on clan and your generation background count
-    ch.generation = 13
+    ' Generation starts at 13 and goes down 1 point per point of the "generation" background.
+    ch.generation = INITIAL_GENERATION - GetBackground(ch, BACKGROUND_GENERATION)
 
     ' TODO: figure out how to calculate willpower
     ch.willpower = 10
@@ -1459,7 +1447,7 @@ Sub ShowCharacterSheet (ch As CharacterType)
     ' TODO: Make the string fields show a full width "_" string for "empty lines" when printed.
     Cls
     Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
-    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Sex: " + MakeFitL$(Genders(ch.gender), 10, " ") + " Generation: " + MakeFitL$(itos$(ch.generation), 9, " ") + " บ"
+    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Gender: " + MakeFitL$(Genders(ch.gender), 14, " ") + " Generation: " + MakeFitR$(itos$(ch.generation), 2, " ") + " บ"
     Print "บ Clan: " + MakeFitL$(Clans(ch.clan), 30, " ") + " บ Age: " + MakeFitL$(ch.age$, 32, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(ch.player$, 29, " ") + " บ"
     Print "บ              Attributes              บ Chronicle: " + MakeFitL$(ch.chronicle$, 26, " ") + " บ"
@@ -1481,7 +1469,7 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Print "บ                                                                              บ"
     Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
     Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
-    While InKey$ = "": Wend
+    Call PressAnyKeyToContinue
 
     Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
     Print "บ " + MakeFitC$("Abilities", 76, " ") + " บ"
@@ -1499,7 +1487,7 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
     Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
     Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
-    While InKey$ = "": Wend
+    Call PressAnyKeyToContinue
 End Sub
 
 Sub FillAttributeValues (ch As CharacterType, values() As Integer, groupIndex As Integer)
@@ -1540,6 +1528,10 @@ End Sub
 
 Sub VehicleGenerator
     Print "VehicleGenerator"
+End Sub
+
+Sub PressAnyKeyToContinue ()
+    While InKey$ = "": Wend
 End Sub
 
 Function GetNumAttributesInGroup (index As Integer)

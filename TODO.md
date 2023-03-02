@@ -1,5 +1,4 @@
 # High Priority
-* Calculate generation.
 * Calculate conscience.
 * Calculate conviction.
 * Calculate instinct.
@@ -18,12 +17,16 @@
 * Spending virtue points
 
 # Low Priority
+* Add freebie points see page 92 VtM
+    * After other generation steps allow spending the freebie points on adding dots to the sheet. This should be a nested menu like "What do you want to spend points on? -> Which of those things do you want to add a dot to?
+    * We probably want to show the character sheet before asking or give the user a way to display it in the main menu of this section.
 * Rename items, abilities/abilities, abilityGroups rename the shared arrays and constants too
 * Change CharacterType to use fields like attribute_1_1 instead of attr_strength
     * Same for abilities like knowledge_computer -> ability_3_2, background_allies -> background_1, and discipline_obeah -> discipline_13.
     * This would let us hard-code a given number of those fields so other format plugins can use up to that number at least.
 * See if other combinations of clan and other variables cause missed questions.
 * Add blood pool to sheet and figure out what should replace it for non-vampires.
+    * Generation affects blood pool page 173 VtM.
 * Create a way to choose between VtM, VtDA, and WtA then load the appropriate lookup tables.
     * Completely generic plugin support would be great, but not possible.
     * Have specific predefined rulsets in the app.
