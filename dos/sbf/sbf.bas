@@ -3,8 +3,6 @@ $Debug
 ' TODO: See if other combinations of clan and other variables cause sub questions.
 ' TODO: Calculate generation
 ' TODO: Calculate conscience
-' TODO: Calculate conviction
-' TODO: Calculate instinct
 ' TODO: Calculate self-control
 ' TODO: Calculate courage
 ' TODO: Calculate humanity/road
@@ -225,9 +223,6 @@ Type CharacterType
     roadValue As Integer
     willpower As Integer
     bloodPool As Integer
-    ' Special but don't know why
-    conviction As Integer
-    instinct As Integer
     ' Disciplines
     discipline_animalism As Integer
     discipline_auspex As Integer
@@ -1155,8 +1150,6 @@ Sub NewCharacter (ch As CharacterType)
     ch.clan = 0
     ch.nature = 0
     ch.demeanor = 0
-    ch.conviction = 0
-    ch.instinct = 0
     ch.generation = 13
     ch.roadName = ""
     ch.roadValue = 0
@@ -1414,11 +1407,6 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
         Call SetVirtue(ch, virtue, GetVirtue(ch, virtue) + 1)
         virtuePoints = virtuePoints - 1
     Wend
-
-    ' These are VtDA specific. Conscience/Conviction, Self-Control/Instinct, and Courage are the virtues there.
-    ' TODO: figure out what to do about them.
-    ch.conviction = 2
-    ch.instinct = 3
 End Sub
 
 Sub CGSpendFreebiePoints (ch As CharacterType)
@@ -1668,10 +1656,10 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Print "บ Backgrounds:                         บ Virtues:                              บ"
     Print "                                         " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, " ") + " บ"
     Print "บ " + MakeFitL$(backgroundStrings(0), 36, " ") + " บ " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(1), 36, " ") + " บ " + MakeFitB$("Conviction:", itos$(ch.conviction), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(2), 36, " ") + " บ " + MakeFitB$("Instinct:", itos$(ch.instinct), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(3), 36, " ") + " บ " + MakeFitB$("Self-Control:", itos$(ch.selfControl), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(4), 36, " ") + " บ " + MakeFitB$("Courage:", itos$(ch.courage), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(1), 36, " ") + " บ " + MakeFitB$("Self-Control:", itos$(ch.selfControl), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(2), 36, " ") + " บ " + MakeFitB$("Courage:", itos$(ch.courage), 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(3), 36, " ") + " บ " + MakeFitL$("", 37, " ") + " บ"
+    Print "บ " + MakeFitL$(backgroundStrings(4), 36, " ") + " บ " + MakeFitL$("", 37, " ") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
     Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
     Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"

@@ -1,6 +1,4 @@
 # High Priority
-* Calculate conviction.
-* Calculate instinct.
 * Calculate roadValue aka humanity in VtM, and something else in WtA.
 * Calculate willpower.
 * Input/Print derangements. These are only for Malkavian vampires.
@@ -140,7 +138,6 @@
     * Maybe use 27 - Out of paper.
 * Use LogError in all of the SELECT CASE blocks without a CASE ELSE to throw an unknown index error.
 * Sort virtues better on the character sheet.
-    * Why are conviction and instinct between them?
 * Start work on ports
     * Mainly the C++ port.
     * Consider a python port to refresh my python skills.
@@ -169,3 +166,265 @@
 
 # Reference
 * QB64 Wiki [https://qb64.com/wiki]
+
+# Charcter Creation Process from VtDA
+## Step One
+* Concept
+* Clan
+* Nature
+* Demeanor
+* Road
+
+## Step Two
+* Attribute Priorities
+    * Physical/Social/Mental
+    * 7/5/3 Points
+* Spend Ability Points
+
+## Step Three
+* Ability Priorities
+    * Talents/Skills/Knowledges
+    * 13/9/5
+    * No ability higher than e
+
+## Step Four
+* Disciplines (4)
+* Backgrounds (5)
+* Virtues (7)
+
+## Step Five
+* Calculate These
+    * Via
+    * Willpower
+    * Blood Pool
+
+# Archetypes (from page 102)
+* Autocrat: Stability requires order. Bring it about.
+* Barbarian: Civilization is a joke; honor is everything. Caretaker: Suffering is everywhere; you must temper it with love. Celebrant: Something fills you with joy, and you cannot hide that pleasure.
+* Child: You?re young, or at least appear to be so.
+* Defender: The meek must be protected from the wicked by the strong.
+* Fanatic: Your cause is everything to you.
+* Gallant: Grace is all that counts; romance is your ideal, and God?s (or the Devil?s) will your pleasure.
+* Innovator: There is always a better way to do something. Your task is to bring it about.
+* Jester: There is too much pain in the world to endure without laughter. You make a mockery of sadness.
+* Judge: You seek justice for everyone.
+* Loner: You?ve never fit in and never will.
+* Monster: God has demanded that you play the beast; who are you to argue?
+* Penitent: Your sins can only be forgiven after you prove your true worth.
+* Rebel: You?re sick of being ordered around! Hide your feelings well and work for the time of change.
+* Rogue: To hell with rules, to hell with everyone! Life (or unlife) is yours to plunder.
+* Survivor: No matter what storms sweep through, you will always prevail.
+* Tyrant: The only way to get things done is to do them your way! All other paths are folly.
+
+# Sample Concepts (from page 102)
+* Artisan ? limner, musician, embroiderer, weaponmaster
+* Beggar ? cripple, escaped slave, debtor, mutilated felon, veteran
+* Clergy ? monk, priest, bishop, nun, laity, servant, student, mystic
+* Craftsman ? smith, tailor/seamstress, stonecutter, armorer
+* Dispossessed ? refugee, Jew, Moor, foreigner, Celt, disinherited noble, slave
+* Heretic ? pagan, unorthodox Christian, Infernalist, witch, occultist, sorcerer
+* Knight ? squire, errant, courtier, poor knight
+* Lowlife ? drunkard, prostitute, moneylender, traveling player, brawler, defrocked clergyman
+* Nobility ? baron(ess), royal heir, crusader, bastard, rake
+* Outlander ? barbarian, Oriental, traveler, Moslem, spy, slave, caravaner
+* Peasant ? servant, farmer, shepherd, stablehand, tavern girl, serf
+* Pilgrim ? crusader, penitent, mad monk, palmer
+* Retainer ? huntsman, ranger, seneschal, bard, sergeant- at-arms, torturer, lady-in-waiting, steward, diplomat
+* Scholar ? student, scribe, physician, alchemist, sage, theologian
+* Soldier ? man-at-arms, mercenary, grizzled vet, guard, assassin
+* Tradesman ? bard, innkeeper, traveling trader, animal trainer
+* Wanderer ? vagabond, thief, bard, exile, camp follower
+* Youth ? runaway, child, apprentice, heir, squire, urchin
+
+## Roads (from page 102, see page 113)
+* Road of the Beast: Feed the Beast, that it will not break its chains. * Road of Blood: Vampiric blood grants the power for revenge. * Road of Chivalry: Treat your equals with honor and your betters with respect.
+* Road of the Devil: We are created evil and must play our part. * Road of Heaven: God made us vampires to exact His wrath. * Road of Humanity: The struggle to maintain one?s humanity. * Road of Paradox: Existence is a lie; change reality for the better.
+* Road of Typhon: Sin and corruption are the keys to under- standing.
+
+## Clans (from page 103)
+*  Assamites: The mysterious ?Saracens? of the Middle East have perfected the art of the silent kill.
+*  Brujah: Philosophers, scholars and athletes, the fractious ?zealots? pursue their dream of a perfect society.
+*  Cappadocians: Seeking the wisdom of the grave, the ?graverob- bers? call on the spirits of the dead for enlightenment.
+*  Followers of Set: Originally hailing from Egypt, the ?serpents? spread corruption and vice in their path.
+*  Gangrel: Wanderers and rustics, the ?animals? are closer to the beasts of the forests than to any of their Cainite kin.
+*  Lasombra: Masters of darkness and shadows, the ?magisters? seek to control mortal and vampiric society alike.
+*  Malkavians: Cursed with insanity, the ?madmen? enjoy a surreal and disturbing insight.
+*  Nosferatu: Hideous beyond words, the ostracized ?lepers? are spies and informants without equal.
+*  Ravnos: Wandering vagabonds and hucksters, the ?charlatans? gleefully practice their arts of deception and theft.
+*  Toreador: Lovers of art and beauty, the ?artisans? freely indulge their tastes for the aesthetic.
+*  Tremere: A recent and insular clan, the sorcerous ?usurpers? are struggling to establish themselves.
+*  Tzimisce: Terrible Slavic fleshcrafters, the ?fiends? mercilessly rule over their mortal subjects.
+*  Ventrue: Imperious and commanding, the ?patricians? consider it their duty to lead vampiric society.
+*  Caitiff: The rare and luckless Cainites with no clan are outcasts and disgraced.
+
+## Backgrounds (from page 103)
+*  Allies: Human confederates, usually family or friends.
+*  Contacts: The number of information sources the character possesses.
+*  Generation: How far removed from Caine the character is. *  Herd: The vessels to which the character has free and safe access. *  Influence: The character?s political power within mortal society. *  Mentor: The Cainite patron who advises and supports the character.
+*  Resources: Wealth, belongings and monthly income. *  Retainers: Followers, guards and servants.
+*  Status: The character?s standing in undead society.
+
+## Disciplines (from page 103)
+*  Animalism: Supernatural affinity with and control of animals. *  Auspex: Extrasensory perception, awareness and premonitions. *  Celerity: Supernatural quickness and reflexes.
+*  Chimerstry: The ability to create illusions and hallucinations. *  Dementation: The ability to pass madness on to a victim.
+*  Dominate: Mind control practiced through the piercing gaze. *  Fortitude: Unearthly toughness, even to the point of resisting fire and sunlight.
+*  Mortis: The supernatural power to control the process of death. *  Obfuscate: The ability to remain obscure and unseen, even in crowds.
+*  Obtenebration: The unearthly control over shadows.
+*  Potence: The Discipline of physical vigor and strength.
+*  Presence: The ability to attract, sway and control crowds.
+*  Protean: Shapechanging ? from growing claws to melding with the earth.
+*  Quietus: The Assamites? arts of the silent kill.
+*  Serpentis: The reptilian, corruptive Discipline of the Followers of Set.
+*  Thaumaturgy: The study and practice of sorcery.
+*  Vicissitude: The Tzimisce art of flesh-shaping.
+
+## Freebie Points (from page 103)
+|Trait|Cost|
+|-|-|
+|Attributes|5 per dot|
+|Abilities|2 per dot|
+|Backgrounds|1 per dot|
+|Willpower|1 per dot|
+|Disciplines|7 per dot|
+|Virtues|2 per dot|
+|Roads|1 per dot|
+
+## Experience Costs
+
+|Trait|Cost|
+|-|-|
+|New Ability|3|
+|New Thaumaturgy Path|7|
+|New Discipline|10|
+|Willpower|Current Rating|
+|Road|Current Rating x2|
+|Ability|Current Rating x2|
+|Attribute|Current Rating x4|
+|Thaumaturgy Path (primary)|Current Rating x4|
+|Thaumaturgy Path (secondary)|Current Rating x5|
+|Clan Discipline|Current Rating x5|
+|Other Discipline|Current Rating x7|
+
+# Questions and Answers (from pages 107-100)
+* How old are you?
+    * When were you born?
+    * When were you embraced?
+* What was your mortal life like?
+* When did you first meet a vampire?
+* Who was your sire?
+* How do you feel about mortals?
+* How did you begin to look at yourself?
+* How did you meet the rest of your coterie?
+* Where is your territory?
+* What drives you?
+
+
+* Example Filled In Character Sheet page 106
+* Archetype descriptions pages 109-113
+* Road descriptions pages 113-117
+* Attribute descriptions pages 117-119
+* Ability descriptions pages 119-128
+    * Talents pages 119-122
+    * Skills pages 122-125
+    * Knowledges pages 125-128
+* Backgrounds pages 128-130
+* Virtues pages 130-132
+* Roads 
+
+# Character Creation VtM (from page 87)
+* Step One: Character Concept
+    * Concept
+    * Clan
+    * Nature
+    * Demeanor
+* Step Two: Choose Attributes
+    * Physical/Social/Mental
+    * 7/5/3
+* Step Three: Choose Abilities
+    * Priorities
+    * Spend Points
+        * Talents/Skills/Knowledges
+        * 13/9/7
+* Step Four: Choose Advantags
+    * Disciplines
+    * Backgrounds
+    * Virtues
+* Step Five: Last Touches
+    * Willpower
+    * Humanity
+    * Blood Pool
+
+## Concepts (from page 87)
+
+* Criminal - jailbird, mafioso, cat burglar, drug dealer, bandit
+* Dilettante - artist, writer, intellectual, gambler, student
+* Drifter - hobo, cowboy, prostitute, hermit, pilgrim
+* Entertainer - comic, musician, movie star, clown
+* Investigator - detective, cop, government agent, inquisitor
+* Kid - hild, runaway, nerd, gang member, street urchin
+* Outsider - aborigine,ThirdWorldresident,homosexual
+* Politician -  judge, mayor, senator, public official, governor
+* Professional - engineer, doctor, mortician, scholar
+* Punk - club crawler, masher, skinhead, classic '70s punk
+* Reporter - anchorperson, newspaper, paparazzo, town crier
+* Soldier - bodyguard, mercenary, Green Beret, knight
+* Worker - trucker, farmer, wage slave, servant, serf
+
+## Clans (from page 87)
+*Brujah: Respecting no authority and acknowledging no leaders, the "rabble" consider themselves free.
+? Gangrel: Loners and rustics, the "outlanders" are the only Kindred who dare venture outside the cities.
+? Malkavian: Commonly (and correctly) believed to be insane, the "kooks" nonetheless possess an uncanny
+VISion and wisdom.
+? Nosferatu: Ostracizedand misunderstood by others, the hideous "sewerrats" ltve out their sordid existences in hiding.
+? Toreador: Known for their hedonistic ways, the "degenerates" prefer to think of themselves as artists.
+? Tremere: Wizards descended from an ancient legacy, the "warlocks" work together to increase their influence and power.
+? Ventrue: Aristocrats of rarefied taste and manner, the "blue bloods" are leaders of cool cunning.
+? Caitiff: Those with no clan - the outcasts and the disgraced.
+
+## Advantages (from pages -90)
+* No ability highr than 3
+* Talents/Skills/Knowledges)
+* 3/5/7
+
+## Disciplines
+* See pages 156-171
+? Animalism: Supernatural affinity with, and control
+of, animals.
+? Auspex: Extrasensory perception, awareness and
+premonitions.
+? Celerity: Supernatural quickness and reflexes.
+? Dominate: Mind control practiced through the
+piercing gaze.
+? Fortitude: Unearthly toughness, even to the point
+of resisting fire and sunlight.
+? Obfuscate: The ability to remain obscure and un-
+seen, even in crowds.
+? Potence: The Discipline of physical vigor and
+strength.
+? Presence: The ability to attract, sway and control crowds.
+? Protean: Shapechanging- from growing claws to melding with the earth.
+? Thaumaturgy: The study and practice ofsorcery.
+
+## Bafckgrounds (page 91)
+
+* Allies: Human confederates, usually family or fnends.
+* Contacts: The number of information sources the character possesses.
+* Fame: The character's renown in the mortal world. Generation : How far removed from Caine the character is.
+* Herd: The vessels to which the character has free and safe access.
+* Influence: The character's political power within mortal society.
+* Mentor: The Cainite patron who advises and supports the character.
+* Resources: W ealth, belongings, and monthly income.
+* Retainers: Followers, guards and servants. Status:Thecharacter'sstandinginundeadsociety.
+
+## Freebie Points (page 92, 15 points)
+
+Point Pool Costs
+|Trait|Cost|
+|-|-|
+|Disciplines (any)7 points per dot|
+|Attributes|5 points per dot|
+|Abilities|2 points per dot|
+|Virtues|2 points per dot|
+|Willpower|2 points per dot|
+|Humanity|1 point per dot|
+|Backgrounds|1 point per dot|
