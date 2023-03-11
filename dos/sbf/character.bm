@@ -1,0 +1,922 @@
+$Debug
+Sub Initialize_Character_Lib
+    ' For all of these lookup tables they should look something like this to know the mapping is correct
+    ' Names(NAME_ITEM1) = "Item1"
+    ' The index constants should start at 1 and go up to NAMES_COUNT without leaving any holes.
+
+    ' Clans
+    Clans(CLAN_ANARCH) = "Anarch"
+    Clans(CLAN_ASSAMITE) = "Assamite"
+    Clans(CLAN_BAALI) = "Baali"
+    Clans(CLAN_BRUJAH) = "Brujah"
+    Clans(CLAN_CAITIFF) = "Caitiff"
+    Clans(CLAN_CAPPADOCIAN) = "Cappadocian"
+    Clans(CLAN_GANGREL) = "Gangrel"
+    Clans(CLAN_GIOVANNI) = "Giovanni"
+    Clans(CLAN_INCONNU) = "Inconnu"
+    Clans(CLAN_LASOMBRA) = "Lasombra"
+    Clans(CLAN_MALKAVIAN) = "Malkavian"
+    Clans(CLAN_NOSFERATU) = "Nosferatu"
+    Clans(CLAN_RAVANOS) = "Ravanos"
+    Clans(CLAN_SETTITE) = "Settite"
+    Clans(CLAN_TREMERE) = "Tremere"
+    Clans(CLAN_TOREADOR) = "Toreador"
+    Clans(CLAN_TZISMICE) = "Tzismice"
+    Clans(CLAN_VENTRUE) = "Ventrue"
+
+    ' Archetypes
+    Archetypes(ARCHETYPE_ARCHITECT) = "Architect"
+    Archetypes(ARCHETYPE_AUTOCRAT) = "Autocrat"
+    Archetypes(ARCHETYPE_BARBARIAN) = "Barbarian"
+    Archetypes(ARCHETYPE_BON_VIVANT) = "Bon Vivant"
+    Archetypes(ARCHETYPE_BRAVO) = "Bravo"
+    Archetypes(ARCHETYPE_CAREGIVER) = "Caregiver"
+    Archetypes(ARCHETYPE_CARETAKER) = "Caretaker"
+    Archetypes(ARCHETYPE_CELEBRANT) = "Celebrant"
+    Archetypes(ARCHETYPE_CHILD) = "Child"
+    Archetypes(ARCHETYPE_CONFORMIST) = "Conformist"
+    Archetypes(ARCHETYPE_CONNIVER) = "Conniver"
+    Archetypes(ARCHETYPE_CURMUDGEON) = "Curmudgeon"
+    Archetypes(ARCHETYPE_DEFENDER) = "Defender"
+    Archetypes(ARCHETYPE_DEVIANT) = "Deviant"
+    Archetypes(ARCHETYPE_DIRECTOR) = "Director"
+    Archetypes(ARCHETYPE_FANATIC) = "Fanatic"
+    Archetypes(ARCHETYPE_GALLANT) = "Gallant"
+    Archetypes(ARCHETYPE_INNOVATOR) = "Innovator"
+    Archetypes(ARCHETYPE_JESTER) = "Jester"
+    Archetypes(ARCHETYPE_JUDGE) = "Judge"
+    Archetypes(ARCHETYPE_LONER) = "Loner"
+    Archetypes(ARCHETYPE_MARTYR) = "Martyr"
+    Archetypes(ARCHETYPE_MONSTER) = "Monster"
+    Archetypes(ARCHETYPE_PENITENT) = "Penitent"
+    Archetypes(ARCHETYPE_REBEL) = "Rebel"
+    Archetypes(ARCHETYPE_ROGUE) = "Rogue"
+    Archetypes(ARCHETYPE_SURVIVOR) = "Survivor"
+    Archetypes(ARCHETYPE_TRADITIONALIST) = "Traditionalist"
+    Archetypes(ARCHETYPE_TYRANT) = "Tyrant"
+    Archetypes(ARCHETYPE_VISIONARY) = "Visionary"
+
+    ' Disciplines
+    Disciplines(DISCIPLINE_ANIMALISM) = "Animalism"
+    Disciplines(DISCIPLINE_AUSPEX) = "Auspex"
+    Disciplines(DISCIPLINE_BARDO) = "Bardo"
+    Disciplines(DISCIPLINE_CELERITY) = "Celerity"
+    Disciplines(DISCIPLINE_CHIMESTRY) = "Chimestry"
+    Disciplines(DISCIPLINE_DEMENTATION) = "Dementation"
+    Disciplines(DISCIPLINE_DOMINATE) = "Dominate"
+    Disciplines(DISCIPLINE_FORTITUDE) = "Fortitude"
+    Disciplines(DISCIPLINE_MELPOMINEE) = "Melpominee"
+    Disciplines(DISCIPLINE_MORTIS) = "Mortis"
+    Disciplines(DISCIPLINE_MYTHERCERIA) = "Mytherceria"
+    Disciplines(DISCIPLINE_NECROMANCY) = "Necromancy"
+    Disciplines(DISCIPLINE_OBEAH) = "Obeah"
+    Disciplines(DISCIPLINE_OBFUSCATE) = "Obfuscate"
+    Disciplines(DISCIPLINE_OBTENEBRATION) = "Obtenebration"
+    Disciplines(DISCIPLINE_POTENCE) = "Potence"
+    Disciplines(DISCIPLINE_PRESENCE) = "Presence"
+    Disciplines(DISCIPLINE_PROTEAN) = "Protean"
+    Disciplines(DISCIPLINE_QUIETUS) = "Quietus"
+    Disciplines(DISCIPLINE_SERPENTIS) = "Serpentis"
+    Disciplines(DISCIPLINE_SPIRITUS) = "Spiritus"
+    Disciplines(DISCIPLINE_THANANTOSIS) = "Thanantosis"
+    Disciplines(DISCIPLINE_THAUMATURGY) = "Thaumaturgy"
+    Disciplines(DISCIPLINE_VICISSITUDE) = "Vicissitude"
+
+    ' Virtues
+    Virtues(VIRTUE_SELF_CONTROL) = "Self-Control"
+    Virtues(VIRTUE_COURAGE) = "Courage"
+    Virtues(VIRTUE_CONSCIENCE) = "Conscience"
+
+    ' Physical Attributes
+    PhysicalAttributes(ATTRIBUTE_STRENGTH) = "Strength"
+    PhysicalAttributeAbbreviations(ATTRIBUTE_STRENGTH) = "Str."
+    PhysicalAttributes(ATTRIBUTE_DEXTERITY) = "Dexterity"
+    PhysicalAttributeAbbreviations(ATTRIBUTE_DEXTERITY) = "Dex."
+    PhysicalAttributes(ATTRIBUTE_STAMINA) = "Stamina"
+    PhysicalAttributeAbbreviations(ATTRIBUTE_STAMINA) = "Sta."
+
+    ' Social Attributes
+    SocialAttributes(ATTRIBUTE_CHARISMA) = "Charisma"
+    SocialAttributeAbbreviations(ATTRIBUTE_CHARISMA) = "Cha."
+    SocialAttributes(ATTRIBUTE_MANIPULATION) = "Manipulation"
+    SocialAttributeAbbreviations(ATTRIBUTE_MANIPULATION) = "Man."
+    SocialAttributes(ATTRIBUTE_APPEARANCE) = "Appearance"
+    SocialAttributeAbbreviations(ATTRIBUTE_APPEARANCE) = "App."
+
+    ' Mental Attributes
+    MentalAttributes(ATTRIBUTE_INTELLIGENCE) = "Intelligence"
+    MentalAttributeAbbreviations(ATTRIBUTE_INTELLIGENCE) = "Int."
+    MentalAttributes(ATTRIBUTE_PERCEPTION) = "Perception"
+    MentalAttributeAbbreviations(ATTRIBUTE_PERCEPTION) = "Per."
+    MentalAttributes(ATTRIBUTE_WITS) = "Wits"
+    MentalAttributeAbbreviations(ATTRIBUTE_WITS) = "Wits"
+
+    ' Attribute Groups
+    AttributeGroups(ATTRIBUTE_GROUP_PHYSICAL) = "Physical"
+    AttributeGroups(ATTRIBUTE_GROUP_SOCIAL) = "Social"
+    AttributeGroups(ATTRIBUTE_GROUP_MENTAL) = "Mental"
+
+    ' Abilities
+    AbilityGroups(ABILITY_GROUP_TALENTS) = "Talents"
+    AbilityGroups(ABILITY_GROUP_SKILLS) = "Skills"
+    AbilityGroups(ABILITY_GROUP_KNOWLEDGES) = "Knowledges"
+
+    ' Talents
+    Talents(TALENT_ACTING) = "Acting"
+    Talents(TALENT_ALERTNESS) = "Alertness"
+    Talents(TALENT_ATHLETICS) = "Athletics"
+    Talents(TALENT_BRAWL) = "Brawl"
+    Talents(TALENT_DODGE) = "Dodge"
+    Talents(TALENT_EMPATHY) = "Empathy"
+    Talents(TALENT_INTIMIDATION) = "Intimidation"
+    Talents(TALENT_LEADERSHIP) = "Leadership"
+    Talents(TALENT_STREETWISE) = "Streetwise"
+    Talents(TALENT_SUBTERFUGE) = "Subterfuge"
+
+    ' Skills
+    Skills(SKILL_ANIMAL_KEN) = "Animal Ken"
+    Skills(SKILL_DRIVE) = "Drive"
+    Skills(SKILL_ETIQUETTE) = "Etiquette"
+    Skills(SKILL_FIREARMS) = "Firearms"
+    Skills(SKILL_MELEE) = "Melee"
+    Skills(SKILL_MUSIC) = "Music"
+    Skills(SKILL_REPAIR) = "Repair"
+    Skills(SKILL_SECURITY) = "Security"
+    Skills(SKILL_STEALTH) = "Stealth"
+    Skills(SKILL_SURVIVAL) = "Survival"
+
+    ' Knowwledges
+    Knowledges(KNOWLEDGE_BUREAUCRACY) = "Bureaucracy"
+    Knowledges(KNOWLEDGE_COMPUTER) = "Computer"
+    Knowledges(KNOWLEDGE_FINANCE) = "Finance"
+    Knowledges(KNOWLEDGE_INVESTIGATION) = "Investigation"
+    Knowledges(KNOWLEDGE_LAW) = "Law"
+    Knowledges(KNOWLEDGE_LINGUISTICS) = "Linguistics"
+    Knowledges(KNOWLEDGE_MEDICINE) = "Medicine"
+    Knowledges(KNOWLEDGE_OCCULT) = "Occult"
+    Knowledges(KNOWLEDGE_POLITICS) = "Politics"
+    Knowledges(KNOWLEDGE_SCIENCE) = "Science"
+
+    ' Backgrounds
+    Backgrounds(BACKGROUND_ALLIES) = "Allies"
+    Backgrounds(BACKGROUND_CONTACTS) = "Contacts"
+    Backgrounds(BACKGROUND_FAME) = "Fame"
+    Backgrounds(BACKGROUND_GENERATION) = "Generation"
+    Backgrounds(BACKGROUND_HERD) = "Herd"
+    Backgrounds(BACKGROUND_INFLUENCE) = "Influence"
+    Backgrounds(BACKGROUND_MENTOR) = "Mentor"
+    Backgrounds(BACKGROUND_RESOURCES) = "Resources"
+    Backgrounds(BACKGROUND_RETAINERS) = "Retainers"
+    Backgrounds(BACKGROUND_STATUS) = "Status"
+
+    ' Genders
+    Genders(GENDER_MALE) = "Male"
+    Genders(GENDER_FEMALE) = "Female"
+    Genders(GENDER_TRANS_MALE) = "Trans-Male"
+    Genders(GENDER_TRANS_FEMALE) = "Trans-Female"
+    Genders(GENDER_NON_BINARY) = "Non-Binary"
+
+    DerangementColors(DERANGEMENT_ID_AMNESIA) = COLOR_DARK_RED
+    DerangementColors(DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR) = COLOR_DARK_MAGENTA
+    DerangementColors(DERANGEMENT_ID_FANTASY) = COLOR_DARK_ORANGE
+    DerangementColors(DERANGEMENT_ID_MANIC_DEPRESSION) = COLOR_DARK_WHITE
+    DerangementColors(DERANGEMENT_ID_MULTIPLE_PERSONALITIES) = COLOR_DARK_BLUE
+    DerangementColors(DERANGEMENT_ID_OBSESSION) = COLOR_BRIGHT_GREEN
+    DerangementColors(DERANGEMENT_ID_OVERCOMPENSATION) = COLOR_BRIGHT_CYAN
+    DerangementColors(DERANGEMENT_ID_PARANOIA) = COLOR_BRIGHT_RED
+    DerangementColors(DERANGEMENT_ID_PERFECTION) = COLOR_BRIGHT_MAGENTA
+    DerangementColors(DERANGEMENT_ID_REGRESSION) = COLOR_BRIGHT_YELLOW
+
+    DerangementLabels(DERANGEMENT_ID_AMNESIA) = DERANGEMENT_LABEL_AMNESIA
+    DerangementLabels(DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR) = DERANGEMENT_LABEL_DELUSIONS_OF_GRANDEUR
+    DerangementLabels(DERANGEMENT_ID_FANTASY) = DERANGEMENT_LABEL_FANTASY
+    DerangementLabels(DERANGEMENT_ID_MANIC_DEPRESSION) = DERANGEMENT_LABEL_MANIC_DEPRESSION
+    DerangementLabels(DERANGEMENT_ID_MULTIPLE_PERSONALITIES) = DERANGEMENT_LABEL_MULTIPLE_PERSONALITIES
+    DerangementLabels(DERANGEMENT_ID_OBSESSION) = DERANGEMENT_LABEL_OBSESSION
+    DerangementLabels(DERANGEMENT_ID_OVERCOMPENSATION) = DERANGEMENT_LABEL_OVERCOMPENSATION
+    DerangementLabels(DERANGEMENT_ID_PARANOIA) = DERANGEMENT_LABEL_PARANOIA
+    DerangementLabels(DERANGEMENT_ID_PERFECTION) = DERANGEMENT_LABEL_PERFECTION
+    DerangementLabels(DERANGEMENT_ID_REGRESSION) = DERANGEMENT_LABEL_REGRESSION
+
+    DerangementDescriptions(DERANGEMENT_ID_AMNESIA) = DERANGEMENT_DESCRIPTION_AMNESIA
+    DerangementDescriptions(DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR) = DERANGEMENT_DESCRIPTION_DELUSIONS_OF_GRA
+    DerangementDescriptions(DERANGEMENT_ID_FANTASY) = DERANGEMENT_DESCRIPTION_FANTASY
+    DerangementDescriptions(DERANGEMENT_ID_MANIC_DEPRESSION) = DERANGEMENT_DESCRIPTION_MANIC_DEPRESSION
+    DerangementDescriptions(DERANGEMENT_ID_MULTIPLE_PERSONALITIES) = DERANGEMENT_DESCRIPTION_MULTIPLE_PERSONA
+    DerangementDescriptions(DERANGEMENT_ID_OBSESSION) = DERANGEMENT_DESCRIPTION_OBSESSION
+    DerangementDescriptions(DERANGEMENT_ID_OVERCOMPENSATION) = DERANGEMENT_DESCRIPTION_OVERCOMPENSATION
+    DerangementDescriptions(DERANGEMENT_ID_PARANOIA) = DERANGEMENT_DESCRIPTION_PARANOIA
+    DerangementDescriptions(DERANGEMENT_ID_PERFECTION) = DERANGEMENT_DESCRIPTION_PERFECTION
+    DerangementDescriptions(DERANGEMENT_ID_REGRESSION) = DERANGEMENT_DESCRIPTION_REGRESSION
+
+    For i = LBound(Derangements) To UBound(Derangements)
+        Call NewDerangement(Derangements(i), i, DerangementLabels(i), DerangementColors(i), DerangementDescriptions(i))
+    Next
+End Sub
+
+' Character
+
+Sub NewCharacter (ch As CharacterType)
+    ' Scalars
+    ch.name = ""
+    ch.player = ""
+    ch.chronicle = ""
+    ch.haven = ""
+    ch.concept = ""
+    ch.age = ""
+    ch.gender = 0
+    ch.clan = 0
+    ch.nature = 0
+    ch.demeanor = 0
+    ch.generation = 13
+    ch.roadName = ""
+    ch.roadValue = 0
+    ch.willpower = 0
+    ch.bloodPool = 0
+    ch.derangementId = -1
+    ' Virtues
+    ch.selfControl = 1
+    ch.courage = 1
+    ch.conscience = 1
+
+    ' Arrays/Objects
+    ' Abilities (Talents/Skills/Knowledges)
+    For groupIndex = 1 To ABILITY_GROUPS_COUNT
+        For index = 1 To GetNumItemsForAbilityGroup(groupIndex)
+            Call SetAbilityValue(ch, groupIndex, index, 0)
+        Next
+    Next
+    ' Attributes
+    For groupIndex = 1 To ATTRIBUTE_GROUPS_COUNT
+        For index = 1 To GetNumAttributesInGroup(groupIndex)
+            Call SetAttributeValue(ch, groupIndex, index, 1)
+        Next
+    Next
+    ' Backgrounds
+    For index = 1 To BACKGROUNDS_COUNT
+        Call SetBackground(ch, index, 0)
+    Next
+    ' Disciplines
+    For index = 1 To DISCIPLINES_COUNT
+        Call SetDiscipline(ch, index, 0)
+    Next
+End Sub
+
+' Disciplines
+
+Function GetDisciplinePoints ()
+    GetDisciplinePoints = DISCIPLINE_POINTS
+End Function
+
+Sub SetDiscipline (ch As CharacterType, index As Integer, value As Integer)
+    Select Case index
+        Case DISCIPLINE_ANIMALISM
+            ch.discipline_animalism = value
+        Case DISCIPLINE_AUSPEX
+            ch.discipline_auspex = value
+        Case DISCIPLINE_BARDO
+            ch.discipline_bardo = value
+        Case DISCIPLINE_CELERITY
+            ch.discipline_celerity = value
+        Case DISCIPLINE_CHIMESTRY
+            ch.discipline_chimestry = value
+        Case DISCIPLINE_DEMENTATION
+            ch.discipline_dementation = value
+        Case DISCIPLINE_DOMINATE
+            ch.discipline_dominate = value
+        Case DISCIPLINE_FORTITUDE
+            ch.discipline_fortitude = value
+        Case DISCIPLINE_MELPOMINEE
+            ch.discipline_melpominee = value
+        Case DISCIPLINE_MORTIS
+            ch.discipline_mortis = value
+        Case DISCIPLINE_MYTHERCERIA
+            ch.discipline_mytherceria = value
+        Case DISCIPLINE_NECROMANCY
+            ch.discipline_necromancy = value
+        Case DISCIPLINE_OBEAH
+            ch.discipline_obeah = value
+        Case DISCIPLINE_OBFUSCATE
+            ch.discipline_obfuscate = value
+        Case DISCIPLINE_OBTENEBRATION
+            ch.discipline_obtenebration = value
+        Case DISCIPLINE_POTENCE
+            ch.discipline_potence = value
+        Case DISCIPLINE_PRESENCE
+            ch.discipline_presence = value
+        Case DISCIPLINE_PROTEAN
+            ch.discipline_protean = value
+        Case DISCIPLINE_QUIETUS
+            ch.discipline_quietus = value
+        Case DISCIPLINE_SERPENTIS
+            ch.discipline_serpentis = value
+        Case DISCIPLINE_SPIRITUS
+            ch.discipline_spiritus = value
+        Case DISCIPLINE_THANANTOSIS
+            ch.discipline_thanantosis = value
+        Case DISCIPLINE_THAUMATURGY
+            ch.discipline_thaumaturgy = value
+        Case DISCIPLINE_VICISSITUDE
+            ch.discipline_vicissitude = value
+    End Select
+End Sub
+
+Function GetDiscipline (ch As CharacterType, index As Integer)
+    Select Case index
+        Case DISCIPLINE_ANIMALISM
+            GetDiscipline = ch.discipline_animalism
+        Case DISCIPLINE_AUSPEX
+            GetDiscipline = ch.discipline_auspex
+        Case discipline_barde
+            GetDiscipline = ch.discipline_bardo
+        Case DISCIPLINE_CELERITY
+            GetDiscipline = ch.discipline_celerity
+        Case DISCIPLINE_CHIMESTRY
+            GetDiscipline = ch.discipline_chimestry
+        Case DISCIPLINE_DEMENTATION
+            GetDiscipline = ch.discipline_dementation
+        Case DISCIPLINE_DOMINATE
+            GetDiscipline = ch.discipline_dominate
+        Case DISCIPLINE_FORTITUDE
+            GetDiscipline = ch.discipline_fortitude
+        Case DISCIPLINE_MELPOMINEE
+            GetDiscipline = ch.discipline_melpominee
+        Case DISCIPLINE_MORTIS
+            GetDiscipline = ch.discipline_mortis
+        Case DISCIPLINE_MYTHERCERIA
+            GetDiscipline = ch.discipline_mytherceria
+        Case DISCIPLINE_NECROMANCY
+            GetDiscipline = ch.discipline_necromancy
+        Case DISCIPLINE_OBEAH
+            GetDiscipline = ch.discipline_obeah
+        Case DISCIPLINE_OBFUSCATE
+            GetDiscipline = ch.discipline_obfuscate
+        Case DISCIPLINE_OBTENEBRATION
+            GetDiscipline = ch.discipline_obtenebration
+        Case DISCIPLINE_POTENCE
+            GetDiscipline = ch.discipline_potence
+        Case DISCIPLINE_PRESENCE
+            GetDiscipline = ch.discipline_presence
+        Case DISCIPLINE_PROTEAN
+            GetDiscipline = ch.discipline_protean
+        Case DISCIPLINE_QUIETUS
+            GetDiscipline = ch.discipline_quietus
+        Case DISCIPLINE_SERPENTIS
+            GetDiscipline = ch.discipline_serpentis
+        Case DISCIPLINE_SPIRITUS
+            GetDiscipline = ch.discipline_spiritus
+        Case DISCIPLINE_THANANTOSIS
+            GetDiscipline = ch.discipline_thanantosis
+        Case DISCIPLINE_THAUMATURGY
+            GetDiscipline = ch.discipline_thaumaturgy
+        Case DISCIPLINE_VICISSITUDE
+            GetDiscipline = ch.discipline_vicissitude
+    End Select
+End Function
+
+Sub FillDisciplines (ch As CharacterType, disciplines() As Integer)
+    ReDim disciplines(1 To DISCIPLINES_COUNT) As Integer
+    For index = 1 To DISCIPLINES_COUNT
+        disciplines(index) = GetDiscipline(ch, index)
+    Next
+End Sub
+
+' Virtues
+
+Function GetVirtuePoints ()
+    GetVirtuePoints = VIRTUE_POINTS
+End Function
+
+Sub SetVirtue (ch As CharacterType, index As Integer, value As Integer)
+    Select Case index
+        Case VIRTUE_SELF_CONTROL
+            ch.selfControl = value
+        Case VIRTUE_COURAGE
+            ch.courage = value
+        Case VIRTUE_CONSCIENCE
+            ch.conscience = value
+    End Select
+End Sub
+
+Function GetVirtue (ch As CharacterType, index As Integer)
+    value = 0
+    Select Case index
+        Case VIRTUE_SELF_CONTROL
+            value = ch.selfControl
+        Case VIRTUE_COURAGE
+            value = ch.courage
+        Case VIRTUE_CONSCIENCE
+            value = ch.conscience
+    End Select
+    GetVirtue = value
+End Function
+
+Sub FillVirtues (ch As CharacterType, values() As Integer)
+    ReDim values(1 To VIRTUES_COUNT) As Integer
+    For index = 1 To VIRTUES_COUNT
+        values(index) = GetVirtue(ch, index)
+    Next
+End Sub
+
+' Attributes
+
+Sub FillAttributeValues (ch As CharacterType, values() As Integer, groupIndex As Integer)
+    count = GetNumAttributesInGroup(groupIndex)
+    ReDim values(1 To count) As Integer
+    For i = 1 To count
+        values(i) = GetAttributeValue(ch, groupIndex, i)
+    Next
+End Sub
+
+Function GetNumAttributesInGroup (index As Integer)
+    Select Case index
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            count = PHYSICAL_ATTRIBUTES_COUNT
+        Case ATTRIBUTE_GROUP_SOCIAL
+            count = SOCIAL_ATTRIBUTES_COUNT
+        Case ATTRIBUTE_GROUP_MENTAL
+            count = MENTAL_ATTRIBUTES_COUNT
+        Case Else
+            count = 0
+    End Select
+    GetNumAttributesInGroup = count
+End Function
+
+Function GetAttributeName$ (groupIndex As Integer, attributeIndex As Integer)
+    attributeName$ = ""
+    Select Case groupIndex
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            attributeName$ = PhysicalAttributes(attributeIndex)
+        Case ATTRIBUTE_GROUP_SOCIAL
+            attributeName$ = SocialAttributes(attributeIndex)
+        Case ATTRIBUTE_GROUP_MENTAL
+            attributeName$ = MentalAttributes(attributeIndex)
+    End Select
+    GetAttributeName = attributeName$
+End Function
+
+Sub FillAttributesInGroup (group As Integer, attributes() As String)
+    count = GetNumAttributesInGroup(group)
+    If count > 0 Then
+        ReDim attributes(1 To count) As String
+    Else
+        ReDim attributes(0) As String
+    End If
+    Select Case group
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            For i = 1 To count
+                attributes(i) = PhysicalAttributes(i)
+            Next
+        Case ATTRIBUTE_GROUP_SOCIAL
+            For i = 1 To count
+                attributes(i) = SocialAttributes(i)
+            Next
+        Case ATTRIBUTE_GROUP_MENTAL
+            For i = 1 To count
+                attributes(i) = MentalAttributes(i)
+            Next
+    End Select
+End Sub
+
+Sub FillAttributeAbbreviationsInGroup (group As Integer, abbreviations() As String, count As Integer)
+    count = GetNumAttributesInGroup(group)
+    If count > 0 Then
+        ReDim abbreviations(1 To count) As String
+    Else
+        ReDim abbreviations(0) As String
+    End If
+    Select Case group
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            For i = 1 To count
+                abbreviations(i) = PhysicalAttributeAbbreviations(i)
+            Next
+        Case ATTRIBUTE_GROUP_SOCIAL
+            For i = 1 To count
+                abbreviations(i) = SocialAttributeAbbreviations(i)
+            Next
+        Case ATTRIBUTE_GROUP_MENTAL
+            For i = 1 To count
+                abbreviations(i) = MentalAttributeAbbreviations(i)
+            Next
+    End Select
+End Sub
+
+Sub SetAttributeValue (ch As CharacterType, AttributeGroupIndex As Integer, AttributeIndex As Integer, Value As Integer)
+    Select Case AttributeGroupIndex
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            Select Case AttributeIndex
+                Case ATTRIBUTE_STRENGTH
+                    ch.attr_strength = Value
+                Case ATTRIBUTE_DEXTERITY
+                    ch.attr_dexterity = Value
+                Case ATTRIBUTE_STAMINA
+                    ch.attr_stamina = Value
+            End Select
+        Case ATTRIBUTE_GROUP_SOCIAL
+            Select Case AttributeIndex
+                Case ATTRIBUTE_CHARISMA
+                    ch.attr_charisma = Value
+                Case ATTRIBUTE_MANIPULATION
+                    ch.attr_manipulation = Value
+                Case ATTRIBUTE_APPEARANCE
+                    ch.attr_appearance = Value
+            End Select
+        Case ATTRIBUTE_GROUP_MENTAL
+            Select Case AttributeIndex
+                Case ATTRIBUTE_INTELLIGENCE
+                    ch.attr_intelligence = Value
+                Case ATTRIBUTE_PERCEPTION
+                    ch.attr_perception = Value
+                Case ATTRIBUTE_WITS
+                    ch.attr_wits = Value
+            End Select
+    End Select
+End Sub
+
+Function GetAttributeValue (ch As CharacterType, attributeGroupIndex As Integer, attributeIndex As Integer)
+    GetAttributeValue = 0
+    Select Case attributeGroupIndex
+        Case ATTRIBUTE_GROUP_PHYSICAL
+            Select Case attributeIndex
+                Case ATTRIBUTE_STRENGTH
+                    GetAttributeValue = ch.attr_strength
+                Case ATTRIBUTE_DEXTERITY
+                    GetAttributeValue = ch.attr_dexterity
+                Case ATTRIBUTE_STAMINA
+                    GetAttributeValue = ch.attr_stamina
+            End Select
+        Case ATTRIBUTE_GROUP_SOCIAL
+            Select Case attributeIndex
+                Case ATTRIBUTE_CHARISMA
+                    GetAttributeValue = ch.attr_charisma
+                Case ATTRIBUTE_MANIPULATION
+                    GetAttributeValue = ch.attr_manipulation
+                Case ATTRIBUTE_APPEARANCE
+                    GetAttributeValue = ch.attr_appearance
+            End Select
+        Case ATTRIBUTE_GROUP_MENTAL
+            Select Case attributeIndex
+                Case ATTRIBUTE_INTELLIGENCE
+                    GetAttributeValue = ch.attr_intelligence
+                Case ATTRIBUTE_PERCEPTION
+                    GetAttributeValue = ch.attr_perception
+                Case ATTRIBUTE_WITS
+                    GetAttributeValue = ch.attr_wits
+            End Select
+    End Select
+End Function
+
+Function GetAttributePointsForRank (rank As Integer)
+    GetAttributePointsForRank = 0
+    Select Case rank
+        Case 1
+            GetAttributePointsForRank = 7
+        Case 2
+            GetAttributePointsForRank = 5
+        Case 3
+            GetAttributePointsForRank = 3
+    End Select
+End Function
+
+' Abilities
+
+Sub SetAbilityValue (ch As CharacterType, groupIndex As Integer, index As Integer, value As Integer)
+    Select Case groupIndex
+        Case ABILITY_GROUP_TALENTS
+            Call SetTalent(ch, index, value)
+        Case ABILITY_GROUP_SKILLS
+            Call SetSkill(ch, index, value)
+        Case ABILITY_GROUP_KNOWLEDGES
+            Call SetKnowledge(ch, index, value)
+    End Select
+End Sub
+
+Function GetAbilityValue (ch As CharacterType, abilityIndex As Integer, itemIndex As Integer)
+    GetAbilityValue = 0
+    Select Case abilityIndex
+        Case ABILITY_GROUP_TALENTS
+            GetAbilityValue = GetTalent(ch, itemIndex)
+        Case ABILITY_GROUP_SKILLS
+            GetAbilityValue = GetSkill(ch, itemIndex)
+        Case ABILITY_GROUP_KNOWLEDGES
+            GetAbilityValue = GetKnowledge(ch, itemIndex)
+    End Select
+End Function
+
+Function GetAbilityPointsForRank (rank As Integer)
+    GetAbilityPointsForRank = 0
+    Select Case rank
+        Case 1
+            GetAbilityPointsForRank = 13
+        Case 2
+            GetAbilityPointsForRank = 9
+        Case 3
+            GetAbilityPointsForRank = 5
+    End Select
+End Function
+
+Sub FillAbilityValues (ch As CharacterType, values() As Integer, groupIndex As Integer)
+    count = GetNumItemsForAbilityGroup(groupIndex)
+    ReDim values(1 To count) As Integer
+    For i = 1 To count
+        values(i) = GetAbilityValue(ch, groupIndex, i)
+    Next
+End Sub
+
+Function GetNumItemsForAbilityGroup (index As Integer)
+    Select Case index
+        Case ABILITY_GROUP_TALENTS
+            count = TALENTS_COUNT
+        Case ABILITY_GROUP_SKILLS
+            count = SKILLS_COUNT
+        Case ABILITY_GROUP_KNOWLEDGES
+            count = KNOWLEDGES_COUNT
+        Case Else
+            count = 0
+    End Select
+    GetNumItemsForAbilityGroup = count
+End Function
+
+Function GetAbilityName$ (groupIndex As Integer, abilityIndex As Integer)
+    abilityName$ = ""
+    Select Case groupIndex
+        Case ABILITY_GROUP_TALENTS
+            abilityName$ = Talents(abilityIndex)
+        Case ABILITY_GROUP_SKILLS
+            abilityName$ = Skills(abilityIndex)
+        Case ABILITY_GROUP_KNOWLEDGES
+            abilityName$ = Knowledges(abilityIndex)
+    End Select
+    GetAbilityName = abilityName$
+End Function
+
+Sub FillAbilitiesForAbilityGroup (ability As Integer, items() As String)
+    count = GetNumItemsForAbilityGroup(ability)
+    If count > 0 Then
+        ReDim items(1 To count) As String
+    Else
+        ReDim items(0) As String
+    End If
+    Select Case ability
+        Case ABILITY_GROUP_TALENTS
+            For i = 1 To count
+                items(i) = Talents(i)
+            Next
+        Case ABILITY_GROUP_SKILLS
+            For i = 1 To count
+                items(i) = Skills(i)
+            Next
+        Case ABILITY_GROUP_KNOWLEDGES
+            For i = 1 To count
+                items(i) = Knowledges(i)
+            Next
+    End Select
+End Sub
+
+' Ability - Talents
+
+Sub SetTalent (ch As CharacterType, index As Integer, value As Integer)
+    Select Case index
+        Case TALENT_ACTING
+            ch.talent_acting = value
+        Case TALENT_ALERTNESS
+            ch.talent_alertness = value
+        Case TALENT_ATHLETICS
+            ch.talent_athletics = value
+        Case TALENT_BRAWL
+            ch.talent_brawl = value
+        Case TALENT_DODGE
+            ch.talent_dodge = value
+        Case TALENT_EMPATHY
+            ch.talent_empathy = value
+        Case TALENT_INTIMIDATION
+            ch.talent_intimidation = value
+        Case TALENT_LEADERSHIP
+            ch.talent_leadership = value
+        Case TALENT_STREETWISE
+            ch.talent_streetwise = value
+        Case TALENT_SUBTERFUGE
+            ch.talent_subterfuge = value
+    End Select
+End Sub
+
+Function GetTalent (ch As CharacterType, index As Integer)
+    Select Case index
+        Case TALENT_ACTING
+            GetTalent = ch.talent_acting
+        Case TALENT_ALERTNESS
+            GetTalent = ch.talent_alertness
+        Case TALENT_ATHLETICS
+            GetTalent = ch.talent_athletics
+        Case TALENT_BRAWL
+            GetTalent = ch.talent_brawl
+        Case TALENT_DODGE
+            GetTalent = ch.talent_dodge
+        Case TALENT_EMPATHY
+            GetTalent = ch.talent_empathy
+        Case TALENT_INTIMIDATION
+            GetTalent = ch.talent_intimidation
+        Case TALENT_LEADERSHIP
+            GetTalent = ch.talent_leadership
+        Case TALENT_STREETWISE
+            GetTalent = ch.talent_streetwise
+        Case TALENT_SUBTERFUGE
+            GetTalent = ch.talent_subterfuge
+    End Select
+End Function
+
+' Ability - Skills
+
+Sub SetSkill (ch As CharacterType, index As Integer, value As Integer)
+    Select Case index
+        Case SKILL_ANIMAL_KEN
+            ch.skill_animalKen = value
+        Case SKILL_DRIVE
+            ch.skill_drive = value
+        Case SKILL_ETIQUETTE
+            ch.skill_etiquette = value
+        Case SKILL_FIREARMS
+            ch.skill_firearms = value
+        Case SKILL_MELEE
+            ch.skill_melee = value
+        Case SKILL_MUSIC
+            ch.skill_music = value
+        Case SKILL_REPAIR
+            ch.skill_repair = value
+        Case SKILL_SECURITY
+            ch.skill_security = value
+        Case SKILL_STEALTH
+            ch.skill_stealth = value
+        Case SKILL_SURVIVAL
+            ch.skill_survival = value
+    End Select
+End Sub
+
+Function GetSkill (ch As CharacterType, index As Integer)
+    Select Case index
+        Case SKILL_ANIMAL_KEN
+            GetSkill = ch.skill_animalKen
+        Case SKILL_DRIVE
+            GetSkill = ch.skill_drive
+        Case SKILL_ETIQUETTE
+            GetSkill = ch.skill_etiquette
+        Case SKILL_FIREARMS
+            GetSkill = ch.skill_firearms
+        Case SKILL_MELEE
+            GetSkill = ch.skill_melee
+        Case SKILL_MUSIC
+            GetSkill = ch.skill_music
+        Case SKILL_REPAIR
+            GetSkill = ch.skill_repair
+        Case SKILL_SECURITY
+            GetSkill = ch.skill_security
+        Case SKILL_STEALTH
+            GetSkill = ch.skill_stealth
+        Case SKILL_SURVIVAL
+            GetSkill = ch.skill_survival
+    End Select
+End Function
+
+' Ability - Knowledges
+
+Sub SetKnowledge (ch As CharacterType, index As Integer, value As Integer)
+    Select Case index
+        Case KNOWLEDGE_BUREAUCRACY
+            ch.knowledge_bureaucracy = value
+        Case KNOWLEDGE_COMPUTER
+            ch.knowledge_computer = value
+        Case KNOWLEDGE_FINANCE
+            ch.knowledge_finance = value
+        Case KNOWLEDGE_INVESTIGATION
+            ch.knowledge_investigation = value
+        Case KNOWLEDGE_LAW
+            ch.knowledge_law = value
+        Case KNOWLEDGE_LINGUISTICS
+            ch.knowledge_linguistics = value
+        Case KNOWLEDGE_MEDICINE
+            ch.knowledge_medicine = value
+        Case KNOWLEDGE_OCCULT
+            ch.knowledge_occult = value
+        Case KNOWLEDGE_POLITICS
+            ch.knowledge_politics = value
+        Case KNOWLEDGE_SCIENCE
+            ch.knowledge_science = value
+    End Select
+End Sub
+
+Function GetKnowledge (ch As CharacterType, index As Integer)
+    Select Case index
+        Case KNOWLEDGE_BUREAUCRACY
+            GetKnowledge = ch.knowledge_bureaucracy
+        Case KNOWLEDGE_COMPUTER
+            GetKnowledge = ch.knowledge_computer
+        Case KNOWLEDGE_FINANCE
+            GetKnowledge = ch.knowledge_finance
+        Case KNOWLEDGE_INVESTIGATION
+            GetKnowledge = ch.knowledge_investigation
+        Case KNOWLEDGE_LAW
+            GetKnowledge = ch.knowledge_law
+        Case KNOWLEDGE_LINGUISTICS
+            GetKnowledge = ch.knowledge_linguistics
+        Case KNOWLEDGE_MEDICINE
+            GetKnowledge = ch.knowledge_medicine
+        Case KNOWLEDGE_OCCULT
+            GetKnowledge = ch.knowledge_occult
+        Case KNOWLEDGE_POLITICS
+            GetKnowledge = ch.knowledge_politics
+        Case KNOWLEDGE_SCIENCE
+            GetKnowledge = ch.knowledge_science
+    End Select
+End Function
+
+' Backgrounds
+
+Sub SetBackground (ch As CharacterType, index As Integer, value As Integer)
+    Select Case index
+        Case BACKGROUND_ALLIES
+            ch.background_allies = value
+        Case BACKGROUND_CONTACTS
+            ch.background_contacts = value
+        Case BACKGROUND_FAME
+            ch.background_fame = value
+        Case BACKGROUND_GENERATION
+            ch.background_generation = value
+        Case BACKGROUND_HERD
+            ch.background_herd = value
+        Case BACKGROUND_INFLUENCE
+            ch.background_influence = value
+        Case BACKGROUND_MENTOR
+            ch.background_mentor = value
+        Case BACKGROUND_RESOURCES
+            ch.background_resources = value
+        Case BACKGROUND_RETAINERS
+            ch.background_retainers = value
+        Case BACKGROUND_STATUS
+            ch.background_status = value
+    End Select
+End Sub
+
+Function GetBackground (ch As CharacterType, index As Integer)
+    Select Case index
+        Case BACKGROUND_ALLIES
+            GetBackground = ch.background_allies
+        Case BACKGROUND_CONTACTS
+            GetBackground = ch.background_contacts
+        Case BACKGROUND_FAME
+            GetBackground = ch.background_fame
+        Case BACKGROUND_GENERATION
+            GetBackground = ch.background_generation
+        Case BACKGROUND_HERD
+            GetBackground = ch.background_herd
+        Case BACKGROUND_INFLUENCE
+            GetBackground = ch.background_influence
+        Case BACKGROUND_MENTOR
+            GetBackground = ch.background_mentor
+        Case BACKGROUND_RESOURCES
+            GetBackground = ch.background_resources
+        Case BACKGROUND_RETAINERS
+            GetBackground = ch.background_retainers
+        Case BACKGROUND_STATUS
+            GetBackground = ch.background_status
+    End Select
+End Function
+
+Sub FillBackgrounds (ch As CharacterType, backgrounds() As Integer)
+    For index = 1 To BACKGROUNDS_COUNT
+        backgrounds(index) = GetBackground(ch, index)
+    Next
+End Sub
+
+Function GetBackgroundPoints ()
+    GetBackgroundPoints = BACKGROUND_POINTS
+End Function
+
+' Genders
+
+' Derangements
+
+Sub NewDerangement (derangement As DerangementType, id As Integer, label As String, textColor As Integer, description As String)
+    derangement.id = id
+    derangement.label = label
+    derangement.textColor = textColor
+    derangement.description = description
+End Sub
+
+Function GetAllDerangementsLine$ (ch As CharacterType)
+    Dim allDerangements(1) As DerangementType
+    Call FillDerangements(ch, allDerangements())
+    allDerangementsString$ = ""
+    For i = 0 To UBound(allDerangements) - 1
+        allDerangementsString$ = allDerangementsString$ + allDerangements(i).label + ", "
+    Next
+    GetAllDerangementsLine$ = allDerangementsString$
+End Function
+
+Sub FillDerangements (ch As CharacterType, myDerangements() As DerangementType)
+    count = 1
+    If ch.derangementId < 0 Or ch.derangementId >= count Then
+        Exit Sub
+    End If
+    ReDim myDerangements(count) As DerangementType
+    myDerangements(0) = Derangements(ch.derangementId)
+End Sub
