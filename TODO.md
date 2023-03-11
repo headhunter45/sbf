@@ -1,12 +1,4 @@
 # High Priority
-* Input/Print derangements. These are only for Malkavian vampires.
-    * If the clan is malk then ask to pick a derangement. Maybe more than one?
-    * Print any derangements on the character on the character sheet.
-        * This section is the last section with dummy text.
-    * Figure out how to support something like this for various rulesets.
-    * VtDA has malks so it would need this.
-    * WtA doesn't obviously have them, but it may have something else that requires a specific question/addition to CharacterType.
-    * Make this generic if possible.
 
 # Low Priority
 * Add freebie points see page 92 VtM
@@ -432,3 +424,34 @@ Point Pool Costs
 |Willpower|2 points per dot|
 |Humanity|1 point per dot|
 |Backgrounds|1 point per dot|
+
+# Original App
+* Roads are after backgrounds and before conscience/self-control/courage.
+* Derangements are in bright bold colors
+    * Dark Red
+    * Dark purple
+    * Dark orang
+    * Grey/White Maybe dark white
+    * Dark blue
+    * Bright Green
+    * Bright Cyan
+    * Bright Orange
+    * Bright Pink/Magenta
+    * Bright Yellow
+
+## Derangements - Malkavian Only (from page ?)
+
+|Name|Description|Color|
+|-|-|-|
+|Amnesia|You forget a segment of your past. Additionally in some cases a character can forget abilities and be unable to use them for the duration.|Dark Red|
+|Delusions of Grandeur|You imagine you are better than you are.|Dark Magenta|
+|Fantasy|You enter a self-created world where you are the forgotten hero.|Dark Orange|
+|Manic-Depression|You sink into deep and fitful depressions, showing no interest in anything which used to captivate your interests. You will go along with others rather than use the energy to resist. Occasional fits of great energy grab hold of you, and you will work for hours or even days on your projects. During this time you will resist even the need for sleep as you burn up blood and Willpower on your schemes.|Dark White|
+|Multiple Personalities|You possess a number of new personalities. You have amore than one Mature, and will switch between them. Thus you regain Willpower points in defferent ways at defferent times|Dark Blue|
+|Obsession|You become obsessed with some interest or fetish.|Bright Green|
+|Overcompensation|You make up for your moral weaknesses by playing up your strengths to an extreme. You don't think you can frenzy and won't stop it.|Bright Cyan|
+|Paranoia|You are convinced that you are being hunted. You hold even your closest Friends under suspicion|Bright Red|
+|Perfection|All your energy is directed toward preventing anything from going wong. When it does you must make a self-control roll or frenzy.|Bright Magenta|
+|Regression|You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is.|Bright Yellow|
+
+

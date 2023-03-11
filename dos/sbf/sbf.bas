@@ -217,6 +217,44 @@ Const COLOR_BRIGHT_ORANGE = 14
 Const COLOR_BRIGHT_YELLOW = 14
 Const COLOR_BRIGHT_WHITE = 15
 
+Const DERANGEMENTS_COUNT = 10
+Const DERANGEMENT_ID_AMNESIA = 1
+Const DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR = 2
+Const DERANGEMENT_ID_FANTASY = 3
+Const DERANGEMENT_ID_MANIC_DEPRESSION = 4
+Const DERANGEMENT_ID_MULTIPLE_PERSONALITIES = 5
+Const DERANGEMENT_ID_OBSESSION = 6
+Const DERANGEMENT_ID_OVERCOMPENSATION = 7
+Const DERANGEMENT_ID_PARANOIA = 8
+Const DERANGEMENT_ID_PERFECTION = 9
+Const DERANGEMENT_ID_REGRESSION = 10
+Dim Shared Derangements(1 To DERANGEMENTS_COUNT) As DerangementType
+Dim Shared DerangementColors(1 To DERANGEMENTS_COUNT) As Integer
+
+Dim Shared DerangementLabels(1 To DERANGEMENTS_COUNT) As String
+Const DERANGEMENT_LABEL_AMNESIA = "Amnesia"
+Const DERANGEMENT_LABEL_DELUSIONS_OF_GRANDEUR = "Delusions of Grandeur"
+Const DERANGEMENT_LABEL_FANTASY = "Fantasy"
+Const DERANGEMENT_LABEL_MANIC_DEPRESSION = "Manic-Depression"
+Const DERANGEMENT_LABEL_MULTIPLE_PERSONALITIES = "Multiple Personalities"
+Const DERANGEMENT_LABEL_OBSESSION = "Obsession"
+Const DERANGEMENT_LABEL_OVERCOMPENSATION = "Overcompensation"
+Const DERANGEMENT_LABEL_PARANOIA = "Paranoia"
+Const DERANGEMENT_LABEL_PERFECTION = "Perfection"
+Const DERANGEMENT_LABEL_REGRESSION = "Regression"
+
+Dim Shared DerangementDescriptions(1 To DERANGEMENTS_COUNT) As String
+Const DERANGEMENT_DESCRIPTION_AMNESIA = "You forget a segment of your past. Additionally in some cases a character can forget abilities and be unable to use them for the duration."
+Const DERANGEMENT_DESCRIPTION_DELUSIONS_OF_GRA = "You imagine you are better than you are."
+Const DERANGEMENT_DESCRIPTION_FANTASY = "You enter a self-created world where you are the forgotten hero."
+Const DERANGEMENT_DESCRIPTION_MANIC_DEPRESSION = "You sink into deep and fitful depressions, showing no interest in anything which used to captivate your interests. You will go along with others rather than use the energy to resist. Occasional fits of great energy grab hold of you, and you will work for hours or even days on your projects. During this time you will resist even the need for sleep as you burn up blood and Willpower on your schemes."
+Const DERANGEMENT_DESCRIPTION_MULTIPLE_PERSONA = "You possess a number of new personalities. You have amore than one Mature, and will switch between them. Thus you regain Willpower points in defferent ways at defferent times"
+Const DERANGEMENT_DESCRIPTION_OBSESSION = "You become obsessed with some interest or fetish."
+Const DERANGEMENT_DESCRIPTION_OVERCOMPENSATION = "You make up for your moral weaknesses by playing up your strengths to an extreme. You don't think you can frenzy and won't stop it."
+Const DERANGEMENT_DESCRIPTION_PARANOIA = "You are convinced that you are being hunted. You hold even your closest Friends under suspicion."
+Const DERANGEMENT_DESCRIPTION_PERFECTION = "All your energy is directed toward preventing anything from going wong. When it does you must make a self-control roll or frenzy."
+Const DERANGEMENT_DESCRIPTION_REGRESSION = "You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is."
+
 Dim Shared ScreenColor As Integer
 ScreenColor = COLOR_DARK_WHITE
 
@@ -343,6 +381,12 @@ Type MenuItem
     isVisible As Integer
 End Type
 
+Type DerangementType
+    id As Integer
+    label As String
+    description As String
+    textColor As Integer
+End Type
 
 Call InitializeMemory
 
@@ -528,6 +572,43 @@ Sub InitializeMemory
     Genders(GENDER_TRANS_MALE) = "Trans-Male"
     Genders(GENDER_TRANS_FEMALE) = "Trans-Female"
     Genders(GENDER_NON_BINARY) = "Non-Binary"
+
+    DerangementColors(DERANGEMENT_ID_AMNESIA) = COLOR_DARK_RED
+    DerangementColors(DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR) = COLOR_DARK_MAGENTA
+    DerangementColors(DERANGEMENT_ID_FANTASY) = COLOR_DARK_ORANGE
+    DerangementColors(DERANGEMENT_ID_MANIC_DEPRESSION) = COLOR_DARK_WHITE
+    DerangementColors(DERANGEMENT_ID_MULTIPLE_PERSONALITIES) = COLOR_DARK_BLUE
+    DerangementColors(DERANGEMENT_ID_OBSESSION) = COLOR_BRIGHT_GREEN
+    DerangementColors(DERANGEMENT_ID_OVERCOMPENSATION) = COLOR_BRIGHT_CYAN
+    DerangementColors(DERANGEMENT_ID_PARANOIA) = COLOR_BRIGHT_RED
+    DerangementColors(DERANGEMENT_ID_PERFECTION) = COLOR_BRIGHT_MAGENTA
+    DerangementColors(DERANGEMENT_ID_REGRESSION) = COLOR_BRIGHT_YELLOW
+
+    DerangementLabels(DERANGEMENT_ID_AMNESIA) = DERANGEMENT_LABEL_AMNESIA
+    DerangementLabels(DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR) = DERANGEMENT_LABEL_DELUSIONS_OF_GRANDEUR
+    DerangementLabels(DERANGEMENT_ID_FANTASY) = DERANGEMENT_LABEL_FANTASY
+    DerangementLabels(DERANGEMENT_ID_MANIC_DEPRESSION) = DERANGEMENT_LABEL_MANIC_DEPRESSION
+    DerangementLabels(DERANGEMENT_ID_MULTIPLE_PERSONALITIES) = DERANGEMENT_LABEL_MULTIPLE_PERSONALITIES
+    DerangementLabels(DERANGEMENT_ID_OBSESSION) = DERANGEMENT_LABEL_OBSESSION
+    DerangementLabels(DERANGEMENT_ID_OVERCOMPENSATION) = DERANGEMENT_LABEL_OVERCOMPENSATION
+    DerangementLabels(DERANGEMENT_ID_PARANOIA) = DERANGEMENT_LABEL_PARANOIA
+    DerangementLabels(DERANGEMENT_ID_PERFECTION) = DERANGEMENT_LABEL_PERFECTION
+    DerangementLabels(DERANGEMENT_ID_REGRESSION) = DERANGEMENT_LABEL_REGRESSION
+
+    DerangementDescriptions(DERANGEMENT_ID_AMNESIA) = DERANGEMENT_DESCRIPTION_AMNESIA
+    DerangementDescriptions(DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR) = DERANGEMENT_DESCRIPTION_DELUSIONS_OF_GRA
+    DerangementDescriptions(DERANGEMENT_ID_FANTASY) = DERANGEMENT_DESCRIPTION_FANTASY
+    DerangementDescriptions(DERANGEMENT_ID_MANIC_DEPRESSION) = DERANGEMENT_DESCRIPTION_MANIC_DEPRESSION
+    DerangementDescriptions(DERANGEMENT_ID_MULTIPLE_PERSONALITIES) = DERANGEMENT_DESCRIPTION_MULTIPLE_PERSONA
+    DerangementDescriptions(DERANGEMENT_ID_OBSESSION) = DERANGEMENT_DESCRIPTION_OBSESSION
+    DerangementDescriptions(DERANGEMENT_ID_OVERCOMPENSATION) = DERANGEMENT_DESCRIPTION_OVERCOMPENSATION
+    DerangementDescriptions(DERANGEMENT_ID_PARANOIA) = DERANGEMENT_DESCRIPTION_PARANOIA
+    DerangementDescriptions(DERANGEMENT_ID_PERFECTION) = DERANGEMENT_DESCRIPTION_PERFECTION
+    DerangementDescriptions(DERANGEMENT_ID_REGRESSION) = DERANGEMENT_DESCRIPTION_REGRESSION
+
+    For i = LBound(Derangements) To UBound(Derangements)
+        Call NewDerangement(Derangements(i), i, DerangementLabels(i), DerangementColors(i), DerangementDescriptions(i))
+    Next
 End Sub
 
 Sub SplashScreen
@@ -731,6 +812,16 @@ Sub SetDiscipline (ch As CharacterType, index As Integer, value As Integer)
     End Select
 End Sub
 
+Function GetAllDerangementsLine$ (ch As CharacterType)
+    Dim allDerangements(1) As DerangementType
+    Call FillDerangements(ch, allDerangements())
+    allDerangementsString$ = ""
+    For i = 0 To UBound(allDerangements) - 1
+        allDerangementsString$ = allDerangementsString$ + allDerangements(i).label + ", "
+    Next
+    GetAllDerangementsLine$ = allDerangementsString$
+End Function
+
 Function GetVirtue (ch As CharacterType, index As Integer)
     value = 0
     Select Case index
@@ -796,6 +887,12 @@ Function GetDiscipline (ch As CharacterType, index As Integer)
             GetDiscipline = ch.discipline_vicissitude
     End Select
 End Function
+
+Sub FillDerangements (ch As CharacterType, myDerangements() As DerangementType)
+    count = 1
+    ReDim myDerangements(count) As DerangementType
+    myDerangements(0) = Derangements(ch.derangementId)
+End Sub
 
 Sub FillDisciplines (ch As CharacterType, disciplines() As Integer)
     ReDim disciplines(1 To DISCIPLINES_COUNT) As Integer
@@ -1146,6 +1243,7 @@ Sub NewCharacter (ch As CharacterType)
     ch.roadValue = 0
     ch.willpower = 0
     ch.bloodPool = 0
+    ch.derangementId = -1
     ' Virtues
     ch.selfControl = 1
     ch.courage = 1
@@ -1429,6 +1527,19 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
     Wend
 End Sub
 
+Sub CGGetDerangement (ch As CharacterType)
+    ' TODO: figure out how this can work with rulesets.
+    If ch.clan = CLAN_MALKAVIAN Then
+        ' If the clan is malkavian then pick a derangement.
+        Dim ms As MenuStyle
+        Call NewMenuStyle(ms)
+        ms.useColors = TRUE
+
+        ch.derangementId = ChooseStringIdWithColors(DerangementLabels(), DerangementColors(), ms, "Which derangement do you want?")
+        If ch.derangementId = 0 Then ch.derangementId = GetRandomInt(1, DERANGEMENTS_COUNT)
+    End If
+End Sub
+
 Sub SetColor (c As Integer)
     ScreenColor = c
     Color c
@@ -1583,6 +1694,7 @@ Sub CharacterGenerator ()
     Call CGGetBackgrounds(ch)
     Call CGGetRoad(ch)
     Call CGSpendVirtuePoints(ch)
+    Call CGGetDerangement(ch)
 
     ' Generation starts at 13 and goes down 1 point per point of the "generation" background.
     ch.generation = INITIAL_GENERATION - GetBackground(ch, BACKGROUND_GENERATION)
@@ -1646,6 +1758,10 @@ Sub ShowCharacterSheet (ch As CharacterType)
             backgroundStringsIndex = backgroundStringsIndex + 1
         End If
     Next
+    Dim derangementStrings(5) As String
+    allDerangementsLine$ = GetAllDerangementsLine$(ch)
+
+    Call MakeWrapLines(derangementStrings(), allDerangementsLine$, 37, 5)
 
     ' TODO: Add derangements to this sheet.
     ' TODO: Make the string fields show a full width "_" string for "empty lines" when printed.
@@ -1659,11 +1775,11 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Print "บ Str. " + MakeFitL$(itos$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(itos$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(itos$(ch.attr_intelligence), 5, " ") + " บ Concept: " + MakeFitL$(ch.concept$, 28, " ") + " บ"
     Print "บ Dex. " + MakeFitL$(itos$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(itos$(ch.attr_charisma), 7, " ") + " Per. " + MakeFitL$(itos$(ch.attr_perception), 5, " ") + " ฬอออออออออออออออออออออออออออออออออออออออน"
     Print "บ Sta. " + MakeFitL$(itos$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(itos$(ch.attr_manipulation), 7, " ") + " Wit. " + MakeFitL$(itos$(ch.attr_wits), 5, " ") + " บ Derangements:                         บ"
-    Print "ฬออออออออออออออออออออออออออออออออออออออน Regression,__________________________ บ"
-    Print "บ Disciplines:                         บ _____________________________________ บ"
-    Print "บ " + MakeFitL$(disciplineStrings(0), 36, " ") + " บ _____________________________________ บ"
-    Print "บ " + MakeFitL$(disciplineStrings(1), 36, " ") + " บ _____________________________________ บ"
-    Print "บ " + MakeFitL$(disciplineStrings(2), 36, " ") + " บ _____________________________________ บ"
+    Print "ฬออออออออออออออออออออออออออออออออออออออน " + derangementStrings(0) + " บ"
+    Print "บ Disciplines:                         บ " + derangementStrings(1) + " บ"
+    Print "บ " + MakeFitL$(disciplineStrings(0), 36, " ") + " บ " + MakeFitL$(derangementStrings(2), 37, "_") + " บ"
+    Print "บ " + MakeFitL$(disciplineStrings(1), 36, " ") + " บ " + MakeFitL$(derangementStrings(3), 37, "_") + " บ"
+    Print "บ " + MakeFitL$(disciplineStrings(2), 36, " ") + " บ " + MakeFitL$(derangementStrings(4), 37, "_") + " บ"
     Print "ฬออออออออออออออออออออออออออออออออออออออฮอออออออออออออออออออออออออออออออออออออออน"
     Print "บ " + MakeFitL$(ch.roadName + ": " + itos$(ch.roadValue), 36, " ") + " บ Nature: " + MakeFitL$(Archetypes(ch.nature), 29, " ") + " บ"
     Print "บ Willpower: " + MakeFitL$(itos$(ch.willpower), 25, " ") + " บ Demeanor: " + MakeFitL$(Archetypes(ch.demeanor), 27, " ") + " บ"
@@ -1989,6 +2105,13 @@ Sub NewMenuItemWithColor (mi As MenuItem, label As String, textColor As Integer,
     mi.value = 0
     mi.color = textColor
     mi.isVisible = TRUE
+End Sub
+
+Sub NewDerangement (derangement As DerangementType, id As Integer, label As String, textColor As Integer, description As String)
+    derangement.id = id
+    derangement.label = label
+    derangement.textColor = textColor
+    derangement.description = description
 End Sub
 
 Function GetDisciplinePoints ()
