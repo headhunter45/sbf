@@ -1,12 +1,6 @@
 $Debug
 ' Setup
 ' TODO: See if other combinations of clan and other variables cause sub questions.
-' TODO: Calculate generation
-' TODO: Calculate conscience
-' TODO: Calculate self-control
-' TODO: Calculate courage
-' TODO: Calculate humanity/road
-' TODO: Calculate willpower
 ' TODO: Add blood pool to sheet
 ' TODO: Input/Print derangements
 ' TODO: Create a way to choose between VtM, VtDA, and WtA then load the appropriate lookup tables.
@@ -204,6 +198,28 @@ Const GENDER_NON_BINARY = 5
 Const GENDERS_COUNT = 5
 Dim Shared Genders(1 To GENDERS_COUNT) As String
 
+Const COLOR_DARK_BLACK = 0
+Const COLOR_DARK_BLUE = 1
+Const COLOR_DARK_GREEN = 2
+Const COLOR_DARK_CYAN = 3
+Const COLOR_DARK_RED = 4
+Const COLOR_DARK_MAGENTA = 5
+Const COLOR_DARK_ORANGE = 6
+Const COLOR_DARK_YELLOW = 6
+Const COLOR_DARK_WHITE = 7
+Const COLOR_BRIGHT_BLACK = 8
+Const COLOR_BRIGHT_BLUE = 9
+Const COLOR_BRIGHT_GREEN = 10
+Const COLOR_BRIGHT_CYAN = 11
+Const COLOR_BRIGHT_RED = 12
+Const COLOR_BRIGHT_MAGENTA = 13
+Const COLOR_BRIGHT_ORANGE = 14
+Const COLOR_BRIGHT_YELLOW = 14
+Const COLOR_BRIGHT_WHITE = 15
+
+Dim Shared ScreenColor As Integer
+ScreenColor = COLOR_DARK_WHITE
+
 Type CharacterType
     name As String
     player As String
@@ -223,6 +239,7 @@ Type CharacterType
     roadValue As Integer
     willpower As Integer
     bloodPool As Integer
+    derangementId As Integer
     ' Disciplines
     discipline_animalism As Integer
     discipline_auspex As Integer
@@ -315,11 +332,14 @@ Type MenuStyle
     labelValueSeparator As String
     menuItemSpacer As String
     showRandom As Integer
+    useColors As Integer
 End Type
+
 Type MenuItem
     label As String
     id As Integer
     value As Integer
+    color As Integer
     isVisible As Integer
 End Type
 
@@ -328,8 +348,6 @@ Call InitializeMemory
 
 ' Run "tests" at startup. Uncomment the end instruction to see the output and not run the rest of the program.
 Call Test
-'End
-
 Call SplashScreen
 Call MainMenu
 
@@ -1184,7 +1202,6 @@ Sub NewCharacter (ch As CharacterType)
 End Sub
 
 Sub BuildMenu (items() As MenuItem, labels() As String, count As Integer)
-    ReDim items(1 To count) As MenuItem
     For i = 1 To count
         Dim mi As MenuItem
         Call NewMenuItem(mi, labels(i), i)
@@ -1193,10 +1210,21 @@ Sub BuildMenu (items() As MenuItem, labels() As String, count As Integer)
 End Sub
 
 Sub BuildMenuWithValues (items() As MenuItem, labels() As String, values() As Integer, count As Integer)
-    ReDim items(1 To count) As MenuItem
     For i = 1 To count
         Dim mi As MenuItem
         Call NewMenuItemWithValue(mi, labels(i), i, values(i))
+        items(i) = mi
+    Next
+End Sub
+
+Sub BuildMenuWithColors (items() As MenuItem, labels() As String, colors() As Integer)
+    ' Check array bounds
+    If LBound(items) <> 1 Or LBound(colors) <> 1 Or UBound(items) <> UBound(colors) Then End
+
+    count = UBound(items)
+    For i = 1 To count
+        Dim mi As MenuItem
+        Call NewMenuItemWithColor(mi, labels(i), colors(i), i)
         items(i) = mi
     Next
 End Sub
@@ -1223,6 +1251,25 @@ Function ChooseStringIdWithValues (labels() As String, values() As Integer, styl
     choice = GetMenuChoice(mnuItems(), style, count)
     If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count)
     ChooseStringIdWithValues = choice
+End Function
+
+Function ChooseStringIdWithColors (labels() As String, colors() As Integer, style As MenuStyle, prompt As String)
+    Cls
+    ' Check array bounds
+    If LBound(labels) <> 1 Or LBound(colors) <> 1 Or UBound(labels) <> UBound(colors) Then
+        ChooseStringIdWithColors = -1
+        End
+    End If
+
+    count = UBound(labels)
+    Dim mnuItems(1 To count) As MenuItem
+    Call BuildMenuWithColors(mnuItems(), labels(), colors())
+    Call AdjustMenuStyle(style, mnuItems(), count, TRUE)
+    Print prompt
+    Call PrintMenu(mnuItems(), count, style)
+    choice = GetMenuChoice(mnuItems(), style, count)
+    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count)
+    ChooseStringIdWithColors = choice
 End Function
 
 Function ChooseMenuItemId (items() As MenuItem, style As MenuStyle, count As Integer, prompt As String, ignoreValue As Integer)
@@ -1259,7 +1306,6 @@ Sub CGGetDisciplines (ch As CharacterType)
     Dim disciplineValues(DISCIPLINES_COUNT) As Integer
     While disciplinePoints > 0
         Cls
-        Print "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " discipline points on?"
         Call FillDisciplines(ch, disciplineValues())
         discipline = ChooseStringIdWithValues(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?")
         Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
@@ -1404,10 +1450,20 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
     While virtuePoints > 0
         Call FillVirtues(ch, values())
         virtue = ChooseStringIdWithValues(Virtues(), values(), ms, VIRTUES_COUNT, "Which virtue do you want to spend 1 of your " + itos$(virtuePoints) + " points on?")
+        If virtue = 0 Then virtue = GetRandomInt(1, VIRTUES_COUNT)
         Call SetVirtue(ch, virtue, GetVirtue(ch, virtue) + 1)
         virtuePoints = virtuePoints - 1
     Wend
 End Sub
+
+Sub SetColor (c As Integer)
+    ScreenColor = c
+    Color c
+End Sub
+
+Function GetColor ()
+    GetColor = ScreenColor
+End Function
 
 Sub CGSpendFreebiePoints (ch As CharacterType)
 End Sub
@@ -1654,7 +1710,6 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Next
     Print "ฬออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออน"
     Print "บ Backgrounds:                         บ Virtues:                              บ"
-    Print "                                         " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, " ") + " บ"
     Print "บ " + MakeFitL$(backgroundStrings(0), 36, " ") + " บ " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, " ") + " บ"
     Print "บ " + MakeFitL$(backgroundStrings(1), 36, " ") + " บ " + MakeFitB$("Self-Control:", itos$(ch.selfControl), 37, " ") + " บ"
     Print "บ " + MakeFitL$(backgroundStrings(2), 36, " ") + " บ " + MakeFitB$("Courage:", itos$(ch.courage), 37, " ") + " บ"
@@ -1844,9 +1899,6 @@ Sub FillAttributeAbbreviationsInGroup (group As Integer, abbreviations() As Stri
     End Select
 End Sub
 
-Sub Test
-    'End
-End Sub
 
 Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer, ignoreValue As Integer)
     maxIdWidth = 0
@@ -1875,7 +1927,14 @@ Sub PrintMenu (items() As MenuItem, count As Integer, style As MenuStyle)
     If count <= 10 Then
         For i = 1 To count
             If items(i).isVisible Then
+                If style.useColors Then
+                    oldColor = GetColor
+                    SetColor (items(i).color)
+                End If
                 Print GetTitle$(items(i), style)
+                If style.useColors Then
+                    Call SetColor(oldColor)
+                End If
             End If
         Next
         If style.showRandom Then
@@ -1932,12 +1991,14 @@ Sub NewMenuStyle (ms As MenuStyle)
     ms.labelValueSeparator = ": "
     ms.menuItemSpacer = ", "
     ms.showRandom = TRUE
+    ms.useColors = FALSE
 End Sub
 
 Sub NewMenuItem (mi As MenuItem, label As String, id As Integer)
     mi.id = id
     mi.label = label
     mi.value = 0
+    mi.color = COLOR_DEFAULT
     mi.isVisible = TRUE
 End Sub
 
@@ -1945,6 +2006,15 @@ Sub NewMenuItemWithValue (mi As MenuItem, label As String, id As Integer, value 
     mi.id = id
     mi.label = label
     mi.value = value
+    mi.color = COLOR_DEFAULT
+    mi.isVisible = TRUE
+End Sub
+
+Sub NewMenuItemWithColor (mi As MenuItem, label As String, textColor As Integer, id As Integer)
+    mi.id = id
+    mi.label = label
+    mi.value = 0
+    mi.color = textColor
     mi.isVisible = TRUE
 End Sub
 
@@ -1959,4 +2029,8 @@ End Function
 Function GetVirtuePoints ()
     GetVirtuePoints = VIRTUE_POINTS
 End Function
+
+Sub Test
+    'End
+End Sub
 

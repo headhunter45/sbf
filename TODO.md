@@ -1,6 +1,4 @@
 # High Priority
-* Calculate roadValue aka humanity in VtM, and something else in WtA.
-* Calculate willpower.
 * Input/Print derangements. These are only for Malkavian vampires.
     * If the clan is malk then ask to pick a derangement. Maybe more than one?
     * Print any derangements on the character on the character sheet.
@@ -60,6 +58,12 @@
     * Look into pulling out these "classes" into separate bas files as appropriate.
     * I want to get this definition clutter out of the main bas.
 * Make empty strings show as "blank lines" on the character sheet so they can be filled in by hand.
+* Input/Print derangements. These are only for Malkavian vampires.
+    * This has been done in th default ruleset.
+    * Figure out how to support something like this for various rulesets.
+    * VtDA has malks so it would need this.
+    * WtA doesn't obviously have them, but it may have something else that requires a specific question/addition to CharacterType.
+    * Make this generic if possible.
 
 # Super-Low Priority
 * Make GetAttributePointsForRank and GetAbilityPointsForRank use a formula maybe.
