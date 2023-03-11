@@ -33,6 +33,8 @@ Const CLAN_VENTRUE = 18
 Const CLANS_COUNT = 18
 Dim Shared Clans(1 To CLANS_COUNT) As String
 
+'$include: 'colors.bi'
+
 Const ARCHETYPE_ARCHITECT = 1
 Const ARCHETYPE_AUTOCRAT = 2
 Const ARCHETYPE_BARBARIAN = 3
@@ -194,25 +196,6 @@ Const GENDER_NON_BINARY = 5
 Const GENDERS_COUNT = 5
 Dim Shared Genders(1 To GENDERS_COUNT) As String
 
-Const COLOR_DARK_BLACK = 0
-Const COLOR_DARK_BLUE = 1
-Const COLOR_DARK_GREEN = 2
-Const COLOR_DARK_CYAN = 3
-Const COLOR_DARK_RED = 4
-Const COLOR_DARK_MAGENTA = 5
-Const COLOR_DARK_ORANGE = 6
-Const COLOR_DARK_YELLOW = 6
-Const COLOR_DARK_WHITE = 7
-Const COLOR_BRIGHT_BLACK = 8
-Const COLOR_BRIGHT_BLUE = 9
-Const COLOR_BRIGHT_GREEN = 10
-Const COLOR_BRIGHT_CYAN = 11
-Const COLOR_BRIGHT_RED = 12
-Const COLOR_BRIGHT_MAGENTA = 13
-Const COLOR_BRIGHT_ORANGE = 14
-Const COLOR_BRIGHT_YELLOW = 14
-Const COLOR_BRIGHT_WHITE = 15
-
 Const DERANGEMENTS_COUNT = 10
 Const DERANGEMENT_ID_AMNESIA = 1
 Const DERANGEMENT_ID_DELUSIONS_OF_GRANDEUR = 2
@@ -250,9 +233,6 @@ Const DERANGEMENT_DESCRIPTION_OVERCOMPENSATION = "You make up for your moral wea
 Const DERANGEMENT_DESCRIPTION_PARANOIA = "You are convinced that you are being hunted. You hold even your closest Friends under suspicion."
 Const DERANGEMENT_DESCRIPTION_PERFECTION = "All your energy is directed toward preventing anything from going wong. When it does you must make a self-control roll or frenzy."
 Const DERANGEMENT_DESCRIPTION_REGRESSION = "You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is."
-
-Dim Shared ScreenColor As Integer
-ScreenColor = COLOR_DARK_WHITE
 
 Type CharacterType
     name As String
@@ -1522,15 +1502,6 @@ Sub CGGetDerangement (ch As CharacterType)
     End If
 End Sub
 
-Sub SetColor (c As Integer)
-    ScreenColor = c
-    Color c
-End Sub
-
-Function GetColor ()
-    GetColor = ScreenColor
-End Function
-
 Sub CGSpendFreebiePoints (ch As CharacterType)
 End Sub
 
@@ -1913,7 +1884,7 @@ Sub FillAttributesInGroup (group As Integer, attributes() As String)
         Case ATTRIBUTE_GROUP_MENTAL
             For i = 1 To count
                 attributes(i) = MentalAttributes(i)
-            Next                                                                                           f
+            Next
     End Select
 End Sub
 
@@ -2205,6 +2176,8 @@ Sub MakeWrapLines (lines() As String, text As String, maxWidth As Integer, maxLi
         End If
     Wend
 End Sub
+
+'$include: 'colors.bm'
 
 Sub Test
     'End

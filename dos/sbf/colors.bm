@@ -1,0 +1,9 @@
+Sub SetColor (c As Integer)
+    ScreenColor = c
+    Color c
+End Sub
+
+Function GetColor ()
+    GetColor = ScreenColor
+End Function
+
