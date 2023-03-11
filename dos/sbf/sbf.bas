@@ -1,9 +1,5 @@
 $Debug
 ' Setup
-' TODO: See if other combinations of clan and other variables cause sub questions.
-' TODO: Add blood pool to sheet
-' TODO: Input/Print derangements
-' TODO: Create a way to choose between VtM, VtDA, and WtA then load the appropriate lookup tables.
 Randomize Timer
 
 Const FALSE = 0
@@ -1495,20 +1491,7 @@ Sub CGGetBackgrounds (ch As CharacterType)
 End Sub
 
 Sub CGGetRoad (ch As CharacterType)
-    ' TODO: Choose your road. This is only for dark ages so skip for now
-    '1 = Road of the Beast - Feed the beast so it will not break loose.
-    '2 = Road of Blood - Blood grants the power for revenge.
-    '3 = Road of Chivalry - Treat your equals with honor and your betters with respect.
-    '4 = Road of the Devil - We are created evil and must play our part.
-    '5 = Road of Heaven - God made us vampires to exact his wrath.
-    '6 = Road of Humanity - The struggle to maintain one's humanity.
-    '7 = Road of Paradox - Existence is a lie change reality for the better.
-    '8 = Road of Typhon - Sin and corruption are the keys to understanding.
-    'Which road does the character follow?
-
-    ' TODO: figure out how to calculate road/humanity (typhon below)
     ch.roadName = "Humanity"
-    'ch.roadValue = 5
 End Sub
 
 Sub CGSpendVirtuePoints (ch As CharacterType)
@@ -1528,7 +1511,6 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
 End Sub
 
 Sub CGGetDerangement (ch As CharacterType)
-    ' TODO: figure out how this can work with rulesets.
     If ch.clan = CLAN_MALKAVIAN Then
         ' If the clan is malkavian then pick a derangement.
         Dim ms As MenuStyle
@@ -1731,8 +1713,6 @@ Sub ShowCharacterSheet (ch As CharacterType)
     '230 ๆ็่้๊๋2์ํ๎๏
     ' enquote forms s/^([ษบศอฬ].*[ปบผน])$/print "$1"/g
 
-    ' TODO: Try to make disciplines and backgrounds support multiple columns for overflow
-    ' i.e. >3 discipline strings or >5 background strings
     Dim disciplineStrings(3) As String
     disciplineStringsIndex = 0
     For index = 1 To DISCIPLINES_COUNT
@@ -1763,8 +1743,6 @@ Sub ShowCharacterSheet (ch As CharacterType)
 
     Call MakeWrapLines(derangementStrings(), allDerangementsLine$, 37, 5)
 
-    ' TODO: Add derangements to this sheet.
-    ' TODO: Make the string fields show a full width "_" string for "empty lines" when printed.
     Cls
     Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
     Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Gender: " + MakeFitL$(Genders(ch.gender), 14, " ") + " Generation: " + MakeFitR$(itos$(ch.generation), 2, " ") + " บ"
@@ -1857,8 +1835,6 @@ End Sub
 Sub VehicleGenerator
     Print "VehicleGenerator"
 End Sub
-
-' TODO: Look for other options that make sense in the menu. Random NPC generator. Spending experience points on a character. Some sort of character library.
 
 Sub PressAnyKeyToContinue ()
     While InKey$ = "": Wend
