@@ -1913,7 +1913,7 @@ Sub FillAttributesInGroup (group As Integer, attributes() As String)
         Case ATTRIBUTE_GROUP_MENTAL
             For i = 1 To count
                 attributes(i) = MentalAttributes(i)
-            Next
+            Next                                                                                           f
     End Select
 End Sub
 

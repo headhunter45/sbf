@@ -45,17 +45,7 @@
         * If there are none do something sensible so it doesn't output to the character sheet and we don't ask for a value.
     * VtDA has a handfull and I don't think any are humanity.
     * I don't know what WtA has, but I think it has something comparable.
-* Move initializers, getters, setters, fillers, and other utility methods for a type together.
-    * Probably not next to the type definition.
-    * Look into pulling out these "classes" into separate bas files as appropriate.
-    * I want to get this definition clutter out of the main bas.
 * Make empty strings show as "blank lines" on the character sheet so they can be filled in by hand.
-* Input/Print derangements. These are only for Malkavian vampires.
-    * This has been done in th default ruleset.
-    * Figure out how to support something like this for various rulesets.
-    * VtDA has malks so it would need this.
-    * WtA doesn't obviously have them, but it may have something else that requires a specific question/addition to CharacterType.
-    * Make this generic if possible.
 
 # Super-Low Priority
 * Make GetAttributePointsForRank and GetAbilityPointsForRank use a formula maybe.
@@ -75,7 +65,6 @@
         * All of these would do something like build a MenuItem for each with an id of the attribute id const, a label of the attribute name, and a value of ch(attrGroup, attrIndex)
     * This will probably just go away by converting to pm over PrintMenu and PrintMenuWithValues, because we'll be creating an array of MenuItems for each one. We still have to fill the array each time, but we can look into making that suck less afterwards.
 * Get attribute/ability/rank names from arrays when to print them (plural and singular) in loops like "Choose your tertiary attribute?" and "Which talent would you like to spend 1 of your 6 points on?"
-* Reorganize functions/subs so the order/grouping makes more sense. move all global dims together and group them with their constants.
 * Consider supporting freeform gender strings.
     * The main reason for not doing this is limiting the string length.
     * We don't do it for other strings, but we don't want to add more until we have a good way to handle them.
@@ -91,7 +80,6 @@
         * This would work if we can't sanely load/unload the other bas files at runtime.
         * Create a Rulesets array and RULESET_* constants.
         * Make all of these methods take a RULESET_* constant in addition to their current params.
-        * Make each ruleset variant of these methods be prefixed with the ruleset code (vtm, vtda, wta, ...).
         * Have the stubs use a select case to call the specific ruleset variant based on the RULESET_* constant passed in.
         * Maybe only load the ruleset bas files as they are required to save memory. If we can't unload this could still suck.
             * Imagine telling someone you've created to many classes of character. You need to close and reopen the program if you want to create any new classes, but you can create more of the old ones.
