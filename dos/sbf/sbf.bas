@@ -617,10 +617,6 @@ Sub BlankScreen
     Print "藩様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様様夕"
 End Sub
 
-Function itos$ (num As Integer)
-    itos$ = LTrim$(Str$(num))
-End Function
-
 Function GetChoice (min As Integer, max As Integer)
     Dim choice
     Do
@@ -661,29 +657,6 @@ Function GetRandomMenuItemId (items() As MenuItem, count As Integer)
     Next
     i = GetRandomInt(0, numVisibleItems - 1)
     GetRandomMenuItemId = visibleItems(i)
-End Function
-
-Function MakeFitL$ (text As String, length As Integer, pad As String)
-    MakeFitL = Left$(text + String$(length, pad), length)
-End Function
-
-Function MakeFitC$ (text As String, length As Integer, pad As String)
-    TextLength = Len(text)
-    LeftPadLength = MaxI(0, length - TextLength) \ 2
-    RightPadLength = MaxI(0, length - TextLength - LeftPadLength)
-    LeftPad$ = String$(LeftPadLength, pad)
-    RightPad$ = String$(RightPadLength, pad)
-    TotalChop = MaxI(0, TextLength - length)
-    LeftChop = TotalChop \ 2 + 1
-    MakeFitC = LeftPad$ + Mid$(text, LeftChop, length) + RightPad$
-End Function
-
-Function MakeFitR$ (text As String, length As Integer, pad As String)
-    MakeFitR = Right$(String$(length, pad) + text, length)
-End Function
-
-Function MakeFitB$ (prefix As String, suffix As String, length As Integer, pad As String)
-    MakeFitB$ = MakeFitL$(MakeFitL$(prefix, length - Len(suffix), pad) + suffix, length, pad)
 End Function
 
 Function MaxI (val1 As Integer, val2 As Integer)
@@ -2029,6 +2002,111 @@ End Function
 Function GetVirtuePoints ()
     GetVirtuePoints = VIRTUE_POINTS
 End Function
+
+' String functions
+Function itos$ (num As Integer)
+    itos$ = LTrim$(Str$(num))
+End Function
+
+Function MakeFitL$ (text As String, length As Integer, pad As String)
+    MakeFitL = Left$(text + String$(length, pad), length)
+End Function
+
+Function MakeFitC$ (text As String, length As Integer, pad As String)
+    TextLength = Len(text)
+    LeftPadLength = MaxI(0, length - TextLength) \ 2
+    RightPadLength = MaxI(0, length - TextLength - LeftPadLength)
+    LeftPad$ = String$(LeftPadLength, pad)
+    RightPad$ = String$(RightPadLength, pad)
+    TotalChop = MaxI(0, TextLength - length)
+    LeftChop = TotalChop \ 2 + 1
+    MakeFitC = LeftPad$ + Mid$(text, LeftChop, length) + RightPad$
+End Function
+
+Function MakeFitR$ (text As String, length As Integer, pad As String)
+    MakeFitR = Right$(String$(length, pad) + text, length)
+End Function
+
+Function MakeFitB$ (prefix As String, suffix As String, length As Integer, pad As String)
+    MakeFitB$ = MakeFitL$(MakeFitL$(prefix, length - Len(suffix), pad) + suffix, length, pad)
+End Function
+
+Function GetIndexOf (fullString As String, targetString As String, startIndex As Integer)
+    GetIndexOf = -1
+    targetLength = Len(targetString)
+    If targetLength <= 0 Then
+        GetIndexOf = startIndex
+        Exit Function
+    End If
+
+    position = startIndex + 1
+    length = Len(fullString)
+    Do
+        currString$ = Mid$(fullString, position, targetLength)
+        position = position + 1
+    Loop While position <= length And currString$ <> targetString
+    If currString$ = targetString Then GetIndexOf = position - 2
+End Function
+
+Function GetCharAt$ (text As String, index As Integer)
+    length = Len(text)
+    If length <= 0 Or index < 0 Or index >= length Then
+        GetCharAt$ = ""
+        Exit Function
+    End If
+    GetCharAt$ = Mid$(text, index + 1, 1)
+End Function
+
+Function GetSubstring$ (text As String, start As Integer, length As Integer)
+    GetSubstring$ = Mid$(text, start + 1, length)
+End Function
+
+Sub MakeWrapLines (lines() As String, text As String, maxWidth As Integer, maxLines As Integer)
+    ReDim lines(maxLines) As String
+    lineCount = 0
+    thisLine$ = ""
+    nextChunk$ = ""
+    thisLineStartPosition = 0
+    thisLineCurrentPosition = 0
+    nextSpace = -1
+    textLength = Len(text)
+
+    While (lineCount < maxLines)
+        nextSpace = GetIndexOf(text, " ", thisLineCurrentPosition)
+        If nextSpace < 0 Then nextSpace = textLength
+        nextChunk$ = GetSubstring(text, thisLineCurrentPosition, nextSpace - thisLineCurrentPosition)
+        nextChunkLength = Len(nextChunk$)
+        If nextChunkLength > 0 Then
+            needsSpace = Len(thisLine$) > 0
+            If needsSpace Then
+                thisLine$ = thisLine$ + " "
+            End If
+            thisLineLength = Len(thisLine$)
+            If nextChunkLength > maxWidth Then
+                nextChunk$ = GetSubstring(text, thisLineCurrentPosition, maxWidth - thisLineLength)
+                nextSpace = thisLineStartPosition + maxWidth
+                thisLine$ = thisLine$ + nextChunk$
+                thisLineCurrentPosition = nextSpace
+            ElseIf thisLineLength + nextChunkLength > maxWidth Then
+                thisLine$ = MakeFitL$(thisLine$, maxWidth, " ")
+            Else
+                thisLine$ = thisLine$ + nextChunk$
+                thisLineCurrentPosition = nextSpace + 1
+            End If
+            thisLineLength = Len(thisLine$)
+        Else
+            thisLineCurrentPosition = nextSpace + 1
+        End If
+        If thisLineLength >= maxWidth Or thisLineCurrentPosition > textLength Then
+            thisLine$ = MakeFitL$(thisLine$, maxWidth, "_")
+            lines(lineCount) = thisLine$
+            lineCount = lineCount + 1
+            thisLine$ = ""
+            thisLineLength = Len(thisLine$)
+            thisLineStartPosition = thisLineCurrentPosition
+        End If
+    Wend
+End Sub
 
 Sub Test
     'End
