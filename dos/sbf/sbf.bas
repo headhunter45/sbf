@@ -1919,7 +1919,6 @@ End Sub
 
 Sub FillAbilitiesForAbilityGroup (ability As Integer, items() As String)
     count = GetNumItemsForAbilityGroup(ability)
-    ReDim items(1 To count) As String
     If count > 0 Then
         ReDim items(1 To count) As String
     Else
