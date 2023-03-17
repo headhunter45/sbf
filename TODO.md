@@ -2,13 +2,106 @@
 * Add freebie points see page 92 VtM
     * After other generation steps allow spending the freebie points on adding dots to the sheet. This should be a nested menu like "What do you want to spend points on? -> Which of those things do you want to add a dot to?
     * We probably want to show the character sheet before asking or give the user a way to display it in the main menu of this section.
+    * Costs
+        * Disciplines (any): 7 points per dot
+        * Attributes: 5 points per dot
+        * Abilities: 2 points per dot
+        * Virtues: 2 points per dot
+        * Willpower: 2 points per dot
+        * Humanity: 1 point per dot
+        * Backgrounds: 1 point per dot
+    * How does increasing virtues/willpower/humanity affect each other
 * Add blood pool to sheet and figure out what should replace it for non-vampires.
     * Generation affects blood pool page 173 VtM.
 * Make empty strings show as "blank lines" on the character sheet so they can be filled in by hand.
 * Rename items, abilities/abilities, abilityGroups rename the shared arrays and constants too
 * See if other combinations of clan and other variables cause missed questions.
+* Integrate "Clan Disciplines" currently you can choose any.
+    * See clans section of traits chapter.
+    * A bunch of these have multiple sets of disciplines depending on the ruleset in place. Current defaults should be VtM based.
+    * p156-171
+    * PC
+        * Brujah: Celerity, Potence, Presence
+        * Gangrel: Animalism, Fortitude, Protean
+        * Malkavian: Auspex, Dominate, Obfuscate
+        * Nosferatu: Animalism, Obfuscate, Potence
+        * Toreador: Auspex, Celerity, Presence
+        * Tremere: Auspex, Dominate, Thaumaturgy
+        * Ventrue: Dominate, Fortitude, Presence
+        * Caitiff: any
+    * NPC
+        * Anarch: Based on actual clan
+        * Assamite / Banu Haqim: Blood Sorcery, Celerity, Obfuscate
+            * Warrior Caste: Celerity, Obfuscate, Quietus
+            * Vizier Caste: Auspex, Celerity, Quietus / Auspex, Presence, Quietus
+            * Sorcerer Caste: Assamite Sorcery, Obfuscate, Quietus / Assamite Sorcery, Auspex, Quietus / Assamite Sorcery, Auspex, Celerity
+        * Baali: Obfuscate, Presence, Daimonion
+        * Cappadocian / Hecata: Auspex, Fortitude, Necromancy / Auspex, Fortitude, Oblivion
+        * Giovanni / Hecata: Potence, Dominate, Necromancy / (Auspex, Dominate), Fortitude, Oblivion
+        * Inconnu: probably any
+        * Lasombra: Dominate, Obtenebration, Potence / Dominate, Oblivion, Potence
+        * Ravnos: Animalism, Fortitude, Chimestry / Animalism, Obfuscate, Presence
+        * Settite: Obfuscate, Presence, Serpentis / Obfuscate, Presence, Protean
+        * Tzimisce: Vicissitude, Animalisim, Auspex / Animalism, Dominate, Protean
+* Too many clans?
+    * This is complicated. We have stats available for clans not in the VtM core rulebook and clans only mentioned by name in the VtM core rulebook. There are also questions of whether a PC can use a clan and whether these terms should be treated as a clan or an adjective. This needs more research.
+    * Not Really a Clan
+        * Anarch - npc, complicated they need an original clan
+        * Caitiff - keep
+        * Inconnu - npc
+    * NPC Only
+        * Assamite/Banu Haqim
+        * Baali
+        * Cappadocian/Hecata - npc
+        * Giovanni/Hecata - npc
+    * Others
+        * Brujah - keep
+        * Gangrel - keep
+        * Lasombra - npc sabbat
+        * Malkavian - keep
+        * Nosferatu - keep
+        * Ravnos - npc, fix name from Ravanos to Ravnos
+        * Setite/Ministry - npc (Ministry, Ministry of Set, Followers of Set, Setites), fix name from Settite to Setite
+        * Toreador - keep
+        * Tremere - keep, swap order with Toreador
+        * Tzismice - npc sabbat
+        * Ventrue - keep
+* Limit spending of points
+    * Abilities max 3 dots before freebie points.
+* Reorder CC steps
+    * Concept
+    * Other header info
+    * Clan
+    * Nature
+    * Demeanor
+    * Attributes
+    * Abilities 
+    * Disciplines
+    * Backgrounds
+    * Virtues
+    * Freebie Points
+    * Appearance
+    * Contacts
+    * Retainers
+    * Specialties p125
+    * Equipment
+    * Quirks
+* Add attribute specialties and any other specialties from the book.
 
 # Low Priority
+* Add post-creation questions
+    * How old are you? - Already have this as age at the beginning but could move to the end.
+    * What was unique about your childhood?
+    * What kind of person were you?
+    * When did you first meet a vampire?
+    * How did the embrace change you?
+    * Who was your sire?
+    * How did your sire treat you?
+    * Were you presented to the prince?
+    * How did you meet the others in your brood?
+    * Where is your haven?
+    * What are your habitual feeding grounds?
+    * What motivates you?
 * Create a way to choose between VtM, VtDA, and WtA then load the appropriate lookup tables.
     * Completely generic plugin support would be great, but not possible.
     * Have specific predefined rulsets in the app.
@@ -279,7 +372,6 @@
 |Roads|1 per dot|
 
 ## Experience Costs
-
 |Trait|Cost|
 |-|-|
 |New Ability|3|
@@ -306,7 +398,6 @@
 * How did you meet the rest of your coterie?
 * Where is your territory?
 * What drives you?
-
 
 * Example Filled In Character Sheet page 106
 * Archetype descriptions pages 109-113
@@ -344,7 +435,6 @@
     * Blood Pool
 
 ## Concepts (from page 87)
-
 * Criminal - jailbird, mafioso, cat burglar, drug dealer, bandit
 * Dilettante - artist, writer, intellectual, gambler, student
 * Drifter - hobo, cowboy, prostitute, hermit, pilgrim
