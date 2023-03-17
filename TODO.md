@@ -24,19 +24,9 @@
         * Would be a neat thing to do it by character age where an old enough VtM character either gets additional access to VtDA stuff or for certain things only has access to VtDA stuff.
         * Allowing them to also spend points on any of the VtDA talents/skills/knowledges/backgrounds/disciplines, but only let them choose VtDA clans.
 * Extract the menu stuff to it's own bas file.
-    * https://qb64.com/wiki/TYPE
-    * https://qb64.com/wiki/$INCLUDE
-        * lib.BI - Type definitions. Include at the beginning of program.
-            * Include any dim, const, shared, or data.
-        * lib.BM - Sub/Function definitions. Include at the end of program.
-    * pm, PrintMenu, PrintMenuWithValues
-    * MenuItem/NewMenuItem
-    * MenuStyle/NewMenuStyle
-    * GetRandomMenuItem
     * GetChoice?
     * GetRandomInt?    
 * Extract each of the top-level menu items into their own files.
-* Extract CharacterType and it's associated funcs/subs to their own files. (CharacterType.bi, CharacterType.bm)
 * Extract show character sheet and save character to their own files or maybe put them in the CharacterType files.
 * Extract the ui utility funcs/subs into their own files. MakeFit*, itos$, ...
 * Add support for roads.
@@ -52,9 +42,12 @@
 * GetAbilityValue/SetAbilityValue use a select case and individual GetTalent, GetSkill, ... functions. Try to find a way around this.
     * Maybe not possible without abstracting further in CharacterType and maybe also not possible to support the array defined stuff.
     * Same for GetAttributeValue/SetAttribute.
-* Make pm and MenuStyle and thus PrintMenu and PrintMenuWithValues let you print inside of ascii art boxes like the main menu screen.
-* Make pm and MenuStyle let you print menus like the main menu both full screen and wrap_content width and/or height. Hell maybe let you center them vertically/horizontally and still take up a full screen.
-* Find a way to support PrintMenuWithValues(Disciplines(), DISCIPLINES_COUNT, ch, ...)
+* Make PrintMenu and MenuStyle let you print inside of ascii art boxes like the main menu screen.
+* Make PrintMenu and MenuStyle let you print menus like the main menu both full screen and wrap_content width and/or height. Hell maybe let you center them vertically/horizontally and still take up a full screen.
+* Find a way to support PrintMenu(Disciplines(), DISCIPLINES_COUNT, ch, ...)
+    * Ideally this would be PrintMenu(Disciplines(), DISCIPLINES_COUNT, ch, (id as Integer, ch as CharacterType) { return ch.getDisciplineValue(id);}), but we don't have anonymous functions, function pointers, or inheritance.
+    * Maybe something like PrintMenu(Disciplines(), DISCIPLINES_COUNT, ch, VALUE_DISCIPLINE)
+        * This would call something like BuildValues(ch, VALUE_DISCIPLINE) internally before doing the actual print.
     * Instead of PrintMenuWithValues(Disciplines(), disciplineValues(), DISCIPLINES_COUNT)
     * This would use the extra params to inspect ch for the discipline values instead of building a separate array.
     * This should also work for backgrounds.
@@ -64,7 +57,6 @@
         * PrintMenuWithValues(PROP_ATTRIBUTES, ch, ATTRIBUTE_PHYSICAL)
         * All of these would do something like build a MenuItem for each with an id of the attribute id const, a label of the attribute name, and a value of ch(attrGroup, attrIndex)
     * This will probably just go away by converting to pm over PrintMenu and PrintMenuWithValues, because we'll be creating an array of MenuItems for each one. We still have to fill the array each time, but we can look into making that suck less afterwards.
-* Get attribute/ability/rank names from arrays when to print them (plural and singular) in loops like "Choose your tertiary attribute?" and "Which talent would you like to spend 1 of your 6 points on?"
 * Consider supporting freeform gender strings.
     * The main reason for not doing this is limiting the string length.
     * We don't do it for other strings, but we don't want to add more until we have a good way to handle them.
@@ -121,7 +113,6 @@
     * Custom error codes from 100 to 199
     * Maybe use 27 - Out of paper.
 * Use LogError in all of the SELECT CASE blocks without a CASE ELSE to throw an unknown index error.
-* Sort virtues better on the character sheet.
 * Start work on ports
     * Mainly the C++ port.
     * Consider a python port to refresh my python skills.
@@ -147,7 +138,7 @@
     * Is age a freeform string or not.
     * How are the saved characters getting things like "lllllll" for a demeanor.
     * How are the saved characters getting blank lines "________" for age/name/nature/demeanor/clan/...?
-
+    * What happens if you choose physical as your primary, secondary, and tertiray attribute? Probably something bad.
 # Reference
 * QB64 Wiki [https://qb64.com/wiki]
 
@@ -221,8 +212,13 @@
 * Youth ? runaway, child, apprentice, heir, squire, urchin
 
 ## Roads (from page 102, see page 113)
-* Road of the Beast: Feed the Beast, that it will not break its chains. * Road of Blood: Vampiric blood grants the power for revenge. * Road of Chivalry: Treat your equals with honor and your betters with respect.
-* Road of the Devil: We are created evil and must play our part. * Road of Heaven: God made us vampires to exact His wrath. * Road of Humanity: The struggle to maintain one?s humanity. * Road of Paradox: Existence is a lie; change reality for the better.
+* Road of the Beast: Feed the Beast, that it will not break its chains.
+* Road of Blood: Vampiric blood grants the power for revenge.
+* Road of Chivalry: Treat your equals with honor and your betters with respect.
+* Road of the Devil: We are created evil and must play our part.
+* Road of Heaven: God made us vampires to exact His wrath.
+* Road of Humanity: The struggle to maintain one?s humanity.
+* Road of Paradox: Existence is a lie; change reality for the better.
 * Road of Typhon: Sin and corruption are the keys to under- standing.
 
 ## Clans (from page 103)
@@ -244,15 +240,24 @@
 ## Backgrounds (from page 103)
 *  Allies: Human confederates, usually family or friends.
 *  Contacts: The number of information sources the character possesses.
-*  Generation: How far removed from Caine the character is. *  Herd: The vessels to which the character has free and safe access. *  Influence: The character?s political power within mortal society. *  Mentor: The Cainite patron who advises and supports the character.
-*  Resources: Wealth, belongings and monthly income. *  Retainers: Followers, guards and servants.
+*  Generation: How far removed from Caine the character is.
+*  Herd: The vessels to which the character has free and safe access.
+*  Influence: The character?s political power within mortal society.
+*  Mentor: The Cainite patron who advises and supports the character.
+*  Resources: Wealth, belongings and monthly income.
+*  Retainers: Followers, guards and servants.
 *  Status: The character?s standing in undead society.
 
 ## Disciplines (from page 103)
-*  Animalism: Supernatural affinity with and control of animals. *  Auspex: Extrasensory perception, awareness and premonitions. *  Celerity: Supernatural quickness and reflexes.
-*  Chimerstry: The ability to create illusions and hallucinations. *  Dementation: The ability to pass madness on to a victim.
-*  Dominate: Mind control practiced through the piercing gaze. *  Fortitude: Unearthly toughness, even to the point of resisting fire and sunlight.
-*  Mortis: The supernatural power to control the process of death. *  Obfuscate: The ability to remain obscure and unseen, even in crowds.
+*  Animalism: Supernatural affinity with and control of animals.
+*  Auspex: Extrasensory perception, awareness and premonitions.
+*  Celerity: Supernatural quickness and reflexes.
+*  Chimerstry: The ability to create illusions and hallucinations.
+*  Dementation: The ability to pass madness on to a victim.
+*  Dominate: Mind control practiced through the piercing gaze.
+*  Fortitude: Unearthly toughness, even to the point of resisting fire and sunlight.
+*  Mortis: The supernatural power to control the process of death.
+*  Obfuscate: The ability to remain obscure and unseen, even in crowds.
 *  Obtenebration: The unearthly control over shadows.
 *  Potence: The Discipline of physical vigor and strength.
 *  Presence: The ability to attract, sway and control crowds.

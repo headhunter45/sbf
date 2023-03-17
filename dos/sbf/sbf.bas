@@ -11,6 +11,38 @@ Const INITIAL_GENERATION = 13
 '$include: 'menus.bi'
 '$include: 'character.bi'
 
+Const RANK_PRIMARY = 1
+Const RANK_PRIMARY_LABEL = "Primary"
+Const RANK_SECONDARY = 2
+Const RANK_SECONDARY_LABEL = "Secondary"
+Const RANK_TERTIARY = 3
+Const RANK_TERTIARY_LABEL = "Tertiary"
+Const RANKS_COUNT = 3
+
+Type RankType
+    id As Integer
+    label As String
+End Type
+Dim Shared Ranks(1 To RANKS_COUNT) As RankType
+
+Type AbilityType
+    id As Integer
+    singular As String
+    plural As String
+End Type
+
+Const ABILITY_TALENTS_ID = 1
+Const ABILITY_TALENTS_SINGULAR = "Talent"
+Const ABILITY_TALENTS_PLURAL = "Talents"
+Const ABILITY_SKILLS_ID = 2
+Const ABILITY_SKILLS_SINGULAR = "Skill"
+Const ABILITY_SKILLS_PLURAL = "Skills"
+Const ABILITY_KNOWLEDGES_ID = 3
+Const ABILITY_KNOWLEDGES_SINGULAR = "Knowledge"
+Const ABILITY_KNOWLEDGES_PLURAL = "Knowledges"
+Const ABILITIES_COUNT = 3
+Dim Shared Abilities(1 To ABILITIES_COUNT) As AbilityType
+
 Call InitializeMemory
 
 ' Run "tests" at startup. Uncomment the end instruction to see the output and not run the rest of the program.
@@ -21,6 +53,33 @@ Call MainMenu
 ' This initializes shared variables.
 Sub InitializeMemory
     Call Initialize_Character_Lib
+
+    Dim rank As RankType
+    Call NewRank(rank, RANK_PRIMARY, RANK_PRIMARY_LABEL)
+    Ranks(RANK_PRIMARY) = rank
+    Call NewRank(rank, RANK_SECONDARY, RANK_SECONDARY_LABEL)
+    Ranks(RANK_SECONDARY) = rank
+    Call NewRank(rank, RANK_TERTIARY, RANK_TERTIARY_LABEL)
+    Ranks(RANK_TERTIARY) = rank
+
+    Dim ability As AbilityType
+    Call NewAbility(ability, ABILITY_TALENTS_ID, ABILITY_TALENTS_SINGULAR, ABILITY_TALENTS_PLURAL)
+    Abilities(ABILITY_TALENTS_ID) = ability
+    Call NewAbility(ability, ABILITY_SKILLS_ID, ABILITY_SKILLS_SINGULAR, ABILITY_SKILLS_PLURAL)
+    Abilities(ABILITY_SKILLS_ID) = ability
+    Call NewAbility(ability, ABILITY_KNOWLEDGES_ID, ABILITY_SKILLS_SINGULAR, ABILITY_SKILLS_PLURAL)
+    Abilities(ABILITY_KNOWLEDGES_ID) = ability
+End Sub
+
+Sub NewAbility (ability As AbilityType, id As Integer, singular As String, plural As String)
+    ability.id = id
+    ability.singular = singular
+    ability.plural = plural
+End Sub
+
+Sub NewRank (rank As RankType, id As Integer, label As String)
+    rank.id = id
+    rank.label = label
 End Sub
 
 Sub SplashScreen
@@ -236,7 +295,7 @@ Sub CGGetAttributes (ch As CharacterType)
     Call NewMenuStyle(msWithoutValues)
     Dim msWithValues As MenuStyle
     Call NewMenuStyle(msWithValues)
-    Dim ranks(1 To ATTRIBUTE_GROUPS_COUNT) As Integer
+    Dim attributeRanks(1 To ATTRIBUTE_GROUPS_COUNT) As Integer
 
     ' Attribute groups menu (physical/social/mental)
     Dim mnuAttributeGroups(1 To ATTRIBUTE_GROUPS_COUNT) As MenuItem
@@ -250,10 +309,9 @@ Sub CGGetAttributes (ch As CharacterType)
     groupSum = 0
     rankSum = 1
     For i = 1 To ATTRIBUTE_GROUPS_COUNT - 1
-        ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary attribute?" instead
-        nextGroup = ChooseMenuItemId(mnuAttributeGroups(), msWithoutValues, ATTRIBUTE_GROUPS_COUNT, "Choose your next attribute?", TRUE)
+        nextGroup = ChooseMenuItemId(mnuAttributeGroups(), msWithoutValues, ATTRIBUTE_GROUPS_COUNT, "Choose your " + LCase$(Ranks(i).label) + " attribute?", TRUE)
         mnuAttributeGroups(nextGroup).isVisible = FALSE
-        ranks(nextGroup) = i
+        attributeRanks(nextGroup) = i
         rankSum = rankSum + i + 1
         groupSum = groupSum + nextGroup
     Next
@@ -261,18 +319,18 @@ Sub CGGetAttributes (ch As CharacterType)
     ' (Sum from 1 to count) - (Sum of all previous choice IDs)
     ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
     lastGroup = rankSum - groupSum
-    ranks(lastGroup) = ATTRIBUTE_GROUPS_COUNT
+    attributeRanks(lastGroup) = ATTRIBUTE_GROUPS_COUNT
 
     ' Spend attribute points
     For group = 1 To ATTRIBUTE_GROUPS_COUNT
         count = GetNumAttributesInGroup(group)
         ReDim attributes(1 To count) As String
         Call FillAttributesInGroup(group, attributes())
-        rank = ranks(group)
+        rank = attributeRanks(group)
         ReDim values(1 To count) As Integer
         For attrPoints = GetAttributePointsForRank(rank) To 1 Step -1
             Call FillAttributeValues(ch, values(), group)
-            attribute = ChooseStringIdWithValues(attributes(), values(), msWithValues, count, "Which attribute do you want to spend 1 of your " + itos$(attrPoints) + " points on?")
+            attribute = ChooseStringIdWithValues(attributes(), values(), msWithValues, count, "Which " + LCase$(AttributeGroups(group)) + " attribute do you want to spend 1 of your " + itos$(attrPoints) + " points on?")
             Call SetAttributeValue(ch, group, attribute, GetAttributeValue(ch, group, attribute) + 1)
         Next
     Next
@@ -283,7 +341,7 @@ Sub CGGetAbilities (ch As CharacterType)
     Call NewMenuStyle(msWithoutValues)
     Dim msWithValues As MenuStyle
     Call NewMenuStyle(msWithValues)
-    Dim ranks(1 To ABILITY_GROUPS_COUNT) As Integer
+    Dim abilityRanks(1 To ABILITY_GROUPS_COUNT) As Integer
 
     ' Ability groups menu (talents/skills/knowledges)
     Dim mnuAbilityGroups(1 To ABILITY_GROUPS_COUNT) As MenuItem
@@ -297,10 +355,9 @@ Sub CGGetAbilities (ch As CharacterType)
     groupSum = 0
     rankSum = 1
     For i = 1 To ABILITY_GROUPS_COUNT - 1
-        ' TODO: Pull this from an array like ranks or rank_names so "Choose your primary ability?" instead
-        nextAbility = ChooseMenuItemId(mnuAbilityGroups(), msWithoutValues, ABILITY_GROUPS_COUNT, "Choose your next ability?", TRUE)
+        nextAbility = ChooseMenuItemId(mnuAbilityGroups(), msWithoutValues, ABILITY_GROUPS_COUNT, "Choose your " + LCase$(Ranks(i).label) + " ability?", TRUE)
         mnuAbilityGroups(nextAbility).isVisible = FALSE
-        ranks(nextAbility) = i
+        abilityRanks(nextAbility) = i
         rankSum = rankSum + i + 1
         groupSum = groupSum + nextAbility
     Next
@@ -308,19 +365,18 @@ Sub CGGetAbilities (ch As CharacterType)
     ' (Sum from 1 to count) - (Sum of all previous choice IDs)
     ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
     lastGroup = rankSum - groupSum
-    ranks(lastGroup) = ABILITY_GROUPS_COUNT
+    abilityRanks(lastGroup) = ABILITY_GROUPS_COUNT
 
     ' Spend ability points
     For group = 1 To ABILITY_GROUPS_COUNT
         count = GetNumItemsForAbilityGroup(group)
-        ReDim abilities(1 To count) As String
-        Call FillAbilitiesForAbilityGroup(group, abilities())
-        rank = ranks(group)
+        ReDim abilityNames(1 To count) As String
+        Call FillAbilitiesForAbilityGroup(group, abilityNames())
+        rank = abilityRanks(group)
         ReDim values(1 To count) As Integer
         For abilityPoints = GetAbilityPointsForRank(rank) To 1 Step -1
             Call FillAbilityValues(ch, values(), group)
-            ' TODO: Pull this from an array like AbilityGroupsSingle so "Which talent would you like to spend 1 of your 5 points on?"
-            ability = ChooseStringIdWithValues(abilities(), values(), msWithValues, count, "Which ability would you like to spend 1 of your " + itos$(abilityPoints) + " points on?")
+            ability = ChooseStringIdWithValues(abilityNames(), values(), msWithValues, count, "Which " + LCase$(Abilities(i).singular) + " would you like to spend 1 of your " + itos$(abilityPoints) + " points on?")
             Call SetAbilityValue(ch, group, ability, GetAbilityValue(ch, group, ability) + 1)
         Next
     Next
