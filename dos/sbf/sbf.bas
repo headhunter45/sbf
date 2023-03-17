@@ -84,13 +84,12 @@ End Sub
 
 Sub SplashScreen
     ' Splash screen
-    Cls
-    Print "  Welcome to Tom's Storyteller's Best Friend.  This is a program  that is meant"
-    Print "to aid Storytellers in running Vampire: the Masquerade Chronicles and Vampire:"
-    Print "the Dark Ages Chronicles.  It is distributed as freeware until I think it is"
-    Print "worth something.This program could aid in running campaigns for other"
-    Print "role-playing games especially those from White Wolf(tm).  If you would like"
-    Print "anything added please e-mail me at locutus2001@hotmail.com."
+    Cls ' "                                                                                "
+    Print "Welcome to Tom's Storyteller's Best Friend. This is a program that is meant to"
+    Print "aid storytellers in running Vampire: the Masquerade Chronicles and Vampire: the"
+    Print "Dark Ages Chronicles. This program could aid in running campaigns for other"
+    Print "role-playing games especially those from White Wolf(tm). If you would like"
+    Print "anything added please open a github issue. https://github.com/headhunter45/sbf"
     Print "     Press any key to continue"
     While InKey$ = ""
     Wend

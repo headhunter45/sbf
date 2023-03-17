@@ -1,16 +1,14 @@
 # High Priority
-
-# Low Priority
 * Add freebie points see page 92 VtM
     * After other generation steps allow spending the freebie points on adding dots to the sheet. This should be a nested menu like "What do you want to spend points on? -> Which of those things do you want to add a dot to?
     * We probably want to show the character sheet before asking or give the user a way to display it in the main menu of this section.
-* Rename items, abilities/abilities, abilityGroups rename the shared arrays and constants too
-* Change CharacterType to use fields like attribute_1_1 instead of attr_strength
-    * Same for abilities like knowledge_computer -> ability_3_2, background_allies -> background_1, and discipline_obeah -> discipline_13.
-    * This would let us hard-code a given number of those fields so other format plugins can use up to that number at least.
-* See if other combinations of clan and other variables cause missed questions.
 * Add blood pool to sheet and figure out what should replace it for non-vampires.
     * Generation affects blood pool page 173 VtM.
+* Make empty strings show as "blank lines" on the character sheet so they can be filled in by hand.
+* Rename items, abilities/abilities, abilityGroups rename the shared arrays and constants too
+* See if other combinations of clan and other variables cause missed questions.
+
+# Low Priority
 * Create a way to choose between VtM, VtDA, and WtA then load the appropriate lookup tables.
     * Completely generic plugin support would be great, but not possible.
     * Have specific predefined rulsets in the app.
@@ -23,19 +21,21 @@
         * Ideally this would let you create an ancient character in a modern system using a clan only available in the older system.
         * Would be a neat thing to do it by character age where an old enough VtM character either gets additional access to VtDA stuff or for certain things only has access to VtDA stuff.
         * Allowing them to also spend points on any of the VtDA talents/skills/knowledges/backgrounds/disciplines, but only let them choose VtDA clans.
-* Extract the menu stuff to it's own bas file.
-    * GetChoice?
-    * GetRandomInt?    
-* Extract each of the top-level menu items into their own files.
-* Extract show character sheet and save character to their own files or maybe put them in the CharacterType files.
-* Extract the ui utility funcs/subs into their own files. MakeFit*, itos$, ...
 * Add support for roads.
     * VtM only has one. Humanity.
         * If there is only one like this then choose it and don't ask.
         * If there are none do something sensible so it doesn't output to the character sheet and we don't ask for a value.
     * VtDA has a handfull and I don't think any are humanity.
     * I don't know what WtA has, but I think it has something comparable.
-* Make empty strings show as "blank lines" on the character sheet so they can be filled in by hand.
+* Change CharacterType to use fields like attribute_1_1 instead of attr_strength
+    * Same for abilities like knowledge_computer -> ability_3_2, background_allies -> background_1, and discipline_obeah -> discipline_13.
+    * This would let us hard-code a given number of those fields so other format plugins can use up to that number at least.
+* Extract the menu stuff to it's own bas file.
+    * GetChoice?
+    * GetRandomInt?    
+* Extract each of the top-level menu items into their own files.
+* Extract show character sheet and save character to their own files or maybe put them in the CharacterType files.
+* Extract the ui utility funcs/subs into their own files. MakeFit*, itos$, ...
 
 # Super-Low Priority
 * Make GetAttributePointsForRank and GetAbilityPointsForRank use a formula maybe.
