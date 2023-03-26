@@ -7,7 +7,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleDisplayName</key>
-	<string>Metal Test</string>
+	<string>Storyteller's Best Friend</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>
@@ -26,7 +26,5 @@
 	<string></string>
 	<key>CFBundleSignature</key>
 	<string></string>
-	<key>MetalCaptureEnabled</key>
-	<false/>
 </dict>
 </plist>
