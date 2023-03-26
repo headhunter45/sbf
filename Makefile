@@ -14,6 +14,7 @@ else
 ASAN_FLAGS=
 endif
 
+APPS = test sbf
 BREW86_PREFIX := $(shell arch -x86_64 /usr/local/homebrew/bin/brew --prefix)
 BREW_PREFIX := $(shell brew --prefix)
 INCLUDE_DIRS = sbf-cpp $(BREW_PREFIX)/opt/ncurses/include
@@ -41,7 +42,7 @@ MANDATORY_TARGETS = Makefile
 
 .Phony: all clean app test
 
-all: $(BUILD_DIR)/$(CLIAPPNAME) app
+all: $(BUILD_DIR)/$(CLIAPPNAME) app $(patsubst %, $(BUILD_DIR)/%, $(APPS))
 
 clean:
 	rm -rf $(BUILD_DIR)
@@ -73,6 +74,8 @@ $(BUILD_DIR)/$(CLIAPPNAME): $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS)) $(pats
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/*.h $(MANDATORY_TARGETS)
 	$(CC) $(CCFLAGS) -c -o $@ $<
+
+#$(BUILD_DIR)/$(APPS) are built by "magic" using good enough rules
 
 # We make our own fat libs cause homebrew sucks
 $(BUILD_DIR)/lib/libncurses.a: $(BREW_PREFIX)/opt/ncurses/lib $(BREW86_PREFIX)/opt/ncurses/lib
