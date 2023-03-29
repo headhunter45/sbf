@@ -1,3 +1,5 @@
+.SECONDEXPANSION:
+
 BUILD_DIR := build
 OUT_DIR := build
 SRC_DIR = sbf-cpp
@@ -14,7 +16,6 @@ else
 ASAN_FLAGS=
 endif
 
-APPS = test sbf
 BREW86_PREFIX := $(shell arch -x86_64 /usr/local/homebrew/bin/brew --prefix)
 BREW_PREFIX := $(shell brew --prefix)
 INCLUDE_DIRS = sbf-cpp $(BREW_PREFIX)/opt/ncurses/include
@@ -28,7 +29,9 @@ CCFLAGS := -std=c++17 -Wall -fno-objc-arc -finput-charset=UTF-8 $(INCLUDES) $(DB
 LDFLAGS := $(LIBRARIES) $(FRAMEWORKS) $(ARCHS) $(DBG_OPT_FLAGS) $(ASAN_FLAGS)
 CC = clang++
 LD = clang++
-CLIAPPNAME=sbf-cpp
+CLIAPPNAME=sbf
+TESTAPPNAME=test
+APPS = $(CLIAPPNAME) $(TESTAPPNAME)
 APPNAME=SBF
 BUNDLENAME = $(APPNAME).app
 BUNDLEFOLDER = $(BUILD_DIR)/$(BUNDLENAME)
@@ -40,9 +43,9 @@ FAT_LIBS = ncurses
 
 MANDATORY_TARGETS = Makefile
 
-.Phony: all clean app test
+.Phony: all clean app run_all_tests run_incremental_tests
 
-all: $(BUILD_DIR)/$(CLIAPPNAME) app $(patsubst %, $(BUILD_DIR)/%, $(APPS))
+all: $(patsubst %, $(BUILD_DIR)/%, $(APPS)) app 
 
 clean:
 	rm -rf $(BUILD_DIR)
@@ -52,8 +55,11 @@ clean:
 	mkdir -p $(BUNDLEFOLDER)/Contents/MacOS
 	mkdir -p $(BUNDLEFOLDER)/Contents/Resources
 
-test: clean all
-	./$(BUILD_DIR)/$(CLIAPPNAME)
+run_all_tests: clean all
+	$(BUILD_DIR)/$(TESTAPPNAME)
+
+run_incremental_tests: $(BUILD_DIR)/$(TESTAPPNAME)
+	$(BUILD_DIR)/$(TESTAPPNAME)
 
 run: $(BUILD_DIR)/$(CLIAPPNAME)
 	$(BUILD_DIR)/$(CLIAPPNAME)
@@ -72,11 +78,12 @@ app: $(BUILD_DIR)/$(CLIAPPNAME) $(SRC_DIR)/Info.plist $(RESOURCES_DIR)/en-US.lpr
 $(BUILD_DIR)/$(CLIAPPNAME): $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS)) $(patsubst %, $(BUILD_DIR)/lib/lib%.a, $(FAT_LIBS)) $(MANDATORY_TARGETS)
 	$(LD) $(LDFLAGS) -o $@ $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS))
 
+$(BUILD_DIR)/$(TESTAPPNAME): $(BUILD_DIR)/test.o $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS)) $(patsubst %, $(BUILD_DIR)/lib/lib%.a, $(FAT_LIBS)) $(MANDATORY_TARGETS)
+	$(LD) $(LDFLAGS) -o $@ $<
+
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/*.h $(MANDATORY_TARGETS)
 	$(CC) $(CCFLAGS) -c -o $@ $<
 
-#$(BUILD_DIR)/$(APPS) are built by "magic" using good enough rules
-
 # We make our own fat libs cause homebrew sucks
-$(BUILD_DIR)/lib/libncurses.a: $(BREW_PREFIX)/opt/ncurses/lib $(BREW86_PREFIX)/opt/ncurses/lib
-	lipo -create -output ./build/lib/libncurses.a $(BREW_PREFIX)/opt/ncurses/lib/libncurses.a $(BREW86_PREFIX)/opt/ncurses/lib/libncurses.a
+build/lib/lib%.a: $(BREW_PREFIX)/opt/$$*/lib/lib$$*.a $(BREW86_PREFIX)/opt/$$*/lib/lib$$*.a $(MANDATORY_TARGETS)
+	lipo -create -output $@ $(word 1, $^) $(word 2, $^)
