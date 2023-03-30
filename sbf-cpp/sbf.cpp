@@ -1,4 +1,5 @@
 #define _XOPEN_SOURCE_EXTENDED
+#include "sbf.h"
 #include <ncursesw/curses.h>
 #include <iostream>
 #include <cstdio>

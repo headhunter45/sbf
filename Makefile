@@ -38,7 +38,7 @@ BUNDLEFOLDER = $(BUILD_DIR)/$(BUNDLENAME)
 BUNDLEIDENTIFIER = com.majinnaibu.test.$(APPNAME)
 BUNDLESIGNATURE = SBF_
 RESOURCES_DIR = Resources
-APP_OBJECTS = main.o
+APP_OBJECTS = Character.o Colors.o Menus.o
 FAT_LIBS = ncurses
 
 MANDATORY_TARGETS = Makefile
@@ -75,11 +75,11 @@ app: $(BUILD_DIR)/$(CLIAPPNAME) $(SRC_DIR)/Info.plist $(RESOURCES_DIR)/en-US.lpr
 	cp $(BUILD_DIR)/$(CLIAPPNAME) $(BUNDLEFOLDER)/Contents/MacOS/$(APPNAME)
 	cp -r $(RESOURCES_DIR)/* $(BUNDLEFOLDER)/Contents/Resources/
 
-$(BUILD_DIR)/$(CLIAPPNAME): $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS)) $(patsubst %, $(BUILD_DIR)/lib/lib%.a, $(FAT_LIBS)) $(MANDATORY_TARGETS)
-	$(LD) $(LDFLAGS) -o $@ $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS))
+$(BUILD_DIR)/$(CLIAPPNAME): $(BUILD_DIR)/sbf.o $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS)) $(patsubst %, $(BUILD_DIR)/lib/lib%.a, $(FAT_LIBS)) $(MANDATORY_TARGETS)
+	$(LD) $(LDFLAGS) -o $@ $< $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS))
 
 $(BUILD_DIR)/$(TESTAPPNAME): $(BUILD_DIR)/test.o $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS)) $(patsubst %, $(BUILD_DIR)/lib/lib%.a, $(FAT_LIBS)) $(MANDATORY_TARGETS)
-	$(LD) $(LDFLAGS) -o $@ $<
+	$(LD) $(LDFLAGS) -o $@ $< $(patsubst %, $(BUILD_DIR)/%, $(APP_OBJECTS))
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/*.h $(MANDATORY_TARGETS)
 	$(CC) $(CCFLAGS) -c -o $@ $<
