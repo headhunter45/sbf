@@ -3,6 +3,7 @@
 BUILD_DIR := build
 OUT_DIR := build
 SRC_DIR = sbf-cpp
+RELATIVE_SRC_DIR = ../$(SRC_DIR)
 
 ifdef DEBUG
 DBG_OPT_FLAGS=-g
@@ -41,11 +42,16 @@ BUNDLESIGNATURE = SBF_
 RESOURCES_DIR = Resources
 #APP_OBJECTS = Character.o Colors.o Menus.o
 MODULES = Abilities Archetypes Attributes Backgrounds Character Clans Colors Derangements Disciplines Genders Ranks Utils Virtues
-TEST_MODULES = $(patsubst %, %_test, $(MODULES))
 APP_OBJECTS = $(patsubst %, $(BUILD_DIR)/%.o, $(MODULES))
-TEST_OBJECTS = $(patsubst %, $(BUILD_DIR)/%.o, $(TEST_MODULES))
 FAT_LIBS = ncurses
 FAT_LIB_OBJECTS = $(patsubst %, $(LIB_DIR)/lib%.a, $(FAT_LIBS))
+TEST_MODULES = $(patsubst %, %_test, $(MODULES))
+TEST_OBJECTS = $(patsubst %, $(BUILD_DIR)/%.o, $(TEST_MODULES))
+TEST_HARNESS_CPP = $(BUILD_DIR)/$(MODULE)_test_harness.cpp
+TEST_HARNESS_OBJ = $(BUILD_DIR)/$(MODULE)_test_harness.o
+TEST_HARNESS_APP = $(BUILD_DIR)/$(MODULE)_test
+TEST_MAIN_CPP = $(BUILD_DIR)/test_main.cpp
+TEST_OBJ = $(BUILD_DIR)/$(MODULE)_test.o
 
 MANDATORY_TARGETS = Makefile
 
@@ -69,9 +75,39 @@ run_incremental_tests: $(BUILD_DIR)/$(TESTAPPNAME) $(MANDATORY_TARGETS)
 
 test: run_incremental_tests
 
-run_test:
-# should depend on Makefile build/something
-# runs a single test bundle build/MODULE_test.o's main and prints the results.
+# Runs a single test harness app e.g. build/Ranks_test made from
+# sbf-cpp/Ranks{.h,.cpp,_test.cpp} and the generated test shim
+# build/Ranks_test_harness.cpp
+run_test: $(TEST_HARNESS_APP) $(MANDATORY_TARGETS)
+	$(TEST_HARNESS_APP)
+
+$(BUILD_DIR)/_test:
+	@echo "You need to define MODULE when you run make run_test."
+
+$(TEST_HARNESS_CPP): $(MANDATORY_TARGETS)
+	@echo "//stuff " >> $(TEST_HARNESS_CPP)
+	@echo "// This file is auto generated\n" > $(TEST_HARNESS_CPP)
+	@echo "#include \"$(RELATIVE_SRC_DIR)/$(MODULE).h\"" >> $(TEST_HARNESS_CPP)
+	@echo "#include \"../sbf-cpp/test.h\"" >> $(TEST_HARNESS_CPP)
+	@echo #include \"$(RELATIVE_SRC_DIR)/test.h\"" >> $(TEST_HARNESS_CPP)
+	@echo "#include <clocale>" >> $(TEST_HARNESS_CPP)
+	@echo "#include <string>" >> $(TEST_HARNESS_CPP)
+	@echo "#include <iostream>" >> $(TEST_HARNESS_CPP)
+	@echo "#include <tuple>" >> $(TEST_HARNESS_CPP)
+	@echo "using namespace Test;" >> $(TEST_HARNESS_CPP)
+	@echo "using std::wcout;\nusing std::endl;\nusing std::tuple;\nusing std::get;" >> $(TEST_HARNESS_CPP)
+	@echo "extern test_method_result main_test_$(MODULE)(int argc, char** argv);" >> $(TEST_HARNESS_CPP)	
+	@echo "int main(int argc, char** argv) {\n    setlocale(LC_ALL, \"\");\n    test_method_result results;\n" >> $(TEST_HARNESS_CPP)
+	@echo "    results = results + main_test_$(MODULE)(argc, argv);\n" >> $(TEST_HARNESS_CPP)
+	@echo "    wcout << \"Total tests ran: \" << get<0>(results) << endl;" >> $(TEST_HARNESS_CPP)
+	@echo "    wcout << \"Total failures: \" << get<1>(results) << endl;" >> $(TEST_HARNESS_CPP)
+	@echo "\n    return 0;\n}" >> $(TEST_HARNESS_CPP)
+
+$(TEST_HARNESS_OBJ): $(TEST_HARNESS_CPP) $(SRC_DIR)/*.h $(TEST_CPP) $(MANDATORY_TARGETS)
+	$(CC) $(CCFLAGS) -c -o $@ $<	
+
+$(TEST_HARNESS_APP): $(TEST_HARNESS_OBJ) $(APP_OBJECTS) $(TEST_OBJ) $(BUILD_DIR)/test.o $(MANDATORY_TARGETS)
+	$(LD) $(LDFLAGS) -o $@ $< $(APP_OBJECTS) $(TEST_OBJ) $(BUILD_DIR)/test.o
 
 run: $(BUILD_DIR)/$(CLIAPPNAME)
 	$(BUILD_DIR)/$(CLIAPPNAME)
@@ -101,21 +137,21 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/*.h $(MANDATORY_TARGETS)
 
 # Create build/test_main.cpp with a main function that calls all of the test_main_* functions in each of the $(TEST_OBJECTS).
 $(BUILD_DIR)/test_main.cpp: $(TEST_OBJECTS)
-	echo "// This file is auto generated\n" > $(BUILD_DIR)/test_main.cpp
-	echo "$(patsubst %, #include \"../$(SRC_DIR)/%.h\"\n, $(MODULES))" >> $(BUILD_DIR)/test_main.cpp
-	echo "#include \"../$(SRC_DIR)/test.h\"" >> $(BUILD_DIR)/test_main.cpp
-	echo "#include <clocale>" >> $(BUILD_DIR)/test_main.cpp
-	echo "#include <string>" >> $(BUILD_DIR)/test_main.cpp
-	echo "#include <iostream>" >> $(BUILD_DIR)/test_main.cpp
-	echo "#include <tuple>" >> $(BUILD_DIR)/test_main.cpp
-	echo "using namespace Test;" >> $(BUILD_DIR)/test_main.cpp
-	echo "using std::wcout;\nusing std::endl;\nusing std::tuple;\nusing std::get;" >> $(BUILD_DIR)/test_main.cpp
-	echo "$(patsubst %, extern test_method_result main_test_%(int argc, char** argv);\n, $(MODULES))" >> $(BUILD_DIR)/test_main.cpp
-	echo "int main(int argc, char** argv) {\n    setlocale(LC_ALL, \"\");\n    test_method_result results;\n" >> $(BUILD_DIR)/test_main.cpp
-	echo "$(patsubst %,    results = results + main_test_%(argc, argv);\n, $(MODULES))" >> $(BUILD_DIR)/test_main.cpp
-	echo "    wcout << \"Total tests ran: \" << get<0>(results) << endl;\n" >> $(BUILD_DIR)/test_main.cpp
-	echo "    wcout << \"Total failures: \" << get<1>(results) << endl;\n" >> $(BUILD_DIR)/test_main.cpp
-	echo "\n    return 0;\n}" >> $(BUILD_DIR)/test_main.cpp
+	@echo "// This file is auto generated\n" > $(BUILD_DIR)/test_main.cpp
+	@echo "$(patsubst %, #include \"$(RELATIVE_SRC_DIR)/%.h\"\n, $(MODULES))" >> $(BUILD_DIR)/test_main.cpp
+	@echo "#include \"$(RELATIVE_SRC_DIR)/test.h\"" >> $(BUILD_DIR)/test_main.cpp
+	@echo "#include <clocale>" >> $(BUILD_DIR)/test_main.cpp
+	@echo "#include <string>" >> $(BUILD_DIR)/test_main.cpp
+	@echo "#include <iostream>" >> $(BUILD_DIR)/test_main.cpp
+	@echo "#include <tuple>" >> $(BUILD_DIR)/test_main.cpp
+	@echo "using namespace Test;" >> $(BUILD_DIR)/test_main.cpp
+	@echo "using std::wcout;\nusing std::endl;\nusing std::tuple;\nusing std::get;" >> $(BUILD_DIR)/test_main.cpp
+	@echo "$(patsubst %, extern test_method_result main_test_%(int argc, char** argv);\n, $(MODULES))" >> $(BUILD_DIR)/test_main.cpp
+	@echo "int main(int argc, char** argv) {\n    setlocale(LC_ALL, \"\");\n    test_method_result results;\n" >> $(BUILD_DIR)/test_main.cpp
+	@echo "$(patsubst %,    results = results + main_test_%(argc, argv);\n, $(MODULES))" >> $(BUILD_DIR)/test_main.cpp
+	@echo "    wcout << \"Total tests ran: \" << get<0>(results) << endl;\n" >> $(BUILD_DIR)/test_main.cpp
+	@echo "    wcout << \"Total failures: \" << get<1>(results) << endl;\n" >> $(BUILD_DIR)/test_main.cpp
+	@echo "\n    return 0;\n}" >> $(BUILD_DIR)/test_main.cpp
 
 # We make our own fat libs cause homebrew sucks
 $(LIB_DIR)/lib%.a: $(BREW_PREFIX)/opt/$$*/lib/lib$$*.a $(BREW86_PREFIX)/opt/$$*/lib/lib$$*.a $(MANDATORY_TARGETS)
