@@ -2,6 +2,9 @@
 
 namespace SBF {
     
+    using std::wstring;
+    using std::vector;
+
     int GetNumAttributesInGroup(int groupId) {
         switch (groupId) {
             case kAttributeGroupPhysicalId:
@@ -41,7 +44,7 @@ namespace SBF {
 
         // Arrays/Objects
         // Abilities (Talents/Skills/Knowledges)
-        for (int groupId = 1; groupId <= kAbilityGroupsCount; groupId++) {
+        for (int groupId = 1; groupId <= kAbilitiesCount; groupId++) {
             const int numAbilities = GetNumItemsForAbilityGroup(groupId);
             for (int abilityId = 1; abilityId <= numAbilities; abilityId++) {
                 SetAbilityValue(groupId, abilityId, 0);
@@ -408,13 +411,13 @@ namespace SBF {
 
     void CharacterType::SetAbilityValue(int abilityGroupId, int abilityId, int value) {
         switch (abilityGroupId) {
-            case kAbilityGroupTalentsId:
+            case kAbilityTalentsId:
                 SetTalentValue(abilityId, value);
                 break;
-            case kAbilityGroupSkillsId:
+            case kAbilitySkillsId:
                 SetSkillValue(abilityId, value);
                 break;
-            case kAbilityGroupKnowledgesId:
+            case kAbilityKnowledgesId:
                 SetKnowledgeValue(abilityId, value);
                 break;
         }
@@ -422,11 +425,11 @@ namespace SBF {
 
     int CharacterType::GetAbilityValue(int abilityGroupId, int abilityId) const {
         switch(abilityGroupId) {
-            case kAbilityGroupTalentsId:
+            case kAbilityTalentsId:
                 return GetTalentValue(abilityId);
-            case kAbilityGroupKnowledgesId:
+            case kAbilityKnowledgesId:
                 return GetKnowledgeValue(abilityId);
-            case kAbilityGroupSkillsId:
+            case kAbilitySkillsId:
                 return GetSkillValue(abilityId);
         }
         return 0;
@@ -454,43 +457,31 @@ namespace SBF {
 
     int GetNumItemsForAbilityGroup(int abilityGroupId) {
         switch (abilityGroupId) {
-            case kAbilityGroupTalentsId:
+            case kAbilityTalentsId:
                 return kTalentsCount;
-            case kAbilityGroupSkillsId:
+            case kAbilitySkillsId:
                 return kSkillsCount;
-            case kAbilityGroupKnowledgesId:
+            case kAbilityKnowledgesId:
                 return kKnowledgesCount;
         }
         return 0;
-    }
-
-    wstring GetAbilityLabel(int abilityGroupId, int abilityId) {
-        switch (abilityGroupId) {
-            case kAbilityGroupTalentsId:
-                return kTalents[abilityId];
-            case kAbilityGroupSkillsId:
-                return kSkills[abilityId];
-            case kAbilityGroupKnowledgesId:
-                return kKnowledges[abilityId];
-        }
-        return L"";
     }
 
     void FillAbilitiesForAbilityGroup(std::vector<wstring> abilities, int abilityGroupId) {
         abilities.clear();
         int numAbilities = GetNumItemsForAbilityGroup(abilityGroupId);
         switch (abilityGroupId) {
-            case kAbilityGroupTalentsId:
+            case kAbilityTalentsId:
                 for (int talentId = 0; talentId <= numAbilities; talentId++) {
                     abilities[talentId] = kTalents[talentId];
                 }
                 break;
-            case kAbilityGroupSkillsId:
+            case kAbilitySkillsId:
                 for (int skillId = 0; skillId <= numAbilities; skillId++) {
                     abilities[skillId] = kSkills[skillId];
                 }
                 break;
-            case kAbilityGroupKnowledgesId:
+            case kAbilityKnowledgesId:
                 for (int knowledgeId = 0; knowledgeId <= numAbilities; knowledgeId++) {
                     abilities[knowledgeId] = kKnowledges[knowledgeId];
                 }

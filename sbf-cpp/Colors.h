@@ -1,9 +1,9 @@
 #ifndef COLORS_H__
 #define COLORS_H__
 #include <cstdint>
+#include <vector>
 
 namespace SBF {
-
     const uint8_t kColorDarkBlack = 0;
     const uint8_t kColorDarkBlue = 1;
     const uint8_t kColorDarkGreen = 2;
@@ -25,9 +25,9 @@ namespace SBF {
 
     void SetForegroundColor(uint8_t foregroundColor);
     uint8_t GetForegroundColor();
-    // ncurses color pair
+    // TODO: Make this an ncurses color pair
     uint16_t GetColor();
 
+    void FillColors(std::vector<uint8_t> colors);
 } // End namespace SBF
-
-#endif
+#endif // End !defined COLORS_H__
