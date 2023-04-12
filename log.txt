@@ -1,0 +1,13 @@
+Makefile:111: warning: overriding commands for target `build/_test'
+Makefile:86: warning: ignoring old commands for target `build/_test'
+clang++ -std=c++17 -finput-charset=UTF-8  -Isbf-cpp  -I/opt/homebrew/opt/ncurses/include -arch arm64 -arch x86_64 -fdiagnostics-show-template-tree -fno-elide-type -c -o build/Abilities_test.o sbf-cpp/Abilities_test.cpp
+clang++ -std=c++17 -finput-charset=UTF-8  -Isbf-cpp  -I/opt/homebrew/opt/ncurses/include -arch arm64 -arch x86_64 -fdiagnostics-show-template-tree -fno-elide-type -c -o build/test_main.o build/test_main.cpp
+clang++  -Lbuild/lib -lncurses  -arch arm64 -arch x86_64 -O2  -o build/test build/test_main.o  build/Abilities.o  build/Archetypes.o  build/Attributes.o  build/Backgrounds.o  build/Character.o  build/Clans.o  build/Colors.o  build/Derangements.o  build/Disciplines.o  build/Genders.o  build/Ranks.o  build/Utils.o  build/Virtues.o  build/Abilities_test.o  build/Archetypes_test.o  build/Attributes_test.o  build/Backgrounds_test.o  build/Character_test.o  build/Clans_test.o  build/Colors_test.o  build/Derangements_test.o  build/Disciplines_test.o  build/Genders_test.o  build/Ranks_test.o  build/Utils_test.o  build/Virtues_test.o build/test.o
+cp sbf-cpp/Info.plist build/Contents/Info.plist
+plutil -replace CFBundleExecutable -string "SBF" build/Contents/Info.plist
+plutil -replace CFBundleIdentifier -string "com.majinnaibu.SBF" build/Contents/Info.plist
+plutil -replace CFBundleName -string "SBF" build/Contents/Info.plist
+plutil -replace CFBundleSignature -string SBF_ build/Contents/Info.plist
+cp build/Contents/Info.plist build/SBF.app/Contents/
+cp build/sbf build/SBF.app/Contents/MacOS/SBF
+cp -r Resources/* build/SBF.app/Contents/Resources/

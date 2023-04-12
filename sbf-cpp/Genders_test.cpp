@@ -3,8 +3,8 @@
 using namespace SBF;
 using namespace Test;
 
-test_method_result main_test_Genders(int argc, char** argv) {
-    test_method_result results = std::make_tuple(1, 0);
+TestResults main_test_Genders(int argc, char** argv) {
+    TestResults results;
     
     return results;
 }
