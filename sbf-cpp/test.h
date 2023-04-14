@@ -87,43 +87,6 @@ namespace Test {
             uint32_t total_;
     };
    
-    // This function is called to execute a test suite. You provide it with some configuration info, optional utility callback functions, and test data (input parameters for each call to function_to_test and the expected result). It returns a TestResults that should be treated as an opaque data type.
-    // Not all parameters are named in code, but they are named and explained in the comments and will be described by those names below.
-    //   string suite_name - This is the name of this test suite. It is used for reporting messages.
-    //   TFunctionToTest function_to_test - This is the function to test. This may be replaced if necessary by std::function. It may not currently support class methods, but that is planned.
-    //   vector<tuple<...>> tests - This is the test run data. Each tuple in the vector is a single test run. It's members are explained below.
-    //     string test_name - This is the name of this test. It is used for reporting messages.
-    //     TResult expected_output - This is the expected result of executing this test.
-    //     bool(*)(const TResult expected, const TResult actual) test_compare_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called to evaluate the test results. It takes the expected and actual results as parameters and should return true if the test passed and false otherwise. This may be changed to return a TestResults at some point.
-    //     void(*)(TInputParams...) test_setup_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called before each test to setup the environment for the test. You may use it to allocate resources and setup mocks, stubs, and spies.
-    //     void(*)(TInputParams...) test_teardown_function - This is optiona. If unset or set to nullptr it is skipped. If set to a function it is called after each test to cleanup the environment after the test. You should free resources allocated by test_setup_function.
-    //     bool is_enabled - This is optional. If unset or set to true the test is run. If set to false this test is skipped. If skipped it will be reported as a skipped/disabled test.
-    //   bool(*)(const TResult expected, const TResult actual) suite_compare_function - This is optional. If unset or set to nullptr it is skipped. If set to a function and test_compare_function is not called for a test run then this function is called to evaluate the test results. It takes the expected and actual results as parameters and should return true if the test passed and false otherwise. This may be changed to return a TestResults at some point.
-    //   void(*)() suite_setup_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called before starting this test suite to setup the environment. You may use it to allocate resources and setup mocks, stubs, and spies.
-    //   void(*)() suite_teardown_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called after all tests in this suite have finished and all reporting has finished. You should free resources allocated by suite_setup_function.
-    // This method should be called like so. This is the minimal call and omits all of the optional params. This is the most common usage. You should put one tuple of inputs and expected output for each test case.
-    //   results = collect_and_report_test_resultstest_fn(
-    //     "Test: function_under_test",
-    //     function_under_test,
-    //     vector({
-    //       make_tuple(
-    //         "ShouldReturnAppleForGroupId_1_and_ItemId_2",
-    //         string("Apple"),
-    //         make_tuple(1,2),
-    //       ),
-    //     }),
-    //   );
-    // The suites can be run from one file as such. From a file called ThingDoer_test.cpp to test the class/methods ThingDoer declared in ThingDoer.cpp. This isn't mandatory but is a best practice.
-    // You can use function_to_test without calling collect_and_report_test_results() and also could call it from a normal int main(int argc, char** argv) or other function.
-    //   TestResults test_main_ThingDoer(int argc, char** argv) {
-    //     TestResults results;
-    //     results = collect_and_report_test_results(results, function_to_test("do_thing1", ...), argc, argv);
-    //     results = collect_and_report_test_results(results, function_to_test("do_thing2", ...), argc, argv);
-    //     return results;
-    //   }
-    // Then some test harness either generated or explicit can call test_main_ThingDoer(...) and optionally reported there. Reporting granularity is controlled by how frequently you call collect_and_report_test_results(...).
-    // You can combine test results with results = results + function_to_test(..); and then collect_and_report_test_results on the aggregate TestResults value.
-
     /// @brief 
     /// @tparam TResult 
     template<typename TResult>
@@ -164,6 +127,43 @@ namespace Test {
         MaybeTestConfigureFunction,
         bool
     >;
+
+    // This function is called to execute a test suite. You provide it with some configuration info, optional utility callback functions, and test data (input parameters for each call to function_to_test and the expected result). It returns a TestResults that should be treated as an opaque data type.
+    // Not all parameters are named in code, but they are named and explained in the comments and will be described by those names below.
+    //   string suite_name - This is the name of this test suite. It is used for reporting messages.
+    //   TFunctionToTest function_to_test - This is the function to test. This may be replaced if necessary by std::function. It may not currently support class methods, but that is planned.
+    //   vector<tuple<...>> tests - This is the test run data. Each tuple in the vector is a single test run. It's members are explained below.
+    //     string test_name - This is the name of this test. It is used for reporting messages.
+    //     TResult expected_output - This is the expected result of executing this test.
+    //     bool(*)(const TResult expected, const TResult actual) test_compare_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called to evaluate the test results. It takes the expected and actual results as parameters and should return true if the test passed and false otherwise. This may be changed to return a TestResults at some point.
+    //     void(*)(TInputParams...) test_setup_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called before each test to setup the environment for the test. You may use it to allocate resources and setup mocks, stubs, and spies.
+    //     void(*)(TInputParams...) test_teardown_function - This is optiona. If unset or set to nullptr it is skipped. If set to a function it is called after each test to cleanup the environment after the test. You should free resources allocated by test_setup_function.
+    //     bool is_enabled - This is optional. If unset or set to true the test is run. If set to false this test is skipped. If skipped it will be reported as a skipped/disabled test.
+    //   bool(*)(const TResult expected, const TResult actual) suite_compare_function - This is optional. If unset or set to nullptr it is skipped. If set to a function and test_compare_function is not called for a test run then this function is called to evaluate the test results. It takes the expected and actual results as parameters and should return true if the test passed and false otherwise. This may be changed to return a TestResults at some point.
+    //   void(*)() suite_setup_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called before starting this test suite to setup the environment. You may use it to allocate resources and setup mocks, stubs, and spies.
+    //   void(*)() suite_teardown_function - This is optional. If unset or set to nullptr it is skipped. If set to a function it is called after all tests in this suite have finished and all reporting has finished. You should free resources allocated by suite_setup_function.
+    // This method should be called like so. This is the minimal call and omits all of the optional params. This is the most common usage. You should put one tuple of inputs and expected output for each test case.
+    //   results = collect_and_report_test_resultstest_fn(
+    //     "Test: function_under_test",
+    //     function_under_test,
+    //     vector({
+    //       make_tuple(
+    //         "ShouldReturnAppleForGroupId_1_and_ItemId_2",
+    //         string("Apple"),
+    //         make_tuple(1,2),
+    //       ),
+    //     }),
+    //   );
+    // The suites can be run from one file as such. From a file called ThingDoer_test.cpp to test the class/methods ThingDoer declared in ThingDoer.cpp. This isn't mandatory but is a best practice.
+    // You can use function_to_test without calling collect_and_report_test_results() and also could call it from a normal int main(int argc, char** argv) or other function.
+    //   TestResults test_main_ThingDoer(int argc, char** argv) {
+    //     TestResults results;
+    //     results = collect_and_report_test_results(results, function_to_test("do_thing1", ...), argc, argv);
+    //     results = collect_and_report_test_results(results, function_to_test("do_thing2", ...), argc, argv);
+    //     return results;
+    //   }
+    // Then some test harness either generated or explicit can call test_main_ThingDoer(...) and optionally reported there. Reporting granularity is controlled by how frequently you call collect_and_report_test_results(...).
+    // You can combine test results with results = results + function_to_test(..); and then collect_and_report_test_results on the aggregate TestResults value.
 
     /// @brief
     /// @tparam TResult The result type of the test.
