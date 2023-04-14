@@ -84,7 +84,7 @@ End Sub
 
 Sub SplashScreen
     ' Splash screen
-    Cls ' "                                                                                "
+    MaybeCls ' "                                                                                "
     Print "Welcome to Tom's Storyteller's Best Friend. This is a program that is meant to"
     Print "aid storytellers in running Vampire: the Masquerade Chronicles and Vampire: the"
     Print "Dark Ages Chronicles. This program could aid in running campaigns for other"
@@ -99,7 +99,7 @@ Sub MainMenu
     ' Main menu
     choice = 0
     Do
-        Cls
+        MaybeCls
         Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
         Print "บ What are you going to do?                                                    บ"
         Print "บ        1 = Character Generator                                               บ"
@@ -206,7 +206,7 @@ Function MaxI (val1 As Integer, val2 As Integer)
 End Function
 
 Function ChooseStringId (labels() As String, style As MenuStyle, count As Integer, prompt As String)
-    Cls
+    MaybeCls
     ReDim mnuItems(1 To count) As MenuItem
     Call BuildMenu(mnuItems(), labels(), count)
     Call AdjustMenuStyle(style, mnuItems(), count, TRUE)
@@ -218,7 +218,7 @@ Function ChooseStringId (labels() As String, style As MenuStyle, count As Intege
 End Function
 
 Function ChooseStringIdWithValues (labels() As String, values() As Integer, style As MenuStyle, count As Integer, prompt As String)
-    Cls
+    MaybeCls
     Dim mnuItems(1 To count) As MenuItem
     Call BuildMenuWithValues(mnuItems(), labels(), values(), count)
     Call AdjustMenuStyle(style, mnuItems(), count, FALSE)
@@ -230,7 +230,7 @@ Function ChooseStringIdWithValues (labels() As String, values() As Integer, styl
 End Function
 
 Function ChooseStringIdWithColors (labels() As String, colors() As Integer, style As MenuStyle, prompt As String)
-    Cls
+    MaybeCls
     ' Check array bounds
     If LBound(labels) <> 1 Or LBound(colors) <> 1 Or UBound(labels) <> UBound(colors) Then
         ChooseStringIdWithColors = -1
@@ -249,7 +249,7 @@ Function ChooseStringIdWithColors (labels() As String, colors() As Integer, styl
 End Function
 
 Function ChooseMenuItemId (items() As MenuItem, style As MenuStyle, count As Integer, prompt As String, ignoreValue As Integer)
-    Cls
+    MaybeCls
     Call AdjustMenuStyle(style, items(), count, ignoreValue)
     Print prompt
     Call PrintMenu(items(), count, style)
@@ -259,7 +259,7 @@ Function ChooseMenuItemId (items() As MenuItem, style As MenuStyle, count As Int
 End Function
 
 Sub CGGetHeader (ch As CharacterType)
-    Cls
+    MaybeCls
     Dim ms As MenuStyle
     Call NewMenuStyle(ms)
     Input "What is the character's name? ", ch.name
@@ -281,7 +281,7 @@ Sub CGGetDisciplines (ch As CharacterType)
     disciplinePoints = GetDisciplinePoints
     Dim disciplineValues(DISCIPLINES_COUNT) As Integer
     While disciplinePoints > 0
-        Cls
+        MaybeCls
         Call FillDisciplines(ch, disciplineValues())
         discipline = ChooseStringIdWithValues(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?")
         Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
@@ -388,7 +388,7 @@ Sub CGGetBackgrounds (ch As CharacterType)
     backgroundPoints = GetBackgroundPoints
     Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
     While backgroundPoints > 0
-        Cls
+        MaybeCls
         Call FillBackgrounds(ch, backgroundValues())
         background = ChooseStringIdWithValues(Backgrounds(), backgroundValues(), ms, BACKGROUNDS_COUNT, "Which background do you want to spend 1 of your " + itos$(backgroundPoints) + " points on?")
         Call SetBackground(ch, background, GetBackground(ch, background) + 1)
@@ -640,7 +640,7 @@ Sub ShowCharacterSheet (ch As CharacterType)
 
     Call MakeWrapLines(derangementStrings(), allDerangementsLine$, 37, 5)
 
-    Cls
+    MaybeCls
     Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
     Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Gender: " + MakeFitL$(Genders(ch.gender), 14, " ") + " Generation: " + MakeFitR$(itos$(ch.generation), 2, " ") + " บ"
     Print "บ Clan: " + MakeFitL$(Clans(ch.clan), 30, " ") + " บ Age: " + MakeFitL$(ch.age$, 32, " ") + " บ"
@@ -824,6 +824,10 @@ Sub MakeWrapLines (lines() As String, text As String, maxWidth As Integer, maxLi
             thisLineStartPosition = thisLineCurrentPosition
         End If
     Wend
+End Sub
+
+Sub MaybeCls ()
+    If Not isDebugging Then Cls
 End Sub
 
 '$include: 'colors.bm'
