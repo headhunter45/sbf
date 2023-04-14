@@ -2,7 +2,7 @@ Function GetRandomMenuItemId (items() As MenuItem, count As Integer)
     numVisibleItems = 0
     Dim visibleItems(count) As Integer
     For i = 1 To count
-        If items(i).isVisible Then
+        If items(i).isVisible and items(i).includeinrandom Then
             visibleItems(numVisibleItems) = i
             numVisibleItems = numVisibleItems + 1
         End If
@@ -52,8 +52,12 @@ Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer, 
         End If
     Next
     If style.showRandom Then
-        maxIdWidth = MaxI(maxIdWidth, Len("0"))
+        maxIdWidth = MaxI(maxIdWidth, Len(itos$(style.randomItemId)))
         maxItemWidth = MaxI(maxItemWidth, Len(style.randomItemName))
+    End If
+    If style.showCancel Then
+        maxIdWidth = MaxI(maxIdWidth, Len(itos$(style.cancelItemId)))
+        maxItemWidth = MaxI(maxItemWidth, Len(style.cancelItemName))
     End If
     style.idWidth = maxIdWidth
     style.labelWidth = maxItemWidth
@@ -62,22 +66,26 @@ End Sub
 
 Sub PrintMenu (items() As MenuItem, count As Integer, style As MenuStyle)
     Dim randomItem As MenuItem
-    Call NewMenuItem(randomItem, style.randomItemName, style.randomItemId)
-    If count <= 10 Then
+    Call NewMenuItemWithColor(randomItem, style.randomItemName, style.randomItemColor, style.randomItemId)
+    Dim cancelItem As MenuItem
+    Call NewMenuItemWithColor(cancelItem, style.cancelItemName, style.cancelItemColor, style.cancelItemId)
+    actualCount = count
+    If style.showCancel = TRUE Then actualCount = actualCount + 1
+    If style.showRandom = TRUE Then actualCount = actualCount + 1
+    If actualCount <= 10 Then
         For i = 1 To count
             If items(i).isVisible Then
-                If style.useColors Then
-                    oldColor = GetColor
-                    SetColor (items(i).color)
-                End If
-                Print GetTitle$(items(i), style)
-                If style.useColors Then
-                    Call SetColor(oldColor)
-                End If
+                title$ = GetTitle$(items(i), style)
+                Call PrintWithMaybeColor(title$, items(i).color, style.useColors)
             End If
         Next
+        If style.showCancel Then
+            cancelLabel$ = GetTitleWithoutValue$(cancelItem, style)
+            Call PrintWithMaybeColor(cancelLabel$, cancelItem.color, style.useColors)
+        End If
         If style.showRandom Then
-            Print GetTitleWithoutValue$(randomItem, style)
+            randomLabel$ = GetTitleWithoutValue$(randomItem, style)
+            Call PrintWithMaybeColor(randomLabel$, randomItem.color, style.useColors)
         End If
     Else
         Dim emptyItem As MenuItem
@@ -96,13 +104,19 @@ Sub PrintMenu (items() As MenuItem, count As Integer, style As MenuStyle)
                         itemText$ = MakeFitL$(RTrim$(itemText$) + style.menuItemSpacer, textLength + Len(style.menuItemSpacer), " ")
                     End If
                 End If
-                Print MakeFitC$(itemText$, columnWidth, " ");
+                label$ = MakeFitC$(itemText$, columnWidth, " ")
+                Call PrintWithMaybeColor(label$, items(i).color, style.useColors)
             End If
             column = (column + 1) Mod itemsPerRow
             If column = 0 Then Print ""
         Next
+        If style.showCancel Then
+            cancelLabel$ = MakeFitC$(GetTitleWithoutValue$(cancelItem, style), columnWidth, " ")
+            Call PrintWithMaybeColor(cancelLabel$, cancelItem.color, style.useColors)
+        End If
         If style.showRandom Then
-            Print MakeFitC$(GetTitleWithoutValue$(randomItem, style), columnWidth, " ")
+            randomLabel$ = MakeFitC$(GetTitleWithoutValue$(randomItem, style), columnWidth, " ")
+            Call PrintWithMaybeColor(randomLabel$, randomItem.color, style.useColors)
         End If
     End If
 End Sub
@@ -116,7 +130,7 @@ Function GetTitle$ (mi As MenuItem, ms As MenuStyle)
 End Function
 
 Function GetTitleWithoutValue$ (mi As MenuItem, ms As MenuStyle)
-    GetTitleWithoutValue$ = MakeFitR$(itos(mi.id), ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(mi.label, ms.labelWidth + ms.valueWidth + Len(ms.labelValueSeparator), " ")
+    GetTitleWithoutValue$ = MakeFitR$(itos$(mi.id), ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(mi.label, ms.labelWidth + ms.valueWidth + Len(ms.labelValueSeparator), " ")
 End Function
 
 Sub NewMenuStyle (ms As MenuStyle)
@@ -126,10 +140,15 @@ Sub NewMenuStyle (ms As MenuStyle)
     ms.screenWidth = 80
     ms.randomItemName = "Random"
     ms.randomItemId = 0
+    ms.randomItemColor = COLOR_FOREGROUND_DEFAULT
+    ms.cancelItemName = "Cancel"
+    ms.cancelItemId = -1
+    ms.cancelItemColor = COLOR_FOREGROUND_DEFAULT
     ms.idLabelSeparator = " = "
     ms.labelValueSeparator = ": "
     ms.menuItemSpacer = ", "
     ms.showRandom = TRUE
+    ms.showCancel = false
     ms.useColors = FALSE
 End Sub
 
@@ -139,6 +158,7 @@ Sub NewMenuItem (mi As MenuItem, label As String, id As Integer)
     mi.value = 0
     mi.color = COLOR_DEFAULT
     mi.isVisible = TRUE
+    mi.includeInRandom = true
 End Sub
 
 Sub NewMenuItemWithValue (mi As MenuItem, label As String, id As Integer, value As Integer)
@@ -147,6 +167,7 @@ Sub NewMenuItemWithValue (mi As MenuItem, label As String, id As Integer, value 
     mi.value = value
     mi.color = COLOR_DEFAULT
     mi.isVisible = TRUE
+    mi.includeInRandom = true
 End Sub
 
 Sub NewMenuItemWithColor (mi As MenuItem, label As String, textColor As Integer, id As Integer)

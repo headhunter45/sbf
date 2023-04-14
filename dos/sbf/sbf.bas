@@ -4,6 +4,7 @@ Randomize Timer
 
 Const FALSE = 0
 Const TRUE = Not FALSE
+Const isDebugging = TRUE
 
 Const INITIAL_GENERATION = 13
 
@@ -84,7 +85,8 @@ End Sub
 
 Sub SplashScreen
     ' Splash screen
-    MaybeCls ' "                                                                                "
+    MaybeCls
+    '     "                                                                                "
     Print "Welcome to Tom's Storyteller's Best Friend. This is a program that is meant to"
     Print "aid storytellers in running Vampire: the Masquerade Chronicles and Vampire: the"
     Print "Dark Ages Chronicles. This program could aid in running campaigns for other"
@@ -183,6 +185,7 @@ Function GetMenuChoice (items() As MenuItem, style As MenuStyle, count As Intege
     Do
         Input choice
         If style.showRandom And choice = style.randomItemId Then acceptChoice = TRUE
+        If style.showCancel And choice = style.cancelItemId Then acceptChoice = TRUE
         For i = 1 To count
             If choice = items(i).id And items(i).isVisible Then
                 acceptChoice = TRUE
@@ -227,21 +230,6 @@ Function ChooseStringIdWithValues (labels() As String, values() As Integer, styl
     choice = GetMenuChoice(mnuItems(), style, count)
     If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count)
     ChooseStringIdWithValues = choice
-End Function
-
-Function ChooseStringIdWithValuesAndCancel (labels() As String, values() As Integer, style As MenuStyle, count As Integer, prompt As String)
-    MaybeCls
-    Dim mnuItems(1 To count + 1) As MenuItem
-    Call BuildMenuWithValues(mnuItems(), labels(), values(), count)
-    Dim cancelMenuItem As MenuItem
-    Call NewMenuItemWithValue(cancelMenuItem, "Cancel", count + 1, -1)
-    mnuItems(count + 1) = cancelMenuItem
-    Call AdjustMenuStyle(style, mnuItems(), count, FALSE)
-    Print prompt
-    Call PrintMenu(mnuItems(), count, style)
-    choice = GetMenuChoice(mnuItems(), style, count)
-    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count - 1)
-    ChooseStringIdWithValuesAndCancel = choice
 End Function
 
 Function ChooseStringIdWithColors (labels() As String, colors() As Integer, style As MenuStyle, prompt As String)
@@ -294,7 +282,7 @@ Sub CGGetDisciplines (ch As CharacterType)
     Dim ms As MenuStyle
     Call NewMenuStyle(ms)
     disciplinePoints = GetDisciplinePoints
-    Dim disciplineValues(DISCIPLINES_COUNT) As Integer
+    Dim disciplineValues(1 To DISCIPLINES_COUNT) As Integer
     While disciplinePoints > 0
         MaybeCls
         Call FillDisciplines(ch, disciplineValues())
@@ -401,7 +389,7 @@ Sub CGGetBackgrounds (ch As CharacterType)
     Dim ms As MenuStyle
     Call NewMenuStyle(ms)
     backgroundPoints = GetBackgroundPoints
-    Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
+    Dim backgroundValues(1 To BACKGROUNDS_COUNT) As Integer
     While backgroundPoints > 0
         MaybeCls
         Call FillBackgrounds(ch, backgroundValues())
@@ -425,7 +413,6 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
     While virtuePoints > 0
         Call FillVirtues(ch, values())
         virtue = ChooseStringIdWithValues(Virtues(), values(), ms, VIRTUES_COUNT, "Which virtue do you want to spend 1 of your " + itos$(virtuePoints) + " points on?")
-        If virtue = 0 Then virtue = GetRandomInt(1, VIRTUES_COUNT)
         Call SetVirtue(ch, virtue, GetVirtue(ch, virtue) + 1)
         virtuePoints = virtuePoints - 1
     Wend
@@ -439,7 +426,6 @@ Sub CGGetDerangement (ch As CharacterType)
         ms.useColors = TRUE
 
         ch.derangementId = ChooseStringIdWithColors(DerangementLabels(), DerangementColors(), ms, "Which derangement do you want?")
-        If ch.derangementId = 0 Then ch.derangementId = GetRandomInt(1, DERANGEMENTS_COUNT)
     End If
 End Sub
 
@@ -447,71 +433,55 @@ Sub CGSpendFreebiePoints (ch As CharacterType)
     freebiePoints = GetFreebiePoints(ch)
     Dim ms As MenuStyle
     Call NewMenuStyle(ms)
-    Dim labels(1 To 7) As String
-    Dim menuItemIds(1 To 7) As Integer
-    ' TODO: Find a better way to handle these menuItemIds mabye a new Choose* function and some constants
     While (freebiePoints > 0)
         MaybeCls
-        Print "freebiePoints = "; itos$(freebiePoints)
+        Call MaybePrint("freebiePoints = " + itos$(freebiePoints))
         ' Build the menu
-        numMenuItems = 0
-        If freebiePoints >= FREEBIE_POINT_COST_DISCIPLINE Then
-            numMenuItems = numMenuItems + 1
-            menuItemIds(numMenuItems) = 1
-            labels(numMenuItems) = "Add a discipline dot    7 points"
-        End If
-        If freebiePoints >= FREEBIE_POINT_COST_ATTRIBUTE Then
-            numMenuItems = numMenuItems + 1
-            menuItemIds(numMenuItems) = 2
-            labels(numMenuItems) = "Add an attribute dot    5 points"
-        End If
-        If freebiePoints >= FREEBIE_POINT_COST_ability Then
-            numMenuItems = numMenuItems + 1
-            menuItemIds(numMenuItems) = 3
-            labels(numMenuItems) = "Add an ability dot      2 points"
-        End If
-        If freebiePoints >= FREEBIE_POINT_COST_VIRTUE Then
-            numMenuItems = numMenuItems + 1
-            menuItemIds(numMenuItems) = 4
-            labels(numMenuItems) = "Add a virtue dot        2 points"
-        End If
-        If freebiePoints >= FREEBIE_POINT_COST_HUMANITY Then
-            ' TODO: Make this configurable for VtDA
-            numMenuItems = numMenuItems + 1
-            menuItemIds(numMenuItems) = 5
-            labels(numMenuItems) = "Add a humanity dot      1 point"
-        End If
-        If freebiePoints >= FREEBIE_POINT_COST_BACKGROUND Then
-            numMenuItems = numMenuItems + 1
-            menuItemIds(numMenuItems) = 6
-            labels(numMenuItems) = "Add a background dot    1 point"
-        End If
-        ' TODO: Exclude this option from the randomized Ids. Maybe use a different Choose* function or just do it here.
-        numMenuItems = numMenuItems + 1
-        menuItemIds(numMenuItems) = 7
-        labels(numMenuItems) = "Show character sheet"
+        ReDim availableFreebies(1 To FREEBIES_COUNT) As FreebieType
+        numAvailableFreebies = 0
+        For index = 1 To FREEBIES_COUNT
+            If Freebies(index).cost <= freebiePoints Then
+                numAvailableFreebies = numAvailableFreebies + 1
+                availableFreebies(numAvailableFreebies) = Freebies(index)
+            End If
+        Next
+
+        ReDim menuItems(1 To numAvailableFreebies) As MenuItem
+        For index = 1 To numAvailableFreebies
+            Dim mi As MenuItem
+            Call NewMenuItem(mi, availableFreebies(index).label, availableFreebies(index).id)
+            If index = FREEBIE_SHOW_CHARACTER_SHEET_ID Then mi.includeInRandom = FALSE
+            menuItems(index) = mi
+        Next
 
         prompt$ = "You have " + itos$(freebiePoints) + " freebie points remaining what would you like to spend the points on?"
-        id = ChooseStringId(labels(), ms, numMenuItems, prompt$)
+        id = ChooseMenuItemId(menuItems(), ms, numAvailableFreebies, prompt$, TRUE)
 
-        Select Case menuItemIds(id)
-            Case 1
+        Select Case id
+            Case FREEBIE_DISCIPLINE_ID
                 Call CGSpendDisciplinePoint(ch)
-            Case 2
+            Case FREEBIE_ATTRIBUTE_ID
                 Call CGSpendAttributePoint(ch)
-            Case 3
+            Case FREEBIE_ABILITY_ID
                 Call CGSpendAbilityPoint(ch)
-            Case 4
+            Case FREEBIE_VIRTUE_ID
                 Call CGSpendVirtuePoint(ch)
-            Case 5
+            Case FREEBIE_HUMANITY_ID
                 Call CGSpendHumanityPoint(ch)
-            Case 6
+            Case FREEBIE_BACKGROUND_ID
                 Call CGSpendBackgroundPoint(ch)
-            Case 7
+            Case FREEBIE_SHOW_CHARACTER_SHEET_ID
                 Call ShowCharacterSheet(ch)
         End Select
 
         freebiePoints = GetFreebiePoints(ch)
+        Call MaybePrint("Auspex: " + itos$(GetDiscipline(ch, DISCIPLINE_AUSPEX)))
+        Call MaybePrint("Strength: " + itos$(GetAttributeValue(ch, ATTRIBUTE_GROUP_PHYSICAL, ATTRIBUTE_STRENGTH)))
+        Call MaybePrint("Acting: " + itos$(GetAbilityValue(ch, ABILITY_TALENTS_ID, TALENT_ACTING)))
+        Call MaybePrint("Conscience: " + itos$(GetVirtue(ch, VIRTUE_CONSCIENCE)))
+        Call MaybePrint("Humanity: " + itos$(GetRoadValue(ch)))
+        Call MaybePrint("Generation (Background): " + itos$(GetBackground(ch, BACKGROUND_GENERATION)))
+        Call MaybePrint("Generation: " + itos$(GetGeneration(ch)))
     Wend
 End Sub
 
@@ -519,50 +489,52 @@ Sub CGSpendDisciplinePoint (ch As CharacterType)
     MaybeCls
     Dim ms As MenuStyle
     Call NewMenuStyle(ms)
-    Dim disciplineValues(DISCIPLINES_COUNT) As Integer
+    ms.showCancel = TRUE
+    ms.cancelItemId = DISCIPLINES_COUNT + 1
+    Dim disciplineValues(1 To DISCIPLINES_COUNT) As Integer
     Call FillDisciplines(ch, disciplineValues())
-    discipline = ChooseStringIdWithValuesAndCancel(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?")
-    If discipline > 0 Then
-        Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
-        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - 7)
+    prompt$ = "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?"
+    id = ChooseStringIdWithValues(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, prompt$)
+    If id <> ms.cancelItemId Then
+        Call SetDiscipline(ch, id, GetDiscipline(ch, id) + 1)
+        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - FREEBIE_DISCIPLINE_COST)
     End If
 End Sub
 
-Type AttributeReference
+Type GroupedStatReference
     id As Integer
     groupIndex As Integer
-    attributeIndex As Integer
+    itemIndex As Integer
 End Type
+
+Sub NewGroupedStatReference (ref As GroupedStatReference, id As Integer, groupIndex As Integer, itemIndex As Integer)
+    ref.id = id
+    ref.groupIndex = groupIndex
+    ref.itemIndex = itemIndex
+End Sub
 
 Sub CGSpendAttributePoint (ch As CharacterType)
     MaybeCls
-    'TODO: Paragraph
-    'Choose an attribute maybe choose a group then choose an attribute, but try to only have the one choice.
-    'Allow cancel
-    'If an attribute was chosen then add that attribute point to ch and subtract 5 freebie points from ch
-    Print "TODO: Fill in CGSpendAttributePoint"
-    Dim ms As MenuStyle ' With values
+    Dim ms As MenuStyle
     Call NewMenuStyle(ms)
-
+    ms.showCancel = TRUE
     numAttributes = 0
-    Dim numAttributesInGroup(1 To ABILITY_GROUPS_COUNT) As Integer
+    Dim numAttributesInGroup(1 To ATTRIBUTE_GROUPS_COUNT) As Integer
 
-    For attributeGroupIndex = 1 To ABILITY_GROUPS_COUNT
+    For attributeGroupIndex = 1 To ATTRIBUTE_GROUPS_COUNT
         numAttributesInGroup(attributeGroupIndex) = GetNumAttributesInGroup(attributeGroupIndex)
         numAttributes = numAttributes + numAttributesInGroup(attributeGroupIndex)
     Next
 
-    Dim attributes(numAttributes) As AttributeReference
-    Dim labels(numAttributes) As String
-    Dim values(numAttributes) As Integer
+    Dim attributes(1 To numAttributes) As GroupedStatReference
+    Dim labels(1 To numAttributes) As String
+    Dim values(1 To numAttributes) As Integer
 
     attributeIndex = 1
-    For attributeGroupIndex = 1 To ABILITY_GROUPS_COUNT
+    For attributeGroupIndex = 1 To ATTRIBUTE_GROUPS_COUNT
         For index = 1 To numAttributesInGroup(attributeGroupIndex)
-            Dim attribute As AttributeReference
-            attribute.id = attributeIndex
-            attribute.groupIndex = attributeGroupIndex
-            attribute.attributeIndex = index
+            Dim attribute As GroupedStatReference
+            Call NewGroupedStatReference(attribute, attributeIndex, attributeGroupIndex, index)
             attributes(attributeIndex) = attribute
             labels(attributeIndex) = GetAttributeName$(attributeGroupIndex, index)
             values(attributeIndex) = GetAttributeValue(ch, attributeGroupIndex, index)
@@ -570,43 +542,87 @@ Sub CGSpendAttributePoint (ch As CharacterType)
         Next
     Next
 
-    attributeIndex = ChooseStringIdWithValuesAndCancel(labels(), values(), ms, numAttributes, "Which attribute do you want to add one dot to?")
-    If attributeIndex > 0 Then
-        Dim attr As AttributeReference
-        attr = attributes(attributeIndex)
-        Call SetAttributeValue(ch, attr.groupIndex, attr.attributeIndex, GetAttributeValue(ch, at.groupindex, at.attributeindex) + 1)
-        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - 5)
+    ' TODO: Make this show values.
+    prompt$ = "Which attribute do you want to add one dot to?"
+    ms.cancelItemId = numAttributes + 1
+    id = ChooseStringIdWithValues(labels(), values(), ms, numAttributes, prompt$)
+    If id <> ms.cancelItemId Then
+        Dim attr As GroupedStatReference
+        attr = attributes(id)
+        Call SetAttributeValue(ch, attr.groupIndex, attr.itemIndex, GetAttributeValue(ch, attr.groupIndex, attr.itemIndex) + 1)
+        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - FREEBIE_ATTRIBUTE_COST)
     End If
 End Sub
 
 Sub CGSpendAbilityPoint (ch As CharacterType)
-    'TODO: Paragraph
-    'Choose an abililty group; Allow cancel
-    'Choose an ability; Allow cancel
-    'If an ability was chosen then add that ability point to ch and subtract 2 freebie points
-    Print "TODO: Fill in CGSpendAbilityPoint"
-End Sub
-Sub CGSpendVirtuePoint (ch As CharacterType)
-    'TODO: Paragraph
-    'Choose a virtue; Allow cancel
-    'If a virtue was chosen that add that virtue point to ch and subtract 2 freebie points.
-    Print "TODO: Fill in CGSpendVirtuePoint"
-End Sub
-Sub CGSpendHumanityPoint (ch As CharacterType)
-    'TODO: Paragraph
-    'Confirm they want to add the point
-    'If they say yes then add the humanity point to ch and subtract 1 freebie point.
-    Print "TODO: Fill in CGSpendHumanityPoint"
-End Sub
-Sub CGSpendBackgroundPoint (ch As CharacterType)
-    'TODO: Paragraph
-    'Choose a background; Allow cancel
-    'If they chose a background then add the background and subtract 1 freebie point.
-    Print "TODO: Fill in CGSpendBackgroundPoint"
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    ms.showCancel = TRUE
+    done = FALSE
+    While Not done
+        MaybeCls
+        ms.cancelItemId = ABILITY_GROUPS_COUNT + 1
+        abilityGroupIndex = ChooseStringId(AbilityGroups(), ms, ABILITY_GROUPS_COUNT, "What kind of ability would you like to add 1 dot to?")
+        If abilityGroupIndex = ms.cancelItemId Then Exit Sub
+
+        numAbilities = GetNumItemsForAbilityGroup(abilityGroupIndex)
+        Dim labels(1 To numAbilities) As String
+        Call FillAbilitiesForAbilityGroup(abilityGroupIndex, labels())
+        ms.cancelItemId = numAbilities + 1
+        abilityIndex = ChooseStringId(labels(), ms, numAbilities, "What ability would you like to add 1 dot to?")
+        If abilityIndex <> ms.cancelItemId Then
+            Call SetAbilityValue(ch, abilityGroupIndex, abilityIndex, GetAbilityValue(ch, abilityGroupIndex, abilityIndex) + 1)
+            Call SetFreebiePoints(ch, GetFreebiePoints(ch) - FREEBIE_ABILITY_COST)
+            done = TRUE
+        End If
+    Wend
 End Sub
 
-' Ignore this warning ch is not used yet because the sub is not implemented yet.
+Sub CGSpendVirtuePoint (ch As CharacterType)
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    ms.showCancel = TRUE
+    ms.cancelItemId = VIRTUES_COUNT + 1
+    prompt$ = "What virtue would you like to add 1 dot to?"
+    id = ChooseStringId(Virtues(), ms, VIRTUES_COUNT, prompt$)
+    If id <> ms.cancelItemId Then
+        Call SetVirtue(ch, id, GetVirtue(ch, id) + 1)
+        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - FREEBIE_ABILITY_COST)
+    End If
+End Sub
+
+Sub CGSpendHumanityPoint (ch As CharacterType)
+    numLabels = 2
+    Dim labels(1 To numLabels) As String
+    labels(1) = "Yes"
+    labels(2) = "No"
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    ms.showRandom = FALSE
+    prompt$ = "Are you sure you want to add a dot to " + GetRoadName$(ch) + "?"
+    id = ChooseStringId(labels(), ms, numLabels, prompt$)
+    If id = 1 Then
+        Call SetRoadValue(ch, GetRoadValue(ch) + 1)
+        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - FREEBIE_HUMANITY_COST)
+    End If
+End Sub
+
+Sub CGSpendBackgroundPoint (ch As CharacterType)
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    ms.showCancel = TRUE
+    ms.cancelItemId = BACKGROUNDS_COUNT + 1
+    prompt$ = "Which background would you like to add 1 dot to?"
+    id = ChooseStringId(Backgrounds(), ms, BACKGROUNDS_COUNT, prompt$)
+    If id <> ms.cancelItemId Then
+        Call SetBackground(ch, id, GetBackground(ch, id) + 1)
+        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - FREEBIE_BACKGROUND_COST)
+    End If
+End Sub
+
 Sub SaveCharacterSheet (ch As CharacterType)
+    Call MaybePrint("TODO: Fill in SaveCharacterSheet")
+    Call MaybePrint(ch.name)
     ' Where do you want the file to be saved? (default is C:\Windows\Desktop)?
     ' What do you want the file to be called? (default is CHAR1)?
 
@@ -619,7 +635,7 @@ Sub SaveCharacterSheet (ch As CharacterType)
     '|   Physical     Social      Mental    | Haven: kkkkkk                         |
     '| Str. 5       App. 2       Int. 1     | Concept: llllll                       |
     '| Dex. 3       Cha. 2       Per. 1     |---------------------------------------|
-    '| Sta. 2       Man. 4       Wit. 4     | Derangements:                         |
+    '| Sta. 2       Man. 4       Wit. 4     | Derangementss:                         |
     '|--------------------------------------| _____________________________________ |
     '| Disciplines:                         | _____________________________________ |
     '| Obtenebration                        | _____________________________________ |
@@ -767,10 +783,10 @@ Sub CharacterGenerator ()
 End Sub
 
 Sub ShowCharacterSheet (ch As CharacterType)
-    Dim disciplineValues(DISCIPLINES_COUNT) As Integer
+    Dim disciplineValues(1 To DISCIPLINES_COUNT) As Integer
     Call FillDisciplines(ch, disciplineValues())
 
-    Dim backgroundValues(BACKGROUNDS_COUNT) As Integer
+    Dim backgroundValues(1 To BACKGROUNDS_COUNT) As Integer
     Call FillBackgrounds(ch, backgroundValues())
 
     '... 0123456789
@@ -861,34 +877,34 @@ End Sub
 
 ' Simpler character generator with fewer questions and more things done randomly without asking.
 Sub CharacterGeneratorForDummies
-    Print "CharacterGeneratorForDummies"
+    Call MaybePrint("CharacterGeneratorForDummies")
 End Sub
 
 ' Maybe just remove this. It's kinda pointless. It asks some questions and calculates a contested roll.
 ' C1 dice pool, C1 difficulty, C2 dice pool, C2 difficulty, then rolls all the dice and does the math.
 ' In practice it's just slower than rolling the dice
 Sub CombatComputer
-    Print "CombatComputer"
+    Call MaybePrint("CombatComputer")
 End Sub
 
 ' Asks for a number of dice and a difficulty. Rolls the dice, calculates botches and successes.
 Sub DiceRoller
-    Print "DiceRoller"
+    Call MaybePrint("DiceRoller")
 End Sub
 
 ' Like the character generator if you choose random for everything. Should do random names/ages too, but doesn't yet.
 Sub RandomCharacterGenerator
-    Print "RandomCharacterGenerator"
+    Call MaybePrint("RandomCharacterGenerator")
 End Sub
 
 ' This had a function at one point but got taken out. Will only come back if the disassembly can figure it out.
 Sub Choice6
-    Print "Unnamed choice 6"
+    Call MaybePrint("Unnamed choice 6")
 End Sub
 
 ' Like the character generator but for vehicles. Much simpler with fewer questions. Prints a vehicle sheet when done. Never finished and crashes mid way through currently.
 Sub VehicleGenerator
-    Print "VehicleGenerator"
+    Call MaybePrint("VehicleGenerator")
 End Sub
 
 Sub PressAnyKeyToContinue ()
@@ -1002,6 +1018,10 @@ End Sub
 
 Sub MaybeCls ()
     If Not isDebugging Then Cls
+End Sub
+
+Sub MaybePrint (message As String)
+    If isDebugging Then Print message
 End Sub
 
 '$include: 'colors.bm'

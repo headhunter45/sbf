@@ -1,16 +1,4 @@
 # High Priority
-* Add freebie points see page 92 VtM
-    * After other generation steps allow spending the freebie points on adding dots to the sheet. This should be a nested menu like "What do you want to spend points on? -> Which of those things do you want to add a dot to?
-    * We probably want to show the character sheet before asking or give the user a way to display it in the main menu of this section.
-    * Costs
-        * Disciplines (any): 7 points per dot
-        * Attributes: 5 points per dot
-        * Abilities: 2 points per dot
-        * Virtues: 2 points per dot
-        * Willpower: 2 points per dot
-        * Humanity: 1 point per dot
-        * Backgrounds: 1 point per dot
-    * How does increasing virtues/willpower/humanity affect each other
 * Add blood pool to sheet and figure out what should replace it for non-vampires.
     * Generation affects blood pool page 173 VtM.
 * Make empty strings show as "blank lines" on the character sheet so they can be filled in by hand.
@@ -89,6 +77,7 @@
 * Add attribute specialties and any other specialties from the book.
 
 # Low Priority
+* How does increasing virtues/willpower/humanity affect each other
 * Add post-creation questions
     * How old are you? - Already have this as age at the beginning but could move to the end.
     * What was unique about your childhood?

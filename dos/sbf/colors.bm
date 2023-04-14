@@ -7,3 +7,14 @@ Function GetColor ()
     GetColor = ScreenColor
 End Function
 
+Sub PrintWithMaybeColor (message As String, textColor As Integer, useColors As Integer)
+    Dim oldColor As Integer
+    If useColors = TRUE Then
+        oldColor = GetColor
+        SetColor (textColor)
+    End If
+    Print message
+    If useColors = TRUE Then
+        SetColor (oldColor)
+    End If
+End Sub

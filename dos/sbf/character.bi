@@ -197,6 +197,17 @@ Const DERANGEMENT_ID_PARANOIA = 8
 Const DERANGEMENT_ID_PERFECTION = 9
 Const DERANGEMENT_ID_REGRESSION = 10
 Dim Shared Derangements(1 To DERANGEMENTS_COUNT) As DerangementType
+
+Const DERANGEMENT_COLOR_AMNESIA = COLOR_DARK_RED
+Const DERANGEMENT_COLOR_DELUSIONS_OF_GRANDEUR = COLOR_DARK_MAGENTA
+Const DERANGEMENT_COLOR_FANTASY = COLOR_DARK_ORANGE
+Const DERANGEMENT_COLOR_MANIC_DEPRESSION = COLOR_DARK_WHITE
+Const DERANGEMENT_COLOR_MULTIPLE_PERSONALITIES = COLOR_DARK_BLUE
+Const DERANGEMENT_COLOR_OBSESSION = COLOR_BRIGHT_GREEN
+Const DERANGEMENT_COLOR_OVERCOMPENSATION = COLOR_BRIGHT_CYAN
+Const DERANGEMENT_COLOR_PARANOIA = COLOR_BRIGHT_RED
+Const DERANGEMENT_COLOR_PERFECTION = COLOR_BRIGHT_MAGENTA
+Const DERANGEMENT_COLOR_REGRESSION = COLOR_BRIGHT_YELLOW
 Dim Shared DerangementColors(1 To DERANGEMENTS_COUNT) As Integer
 
 Dim Shared DerangementLabels(1 To DERANGEMENTS_COUNT) As String
@@ -223,12 +234,46 @@ Const DERANGEMENT_DESCRIPTION_PARANOIA = "You are convinced that you are being h
 Const DERANGEMENT_DESCRIPTION_PERFECTION = "All your energy is directed toward preventing anything from going wong. When it does you must make a self-control roll or frenzy."
 Const DERANGEMENT_DESCRIPTION_REGRESSION = "You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is."
 
-Const FREEBIE_POINT_COST_DISCIPLINE = 7
-Const FREEBIE_POINT_COST_ATTRIBUTE = 5
-Const FREEBIE_POINT_COST_ABIILTY = 2
-Const FREEBIE_POINT_COST_VIRTUE = 2
-Const FREEBIE_POINT_COST_HUMANITY = 1
-Const FREEBIE_POINT_COST_BACKGROUND = 1
+Const FREEBIES_COUNT = 7
+Dim Shared FreebieCosts(1 To FREEBIES_COUNT) As Integer
+Dim Shared FreebieLabels(1 To FREEBIES_COUNT) As String
+Dim Shared FreebieNames(1 to FREEBIES_COUNT) As String
+Dim Shared Freebies(1 To FREEBIES_COUNT) As FreebieType
+Const FREEBIE_DISCIPLINE_ID = 1
+Const FREEBIE_DISCIPLINE_COST = 7
+Const FREEBIE_DISCIPLINE_NAME = "Discipline"
+Const FREEBIE_DISCIPLINE_LABEL = "Add a discipline dot    7 points"
+
+Const FREEBIE_ATTRIBUTE_ID = 2
+Const FREEBIE_ATTRIBUTE_COST = 5
+Const FREEBIE_ATTRIBUTE_NAME = "Attribute"
+Const FREEBIE_ATTRIBUTE_LABEL = "Add an attribute dot    5 points"
+
+Const FREEBIE_ABILITY_ID = 3
+Const FREEBIE_ABILITY_COST = 2
+Const FREEBIE_ABILITY_NAME = "Ability"
+Const FREEBIE_ABILITY_LABEL = "Add an ability dot      2 points"
+
+Const FREEBIE_VIRTUE_ID = 4
+Const FREEBIE_VIRTUE_COST = 2
+Const FREEBIE_VIRTUE_NAME = "Virtue"
+Const FREEBIE_VIRTUE_LABEL = "Add a virtue dot        2 points"
+
+' TODO: Make this configurable for VtDA
+Const FREEBIE_HUMANITY_ID = 5
+Const FREEBIE_HUMANITY_COST = 1
+Const FREEBIE_HUMANITY_NAME = "Humanity"
+Const FREEBIE_HUMANITY_LABEL = "Add a humanity dot      1 point"
+
+Const FREEBIE_BACKGROUND_ID = 6
+Const FREEBIE_BACKGROUND_COST = 1
+Const FREEBIE_BACKGROUND_NAME = "Background"
+Const FREEBIE_BACKGROUND_LABEL = "Add a background dot    1 point"
+
+Const FREEBIE_SHOW_CHARACTER_SHEET_ID = 7
+Const FREEBIE_SHOW_CHARACTER_SHEET_COST = 0
+Const FREEBIE_SHOW_CHARACTER_SHEET_NAME = "Show character sheet"
+Const FREEBIE_SHOW_CHARACTER_SHEET_LABEL = FREEBIE_SHOW_CHARACTER_SHEET_NAME
 
 Type CharacterType
     name As String
@@ -337,4 +382,11 @@ Type DerangementType
     label As String
     description As String
     textColor As Integer
+End Type
+
+Type FreebieType
+    id As Integer
+    cost As Integer
+    name As String * 32
+    label As String * 32 
 End Type
