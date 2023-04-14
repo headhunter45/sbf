@@ -229,6 +229,21 @@ Function ChooseStringIdWithValues (labels() As String, values() As Integer, styl
     ChooseStringIdWithValues = choice
 End Function
 
+Function ChooseStringIdWithValuesAndCancel (labels() As String, values() As Integer, style As MenuStyle, count As Integer, prompt As String)
+    MaybeCls
+    Dim mnuItems(1 To count + 1) As MenuItem
+    Call BuildMenuWithValues(mnuItems(), labels(), values(), count)
+    Dim cancelMenuItem As MenuItem
+    Call NewMenuItemWithValue(cancelMenuItem, "Cancel", count + 1, -1)
+    mnuItems(count + 1) = cancelMenuItem
+    Call AdjustMenuStyle(style, mnuItems(), count, FALSE)
+    Print prompt
+    Call PrintMenu(mnuItems(), count, style)
+    choice = GetMenuChoice(mnuItems(), style, count)
+    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count - 1)
+    ChooseStringIdWithValuesAndCancel = choice
+End Function
+
 Function ChooseStringIdWithColors (labels() As String, colors() As Integer, style As MenuStyle, prompt As String)
     MaybeCls
     ' Check array bounds
@@ -429,6 +444,165 @@ Sub CGGetDerangement (ch As CharacterType)
 End Sub
 
 Sub CGSpendFreebiePoints (ch As CharacterType)
+    freebiePoints = GetFreebiePoints(ch)
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    Dim labels(1 To 7) As String
+    Dim menuItemIds(1 To 7) As Integer
+    ' TODO: Find a better way to handle these menuItemIds mabye a new Choose* function and some constants
+    While (freebiePoints > 0)
+        MaybeCls
+        Print "freebiePoints = "; itos$(freebiePoints)
+        ' Build the menu
+        numMenuItems = 0
+        If freebiePoints >= FREEBIE_POINT_COST_DISCIPLINE Then
+            numMenuItems = numMenuItems + 1
+            menuItemIds(numMenuItems) = 1
+            labels(numMenuItems) = "Add a discipline dot    7 points"
+        End If
+        If freebiePoints >= FREEBIE_POINT_COST_ATTRIBUTE Then
+            numMenuItems = numMenuItems + 1
+            menuItemIds(numMenuItems) = 2
+            labels(numMenuItems) = "Add an attribute dot    5 points"
+        End If
+        If freebiePoints >= FREEBIE_POINT_COST_ability Then
+            numMenuItems = numMenuItems + 1
+            menuItemIds(numMenuItems) = 3
+            labels(numMenuItems) = "Add an ability dot      2 points"
+        End If
+        If freebiePoints >= FREEBIE_POINT_COST_VIRTUE Then
+            numMenuItems = numMenuItems + 1
+            menuItemIds(numMenuItems) = 4
+            labels(numMenuItems) = "Add a virtue dot        2 points"
+        End If
+        If freebiePoints >= FREEBIE_POINT_COST_HUMANITY Then
+            ' TODO: Make this configurable for VtDA
+            numMenuItems = numMenuItems + 1
+            menuItemIds(numMenuItems) = 5
+            labels(numMenuItems) = "Add a humanity dot      1 point"
+        End If
+        If freebiePoints >= FREEBIE_POINT_COST_BACKGROUND Then
+            numMenuItems = numMenuItems + 1
+            menuItemIds(numMenuItems) = 6
+            labels(numMenuItems) = "Add a background dot    1 point"
+        End If
+        ' TODO: Exclude this option from the randomized Ids. Maybe use a different Choose* function or just do it here.
+        numMenuItems = numMenuItems + 1
+        menuItemIds(numMenuItems) = 7
+        labels(numMenuItems) = "Show character sheet"
+
+        prompt$ = "You have " + itos$(freebiePoints) + " freebie points remaining what would you like to spend the points on?"
+        id = ChooseStringId(labels(), ms, numMenuItems, prompt$)
+
+        Select Case menuItemIds(id)
+            Case 1
+                Call CGSpendDisciplinePoint(ch)
+            Case 2
+                Call CGSpendAttributePoint(ch)
+            Case 3
+                Call CGSpendAbilityPoint(ch)
+            Case 4
+                Call CGSpendVirtuePoint(ch)
+            Case 5
+                Call CGSpendHumanityPoint(ch)
+            Case 6
+                Call CGSpendBackgroundPoint(ch)
+            Case 7
+                Call ShowCharacterSheet(ch)
+        End Select
+
+        freebiePoints = GetFreebiePoints(ch)
+    Wend
+End Sub
+
+Sub CGSpendDisciplinePoint (ch As CharacterType)
+    MaybeCls
+    Dim ms As MenuStyle
+    Call NewMenuStyle(ms)
+    Dim disciplineValues(DISCIPLINES_COUNT) As Integer
+    Call FillDisciplines(ch, disciplineValues())
+    discipline = ChooseStringIdWithValuesAndCancel(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?")
+    If discipline > 0 Then
+        Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
+        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - 7)
+    End If
+End Sub
+
+Type AttributeReference
+    id As Integer
+    groupIndex As Integer
+    attributeIndex As Integer
+End Type
+
+Sub CGSpendAttributePoint (ch As CharacterType)
+    MaybeCls
+    'TODO: Paragraph
+    'Choose an attribute maybe choose a group then choose an attribute, but try to only have the one choice.
+    'Allow cancel
+    'If an attribute was chosen then add that attribute point to ch and subtract 5 freebie points from ch
+    Print "TODO: Fill in CGSpendAttributePoint"
+    Dim ms As MenuStyle ' With values
+    Call NewMenuStyle(ms)
+
+    numAttributes = 0
+    Dim numAttributesInGroup(1 To ABILITY_GROUPS_COUNT) As Integer
+
+    For attributeGroupIndex = 1 To ABILITY_GROUPS_COUNT
+        numAttributesInGroup(attributeGroupIndex) = GetNumAttributesInGroup(attributeGroupIndex)
+        numAttributes = numAttributes + numAttributesInGroup(attributeGroupIndex)
+    Next
+
+    Dim attributes(numAttributes) As AttributeReference
+    Dim labels(numAttributes) As String
+    Dim values(numAttributes) As Integer
+
+    attributeIndex = 1
+    For attributeGroupIndex = 1 To ABILITY_GROUPS_COUNT
+        For index = 1 To numAttributesInGroup(attributeGroupIndex)
+            Dim attribute As AttributeReference
+            attribute.id = attributeIndex
+            attribute.groupIndex = attributeGroupIndex
+            attribute.attributeIndex = index
+            attributes(attributeIndex) = attribute
+            labels(attributeIndex) = GetAttributeName$(attributeGroupIndex, index)
+            values(attributeIndex) = GetAttributeValue(ch, attributeGroupIndex, index)
+            attributeIndex = attributeIndex + 1
+        Next
+    Next
+
+    attributeIndex = ChooseStringIdWithValuesAndCancel(labels(), values(), ms, numAttributes, "Which attribute do you want to add one dot to?")
+    If attributeIndex > 0 Then
+        Dim attr As AttributeReference
+        attr = attributes(attributeIndex)
+        Call SetAttributeValue(ch, attr.groupIndex, attr.attributeIndex, GetAttributeValue(ch, at.groupindex, at.attributeindex) + 1)
+        Call SetFreebiePoints(ch, GetFreebiePoints(ch) - 5)
+    End If
+End Sub
+
+Sub CGSpendAbilityPoint (ch As CharacterType)
+    'TODO: Paragraph
+    'Choose an abililty group; Allow cancel
+    'Choose an ability; Allow cancel
+    'If an ability was chosen then add that ability point to ch and subtract 2 freebie points
+    Print "TODO: Fill in CGSpendAbilityPoint"
+End Sub
+Sub CGSpendVirtuePoint (ch As CharacterType)
+    'TODO: Paragraph
+    'Choose a virtue; Allow cancel
+    'If a virtue was chosen that add that virtue point to ch and subtract 2 freebie points.
+    Print "TODO: Fill in CGSpendVirtuePoint"
+End Sub
+Sub CGSpendHumanityPoint (ch As CharacterType)
+    'TODO: Paragraph
+    'Confirm they want to add the point
+    'If they say yes then add the humanity point to ch and subtract 1 freebie point.
+    Print "TODO: Fill in CGSpendHumanityPoint"
+End Sub
+Sub CGSpendBackgroundPoint (ch As CharacterType)
+    'TODO: Paragraph
+    'Choose a background; Allow cancel
+    'If they chose a background then add the background and subtract 1 freebie point.
+    Print "TODO: Fill in CGSpendBackgroundPoint"
 End Sub
 
 ' Ignore this warning ch is not used yet because the sub is not implemented yet.

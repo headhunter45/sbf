@@ -234,6 +234,7 @@ Sub NewCharacter (ch As CharacterType)
     ch.willpower = 0
     ch.bloodPool = 0
     ch.derangementId = -1
+    ch.freebiePoints = 15
     ' Virtues
     ch.selfControl = 1
     ch.courage = 1
@@ -416,6 +417,14 @@ Sub FillVirtues (ch As CharacterType, values() As Integer)
     For index = 1 To VIRTUES_COUNT
         values(index) = GetVirtue(ch, index)
     Next
+End Sub
+
+Function GetFreebiePoints(ch as CharacterType)
+    GetFreebiePoints = ch.freebiePoints
+End Function
+
+Sub SetFreebiePoints(ch As CharacterType, points As Integer)
+    ch.freebiepoints = points
 End Sub
 
 ' Attributes

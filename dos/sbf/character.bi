@@ -223,6 +223,13 @@ Const DERANGEMENT_DESCRIPTION_PARANOIA = "You are convinced that you are being h
 Const DERANGEMENT_DESCRIPTION_PERFECTION = "All your energy is directed toward preventing anything from going wong. When it does you must make a self-control roll or frenzy."
 Const DERANGEMENT_DESCRIPTION_REGRESSION = "You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is."
 
+Const FREEBIE_POINT_COST_DISCIPLINE = 7
+Const FREEBIE_POINT_COST_ATTRIBUTE = 5
+Const FREEBIE_POINT_COST_ABIILTY = 2
+Const FREEBIE_POINT_COST_VIRTUE = 2
+Const FREEBIE_POINT_COST_HUMANITY = 1
+Const FREEBIE_POINT_COST_BACKGROUND = 1
+
 Type CharacterType
     name As String
     player As String
@@ -243,6 +250,7 @@ Type CharacterType
     willpower As Integer
     bloodPool As Integer
     derangementId As Integer
+    freebiePoints As Integer
     ' Disciplines
     discipline_animalism As Integer
     discipline_auspex As Integer
