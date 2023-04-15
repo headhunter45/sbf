@@ -24,10 +24,6 @@ using std::for_each;
 // using namespace Test;
 
 namespace Test {
-    const string fn1(const string& s, int l) {
-        return s.substr(0, l);
-    }
-  
     // Test lifecycle
     // suiteSetupFn(); - This is called to allocate any suite level resources. This is called once when the suite begins.
     // These functions may be called in parallel but execution will not proceed past this block until they have all finished.
@@ -85,135 +81,6 @@ namespace Test {
     //   }
     // Then some test harness either generated or explicit can call test_main_ThingDoer(...) and optionally reported there. Reporting granularity is controlled by how frequently you call collect_and_report_TestResults(...).
     // You can combine test results with results = results + testFn(..); and then collect_and_report_TestResults on the aggregate TestResults value.
-    
-    template <typename TResult, typename... TInputParams>
-    TestResults execute_suite(
-        string suite_label,
-        function<TResult(TInputParams...)> function_to_test,
-        vector<TestTuple<TResult, TInputParams...>> tests,
-        MaybeTestCompareFunction<TResult> maybe_suite_compare_function,
-        MaybeTestConfigureFunction maybe_suite_before_each_function,
-        MaybeTestConfigureFunction maybe_suite_after_each_function,
-        bool is_enabled) {
-        TestResults results;
-        cout << "🚀 Beginning Suite: " << suite_label << endl;
-
-        // Step 1: Suite Setup
-
-        if (maybe_suite_before_each_function.has_value()) {
-            (*maybe_suite_before_each_function)();
-        }
-
-        // Step 2: Execute Tests
-        for_each(tests.begin(), tests.end(), [&suite_label, &function_to_test, &results, &maybe_suite_compare_function](
-            TestTuple<TResult, TInputParams...> test_data
-        ) {
-            // Step 2a: Extract our variables from the TestTuple.
-            const std::string& test_name = get<0>(test_data);
-            const std::string qualified_test_name = suite_label + "::" + test_name;
-            const TResult& expected_output = get<1>(test_data);
-            std::tuple<TInputParams...> input_params = get<2>(test_data);
-            MaybeTestCompareFunction<TResult> maybe_compare_function = get<3>(test_data);
-            TestCompareFunction<TResult> compare_function = maybe_compare_function.has_value()
-            ? *maybe_compare_function
-            : maybe_suite_compare_function.has_value()
-            ? *maybe_suite_compare_function
-            : [](const TResult& l, const TResult& r){return l==r;};
-            MaybeTestConfigureFunction before_each = get<4>(test_data);
-            MaybeTestConfigureFunction after_each = get<5>(test_data);
-
-            // Step 2b: Test Setup
-            cout << "  Beginning Test: " << qualified_test_name << endl;
-            if(before_each.has_value()) {
-                (*before_each)();
-            }
-
-            TResult actual;
-            try {
-                // Step 2c: Execute the test method.
-                actual = std::apply(function_to_test, input_params);
-            } catch(const std::exception& ex) {
-                cout << "    ERROR: Caught exception \"" << ex.what() << "\"" << endl;
-            } catch(const std::string& message) {
-                cout << "    ERROR: Caught string \"" << message << "\"" << endl;
-            } catch(...) {
-                cout << "    ERROR: Caught something that is neither an std::exception nor a std::string." << endl;
-            }
-
-            // Step 2d: Pass or fail.
-            TestResults result;
-            if (compare_function(expected_output, actual)) {
-                result = TestResults().pass();
-                cout << "    PASSED" << endl;
-            } else {
-                result = TestResults().fail();
-                cout << "    FAILED: expected: " << expected_output << ", actual: " << actual << endl;
-            }
-            results += result;
-
-            // Step 2e: Test Teardown
-            if (after_each.has_value()) {
-                (*after_each)();
-            }
-            cout << "  Ending Test: " << test_name << endl;
-        });
-
-        // Step 3: Suite Teardown
-        if (maybe_suite_after_each_function.has_value()) {
-            (*maybe_suite_after_each_function)();
-        }
-        cout << "Ending Suite: " << suite_label << endl;
-        return results;
-    }
-
-    TestResults do_the_other_thing(){
-        auto p1 = "Microsoft QBasic";
-        auto p2 = 5;
-        // auto exp = "Micro";
-        string s = fn1("Microsoft QBasic", 5);
-        TestResults tr;
-
-        // tr = tr + execute_suite<string, const string&, int>(
-        //     "Test 8 Function",
-        //     (function<string(const string&, int)>)fn1,
-        //     vector<TestTuple<string, const string&, int>>({
-        //     // vector<tuple<string, string, tuple<const string&, int>, MaybeTestCompareFunction<string>>>({
-        //         make_tuple(
-        //             string("should do something"), // test_name
-        //             string("Micro"), // expectedOutput
-        //             make_tuple((string)p1, p2),// inputParams,
-        //             std::nullopt, // compare_function
-        //             std::nullopt, // before_each
-        //             std::nullopt, // after_each
-        //             true
-        //         ),
-        //         make_test<string, string, int>(
-        //             "should do something else",
-        //             "Micro",
-        //             make_tuple((string)p1, p2)
-        //         )
-        //     }));
-        
-        auto test_data8 = vector<TestTuple<string, const string&, int>>({
-            make_test<string, string, int>(
-                "Test 8 equals", "Micro", make_tuple((string)p1, p2),
-                [](const string& l, const string& r){ return l==r;}),
-            make_test<string, string, int>(
-                "Test 8 not equals", "Micro", make_tuple((string)p1, p2),
-                [](const string& l, const string& r){ return l!=r;}
-            ),
-            make_test<string, string, int>("Test 8 default compare", "Micro", make_tuple((string)p1, p2)),
-            make_test<string, string, int>("Test 8 default compare", "Micro", make_tuple((string)p1, p2)),
-            make_test<string, string, int>("Test 8 default compare", "Micro", make_tuple((string)p1, p2))
-        });
-        tr = tr + execute_suite<string, const string&, int>(
-            "Test 8 Function with extra data",
-            (function<string(const string&, int)>)fn1,
-            test_data8
-        );
-
-        return tr;
-    }
 
     // _Step_9 - if T2 is a single value then make_tuple<T2>(T2) and call longer version
     // auto testFunction = [](int id){return id==0?"":"";};
@@ -226,27 +93,58 @@ namespace Test {
     //   Also allow make_tuple(T2) if the last param is not a tuple.
 
     TestResults::TestResults()
-    : failed_(0)
+    : errors_(0)
+    , failed_(0)
     , passed_(0)
     , skipped_(0)
     , total_(0) {}
 
     TestResults::TestResults(const TestResults& other)
-    : failed_(other.failed_)
+    : error_messages_(other.error_messages_)
+    , errors_(other.errors_)
+    , failed_(other.failed_)
+    , failure_messages_(other.failure_messages_)
     , passed_(other.passed_)
+    , skip_messages_(other.skip_messages_)
     , skipped_(other.skipped_)
     , total_(other.total_) {}
 
-    TestResults::TestResults(uint32_t failed, uint32_t passed, uint32_t skipped, uint32_t total)
-    : failed_(failed)
+    TestResults::TestResults(uint32_t errors, uint32_t failed, uint32_t passed, uint32_t skipped, uint32_t total, vector<string> error_messages, vector<string> failure_messages, vector<string> skip_messages)
+    : error_messages_(error_messages)
+    , errors_(errors)
+    , failed_(failed)
+    , failure_messages_(failure_messages)
     , passed_(passed)
+    , skip_messages_(skip_messages)
     , skipped_(skipped)
     , total_(total) {}
+
+    TestResults& TestResults::error() {
+        errors_++;
+        return *this;
+    }
+
+    TestResults& TestResults::error(string message) {
+        errors_++;
+        error_messages_.push_back(message);
+        return *this;
+    }
 
     TestResults& TestResults::fail() {
         total_++;
         failed_++;
         return *this;
+    }
+
+    TestResults& TestResults::fail(const string& message) {
+        total_++;
+        failed_++;
+        failure_messages_.push_back(message);
+        return *this;
+    }
+
+    vector<string> TestResults::failure_messages() {
+        return failure_messages_;
     }
 
     TestResults& TestResults::pass() {
@@ -259,6 +157,25 @@ namespace Test {
         total_++;
         skipped_++;
         return *this;
+    }
+
+    TestResults& TestResults::skip(const string& message) {
+        total_++;
+        skipped_++;
+        skip_messages_.push_back(message);
+        return *this;
+    }
+
+    vector<string> TestResults::skip_messages() {
+        return skip_messages_;
+    }
+
+    vector<string> TestResults::error_messages() {
+        return error_messages_;
+    }
+
+    uint32_t TestResults::errors() {
+        return errors_;
     }
 
     uint32_t TestResults::failed() {
@@ -278,16 +195,34 @@ namespace Test {
     }
 
     TestResults TestResults::operator+(const TestResults& other) const {
+        vector<string> error_messages;
+        error_messages.insert(error_messages.end(), error_messages_.begin(), error_messages_.end());
+        error_messages.insert(error_messages.end(), other.error_messages_.begin(), other.error_messages_.end());
+        vector<string> failure_messages;
+        failure_messages.insert(failure_messages.end(), failure_messages_.begin(), failure_messages_.end());
+        failure_messages.insert(failure_messages.end(), other.failure_messages_.begin(), other.failure_messages_.end());
+        vector<string> skip_messages;
+        skip_messages.insert(skip_messages.end(), skip_messages_.begin(), skip_messages_.end());
+        skip_messages.insert(skip_messages.end(), other.skip_messages_.begin(), other.skip_messages_.end());
+        
         return TestResults(
+            errors_ + other.errors_,
             failed_ + other.failed_,
             passed_ + other.passed_,
             skipped_ + other.skipped_,
-            total_ + other.total_);
+            total_ + other.total_,
+            error_messages,
+            failure_messages,
+            skip_messages);
     }
 
     TestResults& TestResults::operator+=(const TestResults& other) {
+        error_messages_.insert(error_messages_.end(), other.error_messages_.begin(), other.error_messages_.end());
+        errors_ += other.errors_;
         failed_ += other.failed_;
+        failure_messages_.insert(failure_messages_.end(), other.failure_messages_.begin(), other.failure_messages_.end());
         passed_ += other.passed_;
+        skip_messages_.insert(skip_messages_.end(), other.skip_messages_.begin(), other.skip_messages_.end());
         skipped_ += other.skipped_;
         total_ += other.total_;
         return *this;
