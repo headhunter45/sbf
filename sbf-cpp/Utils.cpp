@@ -11,20 +11,20 @@ using namespace SBF;
 using namespace Test;
 
 namespace SBF {
-    using std::wcout;
+    using std::cout;
     using std::tuple;
     using std::wcerr;
-    using std::wstring;
+    using std::string;
     using std::endl;
     using std::pair;
     using std::get;
     using std::make_tuple;
     using std::vector;
 
-    wstring word_wrap(const wstring& text, int maxWidth) {
-        wstring output = L"";
-        wstring thisLine = L"";
-        wstring nextChunk = L"";
+    string word_wrap(const string& text, int maxWidth) {
+        string output = "";
+        string thisLine = "";
+        string nextChunk = "";
         int32_t thisLineStartPosition = 0;
         int32_t thisLineCurrentPosition = 0;
         int32_t nextSpace = -1;
@@ -34,7 +34,7 @@ namespace SBF {
         bool done = false;
 
         while (!done) {
-            nextSpace = get_index_of(text, L" ", thisLineCurrentPosition);
+            nextSpace = get_index_of(text, " ", thisLineCurrentPosition);
             if (nextSpace < 0) {
                 nextSpace = textLength;
             }
@@ -43,7 +43,7 @@ namespace SBF {
             if (nextChunkLength > 0) {
                 auto needsSpace = thisLine.size() > 0;
                 if (needsSpace) {
-                    thisLine = thisLine + L" ";
+                    thisLine = thisLine + " ";
                 }
                 thisLineLength = thisLine.size();
                 if (nextChunkLength > maxWidth) {
@@ -66,8 +66,8 @@ namespace SBF {
                     done = true;
                 }
                 thisLine = make_fit_l(thisLine, maxWidth, L'_');
-                output += thisLine + (done ? L"" : L"\n");
-                thisLine = L"";
+                output += thisLine + (done ? "" : "\n");
+                thisLine = "";
                 thisLineLength = thisLine.size();
                 thisLineStartPosition = thisLineCurrentPosition;
             }
@@ -76,27 +76,27 @@ namespace SBF {
         return output;
     }
 
-    wstring string_dollar(size_t length, wchar_t ch) {
-        wstring str = L"";
+    string string_dollar(size_t length, char ch) {
+        string str = "";
         for (size_t i = 0; i<length; i++) {
             str += ch;
         }
         return str;
     }
 
-    wstring left(const wstring& text, size_t length) {
+    string left(const string& text, size_t length) {
         return text.substr(0, length);
     }
 
-    wstring make_fit_l(const wstring& text, size_t length, wchar_t paddCh) {
+    string make_fit_l(const string& text, size_t length, char paddCh) {
         return left(text + string_dollar(length, paddCh), length);
     }
 
-    wstring get_substring(const wstring& text, const int32_t var1, const int32_t var2) {
+    string get_substring(const string& text, const int32_t var1, const int32_t var2) {
         return text.substr(std::min<int32_t>(var1, text.length()-1), std::max(var2, 0));
     }
 
-    size_t get_index_of(const wstring& text, const wstring& search, size_t start) {
+    size_t get_index_of(const string& text, const string& search, size_t start) {
         return text.find(search, start);
     }
 } // End namespace SBF

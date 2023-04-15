@@ -6,28 +6,28 @@
 namespace SBF {
     const int kBackgroundPoints = 5;
     const int kBackgroundAlliesId = 1;
-    const std::wstring kBackgroundAlliesLabel = L"Allies";
+    const std::string kBackgroundAlliesLabel = "Allies";
     const int kBackgroundContactsId = 2;
-    const std::wstring kBackgroundContactsLabel = L"Contacts";
+    const std::string kBackgroundContactsLabel = "Contacts";
     const int kBackgroundFameId = 3;
-    const std::wstring kBackgroundFameLabel = L"Fame";
+    const std::string kBackgroundFameLabel = "Fame";
     const int kBackgroundGenerationId = 4;
-    const std::wstring kBackgroundGenerationLabel = L"Generation";
+    const std::string kBackgroundGenerationLabel = "Generation";
     const int kBackgroundHerdId = 5;
-    const std::wstring kBackgroundHerdLabel = L"Herd";
+    const std::string kBackgroundHerdLabel = "Herd";
     const int kBackgroundInfluenceId = 6;
-    const std::wstring kBackgroundInfluenceLabel = L"Influence";
+    const std::string kBackgroundInfluenceLabel = "Influence";
     const int kBackgroundMentorId = 7;
-    const std::wstring kBackgroundMentorLabel = L"Mentor";
+    const std::string kBackgroundMentorLabel = "Mentor";
     const int kBackgroundResourcesId = 8;
-    const std::wstring kBackgroundResourcesLabel = L"Resources";
+    const std::string kBackgroundResourcesLabel = "Resources";
     const int kBackgroundRetainersId = 9;
-    const std::wstring kBackgroundRetainersLabel = L"Retainers";
+    const std::string kBackgroundRetainersLabel = "Retainers";
     const int kBackgroundStatusId = 10;
-    const std::wstring kBackgroundStatusLabel = L"Status";
+    const std::string kBackgroundStatusLabel = "Status";
     const int kBackgroundsCount = 10;
-    const std::wstring kBackgroundLabels[] = {
-        L"",
+    const std::string kBackgroundLabels[] = {
+        "",
         kBackgroundAlliesLabel,
         kBackgroundContactsLabel,
         kBackgroundFameLabel,
@@ -39,7 +39,7 @@ namespace SBF {
         kBackgroundRetainersLabel,
         kBackgroundStatusLabel,
     };
-    const std::wstring& GetBackgroundLabel(int backgroundId);
-    void FillBackgroundLabels(std::vector<std::wstring> backgroundLabels);
+    const std::string& GetBackgroundLabel(int backgroundId);
+    void FillBackgroundLabels(std::vector<std::string> backgroundLabels);
 } // End namespace SBF
 #endif // End !defined BACKGROUNDS_H__

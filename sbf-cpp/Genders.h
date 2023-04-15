@@ -5,25 +5,25 @@
 
 namespace SBF {
     const int kGenderMaleId = 1;
-    const std::wstring kGenderMaleLabel = L"Male";
+    const std::string kGenderMaleLabel = "Male";
     const int kGenderFemaleId = 2;
-    const std::wstring kGenderFemaleLabel = L"Female";
+    const std::string kGenderFemaleLabel = "Female";
     const int kGenderTransMaleId = 3;
-    const std::wstring kGenderTransMaleLabel = L"Trans-Male";
+    const std::string kGenderTransMaleLabel = "Trans-Male";
     const int kGenderTransFemaleId = 4;
-    const std::wstring kGenderTransFemaleLabel = L"Trans-Female";
+    const std::string kGenderTransFemaleLabel = "Trans-Female";
     const int kGenderNonBinaryId = 5;
-    const std::wstring kGenderNonBinaryLabel = L"Non-Binary";
+    const std::string kGenderNonBinaryLabel = "Non-Binary";
     const int kGendersCount = 5;
-    const std::wstring kGenderLabels[] = {
-        L"",
+    const std::string kGenderLabels[] = {
+        "",
         kGenderMaleLabel,
         kGenderFemaleLabel,
         kGenderTransMaleLabel,
         kGenderTransFemaleLabel,
         kGenderNonBinaryLabel,
     };
-    const std::wstring& GetGenderLabel(int genderId);
-    void FillGenderLabels(std::vector<std::wstring> genderLabels);
+    const std::string& GetGenderLabel(int genderId);
+    void FillGenderLabels(std::vector<std::string> genderLabels);
 } // End namespace SBF
 #endif // End !defined GENDERS_H__

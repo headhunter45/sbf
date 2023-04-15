@@ -6,19 +6,19 @@
 namespace SBF {
     const int kVirtuePoints = 7;
     const int kVirtueSelfControlId = 1;
-    const std::wstring kVirtueSelfControlLabel = L"Self-Control";
+    const std::string kVirtueSelfControlLabel = "Self-Control";
     const int kVirtueCourageId = 2;
-    const std::wstring kVirtueCourageLabel = L"Courage";
+    const std::string kVirtueCourageLabel = "Courage";
     const int kVirtueConscienceId = 3;
-    const std::wstring kVirtueConscienceLabel = L"Conscience";
+    const std::string kVirtueConscienceLabel = "Conscience";
     const int kVirtuesCount = 3;
-    const std::wstring kVirtues[] = {
-        L"",
+    const std::string kVirtues[] = {
+        "",
         kVirtueSelfControlLabel,
         kVirtueCourageLabel,
         kVirtueConscienceLabel,
     };
-    const std::wstring GetVirtueLabel(int virtueId);
-    void FillVirtueLabels(std::vector<std::wstring> virtueLabels);
+    const std::string GetVirtueLabel(int virtueId);
+    void FillVirtueLabels(std::vector<std::string> virtueLabels);
 } // End namespace SBF
 #endif // End !defined VIRTUES_H__

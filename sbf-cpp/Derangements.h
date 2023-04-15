@@ -7,51 +7,51 @@
 namespace SBF {
     struct DerangementType {
         int id;
-        std::wstring label;
-        std::wstring description;
+        std::string label;
+        std::string description;
         uint8_t textColor;
     };
 
     const int kDerangementAmnesiaId = 1;
     const uint8_t kDerangementAmnesiaTextColor= kColorDarkRed;
-    const std::wstring kDerangementAmnesiaLabel = L"Amnesia";
-    const std::wstring kDerangementAmnesiaDescription = LR"---(You forget a segment of your past. Additionally in some cases a character can forget abilities and be unable to use them for the duration.)---";
+    const std::string kDerangementAmnesiaLabel = "Amnesia";
+    const std::string kDerangementAmnesiaDescription = R"---(You forget a segment of your past. Additionally in some cases a character can forget abilities and be unable to use them for the duration.)---";
     const int kDerangementDelusionsOfGrandeurId = 2;
     const uint8_t kDerangementDelusionsOfGrandeurTextColor= kColorDarkMagenta;
-    const std::wstring kDerangementDelusionsOfGrandeurLabel = L"Delusions of Grandeur";
-    const std::wstring kDerangementDelusionsOfGrandeurDescription = LR"---(You imagine you are better than you are.)---";
+    const std::string kDerangementDelusionsOfGrandeurLabel = "Delusions of Grandeur";
+    const std::string kDerangementDelusionsOfGrandeurDescription = R"---(You imagine you are better than you are.)---";
     const int kDerangementFantasyId = 3;
     const uint8_t kDerangementFantasyTextColor= kColorDarkOrange;
-    const std::wstring kDerangementFantasyLabel = L"Fantasy";
-    const std::wstring kDerangementFantasyDescription = LR"---(You enter a self-created world where you are the forgotten hero.)---";
+    const std::string kDerangementFantasyLabel = "Fantasy";
+    const std::string kDerangementFantasyDescription = R"---(You enter a self-created world where you are the forgotten hero.)---";
     const int kDerangementManicDepressionId = 4;
     const uint8_t kDerangementManicDepressionTextColor= kColorDarkWhite;
-    const std::wstring kDerangementManicDepressionLabel = L"Manic-Depression";
-    const std::wstring kDerangementManicDepressionDescription = LR"---(You sink into deep and fitful depressions, showing no interest in anything which used to captivate your interests. You will go along with others rather than use the energy to resist. Occasional fits of great energy grab hold of you, and you will work for hours or even days on your projects. During this time you will resist even the need for sleep as you burn up blood and Willpower on your schemes.)---";
+    const std::string kDerangementManicDepressionLabel = "Manic-Depression";
+    const std::string kDerangementManicDepressionDescription = R"---(You sink into deep and fitful depressions, showing no interest in anything which used to captivate your interests. You will go along with others rather than use the energy to resist. Occasional fits of great energy grab hold of you, and you will work for hours or even days on your projects. During this time you will resist even the need for sleep as you burn up blood and Willpower on your schemes.)---";
     const int kDerangementMultiplePersonalitiesId = 5;
     const uint8_t kDerangementMultiplePersonalitiesTextColor= kColorDarkBlue;
-    const std::wstring kDerangementMultiplePersonalitiesLabel = L"Multiple Personalities";
-    const std::wstring kDerangementMultiplePersonalitiesDescription = LR"---(You possess a number of new personalities. You have amore than one Mature, and will switch between them. Thus you regain Willpower points in defferent ways at defferent times)---";
+    const std::string kDerangementMultiplePersonalitiesLabel = "Multiple Personalities";
+    const std::string kDerangementMultiplePersonalitiesDescription = R"---(You possess a number of new personalities. You have amore than one Mature, and will switch between them. Thus you regain Willpower points in defferent ways at defferent times)---";
     const int kDerangementObsessionId = 6;
     const uint8_t kDerangementObsessionTextColor= kColorBrightGreen;
-    const std::wstring kDerangementObsessionLabel = L"Obsession";
-    const std::wstring kDerangementObsessionDescription = LR"---(You become obsessed with some interest or fetish.)---";
+    const std::string kDerangementObsessionLabel = "Obsession";
+    const std::string kDerangementObsessionDescription = R"---(You become obsessed with some interest or fetish.)---";
     const int kDerangementOvercompensationId = 7;
     const uint8_t kDerangementOvercompensationTextColor= kColorBrightCyan;
-    const std::wstring kDerangementOvercompensationLabel = L"Overcompensation";
-    const std::wstring kDerangementOvercompensationDescription = LR"---(You make up for your moral weaknesses by playing up your strengths to an extreme. You don't think you can frenzy and won't stop it.)---";
+    const std::string kDerangementOvercompensationLabel = "Overcompensation";
+    const std::string kDerangementOvercompensationDescription = R"---(You make up for your moral weaknesses by playing up your strengths to an extreme. You don't think you can frenzy and won't stop it.)---";
     const int kDerangementParanoiaId = 8;
     const uint8_t kDerangementParanoiaTextColor= kColorBrightRed;
-    const std::wstring kDerangementParanoiaLabel = L"Paranoia";
-    const std::wstring kDerangementParanoiaDescription = LR"---(You are convinced that you are being hunted. You hold even your closest Friends under suspicion.)---";
+    const std::string kDerangementParanoiaLabel = "Paranoia";
+    const std::string kDerangementParanoiaDescription = R"---(You are convinced that you are being hunted. You hold even your closest Friends under suspicion.)---";
     const int kDerangementPerfectionId = 9;
     const uint8_t kDerangementPerfectionTextColor= kColorBrightMagenta;
-    const std::wstring kDerangementPerfectionLabel = L"Perfection";
-    const std::wstring kDerangementPerfectionDescription = LR"---(All your energy is directed toward preventing anything from going wong. When it does you must make a self-control roll or frenzy.)---";
+    const std::string kDerangementPerfectionLabel = "Perfection";
+    const std::string kDerangementPerfectionDescription = R"---(All your energy is directed toward preventing anything from going wong. When it does you must make a self-control roll or frenzy.)---";
     const int kDerangementRegressionId = 10;
     const uint8_t kDerangementRegressionTextColor= kColorBrightYellow;
-    const std::wstring kDerangementRegressionLabel = L"Regression";
-    const std::wstring kDerangementRegressionDescription = LR"---(You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is.)---";
+    const std::string kDerangementRegressionLabel = "Regression";
+    const std::string kDerangementRegressionDescription = R"---(You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is.)---";
     const DerangementType kDerangementAmnesia = {
         kDerangementAmnesiaId,
         kDerangementAmnesiaLabel,
@@ -128,8 +128,8 @@ namespace SBF {
         kDerangementRegressionTextColor,
     };
 
-    const std::wstring kDerangementLabels[] = {
-        L"",
+    const std::string kDerangementLabels[] = {
+        "",
         kDerangementAmnesiaLabel,
         kDerangementDelusionsOfGrandeurLabel,
         kDerangementFantasyLabel,
@@ -142,8 +142,8 @@ namespace SBF {
         kDerangementRegressionLabel,
     };
 
-    const std::wstring kDerangementDescriptions[] = {
-        L"",
+    const std::string kDerangementDescriptions[] = {
+        "",
         kDerangementAmnesiaDescription,
         kDerangementDelusionsOfGrandeurDescription,
         kDerangementFantasyDescription,
@@ -157,7 +157,7 @@ namespace SBF {
     };
 
     const DerangementType kDerangements[] = {
-        {0, L"", L"", 0},
+        {0, "", "", 0},
         kDerangementAmnesia,
         kDerangementDelusionsOfGrandeur,
         kDerangementFantasy,

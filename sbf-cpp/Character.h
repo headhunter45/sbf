@@ -29,7 +29,7 @@ namespace SBF {
             int GetAbilityValue(int abilityGroupId, int abilityId) const;
             int GetAttributeValue(int attributeGroupId, int abilityId) const;
             int GetBackgroundValue(int backgroundId) const;
-            std::wstring GetAllDerangementsLine() const;
+            std::string GetAllDerangementsLine() const;
             int GetDisciplineValue(int disciplineId) const;
             int GetKnowledgeValue(int knowledgeId) const;
             int GetSkillValue(int skillId) const;
@@ -44,12 +44,12 @@ namespace SBF {
             void SetTalentValue(int talentId, int value);
             void SetVirtueValue(int virtueId, int value);
             
-            std::wstring name;
-            std::wstring player;
-            std::wstring chronicle;
-            std::wstring haven;
-            std::wstring concept;
-            std::wstring age;
+            std::string name;
+            std::string player;
+            std::string chronicle;
+            std::string haven;
+            std::string concept;
+            std::string age;
             int genderId;
             int clanId;
             int natureId;
@@ -58,7 +58,7 @@ namespace SBF {
             int selfControl;
             int courage;
             int generation;
-            std::wstring roadName;
+            std::string roadName;
             int roadValue;
             int willpower;
             int bloodPool;

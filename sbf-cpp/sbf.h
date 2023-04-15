@@ -4,7 +4,7 @@
 #include <string>
 
 namespace SBF {
-    using std::wstring;
+    using std::string;
 
     const int kInitialGeneration = 13;
 

@@ -5,68 +5,68 @@
 
 namespace SBF {
     const int kArchetypeArchitectId = 1;
-    const std::wstring kArchetypeArchitectLabel = L"Architect";
+    const std::string kArchetypeArchitectLabel = "Architect";
     const int kArchetypeAutocratId = 2;
-    const std::wstring kArchetypeAutocratLabel = L"Autocrat";
+    const std::string kArchetypeAutocratLabel = "Autocrat";
     const int kArchetypeBarbarianId = 3;
-    const std::wstring kArchetypeBarbarianLabel = L"Barbarian";
+    const std::string kArchetypeBarbarianLabel = "Barbarian";
     const int kArchetypeBonVivantId = 4;
-    const std::wstring kArchetypeBonVivantLabel = L"Bon Vivant";
+    const std::string kArchetypeBonVivantLabel = "Bon Vivant";
     const int kArchetypeBravoId = 5;
-    const std::wstring kArchetypeBravoLabel = L"Bravo";
+    const std::string kArchetypeBravoLabel = "Bravo";
     const int kArchetypeCaregiverId = 6;
-    const std::wstring kArchetypeCaregiverLabel = L"Caregiver";
+    const std::string kArchetypeCaregiverLabel = "Caregiver";
     const int kArchetypeCaretakerId = 7;
-    const std::wstring kArchetypeCaretakerLabel = L"Caretaker";
+    const std::string kArchetypeCaretakerLabel = "Caretaker";
     const int kArchetypeCelebrantId = 8;
-    const std::wstring kArchetypeCelebrantLabel = L"Celebrant";
+    const std::string kArchetypeCelebrantLabel = "Celebrant";
     const int kArchetypeChildId = 9;
-    const std::wstring kArchetypeChildLabel = L"Child";
+    const std::string kArchetypeChildLabel = "Child";
     const int kArchetypeConformist = 10;
-    const std::wstring kArchetypeConformistLabel = L"Conformist";
+    const std::string kArchetypeConformistLabel = "Conformist";
     const int kArchetypeConniverId = 11;
-    const std::wstring kArchetypeConniverLabel = L"Conniver";
+    const std::string kArchetypeConniverLabel = "Conniver";
     const int kArchetypeCurmudgeonId = 12;
-    const std::wstring kArchetypeCurmudgeonLabel = L"Curmudgeon";
+    const std::string kArchetypeCurmudgeonLabel = "Curmudgeon";
     const int kArchetypeDefenderId = 13;
-    const std::wstring kArchetypeDefenderLabel = L"Defender";
+    const std::string kArchetypeDefenderLabel = "Defender";
     const int kArchetypeDeviantId = 14;
-    const std::wstring kArchetypeDeviantLabel = L"Deviant";
+    const std::string kArchetypeDeviantLabel = "Deviant";
     const int kArchetypeDirectorId = 15;
-    const std::wstring kArchetypeDirectorLabel = L"Director";
+    const std::string kArchetypeDirectorLabel = "Director";
     const int kArchetypeFanaticId = 16;
-    const std::wstring kArchetypeFanaticLabel = L"Fanatic";
+    const std::string kArchetypeFanaticLabel = "Fanatic";
     const int kArchetypeGallantId = 17;
-    const std::wstring kArchetypeGallantLabel = L"Gallant";
+    const std::string kArchetypeGallantLabel = "Gallant";
     const int kArchetypeInnovatorId = 18;
-    const std::wstring kArchetypeInnovatorLabel = L"Innovator";
+    const std::string kArchetypeInnovatorLabel = "Innovator";
     const int kArchetypeJesterId = 19;
-    const std::wstring kArchetypeJesterLabel = L"Jester";
+    const std::string kArchetypeJesterLabel = "Jester";
     const int kArchetypeJudgeId = 20;
-    const std::wstring kArchetypeJudgeLabel = L"Judge";
+    const std::string kArchetypeJudgeLabel = "Judge";
     const int kArchetypeLoanerId = 21;
-    const std::wstring kArchetypeLoanerLabel = L"Loaner";
+    const std::string kArchetypeLoanerLabel = "Loaner";
     const int kArchetypeMartyrId = 22;
-    const std::wstring kArchetypeMartyrLabel = L"Martyr";
+    const std::string kArchetypeMartyrLabel = "Martyr";
     const int kArchetypeMonsterId = 23;
-    const std::wstring kArchetypeMonsterLabel = L"Monster";
+    const std::string kArchetypeMonsterLabel = "Monster";
     const int kArchetypePenitentId = 24;
-    const std::wstring kArchetypePenitentLabel = L"Penitent";
+    const std::string kArchetypePenitentLabel = "Penitent";
     const int kArchetypeRebelId = 25;
-    const std::wstring kArchetypeRebelLabel = L"Rebel";
+    const std::string kArchetypeRebelLabel = "Rebel";
     const int kArchetypeRogueId = 26;
-    const std::wstring kArchetypeRogueLabel = L"Rogue";
+    const std::string kArchetypeRogueLabel = "Rogue";
     const int kArchetypeSurvivorId = 27;
-    const std::wstring kArchetypeSurvivorLabel = L"Survivor";
+    const std::string kArchetypeSurvivorLabel = "Survivor";
     const int kArchetypeTraditionalistId = 28;
-    const std::wstring kArchetypeTraditionalistLabel = L"Traditionalist";
+    const std::string kArchetypeTraditionalistLabel = "Traditionalist";
     const int kArchetypeTyrantId = 29;
-    const std::wstring kArchetypeTyrantLabel = L"Tyrant";
+    const std::string kArchetypeTyrantLabel = "Tyrant";
     const int kArchetypeVisionaryId = 30;
-    const std::wstring kArchetypeVisionaryLabel = L"Visionary";
+    const std::string kArchetypeVisionaryLabel = "Visionary";
     const int kArchetypesCount = 30;
-    const std::wstring kArchetypes[] = {
-        L"",
+    const std::string kArchetypes[] = {
+        "",
         kArchetypeArchitectLabel,
         kArchetypeAutocratLabel,
         kArchetypeBarbarianLabel,
@@ -99,7 +99,7 @@ namespace SBF {
         kArchetypeVisionaryLabel,
     };
 
-    const std::wstring& GetArchetypeLabel(int archetypeId);
-    void FillArchetypeLabels(std::vector<std::wstring> archetypeLabels);
+    const std::string& GetArchetypeLabel(int archetypeId);
+    void FillArchetypeLabels(std::vector<std::string> archetypeLabels);
 } // End namespace SBF
 #endif // End !defined ARCHETYPES_H__

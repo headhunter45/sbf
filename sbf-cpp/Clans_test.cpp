@@ -4,7 +4,7 @@ using namespace SBF;
 using namespace Test;
 
 TestResults main_test_Clans(int argc, char** argv) {
-    TestResults results = TestResults();
+    TestResults results;
     
     return results;
 }

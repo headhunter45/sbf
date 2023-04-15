@@ -5,97 +5,97 @@
 
 namespace SBF {
     const int kPhysicalAttributeStrengthId = 1;
-    const std::wstring kPhysicalAttributeStrengthLabel = L"Strength";
-    const std::wstring kPhysicalAttributeStrengthAbbreviation = L"Str.";
+    const std::string kPhysicalAttributeStrengthLabel = "Strength";
+    const std::string kPhysicalAttributeStrengthAbbreviation = "Str.";
     const int kPhysicalAttributeDexterityId = 2;
-    const std::wstring kPhysicalAttributeDexterityLabel = L"Dexterity";
-    const std::wstring kPhysicalAttributeDexterityAbbreviation = L"Dex.";
+    const std::string kPhysicalAttributeDexterityLabel = "Dexterity";
+    const std::string kPhysicalAttributeDexterityAbbreviation = "Dex.";
     const int kPhysicalAttributeStaminaId = 3;
-    const std::wstring kPhysicalAttributeStaminaLabel = L"Stamina";
-    const std::wstring kPhysicalAttributeStaminaAbbreviation = L"Sta.";
+    const std::string kPhysicalAttributeStaminaLabel = "Stamina";
+    const std::string kPhysicalAttributeStaminaAbbreviation = "Sta.";
     const int kPhysicalAttributesCount = 3;
-    const std::wstring kPhysicalAttributeLabels[] = {
-        L"",
+    const std::string kPhysicalAttributeLabels[] = {
+        "",
         kPhysicalAttributeStrengthLabel,
         kPhysicalAttributeDexterityLabel,
         kPhysicalAttributeStaminaLabel,
     };
-    const std::wstring kPhysicalAttributeAbbreviations[] = {
-        L"",
+    const std::string kPhysicalAttributeAbbreviations[] = {
+        "",
         kPhysicalAttributeStrengthAbbreviation,
         kPhysicalAttributeDexterityAbbreviation,
         kPhysicalAttributeStaminaAbbreviation,
     };
 
     const int kSocialAttributeCharismaId = 1;
-    const std::wstring kSocialAttributeCharismaLabel = L"Charisma";
-    const std::wstring kSocialAttributeCharismaAbbreviation = L"Cha.";
+    const std::string kSocialAttributeCharismaLabel = "Charisma";
+    const std::string kSocialAttributeCharismaAbbreviation = "Cha.";
     const int kSocialAttributeManipulationId = 2;
-    const std::wstring kSocialAttributeManipulationLabel = L"Manipulation";
-    const std::wstring kSocialAttributeManipulationAbbreviation = L"Man.";
+    const std::string kSocialAttributeManipulationLabel = "Manipulation";
+    const std::string kSocialAttributeManipulationAbbreviation = "Man.";
     const int kSocialAttributeAppearanceId = 3;
-    const std::wstring kSocialAttributeAppearanceLabel = L"Appearance";
-    const std::wstring kSocialAttributeAppearanceAbbreviation = L"App.";
+    const std::string kSocialAttributeAppearanceLabel = "Appearance";
+    const std::string kSocialAttributeAppearanceAbbreviation = "App.";
     const int kSocialAttributesCount = 3;
-    const std::wstring kSocialAttributeLabels[] = {
-        L"",
+    const std::string kSocialAttributeLabels[] = {
+        "",
         kSocialAttributeCharismaLabel,
         kSocialAttributeManipulationLabel,
         kSocialAttributeAppearanceLabel,
     };
-    const std::wstring kSocialAttributeAbbreviations[] = {
-        L"",
+    const std::string kSocialAttributeAbbreviations[] = {
+        "",
         kSocialAttributeCharismaAbbreviation,
         kSocialAttributeManipulationAbbreviation,
         kSocialAttributeAppearanceAbbreviation,
     };
 
     const int kMentalAttributeIntelligenceId = 1;
-    const std::wstring kMentalAttributeIntelligenceLabel = L"Intelligence";
-    const std::wstring kMentalAttributeIntelligenceAbbreviation = L"Int.";
+    const std::string kMentalAttributeIntelligenceLabel = "Intelligence";
+    const std::string kMentalAttributeIntelligenceAbbreviation = "Int.";
     const int kMentalAttributePerceptionId = 2;
-    const std::wstring kMentalAttributePerceptionLabel = L"Perception";
-    const std::wstring kMentalAttributePerceptionAbbreviation = L"Per.";
+    const std::string kMentalAttributePerceptionLabel = "Perception";
+    const std::string kMentalAttributePerceptionAbbreviation = "Per.";
     const int kMentalAttributeWitsId = 3;
-    const std::wstring kMentalAttributeWitsLabel = L"Wits";
-    const std::wstring kMentalAttributeWitsAbbreviation = L"Wits";
+    const std::string kMentalAttributeWitsLabel = "Wits";
+    const std::string kMentalAttributeWitsAbbreviation = "Wits";
     const int kMentalAttributesCount = 3;
-    const std::wstring kMentalAttributeLabels[] = {
-        L"",
+    const std::string kMentalAttributeLabels[] = {
+        "",
         kMentalAttributeIntelligenceLabel,
         kMentalAttributePerceptionLabel,
         kMentalAttributeWitsLabel,
     };
-    const std::wstring kMentalAttributeAbbreviations[] = {
-        L"",
+    const std::string kMentalAttributeAbbreviations[] = {
+        "",
         kMentalAttributeIntelligenceLabel,
         kMentalAttributePerceptionAbbreviation,
         kMentalAttributeWitsAbbreviation,
     };
 
     const int kAttributeGroupPhysicalId = 1;
-    const std::wstring kAttributeGroupPhysicalLabel = L"Physical";
+    const std::string kAttributeGroupPhysicalLabel = "Physical";
     const int kAttributeGroupSocialId = 2;
-    const std::wstring kAttributeGroupSocialLabel = L"Social";
+    const std::string kAttributeGroupSocialLabel = "Social";
     const int kAttributeGroupMentalId = 3;
-    const std::wstring kAttributeGroupMentalLabel = L"Mental";
+    const std::string kAttributeGroupMentalLabel = "Mental";
     const int kAttributeGroupsCount = 3;
-    const std::wstring kAttributeGroups[] = {
-        L"",
+    const std::string kAttributeGroups[] = {
+        "",
         kAttributeGroupPhysicalLabel,
         kAttributeGroupSocialLabel,
         kAttributeGroupMentalLabel,
     };
 
-    const std::wstring& GetAttributeGroupLabel(int attributeGroupId);
-    const std::wstring& GetAtttributeLabel(int attributeGroupId, int attributeId);
-    const std::wstring& GetPhysicalAttributeLabel(int attributeId);
-    const std::wstring& GetSocialAttributeLabel(int attributeId);
-    const std::wstring& GetMentalAttributeLabel(int attributeId);
-    void FillAttributeGroupLabels(std::vector<std::wstring> attributeGroupLabels);
-    void FillAttributeLabelInGroup(std::vector<std::wstring> attributeLabels);
-    void FillPhysicalAttributeLabels(std::vector<std::wstring> physicalAttributeLabels);
-    void FillSocialAttributeLabels(std::vector<std::wstring> socialAttributeLabels);
-    void FillMentalAttributeLabels(std::vector<std::wstring> mentalAttributeLabels);
+    const std::string& GetAttributeGroupLabel(int attributeGroupId);
+    const std::string& GetAtttributeLabel(int attributeGroupId, int attributeId);
+    const std::string& GetPhysicalAttributeLabel(int attributeId);
+    const std::string& GetSocialAttributeLabel(int attributeId);
+    const std::string& GetMentalAttributeLabel(int attributeId);
+    void FillAttributeGroupLabels(std::vector<std::string> attributeGroupLabels);
+    void FillAttributeLabelInGroup(std::vector<std::string> attributeLabels);
+    void FillPhysicalAttributeLabels(std::vector<std::string> physicalAttributeLabels);
+    void FillSocialAttributeLabels(std::vector<std::string> socialAttributeLabels);
+    void FillMentalAttributeLabels(std::vector<std::string> mentalAttributeLabels);
 } // End namespace SBF
 #endif // End !defined ATTRIBUTES_H__

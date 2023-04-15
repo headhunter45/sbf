@@ -5,44 +5,44 @@
 
 namespace SBF {
     const int kClanAnarch = 1;
-    const std::wstring kClanAnarchLabel = L"Anarch";
+    const std::string kClanAnarchLabel = "Anarch";
     const int kClanAssamite = 2;
-    const std::wstring kClanAssamiteLabel = L"Assamite";
+    const std::string kClanAssamiteLabel = "Assamite";
     const int kClanBaali = 3;
-    const std::wstring kClanBaaliLabel = L"Baali";
+    const std::string kClanBaaliLabel = "Baali";
     const int kClanBrujah = 4;
-    const std::wstring kClanBrujahLabel = L"Brujah";
+    const std::string kClanBrujahLabel = "Brujah";
     const int kClanCaitiff = 5;
-    const std::wstring kClanCaitiffLabel = L"Caitiff";
+    const std::string kClanCaitiffLabel = "Caitiff";
     const int kClanCappadocian = 6;
-    const std::wstring kClanCappadocianLabel = L"Cappadocian";
+    const std::string kClanCappadocianLabel = "Cappadocian";
     const int kClanGangrel = 7;
-    const std::wstring kClanGangrelLabel = L"Gangrel";
+    const std::string kClanGangrelLabel = "Gangrel";
     const int kClanGiovanni = 8;
-    const std::wstring kClanGiovanniLabel = L"Giovanni";
+    const std::string kClanGiovanniLabel = "Giovanni";
     const int kClanInconnu = 9;
-    const std::wstring kClanInconnuLabel = L"Inconnu";
+    const std::string kClanInconnuLabel = "Inconnu";
     const int kClanLasombra = 10;
-    const std::wstring kClanLasombraLabel = L"Lasombra";
+    const std::string kClanLasombraLabel = "Lasombra";
     const int kClanMalkavian = 11;
-    const std::wstring kClanMalkavianLabel = L"Malkavian";
+    const std::string kClanMalkavianLabel = "Malkavian";
     const int kClanNosferatu = 12;
-    const std::wstring kClanNosferatuLabel = L"Nosferatu";
+    const std::string kClanNosferatuLabel = "Nosferatu";
     const int kClanRavanos = 13;
-    const std::wstring kClanRavanosLabel = L"Ravanos";
+    const std::string kClanRavanosLabel = "Ravanos";
     const int kClanSettite = 14;
-    const std::wstring kClanSettiteLabel = L"Settite";
+    const std::string kClanSettiteLabel = "Settite";
     const int kClanToreador = 15;
-    const std::wstring kClanToreadorLabel = L"Toreador";
+    const std::string kClanToreadorLabel = "Toreador";
     const int kClanTremere = 16;
-    const std::wstring kClanTremereLabel = L"Tremere";
+    const std::string kClanTremereLabel = "Tremere";
     const int kClanTzismice = 17;
-    const std::wstring kClanTzismiceLabel = L"Tzismice";
+    const std::string kClanTzismiceLabel = "Tzismice";
     const int kClanVentrue = 18;
-    const std::wstring kClanVentrueLabel = L"Ventrue";
+    const std::string kClanVentrueLabel = "Ventrue";
     const int kClansCount = 18;
-    const std::wstring kClans[] = {
-        L"",
+    const std::string kClans[] = {
+        "",
         kClanAnarchLabel,
         kClanAssamiteLabel,
         kClanBaaliLabel,
@@ -60,7 +60,7 @@ namespace SBF {
         kClanTremereLabel,
         kClanVentrueLabel,
     };
-    const std::wstring& GetClanLabel(int clanId);
-    void FillClanLabels(std::vector<std::wstring> clans);
+    const std::string& GetClanLabel(int clanId);
+    void FillClanLabels(std::vector<std::string> clans);
 } // End namespace SBF
 #endif // End !defined CLANS_H__

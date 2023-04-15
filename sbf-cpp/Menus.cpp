@@ -3,17 +3,17 @@
 namespace SBF {
 
     int GetRandomMenuItemId (std::vector<MenuItem> items);
-    void BuildMenu(std::vector<MenuItem> items, std::vector<wstring> labels);
-    void BuildMenuWithValues(std::vector<MenuItem> items, std::vector<wstring> labels, std::vector<int> values);
-    void BuildMenuWithColors(std::vector<MenuItem> items, std::vector<wstring> labels, std::vector<uint8_t> colors);
+    void BuildMenu(std::vector<MenuItem> items, std::vector<string> labels);
+    void BuildMenuWithValues(std::vector<MenuItem> items, std::vector<string> labels, std::vector<int> values);
+    void BuildMenuWithColors(std::vector<MenuItem> items, std::vector<string> labels, std::vector<uint8_t> colors);
     void AdjustMenuStyle(MenuStyle& style, std::vector<MenuItem> items, bool ignoreValue);
     void PrintMenu(std::vector<MenuItem> items, MenuStyle style);
-    wstring GetTitle(MenuItem item, MenuStyle style);
-    wstring GetTitleWithoutValue(MenuItem item, MenuStyle style);
+    string GetTitle(MenuItem item, MenuStyle style);
+    string GetTitleWithoutValue(MenuItem item, MenuStyle style);
     void NewMenuStyle(MenuStyle& style);
-    void NewMenuItem(MenuItem& item, wstring label, int id);
-    void NewMenuItemWithValue(MenuItem& item, wstring label, int id, int value);
-    void NewMenuItemWithColor(MenuItem& item, wstring label, int id, uint8_t color);
+    void NewMenuItem(MenuItem& item, string label, int id);
+    void NewMenuItemWithValue(MenuItem& item, string label, int id, int value);
+    void NewMenuItemWithColor(MenuItem& item, string label, int id, uint8_t color);
 
 } // End namespace SBF
 

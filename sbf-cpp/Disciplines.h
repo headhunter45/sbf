@@ -6,56 +6,56 @@
 namespace SBF {
     const int kDisciplinePoints = 3;
     const int kDisciplineAnimalismId = 1;
-    const std::wstring kDisciplineAnimalismLabel = L"Animalism";
+    const std::string kDisciplineAnimalismLabel = "Animalism";
     const int kDisciplineAuspexId = 2;
-    const std::wstring kDisciplineAuspexLabel = L"Auspex";
+    const std::string kDisciplineAuspexLabel = "Auspex";
     const int kDisciplineBardoId = 3;
-    const std::wstring kDisciplineBardoLabel = L"Bardo";
+    const std::string kDisciplineBardoLabel = "Bardo";
     const int kDisciplineCelerityId = 4;
-    const std::wstring kDisciplineCelerityLabel = L"Celerity";
+    const std::string kDisciplineCelerityLabel = "Celerity";
     const int kDisciplineChimestryId = 5;
-    const std::wstring kDisciplineChimestryLabel = L"Chimestry";
+    const std::string kDisciplineChimestryLabel = "Chimestry";
     const int kDisciplineDementationId = 6;
-    const std::wstring kDisciplineDementationLabel = L"Dementation";
+    const std::string kDisciplineDementationLabel = "Dementation";
     const int kDisciplineDominateId = 7;
-    const std::wstring kDisciplineDominateLabel = L"Dominate";
+    const std::string kDisciplineDominateLabel = "Dominate";
     const int kDisciplineFortitudeId = 8;
-    const std::wstring kDisciplineFortitudeLabel = L"Fortitude";
+    const std::string kDisciplineFortitudeLabel = "Fortitude";
     const int kDisciplineMelpomineeId = 9;
-    const std::wstring kDisciplineMelpomineeLabel = L"Melpominee";
+    const std::string kDisciplineMelpomineeLabel = "Melpominee";
     const int kDisciplineMortisId = 10;
-    const std::wstring kDisciplineMortisLabel = L"Mortis";
+    const std::string kDisciplineMortisLabel = "Mortis";
     const int kDisciplineMytherceriaId = 11;
-    const std::wstring kDisciplineMytherceriaLabel = L"Mytherceria";
+    const std::string kDisciplineMytherceriaLabel = "Mytherceria";
     const int kDisciplineNecromancyId = 12;
-    const std::wstring kDisciplineNecromancyLabel = L"Necromancy";
+    const std::string kDisciplineNecromancyLabel = "Necromancy";
     const int kDisciplineObeahId = 13;
-    const std::wstring kDisciplineObeahLabel = L"Obeah";
+    const std::string kDisciplineObeahLabel = "Obeah";
     const int kDisciplineObfuscateId = 14;
-    const std::wstring kDisciplineObfuscateLabel = L"Obfuscate";
+    const std::string kDisciplineObfuscateLabel = "Obfuscate";
     const int kDisciplineObtenebrationId = 15;
-    const std::wstring kDisciplineObtenebrationLabel = L"Obtenebration";
+    const std::string kDisciplineObtenebrationLabel = "Obtenebration";
     const int kDisciplinePotenceId = 16;
-    const std::wstring kDisciplinePotenceLabel = L"Potence";
+    const std::string kDisciplinePotenceLabel = "Potence";
     const int kDisciplinePresenceId = 17;
-    const std::wstring kDisciplinePresenceLabel = L"Presence";
+    const std::string kDisciplinePresenceLabel = "Presence";
     const int kDisciplineProteanId = 18;
-    const std::wstring kDisciplineProteanLabel = L"Protean";
+    const std::string kDisciplineProteanLabel = "Protean";
     const int kDisciplineQuietusId = 19;
-    const std::wstring kDisciplineQuietusLabel = L"Quietus";
+    const std::string kDisciplineQuietusLabel = "Quietus";
     const int kDisciplineSerpentisId = 20;
-    const std::wstring kDisciplineSerpentisLabel = L"Serpentis";
+    const std::string kDisciplineSerpentisLabel = "Serpentis";
     const int kDisciplineSpiritusId = 21;
-    const std::wstring kDisciplineSpiritusLabel = L"Spiritus";
+    const std::string kDisciplineSpiritusLabel = "Spiritus";
     const int kDisciplineThanantosisId = 22;
-    const std::wstring kDisciplineThanantosisLabel = L"Thanantosis";
+    const std::string kDisciplineThanantosisLabel = "Thanantosis";
     const int kDisciplineThaumaturgyId = 23;
-    const std::wstring kDisciplineThaumaturgyLabel = L"Thaumaturgy";
+    const std::string kDisciplineThaumaturgyLabel = "Thaumaturgy";
     const int kDisciplineVicissitudeId = 24;
-    const std::wstring kDisciplineVicissitudeLabel = L"Vicissitude";
+    const std::string kDisciplineVicissitudeLabel = "Vicissitude";
     const int kDisciplinesCount = 24;
-    const std::wstring kDisciplines[] = {
-        L"",
+    const std::string kDisciplines[] = {
+        "",
         kDisciplineAnimalismLabel,
         kDisciplineAuspexLabel,
         kDisciplineBardoLabel,
@@ -81,7 +81,7 @@ namespace SBF {
         kDisciplineThaumaturgyLabel,
         kDisciplineVicissitudeLabel,
     };
-    const std::wstring GetDisciplineLabel(int disciplineId);
-    void FillDisciplineLabels(std::vector<std::wstring> disciplineLabels);
+    const std::string GetDisciplineLabel(int disciplineId);
+    void FillDisciplineLabels(std::vector<std::string> disciplineLabels);
 } // End namespace SBF
 #endif // End !defined DISCIPLINES_H__

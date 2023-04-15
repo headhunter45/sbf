@@ -5,18 +5,18 @@
 
 namespace SBF {
     const int kRankPrimaryId = 1;
-    const std::wstring kRankPrimaryLabel = L"Primary";
+    const std::string kRankPrimaryLabel = "Primary";
     const int kRankSecondaryId = 2;
-    const std::wstring kRankSecondaryLabel = L"Secondary";
+    const std::string kRankSecondaryLabel = "Secondary";
     const int kRankTertiaryId = 3;
-    const std::wstring kRankTertiaryLabel = L"Tertiary";
+    const std::string kRankTertiaryLabel = "Tertiary";
     const int kRanksCount = 3;
     struct RankType {
         int id;
-        std::wstring label;
+        std::string label;
     };
     const RankType kRanks[] {
-        {0, L""},
+        {0, ""},
         {kRankPrimaryId, kRankPrimaryLabel},
         {kRankSecondaryId, kRankSecondaryLabel},
         {kRankTertiaryId, kRankTertiaryLabel},

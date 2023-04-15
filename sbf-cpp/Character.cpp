@@ -2,7 +2,7 @@
 
 namespace SBF {
     
-    using std::wstring;
+    using std::string;
     using std::vector;
 
     int GetNumAttributesInGroup(int groupId) {
@@ -20,18 +20,18 @@ namespace SBF {
 
     CharacterType::CharacterType() {
         // Scalars
-        name = L"";
-        player = L"";
-        chronicle = L"";
-        haven = L"";
-        concept = L"";
-        age = L"";
+        name = "";
+        player = "";
+        chronicle = "";
+        haven = "";
+        concept = "";
+        age = "";
         genderId = 0;
         clanId = 0;
         natureId = 0;
         demeanorId = 0;
         generation = 3;
-        roadName = L"";
+        roadName = "";
         roadValue = 0;
         willpower = 0;
         bloodPool = 0;
@@ -262,7 +262,7 @@ namespace SBF {
         }
     }
 
-    wstring GetAttributeLabel(int attributeGroupId, int attributeId) {
+    string GetAttributeLabel(int attributeGroupId, int attributeId) {
         switch (attributeGroupId) {
             case kAttributeGroupPhysicalId:
                 return kPhysicalAttributeLabels[attributeId];
@@ -271,11 +271,11 @@ namespace SBF {
             case kAttributeGroupMentalId:
                 return kMentalAttributeLabels[attributeId];
             default:
-                return L"";
+                return "";
         }
     }
 
-    void FillAttributeLabelsInGroup(std::vector<wstring> attributeLabels, int attributeGroupId) {
+    void FillAttributeLabelsInGroup(std::vector<string> attributeLabels, int attributeGroupId) {
         attributeLabels.clear();
         switch (attributeGroupId) {
             case kAttributeGroupPhysicalId:
@@ -296,7 +296,7 @@ namespace SBF {
         }
     }
 
-    void FillAttributeAbbreviationsInGroup(std::vector<wstring> attributeAbbreviations, int attributeGroupId) {
+    void FillAttributeAbbreviationsInGroup(std::vector<string> attributeAbbreviations, int attributeGroupId) {
         attributeAbbreviations.clear();
         switch (attributeGroupId) {
             case kAttributeGroupPhysicalId:
@@ -452,40 +452,6 @@ namespace SBF {
         abilityValues.clear();
         for (int abilityId = 0; abilityId <= numAbilities; abilityId++) {
             abilityValues[abilityId] = GetAbilityValue(abilityGroupId, abilityId);
-        }
-    }
-
-    int GetNumItemsForAbilityGroup(int abilityGroupId) {
-        switch (abilityGroupId) {
-            case kAbilityTalentsId:
-                return kTalentsCount;
-            case kAbilitySkillsId:
-                return kSkillsCount;
-            case kAbilityKnowledgesId:
-                return kKnowledgesCount;
-        }
-        return 0;
-    }
-
-    void FillAbilitiesForAbilityGroup(std::vector<wstring> abilities, int abilityGroupId) {
-        abilities.clear();
-        int numAbilities = GetNumItemsForAbilityGroup(abilityGroupId);
-        switch (abilityGroupId) {
-            case kAbilityTalentsId:
-                for (int talentId = 0; talentId <= numAbilities; talentId++) {
-                    abilities[talentId] = kTalents[talentId];
-                }
-                break;
-            case kAbilitySkillsId:
-                for (int skillId = 0; skillId <= numAbilities; skillId++) {
-                    abilities[skillId] = kSkills[skillId];
-                }
-                break;
-            case kAbilityKnowledgesId:
-                for (int knowledgeId = 0; knowledgeId <= numAbilities; knowledgeId++) {
-                    abilities[knowledgeId] = kKnowledges[knowledgeId];
-                }
-                break;
         }
     }
 
@@ -745,20 +711,20 @@ namespace SBF {
         return kBackgroundPoints;
     }
 
-    void NewDerangement(DerangementType& derangement, int id, wstring label, int textColor, wstring description) {
+    void NewDerangement(DerangementType& derangement, int id, string label, int textColor, string description) {
         derangement.id = id;
         derangement.label = label;
         derangement.textColor = textColor;
         derangement.description = description;
     }
 
-    wstring CharacterType::GetAllDerangementsLine() const {
+    string CharacterType::GetAllDerangementsLine() const {
         // TODO: Replace this with a stringstream.
         std::vector<DerangementType> allDerangements;
         FillDerangements(allDerangements);
-        wstring allDerangementsString = L"";
+        string allDerangementsString = "";
         std::for_each(allDerangements.begin(), allDerangements.end(), [&allDerangementsString](DerangementType derangement) {
-            allDerangementsString += derangement.label + L", ";
+            allDerangementsString += derangement.label + ", ";
         });
         return allDerangementsString;
     }

@@ -36,7 +36,7 @@ int set_double_border(WINDOW* screen) {
 
 int main(int argc, char* argv[]) {
     setlocale(LC_ALL, "");
-    wchar_t buffer[255] = {0};
+    char buffer[255] = {0};
     WINDOW* pWindow = nullptr;
     // Load ncurses and initialize stdscr.
     initscr();
@@ -58,17 +58,17 @@ int main(int argc, char* argv[]) {
             // Draw a box around the window with default chars.
             set_double_border(pWindow);
             // Display the event
-            mvwaddwstr(pWindow, 2, 2, L"Resized");
+            mvwaddwstr(pWindow, 2, 2, "Resized");
             // Get the window width and height.
             int width;
             int height;
             getmaxyx(pWindow, height, width);
             // Display the width and height.
-            swprintf(buffer, sizeof(buffer), L"width: %i, height: %i", width, height);
+            swprintf(buffer, sizeof(buffer), "width: %i, height: %i", width, height);
             mvwaddwstr(pWindow, 1, 2, buffer);
         } else {
             // Display the keycode of the key that was pressed in hex and octal.
-            swprintf(buffer, sizeof(buffer), L"0x%04X %04o pressed", key, key);
+            swprintf(buffer, sizeof(buffer), "0x%04X %04o pressed", key, key);
             mvwaddwstr(pWindow,2, 2, buffer);
         }
         wrefresh(pWindow);
