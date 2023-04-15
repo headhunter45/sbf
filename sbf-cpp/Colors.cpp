@@ -4,7 +4,10 @@ namespace SBF {
     
     // TODO: Update these if they're wrong. They should be the initial color pair.
     static uint8_t g_foregroundColor = kColorDarkWhite;
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wunused-variable"
     static uint8_t g_backgroundColor = kColorDarkBlack;
+    #pragma clang diagnostic pop
     static uint16_t g_color;
 
     void SetForegroundColor(uint8_t foregroundColor) {
