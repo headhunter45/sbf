@@ -34,12 +34,25 @@ namespace SBF {
     const uint8_t kColorBrightYellow = 14;
     const uint8_t kColorBrightWhite = 15;
 
-    void SetForegroundColor(uint8_t foregroundColor);
-    uint8_t GetForegroundColor();
-    // TODO: Make this an ncurses color pair
-    uint16_t GetColor();
+    /// @brief Sets the stored foreground color.
+    /// @param color The new foreground color.
+    void SetForegroundColor(uint8_t color);
 
-    void FillColors(std::vector<uint8_t> colors);
+    /// @brief Gets the stored foreground color.
+    /// @return The foreground color.
+    uint8_t GetForegroundColor();
+
+    /// @brief Sets the stored background color.
+    /// @param color The new background color.
+    void SetBackgroundColor(uint8_t color);
+
+    /// @brief Gets the stored background color.
+    /// @return The background color.
+    uint8_t GetBackgroundColor();
+
+    /// @brief Fills the provided vector with all of the possible color values. It will be cleared before filling.
+    /// @param colors The vector to fill.
+    void FillColors(std::vector<uint8_t>& colors);
 } // End namespace SBF
 /** @}*/
 #endif // End !defined COLORS_H__
