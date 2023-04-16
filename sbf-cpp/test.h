@@ -1,5 +1,14 @@
 ﻿#ifndef TEST_H__
 #define TEST_H__
+/***************************************************************************************
+* @file test.h
+*
+* @brief Defines structs and functions for implementing TinyTest.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
+
 #include <cstdint>
 #include <tuple>
 #include <utility>

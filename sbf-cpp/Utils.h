@@ -1,7 +1,18 @@
 #ifndef UTILS_H__
 #define UTILS_H__
+/***************************************************************************************
+* @file Utils.h
+*
+* @brief Defines various utility functions.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <string>
 
+/** \addtogroup Utils
+ * @{
+*/
 namespace SBF {
     using std::string;
 
@@ -13,4 +24,5 @@ namespace SBF {
     string string_dollar(size_t length, char ch);
 
 } // End namespace SBF
+/** @}*/
 #endif // End !defined UTILS_H__

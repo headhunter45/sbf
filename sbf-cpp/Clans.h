@@ -1,8 +1,19 @@
 #ifndef CLANS_H__
 #define CLANS_H__
+/***************************************************************************************
+* @file Clans.h
+*
+* @brief Defines constants and functions for working with clans.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <string>
 #include <vector>
 
+/** \addtogroup Clans
+ * @{
+*/
 namespace SBF {
     const int kClanAnarch = 1;
     const std::string kClanAnarchLabel = "Anarch";
@@ -65,4 +76,5 @@ namespace SBF {
     std::string GetClanLabel(int clanId);
     void FillClanLabels(std::vector<std::string>& clans);
 } // End namespace SBF
+/** @}*/
 #endif // End !defined CLANS_H__

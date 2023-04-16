@@ -1,8 +1,19 @@
 #ifndef COLORS_H__
 #define COLORS_H__
+/***************************************************************************************
+* @file Colors.h
+*
+* @brief Defines constants and functions for working with screen colors.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <cstdint>
 #include <vector>
 
+/** \addtogroup Abilities
+ * @{
+*/
 namespace SBF {
     const uint8_t kColorDarkBlack = 0;
     const uint8_t kColorDarkBlue = 1;
@@ -30,4 +41,5 @@ namespace SBF {
 
     void FillColors(std::vector<uint8_t> colors);
 } // End namespace SBF
+/** @}*/
 #endif // End !defined COLORS_H__

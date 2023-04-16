@@ -1,8 +1,19 @@
 #ifndef GENDERS_H__
 #define GENDERS_H__
+/***************************************************************************************
+* @file Genders.h
+*
+* @brief Defines constants and functions for working with genders.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <string>
 #include <vector>
 
+/** \addtogroup Genders
+ * @{
+*/
 namespace SBF {
     const int kGenderMaleId = 1;
     const std::string kGenderMaleLabel = "Male";
@@ -26,4 +37,5 @@ namespace SBF {
     const std::string& GetGenderLabel(int genderId);
     void FillGenderLabels(std::vector<std::string> genderLabels);
 } // End namespace SBF
+/** @}*/
 #endif // End !defined GENDERS_H__

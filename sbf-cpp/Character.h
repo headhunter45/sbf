@@ -1,5 +1,13 @@
 #ifndef CHARACTER_H__
 #define CHARACTER_H__
+/***************************************************************************************
+* @file Character.h
+*
+* @brief Defines CharacterType.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include "Colors.h"
 #include "Ranks.h"
 #include "Clans.h"
@@ -13,6 +21,9 @@
 #include <cstdint>
 #include <vector>
 
+/** \addtogroup Character
+ * @{
+*/
 namespace SBF {
     int GetDisciplinePoints();
     int GetVirtuePoints();
@@ -151,4 +162,5 @@ namespace SBF {
             int background_status;
     }; // End class CharacterType
 } // End namespace SBF
+/** @}*/
 #endif // !defined CHARACTER_H__

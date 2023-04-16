@@ -1,8 +1,20 @@
 #ifndef DISCIPLINES_H__
 #define DISCIPLINES_H__
+/***************************************************************************************
+* @file Disciplines.h
+*
+* @brief Defines constants and functions for working with disciplines.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
+
 #include <string>
 #include <vector>
 
+/** \addtogroup Disciplines
+ * @{
+*/
 namespace SBF {
     const int kDisciplinePoints = 3;
     const int kDisciplineAnimalismId = 1;
@@ -84,4 +96,5 @@ namespace SBF {
     const std::string GetDisciplineLabel(int disciplineId);
     void FillDisciplineLabels(std::vector<std::string> disciplineLabels);
 } // End namespace SBF
+/** @}*/
 #endif // End !defined DISCIPLINES_H__

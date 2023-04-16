@@ -1,5 +1,14 @@
 #ifndef MENUS_H__
 #define MENUS_H__
+/***************************************************************************************
+* @file Menus.h
+*
+* @brief Defines constants and functions for working with menus.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
+
 namespace SBF {
     struct MenuStyle;
     struct MenuItem;
@@ -8,6 +17,9 @@ namespace SBF {
 #include <string>
 #include <cstdint>
 
+/** \addtogroup Menus
+ * @{
+ */
 namespace SBF {
     using std::string;
 
@@ -47,5 +59,5 @@ namespace SBF {
     void NewMenuItemWithColor(MenuItem& item, string label, int id, uint8_t color);
 
 } // End namespace SBF
-
+/** @}*/
 #endif // !defined MENUS_H__

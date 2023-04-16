@@ -1,9 +1,20 @@
 #ifndef DERANGEMENTS_H__
 #define DERANGEMENTS_H__
 #include "Colors.h"
+/***************************************************************************************
+* @file Derangements.h
+*
+* @brief Defines constants and functions for working with derangements.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <string>
 #include <vector>
 
+/** \addtogroup Derangements
+ * @{
+*/
 namespace SBF {
     struct DerangementType {
         int id;
@@ -173,4 +184,5 @@ namespace SBF {
     const DerangementType& GetDerangement(int derangementId);
     void FillDerangements(std::vector<DerangementType> derangements);
 } // End namespace SBF
+/** @}*/
 #endif // End !defined DERANGEMENTS_H__

@@ -1,8 +1,19 @@
 #ifndef RANKS_H__
 #define RANKS_H__
+/***************************************************************************************
+* @file Ranks.h
+*
+* @brief Defines constants and functions for working with ranks.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <string>
 #include <vector>
 
+/** \addtogroup
+ * @{
+*/
 namespace SBF {
     const int kRankPrimaryId = 1;
     const std::string kRankPrimaryLabel = "Primary";
@@ -24,4 +35,5 @@ namespace SBF {
     const RankType& GetRank(int rankId);
     void FillRanks(std::vector<RankType> ranks);
 } // End namespace SBF
+/** @}*/
 #endif // !defined RANKS_H__

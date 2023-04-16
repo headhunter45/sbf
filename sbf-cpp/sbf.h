@@ -1,8 +1,21 @@
+#ifndef SBF_H__
+#define SBF_H__
+/***************************************************************************************
+* @file sbf.h
+*
+* @brief Holds code copied from the BASIC version that hasn't been relocated yet.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include "Colors.h"
 #include "Menus.h"
 #include "Character.h"
 #include <string>
 
+/** \addtogroup Unsorted
+ * @{
+*/
 namespace SBF {
     using std::string;
 
@@ -809,3 +822,5 @@ End Sub
 
 */
 } // End namespace SBF
+/** #}*/
+#endif // End !defined SBF_H__

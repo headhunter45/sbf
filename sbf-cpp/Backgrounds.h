@@ -1,8 +1,19 @@
 #ifndef BACKGROUNDS_H__
 #define BACKGROUNDS_H__
+/***************************************************************************************
+* @file Backgrounds.h
+*
+* @brief Defines constants and funcions for working with backgrounds.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <string>
 #include <vector>
 
+/** \addtogroup Backgrounds
+ * @{
+*/
 namespace SBF {
     const int kBackgroundPoints = 5;
     const int kBackgroundAlliesId = 1;
@@ -42,4 +53,5 @@ namespace SBF {
     std::string GetBackgroundLabel(int backgroundId);
     void FillBackgroundLabels(std::vector<std::string>& backgroundLabels);
 } // End namespace SBF
+/** @}*/
 #endif // End !defined BACKGROUNDS_H__
