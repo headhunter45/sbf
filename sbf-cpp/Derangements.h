@@ -181,8 +181,11 @@ namespace SBF {
         kDerangementRegression,
     };
 
-    const DerangementType& GetDerangement(int derangementId);
-    void FillDerangements(std::vector<DerangementType> derangements);
+    bool operator==(const DerangementType& left, const DerangementType& right);
+    bool operator!=(const DerangementType& left, const DerangementType& right);
+    std::ostream& operator<<(std::ostream& os, const DerangementType& derangement);
+    DerangementType GetDerangement(int derangementId);
+    void FillDerangements(std::vector<DerangementType>& derangements);
 } // End namespace SBF
 /** @}*/
 #endif // End !defined DERANGEMENTS_H__
