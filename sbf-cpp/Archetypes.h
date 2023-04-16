@@ -99,7 +99,7 @@ namespace SBF {
         kArchetypeVisionaryLabel,
     };
 
-    const std::string& GetArchetypeLabel(int archetypeId);
-    void FillArchetypeLabels(std::vector<std::string> archetypeLabels);
+    std::string GetArchetypeLabel(int archetypeId);
+    void FillArchetypeLabels(std::vector<std::string>& archetypeLabels);
 } // End namespace SBF
 #endif // End !defined ARCHETYPES_H__
