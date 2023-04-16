@@ -39,7 +39,7 @@ namespace SBF {
         kBackgroundRetainersLabel,
         kBackgroundStatusLabel,
     };
-    const std::string& GetBackgroundLabel(int backgroundId);
-    void FillBackgroundLabels(std::vector<std::string> backgroundLabels);
+    std::string GetBackgroundLabel(int backgroundId);
+    void FillBackgroundLabels(std::vector<std::string>& backgroundLabels);
 } // End namespace SBF
 #endif // End !defined BACKGROUNDS_H__
