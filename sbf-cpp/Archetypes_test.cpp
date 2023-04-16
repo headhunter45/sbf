@@ -27,7 +27,7 @@ namespace Test::Archetypes {
             "SBF::GetArchetypeLabel",
             GetArchetypeLabel,
             vector<TestTuple<string, int>>({
-                                make_test<string, int>(
+                make_test<string, int>(
                     "should return \"\" for id 0",
                     "",
                     make_tuple(0)),
