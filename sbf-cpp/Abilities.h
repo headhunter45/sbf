@@ -152,6 +152,12 @@ namespace SBF {
     /// @return True if left is equal to right and false otherwise.
     bool operator==(const AbilityType& left, const AbilityType& right);
 
+    /// @brief This function compares two AbilityType values for equality.
+    /// @param left The first AbilityType.
+    /// @param right The second AbilityType.
+    /// @return True if left and right are not equal and false otherwise.
+    bool operator!=(const AbilityType& left, const AbilityType& right);
+
     /// @brief Fills the provided vector with all of the available ability groups.
     /// @param abilities The vector to fill. It will be cleared before filling.
     void FillAbilities(std::vector<AbilityType>& abilities);

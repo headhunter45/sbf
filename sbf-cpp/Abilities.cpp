@@ -20,6 +20,10 @@ namespace SBF {
                left.plural == right.plural;
     }
 
+    bool operator!=(const AbilityType& left, const AbilityType& right) {
+        return !(left == right);
+    }
+
     void FillAbilities(vector<AbilityType>& abilities) {
         abilities.clear();
         abilities.push_back(kAbilityGroupTalents);

@@ -99,33 +99,51 @@ namespace Test::Abilities {
                 })
             ));
     }
+
+    TestResults test_AbilityType_operator_not_equal_to() {
+        return execute_suite<bool, AbilityType, AbilityType>(
+            make_test_suite(
+                "SBF::AbilityType::operator!=",
+                [](const AbilityType& left, const AbilityType& right) {
+                    return left != right;
+                },
+                vector<TestTuple<bool, AbilityType, AbilityType>>({
+                    make_test<bool, AbilityType, AbilityType>(
+                        "should return false when comparing an ability group to itself",
+                        false,
+                        make_tuple(kAbilityGroupTalents, kAbilityGroupTalents)),
+                    make_test<bool, AbilityType, AbilityType>(
+                        "should return false when comparing two different instances created with the same values",
+                        false,
+                        make_tuple(kAbilityGroupSkills, AbilityType({kAbilitySkillsId, kAbilitySkillsSingular, kAbilitySkillsPlural}))),
+                    make_test<bool, AbilityType, AbilityType>(
+                        "should return true when comparing two different ability gropus",
+                        true,
+                        make_tuple(kAbilityGroupKnowledges, kAbilityGroupSkills)),
+                })
+            ));
+    }
     
     TestResults test_FillAbilities() {
         return execute_suite<string>(
             make_test_suite(
                 "SBF::FillAbilities",
-                []() {
+                []()->string {
                     ostringstream error_message;
-                    vector<AbilityType> actual;
+                    vector<AbilityType> actual = {{-1, "This should be removed.", "This should be removed."}};
+                    vector<AbilityType> expected = {kAbilityGroupTalents, kAbilityGroupSkills, kAbilityGroupKnowledges};
                     FillAbilities(actual);
-                    if (actual.size() != 3) {
-                        error_message << "size != 3 actually, and was " << actual.size();
+                    compare(error_message, expected, actual);
+                    string error = error_message.str();
+                    if (error.size() > 0) {
+                        return error;
                     }
-                    if (!error_message.str().size() && !(actual[0] == kAbilityGroupTalents)) {
-                        error_message << "group 0 != talents, and was " << actual[0];
-                    }
-                    if (!error_message.str().size() && !(actual[1] == kAbilityGroupSkills)) {
-                        error_message << "group 1 != skills, and was " << actual[1];
-                    }
-                    if (!error_message.str().size() && !(actual[2] == kAbilityGroupKnowledges)) {
-                        error_message << "group 2 != knowledges, and was " << actual[2];
-                    }
-                    return error_message.str();
+                    return "no errors";
                 },
                 vector<TestTuple<string>>({
                     make_test<string>(
                         "should fill abilities",
-                        "",
+                        "no errors",
                         make_tuple()),
                 })
             ));
@@ -136,7 +154,7 @@ namespace Test::Abilities {
             make_test_suite(
                 "SBF::FillAbilitiesForAbilityGroup",
                 [](int groupId) {
-                    vector<string> abilities = {"This should be removed"};
+                    vector<string> abilities = {"This should be removed."};
                     FillAbilitiesForAbilityGroup(abilities, groupId);
                     return abilities;
                 },
@@ -170,7 +188,7 @@ namespace Test::Abilities {
             make_test_suite(
                 "SBF::FillAbilityLabels",
                 [](int groupId) {
-                    vector<string> abilities = {"This should be removed"};
+                    vector<string> abilities = {"This should be removed."};
                     FillAbilityLabels(abilities, groupId);
                     return abilities;
                 },
@@ -203,22 +221,22 @@ namespace Test::Abilities {
         return execute_suite<string>(
             make_test_suite(
                 "SBF::FillKnowlegeLabels",
-                []() {
+                []()->string {
                     ostringstream error_message;
-                    vector<string> actual = {"This should be removed"};
+                    vector<string> actual = {"This should be removed."};
+                    vector<string> expected = {"", "Bureaucracy", "Computer", "Finance", "Investigation", "Law", "Linguistics", "Medicine", "Occult", "Politics", "Science"};
                     FillKnowledgeLabels(actual);
-                    if (actual.size() != 11) {
-                        error_message << "size != 11 actually, and was " << actual.size();
+                    compare(error_message, expected, actual);
+                    string error = error_message.str();
+                    if (error.size() > 0) {
+                        return error;
                     }
-                    if (!error_message.str().size() && !(actual == vector<string>({"", "Bureaucracy", "Computer", "Finance", "Investigation", "Law", "Linguistics", "Medicine", "Occult", "Politics", "Science"}))) {
-                        error_message << "group 0 != talents, and was " << actual[0];
-                    }
-                    return error_message.str();
+                    return "no errors";
                 },
                 vector<TestTuple<string>>({
                     make_test<string>(
                         "should fill knowledge labels",
-                        "",
+                        "no errors",
                         make_tuple()),
                 })
             ));
@@ -228,22 +246,22 @@ namespace Test::Abilities {
         return execute_suite<string>(
             make_test_suite(
                 "SBF::FillSkillLabels",
-                []() {
+                []()->string {
                     ostringstream error_message;
-                    vector<string> actual = {"This should be removed"};
+                    vector<string> actual = {"This should be removed."};
+                    vector<string> expected = {"", "Animal Ken", "Drive", "Etiquette", "Firearms", "Melee", "Music", "Repair", "Security", "Stealth", "Survival"};
                     FillSkillLabels(actual);
-                    if (actual.size() != 11) {
-                        error_message << "size != 11 actually, and was " << actual.size();
+                    compare(error_message, expected, actual);
+                    string error = error_message.str();
+                    if (error.size() > 0) {
+                        return error;
                     }
-                    if (!error_message.str().size() && !(actual == vector<string>({"", "Animal Ken", "Drive", "Etiquette", "Firearms", "Melee", "Music", "Repair", "Security", "Stealth", "Survival"}))) {
-                        error_message << "group 0 != talents, and was " << actual[0];
-                    }
-                    return error_message.str();
+                    return "no errors";
                 },
                 vector<TestTuple<string>>({
                     make_test<string>(
                         "should fill skill labels",
-                        "",
+                        "no errors",
                         make_tuple()),
                 })
             ));
@@ -253,22 +271,22 @@ namespace Test::Abilities {
         return execute_suite<string>(
             make_test_suite(
                 "SBF::FillTalentLabels",
-                []() {
+                []()->string {
                     ostringstream error_message;
-                    vector<string> actual = {"This should be removed"};
+                    vector<string> actual = {"This should be removed."};
+                    vector<string> expected = {"", "Acting", "Alertness", "Athletics", "Brawl", "Dodge", "Empathy", "Intimidation", "Leadership", "Streetwise", "Subterfuge"};
                     FillTalentLabels(actual);
-                    if (actual.size() != 11) {
-                        error_message << "size != 11 actually, and was " << actual.size();
+                    compare(error_message, expected, actual);
+                    string error = error_message.str();
+                    if (error.size() > 0) {
+                        return error;
                     }
-                    if (!error_message.str().size() && !(actual == vector<string>({"", "Acting", "Alertness", "Athletics", "Brawl", "Dodge", "Empathy", "Intimidation", "Leadership", "Streetwise", "Subterfuge"}))) {
-                        error_message << "group 0 != talents, and was " << actual[0];
-                    }
-                    return error_message.str();
+                    return "no errors";
                 },
                 vector<TestTuple<string>>({
                     make_test<string>(
                         "should fill knowledge labels",
-                        "",
+                        "no errors",
                         make_tuple()),
                 })
             ));
