@@ -41,6 +41,25 @@ auto& operator<<(std::basic_ostream<TChar, TTraits>& os, std::vector<TItem> v) {
     return os;
 }
 
+template<typename TChar, typename TTraits, typename TItem>
+auto& compare(std::basic_ostream<TChar, TTraits>& error_message, std::vector<TItem> expected, std::vector<TItem> actual) {
+    if (expected.size() != actual.size()) {
+        error_message << "size mismatch expected: " << expected.size() << ", actual: " << actual.size();
+        return error_message;
+    }
+
+    for (size_t index = 0; index < expected.size(); index++) {
+        if (expected[index] != actual[index]) {
+            error_message << "vectors differ at index " << index
+                << ", \"" << expected[index] << "\" != \"" << actual[index]
+                << "\", expected: " << expected
+                << ", actual: " << actual;
+            return error_message;
+        }
+    }
+    return error_message;
+}
+
 namespace Test {
     using std::tuple;
     using std::pair;
