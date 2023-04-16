@@ -41,7 +41,7 @@ namespace SBF {
     const int kClanVentrue = 18;
     const std::string kClanVentrueLabel = "Ventrue";
     const int kClansCount = 18;
-    const std::string kClans[] = {
+    const std::string kClanLabels[] = {
         "",
         kClanAnarchLabel,
         kClanAssamiteLabel,
@@ -49,6 +49,7 @@ namespace SBF {
         kClanBrujahLabel,
         kClanCaitiffLabel,
         kClanCappadocianLabel,
+        kClanGangrelLabel,
         kClanGiovanniLabel,
         kClanInconnuLabel,
         kClanLasombraLabel,
@@ -58,9 +59,10 @@ namespace SBF {
         kClanSettiteLabel,
         kClanToreadorLabel,
         kClanTremereLabel,
+        kClanTzismiceLabel,
         kClanVentrueLabel,
     };
-    const std::string& GetClanLabel(int clanId);
-    void FillClanLabels(std::vector<std::string> clans);
+    std::string GetClanLabel(int clanId);
+    void FillClanLabels(std::vector<std::string>& clans);
 } // End namespace SBF
 #endif // End !defined CLANS_H__
