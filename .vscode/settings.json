@@ -84,6 +84,7 @@
         "algorithm": "cpp",
         "__verbose_abort": "cpp",
         "thread": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "filesystem": "cpp"
     }
 }
