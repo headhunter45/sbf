@@ -9,6 +9,7 @@ using namespace std;
 namespace Test::Abilities {
     TestResults test_AbilityType_operator_extract();
     TestResults test_AbilityType_operator_equal_to();
+    TestResults test_AbilityType_operator_not_equal_to();
     TestResults test_FillAbilities();
     TestResults test_FillAbilitiesForAbilityGroup();
     TestResults test_FillAbilityLabels();
@@ -29,6 +30,7 @@ TestResults main_test_Abilities(int argc, char** argv) {
 
     results += test_AbilityType_operator_extract();
     results += test_AbilityType_operator_equal_to();
+    results += test_AbilityType_operator_not_equal_to();
     results += test_FillAbilities();
     results += test_FillAbilitiesForAbilityGroup();
     results += test_FillAbilityLabels();
