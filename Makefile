@@ -57,10 +57,11 @@ endif
 COMMA = ,
 EMPTY = 
 SPACE = $(EMPTY) $(EMPTY)
+DOCS_DIR = $(BUILD_DIR)/docs
 
 MANDATORY_TARGETS = Makefile
 
-.Phony: all clean app test run_all_tests run_incremental_tests targets
+.Phony: all clean app test run_all_tests run_incremental_tests targets docs read-docs
 
 all: $(patsubst %, $(BUILD_DIR)/%, $(APPS)) app 
 
@@ -88,6 +89,14 @@ targets:
 	@echo "  app           - Builds the app bundle $(BUNDLENAME). This also indirectly builds $(CLIAPPNAME)."
 	@echo "  test          - Does an incremental build and runs all tests."
 	@echo "  run_all_tests - Does a clean and rebuild then runs all tests."
+	@echo "  docs          - Generates documentation in the $(DOCS_DIR)"
+	@echo "  read-docs     - Opens the index.html file in your default browser. Builds the documentation if necessary."
+
+docs: Doxyfile $(wildcard **/*.h) $(MANDATORY_TARGETS)
+	@doxygen Doxyfile
+
+read-docs: docs
+	@open build/docs/html/index.html
 
 $(BUILD_DIR)/_test:
 	@echo "You need to define MODULE when you run make run_test."
