@@ -1,8 +1,20 @@
 #ifndef ABILITIES_H__
 #define ABILITIES_H__
+/***************************************************************************************
+* @file Abilities.h
+*
+* @brief Defines AbiiltyType, ability and ability group constants, and ability and
+* ability group functions.
+* @copyright
+* Copyright 2023 Tom Hicks
+* Licensed under the MIT license see the LICENSE file for details.
+***************************************************************************************/
 #include <string>
 #include <vector>
 
+/** \addtogroup Abilities 
+ * @{
+*/
 namespace SBF {
     const int kAbilityTalentsId = 1;
     const std::string kAbilityTalentsSingular = "Talent";
@@ -158,30 +170,30 @@ namespace SBF {
     /// @return True if left and right are not equal and false otherwise.
     bool operator!=(const AbilityType& left, const AbilityType& right);
 
-    /// @brief Fills the provided vector with all of the available ability groups.
-    /// @param abilities The vector to fill. It will be cleared before filling.
+    /// @brief Fills the provided vector with all of the available ability groups. It will be cleared before filling.
+    /// @param abilities The vector to fill.
     void FillAbilities(std::vector<AbilityType>& abilities);
 
-    /// @brief Fills the provided vector with all of the ability labels in the specified group.
-    /// @param abilities The vector to fill. It will be cleared before filling.
+    /// @brief Fills the provided vector with all of the ability labels in the specified group. It will be cleared before filling.
+    /// @param abilities The vector to fill.
     /// @param abilityGroupId The id of the ability group to fill for.
     void FillAbilitiesForAbilityGroup(std::vector<std::string>& abilities, int abilityGroupId);
 
-    /// @brief Fills the provided vector with all of the ability labels in the specified group.
-    /// @param labels The vector to fill. It will be cleared before filling.
+    /// @brief Fills the provided vector with all of the ability labels in the specified group. It will be cleared before filling.
+    /// @param labels The vector to fill.
     /// @param abilityGroupId The id of the ability group to fill for.
     void FillAbilityLabels(std::vector<std::string>& labels, int abilityGroupId);
 
-    /// @brief Fills the provided vector with all of the knowledge labels.
-    /// @param knowledgeLabels The vector to fill. It will be cleared before filling.
+    /// @brief Fills the provided vector with all of the knowledge labels. It will be cleared before filling.
+    /// @param knowledgeLabels The vector to fill.
     void FillKnowledgeLabels(std::vector<std::string>& knowledgeLabels);
 
-    /// @brief Fills the provided vector with all of the skill labels.
-    /// @param skillLabels The vector to fill. It will be cleared before filling.
+    /// @brief Fills the provided vector with all of the skill labels. It will be cleared before filling.
+    /// @param skillLabels The vector to fill.
     void FillSkillLabels(std::vector<std::string>& skillLabels);
 
-    /// @brief Fills the provided vector with all of the talent labels.
-    /// @param talentLabels The vector to fill. It will be cleared before filling.
+    /// @brief Fills the provided vector with all of the talent labels. It will be cleared before filling.
+    /// @param talentLabels The vector to fill.
     void FillTalentLabels(std::vector<std::string>& talentLabels);
 
     /// @brief Gets an ability group for a given id.
@@ -215,4 +227,5 @@ namespace SBF {
     /// @return The label for the specific ability.
     const std::string GetTalentLabel(int talentId);
 } // End namespace SBF
+/** @}*/
 #endif // End !defined ABILITIES_H__
