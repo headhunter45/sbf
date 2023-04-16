@@ -20,7 +20,7 @@ namespace SBF {
         kPhysicalAttributeDexterityLabel,
         kPhysicalAttributeStaminaLabel,
     };
-    const std::string kPhysicalAttributeAbbreviations[] = {
+    const std::string kPhysicalAttributeLabelAbbreviations[] = {
         "",
         kPhysicalAttributeStrengthAbbreviation,
         kPhysicalAttributeDexterityAbbreviation,
@@ -43,7 +43,7 @@ namespace SBF {
         kSocialAttributeManipulationLabel,
         kSocialAttributeAppearanceLabel,
     };
-    const std::string kSocialAttributeAbbreviations[] = {
+    const std::string kSocialAttributeLabelAbbreviations[] = {
         "",
         kSocialAttributeCharismaAbbreviation,
         kSocialAttributeManipulationAbbreviation,
@@ -66,9 +66,9 @@ namespace SBF {
         kMentalAttributePerceptionLabel,
         kMentalAttributeWitsLabel,
     };
-    const std::string kMentalAttributeAbbreviations[] = {
+    const std::string kMentalAttributeLabelAbbreviations[] = {
         "",
-        kMentalAttributeIntelligenceLabel,
+        kMentalAttributeIntelligenceAbbreviation,
         kMentalAttributePerceptionAbbreviation,
         kMentalAttributeWitsAbbreviation,
     };
@@ -87,15 +87,20 @@ namespace SBF {
         kAttributeGroupMentalLabel,
     };
 
-    const std::string& GetAttributeGroupLabel(int attributeGroupId);
-    const std::string& GetAtttributeLabel(int attributeGroupId, int attributeId);
-    const std::string& GetPhysicalAttributeLabel(int attributeId);
-    const std::string& GetSocialAttributeLabel(int attributeId);
-    const std::string& GetMentalAttributeLabel(int attributeId);
-    void FillAttributeGroupLabels(std::vector<std::string> attributeGroupLabels);
-    void FillAttributeLabelInGroup(std::vector<std::string> attributeLabels);
-    void FillPhysicalAttributeLabels(std::vector<std::string> physicalAttributeLabels);
-    void FillSocialAttributeLabels(std::vector<std::string> socialAttributeLabels);
-    void FillMentalAttributeLabels(std::vector<std::string> mentalAttributeLabels);
+    std::string GetAttributeGroupLabel(int attributeGroupId);
+    std::string GetAttributeLabel(int attributeGroupId, int attributeId);
+    std::string GetAttributeLabelAbbreviation(int attributeGroupId, int attributeId);
+    std::string GetPhysicalAttributeLabel(int attributeId);
+    std::string GetPhysicalAttributeLabelAbbreviation(int attributeId);
+    int GetNumAttributesInGroup(int attributeGroupId);
+    std::string GetSocialAttributeLabel(int attributeId);
+    std::string GetSocialAttributeLabelAbbreviation(int attributeId);
+    std::string GetMentalAttributeLabel(int attributeId);
+    std::string GetMentalAttributeLabelAbbreviation(int attributeId);
+    void FillAttributeGroupLabels(std::vector<std::string>& attributeGroupLabels);
+    void FillAttributeLabelsInGroup(std::vector<std::string>& attributeLabels, int groupId);
+    void FillPhysicalAttributeLabels(std::vector<std::string>& physicalAttributeLabels);
+    void FillSocialAttributeLabels(std::vector<std::string>& socialAttributeLabels);
+    void FillMentalAttributeLabels(std::vector<std::string>& mentalAttributeLabels);
 } // End namespace SBF
 #endif // End !defined ATTRIBUTES_H__

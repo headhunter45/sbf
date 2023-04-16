@@ -5,19 +5,6 @@ namespace SBF {
     using std::string;
     using std::vector;
 
-    int GetNumAttributesInGroup(int groupId) {
-        switch (groupId) {
-            case kAttributeGroupPhysicalId:
-                return kPhysicalAttributesCount;
-            case kAttributeGroupSocialId:
-                return kSocialAttributesCount;
-            case kAttributeGroupMentalId:
-                return kMentalAttributesCount;
-            default:
-                return 0;
-        }
-    }
-
     CharacterType::CharacterType() {
         // Scalars
         name = "";
@@ -262,19 +249,6 @@ namespace SBF {
         }
     }
 
-    string GetAttributeLabel(int attributeGroupId, int attributeId) {
-        switch (attributeGroupId) {
-            case kAttributeGroupPhysicalId:
-                return kPhysicalAttributeLabels[attributeId];
-            case kAttributeGroupSocialId:
-                return kSocialAttributeLabels[attributeId];
-            case kAttributeGroupMentalId:
-                return kMentalAttributeLabels[attributeId];
-            default:
-                return "";
-        }
-    }
-
     void FillAttributeLabelsInGroup(std::vector<string> attributeLabels, int attributeGroupId) {
         attributeLabels.clear();
         switch (attributeGroupId) {
@@ -301,17 +275,17 @@ namespace SBF {
         switch (attributeGroupId) {
             case kAttributeGroupPhysicalId:
                 for (int attributeId = 0; attributeId <= kPhysicalAttributesCount; attributeId++) {
-                    attributeAbbreviations[attributeId] = kPhysicalAttributeAbbreviations[attributeId];
+                    attributeAbbreviations[attributeId] = kPhysicalAttributeLabelAbbreviations[attributeId];
                 }
                 break;
             case kAttributeGroupSocialId:
                 for (int attributeId = 0; attributeId <= kSocialAttributesCount; attributeId++) {
-                    attributeAbbreviations[attributeId] = kSocialAttributeAbbreviations[attributeId];
+                    attributeAbbreviations[attributeId] = kSocialAttributeLabelAbbreviations[attributeId];
                 }
                 break;
             case kAttributeGroupMentalId:
                 for (int attributeId = 0; attributeId <= kMentalAttributesCount; attributeId++) {
-                    attributeAbbreviations[attributeId] = kMentalAttributeAbbreviations[attributeId];
+                    attributeAbbreviations[attributeId] = kMentalAttributeLabelAbbreviations[attributeId];
                 }
                 break;
         }
