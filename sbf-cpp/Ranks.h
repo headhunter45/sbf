@@ -22,18 +22,29 @@ namespace SBF {
     const int kRankTertiaryId = 3;
     const std::string kRankTertiaryLabel = "Tertiary";
     const int kRanksCount = 3;
+
     struct RankType {
         int id;
         std::string label;
     };
+
+    const RankType kRankPrimary = {kRankPrimaryId, kRankPrimaryLabel};
+    const RankType kRankSecondary = {kRankSecondaryId, kRankSecondaryLabel};
+    const RankType kRankTertiary = {kRankTertiaryId, kRankTertiaryLabel};
+    const RankType kRankUnknown = {0, ""};
+
     const RankType kRanks[] {
-        {0, ""},
-        {kRankPrimaryId, kRankPrimaryLabel},
-        {kRankSecondaryId, kRankSecondaryLabel},
-        {kRankTertiaryId, kRankTertiaryLabel},
+        kRankUnknown,
+        kRankPrimary,
+        kRankSecondary,
+        kRankTertiary,
     };
-    const RankType& GetRank(int rankId);
-    void FillRanks(std::vector<RankType> ranks);
+
+    std::ostream& operator<<(std::ostream& os, const RankType& abilityGroup);
+    bool operator==(const RankType& left, const RankType& right);
+    bool operator!=(const RankType& left, const RankType& right);
+    RankType GetRank(int rankId);
+    void FillRanks(std::vector<RankType>& ranks);
 } // End namespace SBF
 /** @}*/
 #endif // !defined RANKS_H__
