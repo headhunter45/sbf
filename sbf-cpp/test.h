@@ -61,8 +61,8 @@ auto& compare(std::basic_ostream<TChar, TTraits>& error_message, std::vector<TIt
         if (expected[index] != actual[index]) {
             error_message << "vectors differ at index " << index
                 << ", \"" << expected[index] << "\" != \"" << actual[index]
-                << "\", expected: " << expected
-                << ", actual: " << actual;
+                << "\", expected: \"" << expected
+                << "\", actual: \"" << actual << "\"";
             return error_message;
         }
     }
@@ -335,7 +335,7 @@ namespace Test {
                 results.error("🔥ERROR: " + qualified_test_name + " " + os.str());
                 std::cout << "    🔥ERROR: " << os.str() << std::endl;
             } catch(...) {
-                string message = "Caught something that is neither an std::exception nor a std::string.";
+                string message = "Caught something that is neither an std::exception nor an std::string.";
                 results.error("🔥ERROR: " + qualified_test_name + " " + message);
                 std::cout << "    🔥ERROR: " << message << std::endl;
             }
@@ -346,7 +346,7 @@ namespace Test {
                 std::cout << "    ✅PASSED" << std::endl;
             } else {
                 std::ostringstream os;
-                os << "expected: " << expected_output << ", actual: " << actual;
+                os << "expected: \"" << expected_output << "\", actual: \"" << actual << "\"";
                 results.fail("❌FAILED: " + qualified_test_name + " " + os.str());
                 std::cout << "    ❌FAILED: " << os.str() << std::endl;
             }
