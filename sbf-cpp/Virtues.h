@@ -33,11 +33,11 @@ namespace SBF {
     
     /// @brief Gets the label for virtue with the specified id.
     /// @param virtue_id The id of the virtue to find.
-    /// @return The label for the specified virtue.
+    /// @return The label for the specified virtue or an empty string if virtue_id is invalid.
     const std::string GetVirtueLabel(int virtue_id);
 
     /// @brief Fills the vector with all of the valid virtue labels.
-    /// @param virtue_labels The vector to fill.
+    /// @param virtue_labels The vector to fill. It will be cleared first.
     void FillVirtueLabels(std::vector<std::string>& virtue_labels);
 } // End namespace SBF
 /** @}*/

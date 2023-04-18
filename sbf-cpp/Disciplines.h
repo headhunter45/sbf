@@ -93,8 +93,15 @@ namespace SBF {
         kDisciplineThaumaturgyLabel,
         kDisciplineVicissitudeLabel,
     };
-    std::string GetDisciplineLabel(int disciplineId);
-    void FillDisciplineLabels(std::vector<std::string>& disciplineLabels);
+
+    /// @brief Gets the label for a discipline with a specific id.
+    /// @param discipline_id The id of the discipline to get the label for.
+    /// @return The label of the discipline or an empty string if discipline_id is invalid.
+    std::string GetDisciplineLabel(int discipline_id);
+
+    /// @brief Fills the provided vector with all of the valid discipline labels.
+    /// @param discipline_labels The vector to fill. It will be cleared first.
+    void FillDisciplineLabels(std::vector<std::string>& discipline_labels);
 } // End namespace SBF
 /** @}*/
 #endif // End !defined DISCIPLINES_H__

@@ -63,6 +63,7 @@ namespace SBF {
     const uint8_t kDerangementRegressionTextColor= kColorBrightYellow;
     const std::string kDerangementRegressionLabel = "Regression";
     const std::string kDerangementRegressionDescription = R"---(You become childlike retreating to an earlier time when less was expected of you Willpower is regained inthe way a Child's is.)---";
+    const DerangementType kDerangementUnknown = {0, "", "", 0};
     const DerangementType kDerangementAmnesia = {
         kDerangementAmnesiaId,
         kDerangementAmnesiaLabel,
@@ -181,10 +182,31 @@ namespace SBF {
         kDerangementRegression,
     };
 
+    /// @brief Determines the equality of two derangements.
+    /// @param left A derangement to compare.
+    /// @param right A derangement to compare.
+    /// @return True if the derangements are equal and false otherwise.
     bool operator==(const DerangementType& left, const DerangementType& right);
+
+    /// @brief Determines the inequality of two derangements.
+    /// @param left A derangement to compare.
+    /// @param right A derangement to compare.
+    /// @return Tre if the derangements are unequal and false otherwise.
     bool operator!=(const DerangementType& left, const DerangementType& right);
+
+    /// @brief Writes a derangement to an ostream.
+    /// @param os The ostream to write to.
+    /// @param derangement The derangement to write.
+    /// @return The provided ostream for chaining.
     std::ostream& operator<<(std::ostream& os, const DerangementType& derangement);
-    DerangementType GetDerangement(int derangementId);
+
+    /// @brief Gets the derangement with a specific id.
+    /// @param derangement_id The id of the derangement to get.
+    /// @return The derangement with an id of derangement_id or kDerangementUnknown if derangement_id is invalid.
+    DerangementType GetDerangement(int derangement_id);
+
+    /// @brief Fills the provided vector with all valid derangements.
+    /// @param derangements The vector to fill. It will be emptied first.
     void FillDerangements(std::vector<DerangementType>& derangements);
 } // End namespace SBF
 /** @}*/

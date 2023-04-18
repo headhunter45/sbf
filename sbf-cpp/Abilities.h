@@ -47,6 +47,8 @@ namespace SBF {
         kAbilityGroupKnowledges,
     };
 
+    const std::string kAbilityUnknownLabel = "";
+
     const int kTalentActingId = 1;
     const std::string kTalentActingLabel = "Acting";
     const int kTalentAlertnessId = 2;
@@ -69,7 +71,7 @@ namespace SBF {
     const std::string kTalentSubterfugeLabel = "Subterfuge";
     const int kTalentsCount = 10;
     const std::string kTalents[] = {
-        "",
+        kAbilityUnknownLabel,
         kTalentActingLabel,
         kTalentAlertnessLabel,
         kTalentAthleticsLabel,
@@ -104,7 +106,7 @@ namespace SBF {
     const std::string kSkillSurvivalLabel = "Survival";
     const int kSkillsCount = 10;
     const std::string kSkills[] = {
-        "",
+        kAbilityUnknownLabel,
         kSkillAnimalKenLabel,
         kSkillDriveLabel,
         kSkillEtiquetteLabel,
@@ -139,7 +141,7 @@ namespace SBF {
     const std::string kKnowledgeScienceLabel = "Science";
     const int kKnowledgesCount = 10;
     const std::string kKnowledges[] = {
-        "",
+        kAbilityUnknownLabel,
         kKnowledgeBureaucracyLabel,
         kKnowledgeComputerLabel,
         kKnowledgeFinanceLabel,
@@ -154,9 +156,9 @@ namespace SBF {
 
     /// @brief This function writes an AbilityType value to an output stream;
     /// @param os The output stream to write to.
-    /// @param abilityGroup The AbilityType to write.
+    /// @param group The AbilityType to write.
     /// @return Thw output stream for chaining.
-    std::ostream& operator<<(std::ostream& os, const AbilityType& abilityGroup);
+    std::ostream& operator<<(std::ostream& os, const AbilityType& group);
 
     /// @brief This function compares two AbilityType values for equality.
     /// @param left The first AbilityType.
@@ -176,56 +178,56 @@ namespace SBF {
 
     /// @brief Fills the provided vector with all of the ability labels in the specified group. It will be cleared before filling.
     /// @param abilities The vector to fill.
-    /// @param abilityGroupId The id of the ability group to fill for.
-    void FillAbilitiesForAbilityGroup(std::vector<std::string>& abilities, int abilityGroupId);
+    /// @param id The id of the ability group to fill for.
+    void FillAbilitiesForAbilityGroup(std::vector<std::string>& abilities, int id);
 
     /// @brief Fills the provided vector with all of the ability labels in the specified group. It will be cleared before filling.
     /// @param labels The vector to fill.
-    /// @param abilityGroupId The id of the ability group to fill for.
-    void FillAbilityLabels(std::vector<std::string>& labels, int abilityGroupId);
+    /// @param id The id of the ability group to fill for.
+    void FillAbilityLabels(std::vector<std::string>& labels, int id);
 
     /// @brief Fills the provided vector with all of the knowledge labels. It will be cleared before filling.
-    /// @param knowledgeLabels The vector to fill.
-    void FillKnowledgeLabels(std::vector<std::string>& knowledgeLabels);
+    /// @param labels The vector to fill.
+    void FillKnowledgeLabels(std::vector<std::string>& labels);
 
     /// @brief Fills the provided vector with all of the skill labels. It will be cleared before filling.
-    /// @param skillLabels The vector to fill.
-    void FillSkillLabels(std::vector<std::string>& skillLabels);
+    /// @param labels The vector to fill.
+    void FillSkillLabels(std::vector<std::string>& labels);
 
     /// @brief Fills the provided vector with all of the talent labels. It will be cleared before filling.
-    /// @param talentLabels The vector to fill.
-    void FillTalentLabels(std::vector<std::string>& talentLabels);
+    /// @param labels The vector to fill.
+    void FillTalentLabels(std::vector<std::string>& labels);
 
     /// @brief Gets an ability group for a given id.
-    /// @param abilityGroupId The id of the ability group to return.
-    /// @return The ability group with an id of abilityGroupId.
-    const AbilityType& GetAbility(int abilityGroupId);
+    /// @param id The id of the ability group to return.
+    /// @return The ability group with an id of id or kAbilityGroupUnknown if id is invalid.
+    const AbilityType& GetAbility(int id);
 
     /// @brief Gets the label for an ability given its ability group (talents/skills/knowledges) and its id (acting, brawl, dodge, ...).
-    /// @param abilityGroupId The id for the ability group (talents/skills/knowledges).
-    /// @param abilityId The id for the ability within the ability group (acting, dodge, brawl, ...).
+    /// @param group_id The id for the ability group (talents/skills/knowledges).
+    /// @param id The id for the ability within the ability group (acting, dodge, brawl, ...).
     /// @return The label for the specific ability ("Acting").
-    const std::string GetAbilityLabel(int abilityGroupId, int abilityId);
+    const std::string GetAbilityLabel(int group_id, int id);
 
     /// @brief Gets the label for a knowledge ability given its id.
-    /// @param knowledgeId The id of the ability to return the label for.
+    /// @param id The id of the ability to return the label for.
     /// @return The label for the specific ability.
-    const std::string GetKnowledgeLabel(int talentId);
+    const std::string GetKnowledgeLabel(int id);
 
     /// @brief Gets the number of abilities in an ability group.
-    /// @param abilityGroupId The id of the ability group to return the number of abilities for.
+    /// @param id The id of the ability group to return the number of abilities for.
     /// @return The number of abilities in the specific ability group.
-    int GetNumItemsForAbilityGroup(int abilityGroupId);
+    int GetNumItemsForAbilityGroup(int id);
 
     /// @brief Gets the label for a skill ability given its id. 
-    /// @param talentId The id of the ability to return the label for.
+    /// @param id The id of the ability to return the label for.
     /// @return The label of the specific ability.
-    const std::string GetSkillLabel(int talentId);
+    const std::string GetSkillLabel(int id);
 
     /// @brief Gets the label for a talent ability given its id.
-    /// @param talentId The id of the ability to return.
+    /// @param id The id of the ability to return.
     /// @return The label for the specific ability.
-    const std::string GetTalentLabel(int talentId);
+    const std::string GetTalentLabel(int id);
 } // End namespace SBF
 /** @}*/
 #endif // End !defined ABILITIES_H__

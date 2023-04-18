@@ -7,10 +7,10 @@ namespace SBF {
     using std::ostream;
     using std::vector;
 
-    ostream& operator<<(ostream& os, const AbilityType& abilityGroup) {
-        os << "AbilityGroup: {id: " << abilityGroup.id 
-           << ", singular: \"" << abilityGroup.singular 
-           << "\", plural: \"" << abilityGroup.plural << "\"}";
+    ostream& operator<<(ostream& os, const AbilityType& ability) {
+        os << "AbilityGroup: {id: " << ability.id 
+           << ", singular: \"" << ability.singular 
+           << "\", plural: \"" << ability.plural << "\"}";
         return os;
     }
 
@@ -31,10 +31,10 @@ namespace SBF {
         abilities.push_back(kAbilityGroupKnowledges);
     }
 
-    void FillAbilitiesForAbilityGroup(vector<string>& abilities, int abilityGroupId) {
+    void FillAbilitiesForAbilityGroup(vector<string>& abilities, int id) {
         abilities.clear();
-        int numAbilities = GetNumItemsForAbilityGroup(abilityGroupId);
-        switch (abilityGroupId) {
+        int numAbilities = GetNumItemsForAbilityGroup(id);
+        switch (id) {
             case kAbilityTalentsId:
                 for (int talentId = 0; talentId <= numAbilities; talentId++) {
                     if (talentId >= 0 && talentId <= kTalentsCount) {
@@ -59,9 +59,9 @@ namespace SBF {
         }
     }
 
-    void FillAbilityLabels(vector<string>& labels, int abilityGroupId) {
+    void FillAbilityLabels(vector<string>& labels, int id) {
         labels.clear();
-        switch (abilityGroupId) {
+        switch (id) {
             case kAbilityTalentsId:
                 FillTalentLabels(labels);
                 break;

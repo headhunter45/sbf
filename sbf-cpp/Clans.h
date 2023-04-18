@@ -73,7 +73,14 @@ namespace SBF {
         kClanTzismiceLabel,
         kClanVentrueLabel,
     };
-    std::string GetClanLabel(int clanId);
+
+    /// @brief Gets the label for a clan with a specific id.
+    /// @param clan_id The id of the clan to get the label for.
+    /// @return The label of the specified clan or an empty string if clan_id is invalid.
+    std::string GetClanLabel(int clan_id);
+
+    /// @brief Fills the provided vector with all valid clans.
+    /// @param clans The vector to fill. It will be emptied first.
     void FillClanLabels(std::vector<std::string>& clans);
 } // End namespace SBF
 /** @}*/

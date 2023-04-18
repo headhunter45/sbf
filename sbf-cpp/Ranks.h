@@ -40,10 +40,31 @@ namespace SBF {
         kRankTertiary,
     };
 
-    std::ostream& operator<<(std::ostream& os, const RankType& abilityGroup);
+    /// @brief Writes a rank to an ostream.
+    /// @param os The ostream to write to.
+    /// @param rank The rank to write.
+    /// @return The provided ostream for chaining.
+    std::ostream& operator<<(std::ostream& os, const RankType& rank);
+
+    /// @brief Determines if two ranks are equal.
+    /// @param left A rank to compare.
+    /// @param right A rank to compare.
+    /// @return True if both ranks are equal and false otherwise.
     bool operator==(const RankType& left, const RankType& right);
+
+    /// @brief Determines if two ranks are unequal.
+    /// @param left A rank to compare.
+    /// @param right A rank to compare.
+    /// @return True if both ranks are unequal and false otherwise.
     bool operator!=(const RankType& left, const RankType& right);
-    RankType GetRank(int rankId);
+
+    /// @brief Gets a rank with a specific id.
+    /// @param rank_id The id of the rank to get.
+    /// @return The rank with id == rank_id or the unknown rank kRankUnknown if rank_id is invalid.
+    RankType GetRank(int rank_id);
+
+    /// @brief Fills the provided vector with all valid rank labels.
+    /// @param ranks The vector to fill. It will be cleared first.
     void FillRanks(std::vector<RankType>& ranks);
 } // End namespace SBF
 /** @}*/
