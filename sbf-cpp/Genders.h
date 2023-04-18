@@ -34,8 +34,8 @@ namespace SBF {
         kGenderTransFemaleLabel,
         kGenderNonBinaryLabel,
     };
-    const std::string& GetGenderLabel(int genderId);
-    void FillGenderLabels(std::vector<std::string> genderLabels);
+    std::string GetGenderLabel(int genderId);
+    void FillGenderLabels(std::vector<std::string>& genderLabels);
 } // End namespace SBF
 /** @}*/
 #endif // End !defined GENDERS_H__
