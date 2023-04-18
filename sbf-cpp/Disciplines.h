@@ -93,8 +93,8 @@ namespace SBF {
         kDisciplineThaumaturgyLabel,
         kDisciplineVicissitudeLabel,
     };
-    const std::string GetDisciplineLabel(int disciplineId);
-    void FillDisciplineLabels(std::vector<std::string> disciplineLabels);
+    std::string GetDisciplineLabel(int disciplineId);
+    void FillDisciplineLabels(std::vector<std::string>& disciplineLabels);
 } // End namespace SBF
 /** @}*/
 #endif // End !defined DISCIPLINES_H__
