@@ -1,4 +1,4 @@
-#ifndef DISCIPLINES_H__
+﻿#ifndef DISCIPLINES_H__
 #define DISCIPLINES_H__
 /***************************************************************************************
  * @file Disciplines.h

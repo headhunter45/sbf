@@ -1,4 +1,4 @@
-#ifndef DERANGEMENTS_H__
+﻿#ifndef DERANGEMENTS_H__
 #define DERANGEMENTS_H__
 #include "Colors.h"
 /***************************************************************************************

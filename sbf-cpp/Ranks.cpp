@@ -1,4 +1,4 @@
-#include "Ranks.h"
+﻿#include "Ranks.h"
 
 #include <ostream>
 #include <string>

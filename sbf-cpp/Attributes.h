@@ -1,4 +1,4 @@
-#ifndef ATTRIBUTES_H__
+﻿#ifndef ATTRIBUTES_H__
 #define ATTRIBUTES_H__
 /***************************************************************************************
  * @file Attributes.h

@@ -1,4 +1,4 @@
-#include "Clans.h"
+﻿#include "Clans.h"
 
 #include <sstream>
 #include <string>

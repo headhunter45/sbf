@@ -1,4 +1,4 @@
-#include "Character.h"
+﻿#include "Character.h"
 
 #include "test.h"
 using namespace SBF;

@@ -1,4 +1,4 @@
-#ifndef VIRTUES_H__
+﻿#ifndef VIRTUES_H__
 #define VIRTUES_H__
 /***************************************************************************************
  * @file Virtues.h

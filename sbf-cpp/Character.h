@@ -1,4 +1,4 @@
-#ifndef CHARACTER_H__
+﻿#ifndef CHARACTER_H__
 #define CHARACTER_H__
 /***************************************************************************************
  * @file Character.h

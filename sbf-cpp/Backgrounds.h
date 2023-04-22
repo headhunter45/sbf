@@ -1,4 +1,4 @@
-#ifndef BACKGROUNDS_H__
+﻿#ifndef BACKGROUNDS_H__
 #define BACKGROUNDS_H__
 /***************************************************************************************
  * @file Backgrounds.h

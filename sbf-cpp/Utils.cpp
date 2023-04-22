@@ -1,4 +1,4 @@
-#define _XOPEN_SOURCE_EXTENDED
+﻿#define _XOPEN_SOURCE_EXTENDED
 #include "Utils.h"
 
 #include <cstdint>

@@ -1,4 +1,4 @@
-#include "Backgrounds.h"
+﻿#include "Backgrounds.h"
 
 #include <sstream>
 #include <string>

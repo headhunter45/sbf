@@ -1,4 +1,4 @@
-#ifndef ARCHETYPES_H__
+﻿#ifndef ARCHETYPES_H__
 #define ARCHETYPES_H__
 /***************************************************************************************
  * @file Archetypes.h

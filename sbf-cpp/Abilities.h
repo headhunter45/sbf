@@ -1,4 +1,4 @@
-#ifndef ABILITIES_H__
+﻿#ifndef ABILITIES_H__
 #define ABILITIES_H__
 /***************************************************************************************
  * @file Abilities.h
