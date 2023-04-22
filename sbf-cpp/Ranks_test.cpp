@@ -21,7 +21,7 @@ TestResults test_FillRanks();
 
 using namespace Test::Ranks;
 
-TestResults main_test_Ranks(int argc, char** argv) {
+TestResults main_test_Ranks(int argc, char* argv[]) {
   TestResults results;
 
   results += test_RankType_operator_extract();

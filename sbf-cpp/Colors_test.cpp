@@ -25,7 +25,7 @@ extern uint8_t g_foregroundColor;
 extern uint8_t g_backgroundColor;
 }  // namespace SBF
 
-TestResults main_test_Colors(int argc, char** argv) {
+TestResults main_test_Colors(int argc, char* argv[]) {
   TestResults results;
 
   results += test_FillColors();

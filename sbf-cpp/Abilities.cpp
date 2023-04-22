@@ -34,24 +34,18 @@ void FillAbilitiesForAbilityGroup(vector<string>& abilities, int id) {
   int numAbilities = GetNumItemsForAbilityGroup(id);
   switch (id) {
     case kAbilityTalentsId:
-      for (int talentId = 0; talentId <= numAbilities; talentId++) {
-        if (talentId >= 0 && talentId <= kTalentsCount) {
-          abilities.push_back(kTalents[talentId]);
-        }
+      for (int talent_id = 1; talent_id <= numAbilities; talent_id++) {
+        abilities.push_back(GetTalentLabel(talent_id));
       }
       break;
     case kAbilitySkillsId:
-      for (int skillId = 0; skillId <= numAbilities; skillId++) {
-        if (skillId >= 0 && skillId <= kSkillsCount) {
-          abilities.push_back(kSkills[skillId]);
-        }
+      for (int skill_id = 1; skill_id <= numAbilities; skill_id++) {
+        abilities.push_back(GetSkillLabel(skill_id));
       }
       break;
     case kAbilityKnowledgesId:
-      for (int knowledgeId = 0; knowledgeId <= numAbilities; knowledgeId++) {
-        if (knowledgeId >= 0 && knowledgeId <= kKnowledgesCount) {
-          abilities.push_back(kKnowledges[knowledgeId]);
-        }
+      for (int knowledge_id = 1; knowledge_id <= numAbilities; knowledge_id++) {
+        abilities.push_back(GetKnowledgeLabel(knowledge_id));
       }
       break;
   }
@@ -75,35 +69,29 @@ void FillAbilityLabels(vector<string>& labels, int id) {
 void FillKnowledgeLabels(vector<string>& labels) {
   labels.clear();
   int numAbilities = GetNumItemsForAbilityGroup(kAbilityKnowledgesId);
-  for (int knowledgeId = 0; knowledgeId <= numAbilities; knowledgeId++) {
-    if (knowledgeId >= 0 && knowledgeId <= kKnowledgesCount) {
-      labels.push_back(kKnowledges[knowledgeId]);
-    }
+  for (int knowledge_id = 1; knowledge_id <= numAbilities; knowledge_id++) {
+    labels.push_back(GetKnowledgeLabel(knowledge_id));
   }
 }
 
 void FillSkillLabels(vector<string>& labels) {
   labels.clear();
   int numAbilities = GetNumItemsForAbilityGroup(kAbilitySkillsId);
-  for (int skillId = 0; skillId <= numAbilities; skillId++) {
-    if (skillId >= 0 && skillId <= kSkillsCount) {
-      labels.push_back(kSkills[skillId]);
-    }
+  for (int skill_id = 1; skill_id <= numAbilities; skill_id++) {
+    labels.push_back(GetSkillLabel(skill_id));
   }
 }
 
 void FillTalentLabels(vector<string>& labels) {
   labels.clear();
   int numAbilities = GetNumItemsForAbilityGroup(kAbilityTalentsId);
-  for (int talentId = 0; talentId <= numAbilities; talentId++) {
-    if (talentId >= 0 && talentId <= kTalentsCount) {
-      labels.push_back(kTalents[talentId]);
-    }
+  for (int talent_id = 1; talent_id <= numAbilities; talent_id++) {
+    labels.push_back(GetTalentLabel(talent_id));
   }
 }
 
-const AbilityType& GetAbility(int abilityGroupId) {
-  switch (abilityGroupId) {
+const AbilityType& GetAbility(int ability_group_id) {
+  switch (ability_group_id) {
     case kAbilityTalentsId:
       return kAbilityGroupTalents;
     case kAbilitySkillsId:
@@ -114,27 +102,27 @@ const AbilityType& GetAbility(int abilityGroupId) {
   return kAbilityGroupUnknown;
 }
 
-const string GetAbilityLabel(int abilityGroupId, int abilityId) {
-  switch (abilityGroupId) {
+const string GetAbilityLabel(int ability_group_id, int ability_id) {
+  switch (ability_group_id) {
     case kAbilityTalentsId:
-      return GetTalentLabel(abilityId);
+      return GetTalentLabel(ability_id);
     case kAbilitySkillsId:
-      return GetSkillLabel(abilityId);
+      return GetSkillLabel(ability_id);
     case kAbilityKnowledgesId:
-      return GetKnowledgeLabel(abilityId);
+      return GetKnowledgeLabel(ability_id);
   };
   return "";
 }
 
-const std::string GetKnowledgeLabel(int talentId) {
-  if (talentId > 0 && talentId <= kKnowledgesCount) {
-    return kKnowledges[talentId];
+const std::string GetKnowledgeLabel(int talent_id) {
+  if (talent_id > 0 && talent_id <= kKnowledgesCount) {
+    return kKnowledges[talent_id];
   }
   return "";
 }
 
-int GetNumItemsForAbilityGroup(int abilityGroupId) {
-  switch (abilityGroupId) {
+int GetNumItemsForAbilityGroup(int ability_group_id) {
+  switch (ability_group_id) {
     case kAbilityTalentsId:
       return kTalentsCount;
     case kAbilitySkillsId:
@@ -145,16 +133,16 @@ int GetNumItemsForAbilityGroup(int abilityGroupId) {
   return 0;
 }
 
-const std::string GetSkillLabel(int skillId) {
-  if (skillId > 0 && skillId <= kSkillsCount) {
-    return kSkills[skillId];
+const std::string GetSkillLabel(int skill_id) {
+  if (skill_id > 0 && skill_id <= kSkillsCount) {
+    return kSkills[skill_id];
   }
   return "";
 }
 
-const std::string GetTalentLabel(int talentId) {
-  if (talentId > 0 && talentId <= kTalentsCount) {
-    return kTalents[talentId];
+const std::string GetTalentLabel(int talent_id) {
+  if (talent_id > 0 && talent_id <= kTalentsCount) {
+    return kTalents[talent_id];
   }
   return "";
 }

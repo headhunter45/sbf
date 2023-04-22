@@ -31,7 +31,7 @@ TestResults test_FillMentalAttributeLabels();
 
 using namespace Test::Attributes;
 
-TestResults main_test_Attributes(int argc, char** argv) {
+TestResults main_test_Attributes(int argc, char* argv[]) {
   TestResults results;
 
   results += test_GetAttributeGroupLabel();

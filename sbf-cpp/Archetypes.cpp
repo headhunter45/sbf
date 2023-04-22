@@ -4,16 +4,16 @@
 #include <vector>
 
 namespace SBF {
-std::string GetArchetypeLabel(int archetypeId) {
-  if (archetypeId >= 0 && archetypeId <= kArchetypesCount) {
-    return kArchetypes[archetypeId];
+std::string GetArchetypeLabel(int archetype_id) {
+  if (archetype_id >= 0 && archetype_id <= kArchetypesCount) {
+    return kArchetypes[archetype_id];
   }
   return "";
 }
 
 void FillArchetypeLabels(std::vector<std::string>& labels) {
   labels.clear();
-  for (int id = 0; id <= kArchetypesCount; id++) {
+  for (int id = 1; id <= kArchetypesCount; id++) {
     labels.push_back(GetArchetypeLabel(id));
   }
 }

@@ -21,7 +21,7 @@ TestResults test_word_wrap();
 
 using namespace Test::Utils;
 
-TestResults main_test_Utils(int argc, char** argv) {
+TestResults main_test_Utils(int argc, char* argv[]) {
   TestResults results;
 
   results += test_get_index_of();

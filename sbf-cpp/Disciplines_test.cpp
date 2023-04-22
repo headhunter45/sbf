@@ -18,7 +18,7 @@ TestResults test_FillDisciplineLabels();
 
 using namespace Test::Disciplines;
 
-TestResults main_test_Disciplines(int argc, char** argv) {
+TestResults main_test_Disciplines(int argc, char* argv[]) {
   TestResults results;
 
   results += test_GetDisciplineLabel();

@@ -17,7 +17,7 @@ TestResults test_FillVirtueLabels();
 
 using namespace Test::Virtues;
 
-TestResults main_test_Virtues(int argc, char** argv) {
+TestResults main_test_Virtues(int argc, char* argv[]) {
   TestResults results;
 
   results += test_GetVirtueLabel();

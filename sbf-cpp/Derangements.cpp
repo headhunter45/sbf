@@ -27,7 +27,7 @@ DerangementType GetDerangement(int derangementId) {
   if (derangementId > 0 && derangementId <= kDerangementsCount) {
     return kDerangements[derangementId];
   }
-  return {};
+  return kDerangementUnknown;
 }
 
 void FillDerangements(std::vector<DerangementType>& derangements) {

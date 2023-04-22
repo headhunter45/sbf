@@ -21,7 +21,7 @@ TestResults test_FillDerangements();
 
 using namespace Test::Derangements;
 
-TestResults main_test_Derangements(int argc, char** argv) {
+TestResults main_test_Derangements(int argc, char* argv[]) {
   TestResults results;
 
   results += test_DerangementType_operator_extract();

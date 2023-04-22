@@ -18,7 +18,7 @@ TestResults test_FillBackgroundLabels();
 
 using namespace Test::Backgrounds;
 
-TestResults main_test_Backgrounds(int argc, char** argv) {
+TestResults main_test_Backgrounds(int argc, char* argv[]) {
   TestResults results;
 
   results += test_GetBackgroundLabel();

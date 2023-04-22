@@ -88,9 +88,9 @@ namespace Test {
 //   );
 // The suites can be run from one file as such. From a file called ThingDoer_test.cpp to test the class/methods
 // ThingDoer declared in ThingDoer.cpp. This isn't mandatory but is a best practice. You can use testFn without calling
-// collect_and_report_TestResults() and also could call it from a normal int main(int argc, char** argv) or other
+// collect_and_report_TestResults() and also could call it from a normal int main(int argc, char* argv[]) or other
 // function.
-//   TestResults test_main_ThingDoer(int argc, char** argv) {
+//   TestResults test_main_ThingDoer(int argc, char* argv[]) {
 //     TestResults results;
 //     results = collect_and_report_TestResults(results, testFn("doThing1", ...), argc, argv);
 //     results = collect_and_report_TestResults(results, testFn("doThing2", ...), argc, argv);

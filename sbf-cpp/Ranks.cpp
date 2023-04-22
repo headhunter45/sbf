@@ -5,10 +5,13 @@
 #include <vector>
 
 namespace SBF {
+namespace {
+using std::ostream;
 using std::string;
 using std::vector;
+}  // End namespace
 
-std::ostream& operator<<(std::ostream& os, const RankType& rank) {
+ostream& operator<<(ostream& os, const RankType& rank) {
   os << "Rank: {id: " << rank.id << ", label: \"" << rank.label << "\"}";
   return os;
 }

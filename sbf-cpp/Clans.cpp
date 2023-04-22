@@ -4,9 +4,9 @@
 #include <vector>
 
 namespace SBF {
-std::string GetClanLabel(int clanId) {
-  if (clanId > 0 && clanId <= kClansCount) {
-    return kClanLabels[clanId];
+std::string GetClanLabel(int clan_id) {
+  if (clan_id > 0 && clan_id <= kClansCount) {
+    return kClanLabels[clan_id];
   }
   return "";
 }

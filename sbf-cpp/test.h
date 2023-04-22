@@ -293,7 +293,7 @@ using TestSuite = std::tuple<std::string,
 // ThingDoer declared in ThingDoer.cpp. This isn't mandatory but is a best practice. You can use function_to_test
 // without calling collect_and_report_test_results() and also could call it from a normal int main(int argc, char**
 // argv) or other function.
-//   TestResults test_main_ThingDoer(int argc, char** argv) {
+//   TestResults test_main_ThingDoer(int argc, char* argv[]) {
 //     TestResults results;
 //     results = collect_and_report_test_results(results, function_to_test("do_thing1", ...), argc, argv);
 //     results = collect_and_report_test_results(results, function_to_test("do_thing2", ...), argc, argv);

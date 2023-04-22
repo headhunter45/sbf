@@ -4,7 +4,7 @@
 using namespace SBF;
 using namespace Test;
 
-TestResults main_test_Character(int argc, char** argv) {
+TestResults main_test_Character(int argc, char* argv[]) {
   TestResults results;
 
   return results;

@@ -15,7 +15,7 @@ TestResults test_FillArchetypeLabels();
 
 using namespace Test::Archetypes;
 
-TestResults main_test_Archetypes(int argc, char** argv) {
+TestResults main_test_Archetypes(int argc, char* argv[]) {
   TestResults results;
 
   results += test_GetArchetypeLabel();
@@ -70,11 +70,11 @@ TestResults test_FillArchetypeLabels() {
       "SBF::FillArchetypeLabels",
       []() -> string {
         ostringstream error_message;
-        vector<string> expected = {
-            "",          "Architect", "Autocrat",   "Barbarian", "Bon Vivant",     "Bravo",    "Caregiver", "Caretaker",
-            "Celebrant", "Child",     "Conformist", "Conniver",  "Curmudgeon",     "Defender", "Deviant",   "Director",
-            "Fanatic",   "Gallant",   "Innovator",  "Jester",    "Judge",          "Loaner",   "Martyr",    "Monster",
-            "Penitent",  "Rebel",     "Rogue",      "Survivor",  "Traditionalist", "Tyrant",   "Visionary"};
+        vector<string> expected = {"Architect", "Autocrat",  "Barbarian", "Bon Vivant",     "Bravo",    "Caregiver",
+                                   "Caretaker", "Celebrant", "Child",     "Conformist",     "Conniver", "Curmudgeon",
+                                   "Defender",  "Deviant",   "Director",  "Fanatic",        "Gallant",  "Innovator",
+                                   "Jester",    "Judge",     "Loaner",    "Martyr",         "Monster",  "Penitent",
+                                   "Rebel",     "Rogue",     "Survivor",  "Traditionalist", "Tyrant",   "Visionary"};
         vector<string> actual = {"This should be removed."};
         FillArchetypeLabels(actual);
         compare(error_message, expected, actual);

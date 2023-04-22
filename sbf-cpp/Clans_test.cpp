@@ -18,7 +18,7 @@ TestResults test_FillClanLabels();
 
 using namespace Test::Clans;
 
-TestResults main_test_Clans(int argc, char** argv) {
+TestResults main_test_Clans(int argc, char* argv[]) {
   TestResults results;
 
   results += test_GetClanLabel();

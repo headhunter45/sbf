@@ -18,7 +18,7 @@ TestResults test_FillGenderLabels();
 
 using namespace Test::Genders;
 
-TestResults main_test_Genders(int argc, char** argv) {
+TestResults main_test_Genders(int argc, char* argv[]) {
   TestResults results;
 
   results += test_GetGenderLabel();
