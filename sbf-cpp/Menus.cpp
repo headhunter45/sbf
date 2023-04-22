@@ -2,20 +2,20 @@
 
 namespace SBF {
 
-    int GetRandomMenuItemId (std::vector<MenuItem> items);
-    void BuildMenu(std::vector<MenuItem> items, std::vector<string> labels);
-    void BuildMenuWithValues(std::vector<MenuItem> items, std::vector<string> labels, std::vector<int> values);
-    void BuildMenuWithColors(std::vector<MenuItem> items, std::vector<string> labels, std::vector<uint8_t> colors);
-    void AdjustMenuStyle(MenuStyle& style, std::vector<MenuItem> items, bool ignoreValue);
-    void PrintMenu(std::vector<MenuItem> items, MenuStyle style);
-    string GetTitle(MenuItem item, MenuStyle style);
-    string GetTitleWithoutValue(MenuItem item, MenuStyle style);
-    void NewMenuStyle(MenuStyle& style);
-    void NewMenuItem(MenuItem& item, string label, int id);
-    void NewMenuItemWithValue(MenuItem& item, string label, int id, int value);
-    void NewMenuItemWithColor(MenuItem& item, string label, int id, uint8_t color);
+int GetRandomMenuItemId(std::vector<MenuItem> items);
+void BuildMenu(std::vector<MenuItem> items, std::vector<string> labels);
+void BuildMenuWithValues(std::vector<MenuItem> items, std::vector<string> labels, std::vector<int> values);
+void BuildMenuWithColors(std::vector<MenuItem> items, std::vector<string> labels, std::vector<uint8_t> colors);
+void AdjustMenuStyle(MenuStyle& style, std::vector<MenuItem> items, bool ignoreValue);
+void PrintMenu(std::vector<MenuItem> items, MenuStyle style);
+string GetTitle(MenuItem item, MenuStyle style);
+string GetTitleWithoutValue(MenuItem item, MenuStyle style);
+void NewMenuStyle(MenuStyle& style);
+void NewMenuItem(MenuItem& item, string label, int id);
+void NewMenuItemWithValue(MenuItem& item, string label, int id, int value);
+void NewMenuItemWithColor(MenuItem& item, string label, int id, uint8_t color);
 
-} // End namespace SBF
+}  // End namespace SBF
 
 /*
 Function GetRandomMenuItemId (items() As MenuItem, count As Integer)
@@ -114,31 +114,22 @@ Sub PrintMenu (items() As MenuItem, count As Integer, style As MenuStyle)
                 If column <> (itemsPerRow - 1) Then
                     If i <> count Or style.showRandom Then
                         textLength = Len(itemText$)
-                        itemText$ = MakeFitL$(RTrim$(itemText$) + style.menuItemSpacer, textLength + Len(style.menuItemSpacer), " ")
-                    End If
-                End If
-                Print MakeFitC$(itemText$, columnWidth, " ");
-            End If
-            column = (column + 1) Mod itemsPerRow
-            If column = 0 Then Print ""
-        Next
-        If style.showRandom Then
-            Print MakeFitC$(GetTitleWithoutValue$(randomItem, style), columnWidth, " ")
-        End If
-    End If
-End Sub
+                        itemText$ = MakeFitL$(RTrim$(itemText$) + style.menuItemSpacer, textLength +
+Len(style.menuItemSpacer), " ") End If End If Print MakeFitC$(itemText$, columnWidth, " "); End If column = (column + 1)
+Mod itemsPerRow If column = 0 Then Print "" Next If style.showRandom Then Print
+MakeFitC$(GetTitleWithoutValue$(randomItem, style), columnWidth, " ") End If End If End Sub
 
 Function GetTitle$ (mi As MenuItem, ms As MenuStyle)
     id$ = itos$(mi.id)
     label$ = mi.label
     If ms.valueWidth > 0 Then label$ = label$ + ms.labelValueSeparator
     value$ = itos$(mi.value)
-    GetTitle$ = MakeFitR$(id$, ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(label$, ms.labelWidth, " ") + MakeFitR$(value$, ms.valueWidth, " ")
-End Function
+    GetTitle$ = MakeFitR$(id$, ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(label$, ms.labelWidth, " ") +
+MakeFitR$(value$, ms.valueWidth, " ") End Function
 
 Function GetTitleWithoutValue$ (mi As MenuItem, ms As MenuStyle)
-    GetTitleWithoutValue$ = MakeFitR$(itos(mi.id), ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(mi.label, ms.labelWidth + ms.valueWidth + Len(ms.labelValueSeparator), " ")
-End Function
+    GetTitleWithoutValue$ = MakeFitR$(itos(mi.id), ms.idWidth, " ") + ms.idLabelSeparator + MakeFitL$(mi.label,
+ms.labelWidth + ms.valueWidth + Len(ms.labelValueSeparator), " ") End Function
 
 Sub NewMenuStyle (ms As MenuStyle)
     ms.idWidth = 0

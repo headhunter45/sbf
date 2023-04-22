@@ -7,3 +7,4 @@
 /dos/sbf/sbf_start.command
 /build
 *.o
+.cache

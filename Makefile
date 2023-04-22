@@ -63,7 +63,7 @@ MANDATORY_TARGETS = Makefile
 
 .Phony: all clean app test run_all_tests run_incremental_tests targets docs read-docs
 
-all: $(patsubst %, $(BUILD_DIR)/%, $(APPS)) app 
+all: compile_commands.json $(patsubst %, $(BUILD_DIR)/%, $(APPS)) app 
 
 clean:
 	rm -rf "$(BUILD_DIR)"
@@ -210,3 +210,6 @@ $(TEST_HARNESS_OBJ): $(TEST_HARNESS_CPP) $(SRC_DIR)/*.h $(TEST_CPP) $(MANDATORY_
 $(TEST_HARNESS_APP): $(TEST_HARNESS_OBJ) $(APP_OBJECTS) $(TEST_OBJ) $(BUILD_DIR)/test.o $(MANDATORY_TARGETS)
 	$(LD) $(LDFLAGS) -o $@ $< $(APP_OBJECTS) $(TEST_OBJ) $(BUILD_DIR)/test.o
 endif
+
+compile_commands.json: $(MANDATORY_TARGETS)
+	make clean; bear -- make

@@ -1,29 +1,26 @@
 #ifndef SBF_H__
 #define SBF_H__
 /***************************************************************************************
-* @file sbf.h
-*
-* @brief Holds code copied from the BASIC version that hasn't been relocated yet.
-* @copyright
-* Copyright 2023 Tom Hicks
-* Licensed under the MIT license see the LICENSE file for details.
-***************************************************************************************/
+ * @file sbf.h
+ *
+ * @brief Holds code copied from the BASIC version that hasn't been relocated yet.
+ * @copyright
+ * Copyright 2023 Tom Hicks
+ * Licensed under the MIT license see the LICENSE file for details.
+ ***************************************************************************************/
+#include <string>
+
+#include "Character.h"
 #include "Colors.h"
 #include "Menus.h"
-#include "Character.h"
-#include <string>
 
 /** \addtogroup Unsorted
  * @{
-*/
+ */
 namespace SBF {
-    using std::string;
+using std::string;
 
-    const int kInitialGeneration = 13;
-
-
-
-
+const int kInitialGeneration = 13;
 
 /*
 
@@ -86,29 +83,29 @@ Sub MainMenu
     choice = 0
     Do
         Cls
-        Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
-        Print "บ What are you going to do?                                                    บ"
-        Print "บ        1 = Character Generator                                               บ"
-        Print "บ        2 = Character Generator for Dummies                                   บ"
-        Print "บ        3 = Combat Computer                                                   บ"
-        Print "บ        4 = Dice Roller                                                       บ"
-        Print "บ        5 = Random Character Generator                                        บ"
-        Print "บ        6 =                                                                   บ"
-        Print "บ        7 = Vehicle Generator                                                 บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ                                                                              บ"
-        Print "บ        0 = End                                                               บ"
-        Print "บ                                                                              บ"
-        Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
+        Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอป"
+        Print "๏ฟฝ What are you going to do?                                                    ๏ฟฝ"
+        Print "๏ฟฝ        1 = Character Generator                                               ๏ฟฝ"
+        Print "๏ฟฝ        2 = Character Generator for Dummies                                   ๏ฟฝ"
+        Print "๏ฟฝ        3 = Combat Computer                                                   ๏ฟฝ"
+        Print "๏ฟฝ        4 = Dice Roller                                                       ๏ฟฝ"
+        Print "๏ฟฝ        5 = Random Character Generator                                        ๏ฟฝ"
+        Print "๏ฟฝ        6 =                                                                   ๏ฟฝ"
+        Print "๏ฟฝ        7 = Vehicle Generator                                                 ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ        0 = End                                                               ๏ฟฝ"
+        Print "๏ฟฝ                                                                              ๏ฟฝ"
+        Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ"
         choice = GetChoice(0, 7)
         Select Case choice
             Case 1
@@ -129,29 +126,29 @@ End Sub
 
 ' This sub is not called. It is here so it can be copied whenever I need to make a new bordered screen.
 Sub BlankScreen
-    Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
+    Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอป"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ"
 End Sub
 
 Function GetChoice (min As Integer, max As Integer)
@@ -203,17 +200,11 @@ Function ChooseStringId (labels() As String, style As MenuStyle, count As Intege
     ChooseStringId = choice
 End Function
 
-Function ChooseStringIdWithValues (labels() As String, values() As Integer, style As MenuStyle, count As Integer, prompt As String)
-    Cls
-    Dim mnuItems(1 To count) As MenuItem
-    Call BuildMenuWithValues(mnuItems(), labels(), values(), count)
-    Call AdjustMenuStyle(style, mnuItems(), count, FALSE)
-    Print prompt
-    Call PrintMenu(mnuItems(), count, style)
-    choice = GetMenuChoice(mnuItems(), style, count)
-    If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(), count)
-    ChooseStringIdWithValues = choice
-End Function
+Function ChooseStringIdWithValues (labels() As String, values() As Integer, style As MenuStyle, count As Integer, prompt
+As String) Cls Dim mnuItems(1 To count) As MenuItem Call BuildMenuWithValues(mnuItems(), labels(), values(), count) Call
+AdjustMenuStyle(style, mnuItems(), count, FALSE) Print prompt Call PrintMenu(mnuItems(), count, style) choice =
+GetMenuChoice(mnuItems(), style, count) If choice = style.randomItemId Then choice = GetRandomMenuItemId(mnuItems(),
+count) ChooseStringIdWithValues = choice End Function
 
 Function ChooseStringIdWithColors (labels() As String, colors() As Integer, style As MenuStyle, prompt As String)
     Cls
@@ -234,11 +225,8 @@ Function ChooseStringIdWithColors (labels() As String, colors() As Integer, styl
     ChooseStringIdWithColors = choice
 End Function
 
-Function ChooseMenuItemId (items() As MenuItem, style As MenuStyle, count As Integer, prompt As String, ignoreValue As Integer)
-    Cls
-    Call AdjustMenuStyle(style, items(), count, ignoreValue)
-    Print prompt
-    Call PrintMenu(items(), count, style)
+Function ChooseMenuItemId (items() As MenuItem, style As MenuStyle, count As Integer, prompt As String, ignoreValue As
+Integer) Cls Call AdjustMenuStyle(style, items(), count, ignoreValue) Print prompt Call PrintMenu(items(), count, style)
     choice = GetMenuChoice(items(), style, count)
     If choice = style.randomItemId Then choice = GetRandomMenuItemId(items(), count)
     ChooseMenuItemId = choice
@@ -269,11 +257,9 @@ Sub CGGetDisciplines (ch As CharacterType)
     While disciplinePoints > 0
         Cls
         Call FillDisciplines(ch, disciplineValues())
-        discipline = ChooseStringIdWithValues(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, "Which discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?")
-        Call SetDiscipline(ch, discipline, GetDiscipline(ch, discipline) + 1)
-        disciplinePoints = disciplinePoints - 1
-    Wend
-End Sub
+        discipline = ChooseStringIdWithValues(Disciplines(), disciplineValues(), ms, DISCIPLINES_COUNT, "Which
+discipline do you want to spend 1 of your " + itos$(disciplinePoints) + " points on?") Call SetDiscipline(ch,
+discipline, GetDiscipline(ch, discipline) + 1) disciplinePoints = disciplinePoints - 1 Wend End Sub
 
 Sub CGGetAttributes (ch As CharacterType)
     Dim msWithoutValues As MenuStyle
@@ -294,16 +280,11 @@ Sub CGGetAttributes (ch As CharacterType)
     groupSum = 0
     rankSum = 1
     For i = 1 To ATTRIBUTE_GROUPS_COUNT - 1
-        nextGroup = ChooseMenuItemId(mnuAttributeGroups(), msWithoutValues, ATTRIBUTE_GROUPS_COUNT, "Choose your " + LCase$(Ranks(i).label) + " attribute?", TRUE)
-        mnuAttributeGroups(nextGroup).isVisible = FALSE
-        attributeRanks(nextGroup) = i
-        rankSum = rankSum + i + 1
-        groupSum = groupSum + nextGroup
-    Next
-    ' General formula for last choice given 1 to count based indexing is this
-    ' (Sum from 1 to count) - (Sum of all previous choice IDs)
-    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
-    lastGroup = rankSum - groupSum
+        nextGroup = ChooseMenuItemId(mnuAttributeGroups(), msWithoutValues, ATTRIBUTE_GROUPS_COUNT, "Choose your " +
+LCase$(Ranks(i).label) + " attribute?", TRUE) mnuAttributeGroups(nextGroup).isVisible = FALSE attributeRanks(nextGroup)
+= i rankSum = rankSum + i + 1 groupSum = groupSum + nextGroup Next ' General formula for last choice given 1 to count
+based indexing is this ' (Sum from 1 to count) - (Sum of all previous choice IDs) '
+Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1]) lastGroup = rankSum - groupSum
     attributeRanks(lastGroup) = ATTRIBUTE_GROUPS_COUNT
 
     ' Spend attribute points
@@ -315,11 +296,9 @@ Sub CGGetAttributes (ch As CharacterType)
         ReDim values(1 To count) As Integer
         For attrPoints = GetAttributePointsForRank(rank) To 1 Step -1
             Call FillAttributeValues(ch, values(), group)
-            attribute = ChooseStringIdWithValues(attributes(), values(), msWithValues, count, "Which " + LCase$(AttributeGroups(group)) + " attribute do you want to spend 1 of your " + itos$(attrPoints) + " points on?")
-            Call SetAttributeValue(ch, group, attribute, GetAttributeValue(ch, group, attribute) + 1)
-        Next
-    Next
-End Sub
+            attribute = ChooseStringIdWithValues(attributes(), values(), msWithValues, count, "Which " +
+LCase$(AttributeGroups(group)) + " attribute do you want to spend 1 of your " + itos$(attrPoints) + " points on?") Call
+SetAttributeValue(ch, group, attribute, GetAttributeValue(ch, group, attribute) + 1) Next Next End Sub
 
 Sub CGGetAbilities (ch As CharacterType)
     Dim msWithoutValues As MenuStyle
@@ -340,16 +319,11 @@ Sub CGGetAbilities (ch As CharacterType)
     groupSum = 0
     rankSum = 1
     For i = 1 To ABILITY_GROUPS_COUNT - 1
-        nextAbility = ChooseMenuItemId(mnuAbilityGroups(), msWithoutValues, ABILITY_GROUPS_COUNT, "Choose your " + LCase$(Ranks(i).label) + " ability?", TRUE)
-        mnuAbilityGroups(nextAbility).isVisible = FALSE
-        abilityRanks(nextAbility) = i
-        rankSum = rankSum + i + 1
-        groupSum = groupSum + nextAbility
-    Next
-    ' General formula for last choice given 1 to count based indexing is this
-    ' (Sum from 1 to count) - (Sum of all previous choice IDs)
-    ' Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1])
-    lastGroup = rankSum - groupSum
+        nextAbility = ChooseMenuItemId(mnuAbilityGroups(), msWithoutValues, ABILITY_GROUPS_COUNT, "Choose your " +
+LCase$(Ranks(i).label) + " ability?", TRUE) mnuAbilityGroups(nextAbility).isVisible = FALSE abilityRanks(nextAbility) =
+i rankSum = rankSum + i + 1 groupSum = groupSum + nextAbility Next ' General formula for last choice given 1 to count
+based indexing is this ' (Sum from 1 to count) - (Sum of all previous choice IDs) '
+Sum(1..AllAttributesCount)-Sum(Choice[1]..Choice[AllAttributesCount-1]) lastGroup = rankSum - groupSum
     abilityRanks(lastGroup) = ABILITY_GROUPS_COUNT
 
     ' Spend ability points
@@ -361,11 +335,9 @@ Sub CGGetAbilities (ch As CharacterType)
         ReDim values(1 To count) As Integer
         For abilityPoints = GetAbilityPointsForRank(rank) To 1 Step -1
             Call FillAbilityValues(ch, values(), group)
-            ability = ChooseStringIdWithValues(abilityNames(), values(), msWithValues, count, "Which " + LCase$(Abilities(i).singular) + " would you like to spend 1 of your " + itos$(abilityPoints) + " points on?")
-            Call SetAbilityValue(ch, group, ability, GetAbilityValue(ch, group, ability) + 1)
-        Next
-    Next
-End Sub
+            ability = ChooseStringIdWithValues(abilityNames(), values(), msWithValues, count, "Which " +
+LCase$(Abilities(i).singular) + " would you like to spend 1 of your " + itos$(abilityPoints) + " points on?") Call
+SetAbilityValue(ch, group, ability, GetAbilityValue(ch, group, ability) + 1) Next Next End Sub
 
 Sub CGGetBackgrounds (ch As CharacterType)
     ' Spend background points
@@ -376,11 +348,9 @@ Sub CGGetBackgrounds (ch As CharacterType)
     While backgroundPoints > 0
         Cls
         Call FillBackgrounds(ch, backgroundValues())
-        background = ChooseStringIdWithValues(Backgrounds(), backgroundValues(), ms, BACKGROUNDS_COUNT, "Which background do you want to spend 1 of your " + itos$(backgroundPoints) + " points on?")
-        Call SetBackground(ch, background, GetBackground(ch, background) + 1)
-        backgroundPoints = backgroundPoints - 1
-    Wend
-End Sub
+        background = ChooseStringIdWithValues(Backgrounds(), backgroundValues(), ms, BACKGROUNDS_COUNT, "Which
+background do you want to spend 1 of your " + itos$(backgroundPoints) + " points on?") Call SetBackground(ch,
+background, GetBackground(ch, background) + 1) backgroundPoints = backgroundPoints - 1 Wend End Sub
 
 Sub CGGetRoad (ch As CharacterType)
     ch.roadName = "Humanity"
@@ -395,12 +365,9 @@ Sub CGSpendVirtuePoints (ch As CharacterType)
     Dim values(1 To VIRTUES_COUNT) As Integer
     While virtuePoints > 0
         Call FillVirtues(ch, values())
-        virtue = ChooseStringIdWithValues(Virtues(), values(), ms, VIRTUES_COUNT, "Which virtue do you want to spend 1 of your " + itos$(virtuePoints) + " points on?")
-        If virtue = 0 Then virtue = GetRandomInt(1, VIRTUES_COUNT)
-        Call SetVirtue(ch, virtue, GetVirtue(ch, virtue) + 1)
-        virtuePoints = virtuePoints - 1
-    Wend
-End Sub
+        virtue = ChooseStringIdWithValues(Virtues(), values(), ms, VIRTUES_COUNT, "Which virtue do you want to spend 1
+of your " + itos$(virtuePoints) + " points on?") If virtue = 0 Then virtue = GetRandomInt(1, VIRTUES_COUNT) Call
+SetVirtue(ch, virtue, GetVirtue(ch, virtue) + 1) virtuePoints = virtuePoints - 1 Wend End Sub
 
 Sub CGGetDerangement (ch As CharacterType)
     If ch.clan = CLAN_MALKAVIAN Then
@@ -409,10 +376,8 @@ Sub CGGetDerangement (ch As CharacterType)
         Call NewMenuStyle(ms)
         ms.useColors = TRUE
 
-        ch.derangementId = ChooseStringIdWithColors(DerangementLabels(), DerangementColors(), ms, "Which derangement do you want?")
-        If ch.derangementId = 0 Then ch.derangementId = GetRandomInt(1, DERANGEMENTS_COUNT)
-    End If
-End Sub
+        ch.derangementId = ChooseStringIdWithColors(DerangementLabels(), DerangementColors(), ms, "Which derangement do
+you want?") If ch.derangementId = 0 Then ch.derangementId = GetRandomInt(1, DERANGEMENTS_COUNT) End If End Sub
 
 Sub CGSpendFreebiePoints (ch As CharacterType)
 End Sub
@@ -586,15 +551,15 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Call FillBackgrounds(ch, backgroundValues())
 
     '... 0123456789
-    '160  กขฃคฅฆงจฉ
-    '170 ชซฌญฎฏฐฑฒณ
-    '180 ดตถทธนบปผฝ
-    '190 พฟภมยรฤลฦว
-    '200 ศษสหฬอฮฯะั
-    '210 าำิีึืฺุูÛ
-    '220 ÜÝÞ฿เแโใไๅๅ
-    '230 ๆ็่้๊๋2์ํ๎๏
-    ' enquote forms s/^([ษบศอฬ].*[ปบผน])$/print "$1"/g
+    '160 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    '170 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    '180 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    '190 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    '200 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    '210 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    '220 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    '230 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ2๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ
+    ' enquote forms s/^([ษบ๏ฟฝ๏ฟฝ๏ฟฝ].*[๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ])$/print "$1"/g
 
     Dim disciplineStrings(3) As String
     disciplineStringsIndex = 0
@@ -627,47 +592,54 @@ Sub ShowCharacterSheet (ch As CharacterType)
     Call MakeWrapLines(derangementStrings(), allDerangementsLine$, 37, 5)
 
     Cls
-    Print "ษออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออป"
-    Print "บ Name: " + MakeFitL$(ch.name, 30, " ") + " บ Gender: " + MakeFitL$(Genders(ch.gender), 14, " ") + " Generation: " + MakeFitR$(itos$(ch.generation), 2, " ") + " บ"
-    Print "บ Clan: " + MakeFitL$(Clans(ch.clan), 30, " ") + " บ Age: " + MakeFitL$(ch.age$, 32, " ") + " บ"
-    Print "ฬออออออออออออออออออออออออออออออออออออออน Player: " + MakeFitL$(ch.player$, 29, " ") + " บ"
-    Print "บ              Attributes              บ Chronicle: " + MakeFitL$(ch.chronicle$, 26, " ") + " บ"
-    Print "บ   Physical     Social      Mental    บ Haven: " + MakeFitL$(ch.haven$, 30, " ") + " บ"
-    Print "บ Str. " + MakeFitL$(itos$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(itos$(ch.attr_appearance), 7, " ") + " Int. " + MakeFitL$(itos$(ch.attr_intelligence), 5, " ") + " บ Concept: " + MakeFitL$(ch.concept$, 28, " ") + " บ"
-    Print "บ Dex. " + MakeFitL$(itos$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(itos$(ch.attr_charisma), 7, " ") + " Per. " + MakeFitL$(itos$(ch.attr_perception), 5, " ") + " ฬอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ Sta. " + MakeFitL$(itos$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(itos$(ch.attr_manipulation), 7, " ") + " Wit. " + MakeFitL$(itos$(ch.attr_wits), 5, " ") + " บ Derangements:                         บ"
-    Print "ฬออออออออออออออออออออออออออออออออออออออน " + derangementStrings(0) + " บ"
-    Print "บ Disciplines:                         บ " + derangementStrings(1) + " บ"
-    Print "บ " + MakeFitL$(disciplineStrings(0), 36, " ") + " บ " + MakeFitL$(derangementStrings(2), 37, "_") + " บ"
-    Print "บ " + MakeFitL$(disciplineStrings(1), 36, " ") + " บ " + MakeFitL$(derangementStrings(3), 37, "_") + " บ"
-    Print "บ " + MakeFitL$(disciplineStrings(2), 36, " ") + " บ " + MakeFitL$(derangementStrings(4), 37, "_") + " บ"
-    Print "ฬออออออออออออออออออออออออออออออออออออออฮอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ " + MakeFitL$(ch.roadName + ": " + itos$(ch.roadValue), 36, " ") + " บ Nature: " + MakeFitL$(Archetypes(ch.nature), 29, " ") + " บ"
-    Print "บ Willpower: " + MakeFitL$(itos$(ch.willpower), 25, " ") + " บ Demeanor: " + MakeFitL$(Archetypes(ch.demeanor), 27, " ") + " บ"
-    Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                                                                              บ"
-    Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
-    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
+    Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอป"
+    Print "๏ฟฝ Name: " + MakeFitL$(ch.name, 30, " ") + " ๏ฟฝ Gender: " + MakeFitL$(Genders(ch.gender), 14, " ") + "
+Generation: " + MakeFitR$(itos$(ch.generation), 2, " ") + " ๏ฟฝ" Print "๏ฟฝ Clan: " + MakeFitL$(Clans(ch.clan), 30, " ") + "
+๏ฟฝ Age: " + MakeFitL$(ch.age$, 32, " ") + " ๏ฟฝ"
+    Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน Player: " + MakeFitL$(ch.player$, 29, " ") +
+" ๏ฟฝ" Print "๏ฟฝ              Attributes              ๏ฟฝ Chronicle: " + MakeFitL$(ch.chronicle$, 26, " ") + " ๏ฟฝ" Print "๏ฟฝ
+Physical     Social      Mental    ๏ฟฝ Haven: " + MakeFitL$(ch.haven$, 30, " ") + " ๏ฟฝ" Print "๏ฟฝ Str. " +
+MakeFitL$(itos$(ch.attr_strength), 7, " ") + " App. " + MakeFitL$(itos$(ch.attr_appearance), 7, " ") + " Int. " +
+MakeFitL$(itos$(ch.attr_intelligence), 5, " ") + " ๏ฟฝ Concept: " + MakeFitL$(ch.concept$, 28, " ") + " ๏ฟฝ" Print "๏ฟฝ Dex. "
++ MakeFitL$(itos$(ch.attr_dexterity), 7, " ") + " Cha. " + MakeFitL$(itos$(ch.attr_charisma), 7, " ") + " Per. " +
+MakeFitL$(itos$(ch.attr_perception), 5, " ") + "
+๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน"
+    Print "๏ฟฝ Sta. " + MakeFitL$(itos$(ch.attr_stamina), 7, " ") + " Man. " + MakeFitL$(itos$(ch.attr_manipulation), 7, "
+") + " Wit. " + MakeFitL$(itos$(ch.attr_wits), 5, " ") + " ๏ฟฝ Derangements:                         ๏ฟฝ" Print
+"๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน " + derangementStrings(0) +
+" ๏ฟฝ" Print "๏ฟฝ Disciplines:                         ๏ฟฝ " + derangementStrings(1) + " ๏ฟฝ" Print "๏ฟฝ " +
+MakeFitL$(disciplineStrings(0), 36, " ") + " ๏ฟฝ " + MakeFitL$(derangementStrings(2), 37, "_") + " ๏ฟฝ" Print "๏ฟฝ " +
+MakeFitL$(disciplineStrings(1), 36, " ") + " ๏ฟฝ " + MakeFitL$(derangementStrings(3), 37, "_") + " ๏ฟฝ" Print "๏ฟฝ " +
+MakeFitL$(disciplineStrings(2), 36, " ") + " ๏ฟฝ " + MakeFitL$(derangementStrings(4), 37, "_") + " ๏ฟฝ" Print
+"๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน"
+    Print "๏ฟฝ " + MakeFitL$(ch.roadName + ": " + itos$(ch.roadValue), 36, " ") + " ๏ฟฝ Nature: " +
+MakeFitL$(Archetypes(ch.nature), 29, " ") + " ๏ฟฝ" Print "๏ฟฝ Willpower: " + MakeFitL$(itos$(ch.willpower), 25, " ") + " ๏ฟฝ
+Demeanor: " + MakeFitL$(Archetypes(ch.demeanor), 27, " ") + " ๏ฟฝ" Print
+"๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                                                                              ๏ฟฝ"
+    Print "๏ฟฝ                        <<PRESS ANY KEY TO CONTINUE>>                         ๏ฟฝ"
+    Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ"
     Call PressAnyKeyToContinue
 
-    Print "ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป"
-    Print "บ " + MakeFitC$("Abilities", 76, " ") + " บ"
-    Print "บ " + MakeFitC$("Talents", 25, " ") + " " + MakeFitC$("Skills", 25, " ") + " " + MakeFitC$("Knowledges", 24, " ") + " บ"
-    For index = 1 To 10
-        Print "บ " + MakeFitC(MakeFitL$(Talents(index) + ":", 14, " ") + itos$(GetTalent(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Skills(index) + ":", 14, " ") + itos$(GetSkill(ch, index)), 25, " ") + " " + MakeFitC(MakeFitL$(Knowledges(index) + ":", 14, " ") + itos$(GetKnowledge(ch, index)), 24, " ") + " บ"
-    Next
-    Print "ฬออออออออออออออออออออออออออออออออออออออหอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ Backgrounds:                         บ Virtues:                              บ"
-    Print "บ " + MakeFitL$(backgroundStrings(0), 36, " ") + " บ " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(1), 36, " ") + " บ " + MakeFitB$("Self-Control:", itos$(ch.selfControl), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(2), 36, " ") + " บ " + MakeFitB$("Courage:", itos$(ch.courage), 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(3), 36, " ") + " บ " + MakeFitL$("", 37, " ") + " บ"
-    Print "บ " + MakeFitL$(backgroundStrings(4), 36, " ") + " บ " + MakeFitL$("", 37, " ") + " บ"
-    Print "ฬออออออออออออออออออออออออออออออออออออออสอออออออออออออออออออออออออออออออออออออออน"
-    Print "บ                        <<PRESS ANY KEY TO CONTINUE>>                         บ"
-    Print "ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ"
+    Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอป"
+    Print "๏ฟฝ " + MakeFitC$("Abilities", 76, " ") + " ๏ฟฝ"
+    Print "๏ฟฝ " + MakeFitC$("Talents", 25, " ") + " " + MakeFitC$("Skills", 25, " ") + " " + MakeFitC$("Knowledges", 24,
+" ") + " ๏ฟฝ" For index = 1 To 10 Print "๏ฟฝ " + MakeFitC(MakeFitL$(Talents(index) + ":", 14, " ") + itos$(GetTalent(ch,
+index)), 25, " ") + " " + MakeFitC(MakeFitL$(Skills(index) + ":", 14, " ") + itos$(GetSkill(ch, index)), 25, " ") + " "
++ MakeFitC(MakeFitL$(Knowledges(index) + ":", 14, " ") + itos$(GetKnowledge(ch, index)), 24, " ") + " ๏ฟฝ" Next Print
+"๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน"
+    Print "๏ฟฝ Backgrounds:                         ๏ฟฝ Virtues:                              ๏ฟฝ"
+    Print "๏ฟฝ " + MakeFitL$(backgroundStrings(0), 36, " ") + " ๏ฟฝ " + MakeFitB$("Conscience:", itos$(ch.conscience), 37, "
+") + " ๏ฟฝ" Print "๏ฟฝ " + MakeFitL$(backgroundStrings(1), 36, " ") + " ๏ฟฝ " + MakeFitB$("Self-Control:",
+itos$(ch.selfControl), 37, " ") + " ๏ฟฝ" Print "๏ฟฝ " + MakeFitL$(backgroundStrings(2), 36, " ") + " ๏ฟฝ " +
+MakeFitB$("Courage:", itos$(ch.courage), 37, " ") + " ๏ฟฝ" Print "๏ฟฝ " + MakeFitL$(backgroundStrings(3), 36, " ") + " ๏ฟฝ " +
+MakeFitL$("", 37, " ") + " ๏ฟฝ" Print "๏ฟฝ " + MakeFitL$(backgroundStrings(4), 36, " ") + " ๏ฟฝ " + MakeFitL$("", 37, " ") + "
+๏ฟฝ" Print
+"๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอน"
+    Print "๏ฟฝ                        <<PRESS ANY KEY TO CONTINUE>>                         ๏ฟฝ"
+    Print "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอผ"
     Call PressAnyKeyToContinue
 End Sub
 
@@ -698,10 +670,8 @@ Sub Choice6
     Print "Unnamed choice 6"
 End Sub
 
-' Like the character generator but for vehicles. Much simpler with fewer questions. Prints a vehicle sheet when done. Never finished and crashes mid way through currently.
-Sub VehicleGenerator
-    Print "VehicleGenerator"
-End Sub
+' Like the character generator but for vehicles. Much simpler with fewer questions. Prints a vehicle sheet when done.
+Never finished and crashes mid way through currently. Sub VehicleGenerator Print "VehicleGenerator" End Sub
 
 Sub PressAnyKeyToContinue ()
     While InKey$ = "": Wend
@@ -821,6 +791,7 @@ Sub Test
 End Sub
 
 */
-} // End namespace SBF
+}  // End namespace SBF
+
 /** #}*/
-#endif // End !defined SBF_H__
+#endif  // End !defined SBF_H__
