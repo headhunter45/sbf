@@ -36,7 +36,6 @@ class CharacterType {
   void FillAttributeValues(std::vector<int> attributeValues, int groupId) const;
   void FillBackgroundValues(std::vector<int> backgroundValues) const;
   void FillDisciplineValues(std::vector<int> disciplineValues) const;
-  void FillDerangements(std::vector<DerangementType> derangements) const;
   void FillVirtueValues(std::vector<int> virtueValues) const;
   int GetAbilityValue(int abilityGroupId, int abilityId) const;
   int GetAttributeValue(int attributeGroupId, int abilityId) const;

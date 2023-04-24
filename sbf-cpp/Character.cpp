@@ -1,11 +1,17 @@
 ﻿#include "Character.h"
 
+#include <sstream>
+#include <string>
+#include <vector>
+
 #include "Attributes.h"
 
 namespace SBF {
-
+namespace {
+using std::ostringstream;
 using std::string;
 using std::vector;
+}  // namespace
 
 CharacterType::CharacterType() {
   // Scalars
@@ -711,20 +717,9 @@ void NewDerangement(DerangementType& derangement, int id, string label, int text
 }
 
 string CharacterType::GetAllDerangementsLine() const {
-  // TODO: Replace this with a stringstream.
-  std::vector<DerangementType> allDerangements;
-  FillDerangements(allDerangements);
-  string allDerangementsString = "";
-  std::for_each(allDerangements.begin(), allDerangements.end(), [&allDerangementsString](DerangementType derangement) {
-    allDerangementsString += derangement.label + ", ";
-  });
-  return allDerangementsString;
-}
-
-void CharacterType::FillDerangements(std::vector<DerangementType> derangements) const {
-  derangements.clear();
   if (derangementId > 0) {
-    derangements[0] = kDerangements[derangementId];
+    return GetDerangement(derangementId).label;
   }
+  return "";
 }
 }  // End namespace SBF
