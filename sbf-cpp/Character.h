@@ -40,6 +40,9 @@ class CharacterType {
   void FillVirtueValues(std::vector<int> virtueValues) const;
   int GetAbilityValue(int abilityGroupId, int abilityId) const;
   int GetAttributeValue(int attributeGroupId, int abilityId) const;
+  int GetPhysicalAttributeValue(int id) const;
+  int GetSocialAttributeValue(int id) const;
+  int GetMentalAttributeValue(int id) const;
   int GetBackgroundValue(int backgroundId) const;
   std::string GetAllDerangementsLine() const;
   int GetDisciplineValue(int disciplineId) const;
@@ -49,6 +52,9 @@ class CharacterType {
   int GetVirtueValue(int virtueId) const;
   void SetAbilityValue(int abilityGroupId, int abilityId, int value);
   void SetAttributeValue(int attributeGroupId, int attributeId, int value);
+  void SetPhysicalAttributeValue(int id, int value);
+  void SetMentalAttributeValue(int id, int value);
+  void SetSocialAttributeValue(int id, int value);
   void SetBackgroundValue(int backgroundId, int value);
   void SetDisciplineValue(int disciplineId, int value);
   void SetKnowledgeValue(int knowledgeId, int value);
@@ -163,5 +169,6 @@ class CharacterType {
   int background_status;
 };  // End class CharacterType
 }  // End namespace SBF
+
 /** @}*/
 #endif  // !defined CHARACTER_H__

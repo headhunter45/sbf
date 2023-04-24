@@ -354,7 +354,7 @@ TestResults execute_suite(std::string suite_label,
 
              if (!is_enabled) {
                std::cout << " 🚧Skipping Test: " << test_name << std::endl;
-               results.skip("🚧Skipping Test: " + qualified_test_name);
+               results.skip(qualified_test_name);
                return;
              }
 
@@ -371,16 +371,16 @@ TestResults execute_suite(std::string suite_label,
              } catch (const std::exception& ex) {
                std::ostringstream os;
                os << "Caught exception \"" << ex.what() << "\"";
-               results.error("🔥ERROR: " + qualified_test_name + " " + os.str());
+               results.error(qualified_test_name + " " + os.str());
                std::cout << "    🔥ERROR: " << os.str() << std::endl;
              } catch (const std::string& message) {
                std::ostringstream os;
                os << "Caught string \"" << message << "\"";
-               results.error("🔥ERROR: " + qualified_test_name + " " + os.str());
+               results.error(qualified_test_name + " " + os.str());
                std::cout << "    🔥ERROR: " << os.str() << std::endl;
              } catch (...) {
                string message = "Caught something that is neither an std::exception nor an std::string.";
-               results.error("🔥ERROR: " + qualified_test_name + " " + message);
+               results.error(qualified_test_name + " " + message);
                std::cout << "    🔥ERROR: " << message << std::endl;
              }
 
@@ -391,7 +391,7 @@ TestResults execute_suite(std::string suite_label,
              } else {
                std::ostringstream os;
                os << "expected: \"" << expected_output << "\", actual: \"" << actual << "\"";
-               results.fail("❌FAILED: " + qualified_test_name + " " + os.str());
+               results.fail(qualified_test_name + " " + os.str());
                std::cout << "    ❌FAILED: " << os.str() << std::endl;
              }
 

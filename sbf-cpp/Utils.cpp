@@ -13,9 +13,13 @@ using namespace SBF;
 using namespace Test;
 
 namespace SBF {
+namespace {
 using std::string;
+using std::to_string;
+}  // End namespace
 
-string word_wrap(const string& text, const size_t max_width) {
+vector<string> word_wrap(const string& text, const size_t max_width) {
+  vector<string> lines;
   string output = "";
   string thisLine = "";
   string nextChunk = "";
@@ -61,13 +65,14 @@ string word_wrap(const string& text, const size_t max_width) {
       }
       thisLine = make_fit_l(thisLine, max_width, L'_');
       output += thisLine + (done ? "" : "\n");
+      lines.push_back(thisLine);
       thisLine = "";
       thisLineLength = thisLine.size();
       thisLineStartPosition = thisLineCurrentPosition;
     }
   }
 
-  return output;
+  return lines;
 }
 
 string string_dollar(const size_t length, const char ch) {
@@ -86,8 +91,43 @@ string left(const string& text, const size_t length) {
   return text.substr(0, length);
 }
 
+string right(const string& text, const size_t length) {
+  size_t text_length = text.size();
+  size_t starting_position = text_length - length;
+  if (text_length >= length) {
+    return text.substr(starting_position);
+  } else {
+    return text;
+  }
+}
+
+string make_fit_c(const string& text, const size_t length, const char pad_character) {
+  size_t text_length = text.size();
+  size_t left_pad_length = length >= text_length ? (length - text_length) / 2 : 0;
+  size_t right_pad_length = (length >= text_length + left_pad_length) ? (length - text_length - left_pad_length) : 0;
+  string left_pad = string_dollar(left_pad_length, pad_character != '\0' ? pad_character : ' ');
+  string right_pad = string_dollar(right_pad_length, pad_character != '\0' ? pad_character : ' ');
+  size_t total_chop = (text_length >= length) ? text_length - length : 0;
+  size_t left_chop = total_chop / 2;  // + 1
+  string ret = left_pad + (text == "" ? "" : text.substr(left_chop, length)) + right_pad;
+  return ret;
+}
+
+std::string make_fit_b(const std::string& prefix,
+                       const std::string& suffix,
+                       const size_t length,
+                       const char pad_character) {
+  return make_fit_l(make_fit_l(prefix, length - suffix.size(), pad_character != '\0' ? pad_character : ' ') + suffix,
+                    length,
+                    pad_character != '\0' ? pad_character : ' ');
+}
+
 string make_fit_l(const string& text, const size_t length, const char pad_character) {
   return left(text + string_dollar(length, pad_character != '\0' ? pad_character : ' '), length);
+}
+
+string make_fit_r(const string& text, const size_t length, const char pad_character) {
+  return right(string_dollar(length, pad_character != '\0' ? pad_character : ' ') + text, length);
 }
 
 string get_substring(const string& text, const size_t start, const size_t length) {
@@ -96,5 +136,46 @@ string get_substring(const string& text, const size_t start, const size_t length
 
 size_t get_index_of(const string& text, const string& search, const size_t start) {
   return text.find(search, start);
+}
+
+bool is_whitespace(char ch) {
+  return ch == ' ' || ch == '\t' || ch == '\r' || ch == '\n' || ch == '\f' || ch == '\v';
+}
+
+string left_trim(const string& text) {
+  if (text == "") {
+    return "";
+  }
+  size_t index = 0;
+  size_t length = text.size();
+  while (index < length) {
+    if (is_whitespace(text.at(index))) {
+      index++;
+    } else {
+      return text.substr(index);
+    }
+  }
+  return "";
+}
+
+string right_trim(const string& text) {
+  if (text == "") {
+    return "";
+  }
+  size_t last_index = text.size() - 1;
+  size_t index = last_index;
+
+  while (index != string::npos) {
+    if (is_whitespace(text.at(index))) {
+      index--;
+    } else {
+      return text.substr(0, index + 1);
+    }
+  }
+  return "";
+}
+
+std::string itos(int i) {
+  return to_string(i);
 }
 }  // End namespace SBF

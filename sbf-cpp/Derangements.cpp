@@ -16,8 +16,6 @@ bool operator!=(const DerangementType& left, const DerangementType& right) {
 }
 
 ostream& operator<<(ostream& os, const DerangementType& derangement) {
-  // Derangement: {id: 1, label: \"kDerangementAmnesiaLabel\", description: \"kDerangementAmnesiaDescription\",
-  // textColor: kDerangementAmnesiaTextColor}
   os << "Derangement: {id: " << derangement.id << ", label: \"" << derangement.label << "\", description: \""
      << derangement.description << "\", textColor: " << (int)derangement.textColor << "}";
   return os;

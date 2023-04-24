@@ -2,12 +2,8 @@
 
 namespace SBF {
 
-// TODO: Update these if they're wrong. They should be the initial color pair.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-variable"
-uint8_t g_foregroundColor = kColorDarkWhite;
-uint8_t g_backgroundColor = kColorDarkBlack;
-#pragma clang diagnostic pop
+uint8_t g_foreground_color = kColorDefaultForeground;
+uint8_t g_background_color = kColorDefaultBackground;
 
 void FillColors(std::vector<uint8_t>& colors) {
   colors.clear();
@@ -17,20 +13,22 @@ void FillColors(std::vector<uint8_t>& colors) {
 }
 
 uint8_t GetBackgroundColor() {
-  return g_backgroundColor;
+  return g_background_color;
 }
 
 uint8_t GetForegroundColor() {
-  return g_foregroundColor;
+  return g_foreground_color;
 }
 
-// TODO: Define what happens when color is invalid.
-void SetBackgroundColor(uint8_t color) {
-  g_backgroundColor = color;
+uint8_t SetBackgroundColor(uint8_t color) {
+  uint8_t previous_color = color;
+  g_background_color = color;
+  return previous_color;
 }
 
-// TODO: Define what happens when color is invalid.
-void SetForegroundColor(uint8_t color) {
-  g_foregroundColor = color;
+uint8_t SetForegroundColor(uint8_t color) {
+  uint8_t previous_color = color;
+  g_foreground_color = color;
+  return previous_color;
 }
 }  // End namespace SBF

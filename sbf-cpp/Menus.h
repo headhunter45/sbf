@@ -10,9 +10,11 @@
  * Licensed under the MIT license see the LICENSE file for details.
  ***************************************************************************************/
 
+#include "Colors.h"
+
 namespace SBF {
-struct MenuStyle;
-struct MenuItem;
+class MenuStyle;
+class MenuItem;
 }  // namespace SBF
 
 // End forward declarations
@@ -25,40 +27,73 @@ struct MenuItem;
 namespace SBF {
 using std::string;
 
-struct MenuStyle {
-  int idWidth;
-  int labelWidth;
-  int valueWidth;
-  int screenWidth;
-  string randomItemName;
-  int randomItemId;
-  string idLabelSeparator;
-  string labelValueSeparator;
-  string menuItemSpacer;
-  bool showRandom;
-  bool useColors;
+class MenuStyleBuilder {
+ public:
+  MenuStyleBuilder();
+  MenuStyleBuilder& SetScreenWidth(int screen_width);
+  MenuStyleBuilder& SetRandomItemName(const std::string& name);
+  MenuStyleBuilder& SetRandomItemId(int id);
+  MenuStyleBuilder& SetRandomItemColor(uint8_t color);
+  MenuStyleBuilder& SetCancelItemName(const std::string& name);
+  MenuStyleBuilder& SetCancelItemId(int id);
+  MenuStyleBuilder& SetCancelItemColor(uint8_t color);
+  MenuStyleBuilder& SetIdLabelSeparator(const std::string& separator);
+  MenuStyleBuilder& SetLabelValueSeparator(const std::string& separator);
+  MenuStyleBuilder& SetMenuItemSeparator(const std::string& separator);
+  MenuStyleBuilder& SetShowRandom(bool show_random);
+  MenuStyleBuilder& SetShowCancel(bool show_cancel);
+  MenuStyleBuilder& SetUseColors(bool use_colors);
+  MenuStyle Build();
 };
 
-struct MenuItem {
+class MenuStyle {
+ public:
+  MenuStyle();
+  void Adjust(std::vector<MenuItem> menu_items, bool ignore_value = true);
+  int id_width;
+  int label_width;
+  int value_width;
+  int screen_width;
+  string random_item_name;
+  int random_item_id;
+  uint8_t random_item_color;
+  string cancel_item_name;
+  int cancel_item_id;
+  uint8_t cancel_item_color;
+  string id_label_separator;
+  string label_value_separator;
+  string menu_item_spacer;
+  bool show_random;
+  bool show_cancel;
+  bool use_colors;
+};
+
+class MenuItem {
+ public:
+  MenuItem();
+  MenuItem(std::string label, int id);
+  MenuItem(std::string label, int id, int value);
+  MenuItem(std::string label, int id, uint8_t color);
   string label;
   int id;
   int value;
-  int color;
-  bool isVisible;
+  uint8_t color;
+  bool is_visible;
+  bool include_in_random;
 };
 
+// TODO: Make a menu class to hold GetRandomMenuItemId, the various BuildMenu* methods, and possibly PrintMenu.
 int GetRandomMenuItemId(std::vector<MenuItem> items);
-void BuildMenu(std::vector<MenuItem> items, std::vector<string> labels);
+std::vector<MenuItem> BuildMenu(std::vector<string> labels);
 void BuildMenuWithValues(std::vector<MenuItem> items, std::vector<string> labels, std::vector<int> values);
 void BuildMenuWithColors(std::vector<MenuItem> items, std::vector<string> labels, std::vector<uint8_t> colors);
-void AdjustMenuStyle(MenuStyle& style, std::vector<MenuItem> items, bool ignoreValue);
-void PrintMenu(std::vector<MenuItem> items, MenuStyle style);
+std::ostream& PrintMenu(std::ostream& os, std::vector<MenuItem> items, MenuStyle style);
 string GetTitle(MenuItem item, MenuStyle style);
 string GetTitleWithoutValue(MenuItem item, MenuStyle style);
-void NewMenuStyle(MenuStyle& style);
-void NewMenuItem(MenuItem& item, string label, int id);
-void NewMenuItemWithValue(MenuItem& item, string label, int id, int value);
-void NewMenuItemWithColor(MenuItem& item, string label, int id, uint8_t color);
+std::ostream& PrintWithMaybeColor(std::ostream& os,
+                                  const std::string& text,
+                                  uint8_t text_color = kColorDefaultForeground,
+                                  bool use_colors = false);
 
 }  // End namespace SBF
 

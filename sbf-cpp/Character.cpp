@@ -1,5 +1,7 @@
 ﻿#include "Character.h"
 
+#include "Attributes.h"
+
 namespace SBF {
 
 using std::string;
@@ -193,11 +195,12 @@ int GetDisciplinePoints() {
   return kDisciplinePoints;
 }
 
-void CharacterType::FillDisciplineValues(std::vector<int> disciplineValues) const {
+void CharacterType::FillDisciplineValues(std::vector<int> values) const {
   // TODO: This method sucks, but was needed in QBasic.
-  disciplineValues.clear();
-  for (int id = 0; id <= kDisciplinesCount; id++) {
-    disciplineValues[id] = GetDisciplineValue(id);
+  values.clear();
+  values.push_back(0);  // To pad the indexes.
+  for (int id = 1; id <= kDisciplinesCount; id++) {
+    values.push_back(GetDisciplineValue(id));
   }
 }
 
@@ -291,82 +294,97 @@ void FillAttributeAbbreviationsInGroup(std::vector<string> attributeAbbreviation
   }
 }
 
+void CharacterType::SetPhysicalAttributeValue(int id, int value) {
+  switch (id) {
+    case kPhysicalAttributeDexterityId:
+      attr_dexterity = value;
+    case kPhysicalAttributeStaminaId:
+      attr_stamina = value;
+    case kPhysicalAttributeStrengthId:
+      attr_strength = value;
+  }
+}
+
+void CharacterType::SetSocialAttributeValue(int id, int value) {
+  switch (id) {
+    case kSocialAttributeAppearanceId:
+      attr_appearance = value;
+    case kSocialAttributeCharismaId:
+      attr_charisma = value;
+    case kSocialAttributeManipulationId:
+      attr_manipulation = value;
+  }
+}
+
+void CharacterType::SetMentalAttributeValue(int id, int value) {
+  switch (id) {
+    case kMentalAttributeIntelligenceId:
+      attr_intelligence = value;
+    case kMentalAttributePerceptionId:
+      attr_perception = value;
+    case kMentalAttributeWitsId:
+      attr_wits = value;
+  }
+}
+
 void CharacterType::SetAttributeValue(int attributeGroupId, int attributeId, int value) {
   switch (attributeGroupId) {
     case kAttributeGroupPhysicalId:
-      switch (attributeId) {
-        case kPhysicalAttributeStrengthId:
-          attr_strength = value;
-          break;
-        case kPhysicalAttributeDexterityId:
-          attr_dexterity = value;
-          break;
-        case kPhysicalAttributeStaminaId:
-          attr_stamina = value;
-          break;
-      }
+      SetPhysicalAttributeValue(attributeId, value);
       break;
     case kAttributeGroupSocialId:
-      switch (attributeId) {
-        case kSocialAttributeCharismaId:
-          attr_charisma = value;
-          break;
-        case kSocialAttributeManipulationId:
-          attr_manipulation = value;
-          break;
-        case kSocialAttributeAppearanceId:
-          attr_appearance = value;
-          break;
-      }
+      SetSocialAttributeValue(attributeId, value);
       break;
     case kAttributeGroupMentalId:
-      switch (attributeId) {
-        case kMentalAttributeIntelligenceId:
-          attr_intelligence = value;
-          break;
-        case kMentalAttributePerceptionId:
-          attr_perception = value;
-          break;
-        case kMentalAttributeWitsId:
-          attr_wits = value;
-          break;
-      }
+      SetMentalAttributeValue(attributeId, value);
       break;
   }
+}
+
+int CharacterType::GetPhysicalAttributeValue(int id) const {
+  switch (id) {
+    case kPhysicalAttributeDexterityId:
+      return attr_dexterity;
+    case kPhysicalAttributeStaminaId:
+      return attr_stamina;
+    case kPhysicalAttributeStrengthId:
+      return attr_strength;
+  }
+  return 0;
+}
+
+int CharacterType::GetSocialAttributeValue(int id) const {
+  switch (id) {
+    case kSocialAttributeAppearanceId:
+      return attr_appearance;
+    case kSocialAttributeCharismaId:
+      return attr_charisma;
+    case kSocialAttributeManipulationId:
+      return attr_manipulation;
+  }
+  return 0;
+}
+
+int CharacterType::GetMentalAttributeValue(int id) const {
+  switch (id) {
+    case kMentalAttributeIntelligenceId:
+      return attr_intelligence;
+    case kMentalAttributePerceptionId:
+      return attr_perception;
+    case kMentalAttributeWitsId:
+      return attr_wits;
+  }
+  return 0;
 }
 
 int CharacterType::GetAttributeValue(int attributeGroupId, int attributeId) const {
   switch (attributeGroupId) {
     case kAttributeGroupPhysicalId:
-      switch (attributeId) {
-        case kPhysicalAttributeStrengthId:
-          return attr_strength;
-        case kPhysicalAttributeDexterityId:
-          return attr_dexterity;
-        case kPhysicalAttributeStaminaId:
-          return attr_stamina;
-      }
-      break;
+      return GetPhysicalAttributeValue(attributeId);
     case kAttributeGroupSocialId:
-      switch (attributeId) {
-        case kSocialAttributeCharismaId:
-          return attr_charisma;
-        case kSocialAttributeManipulationId:
-          return attr_manipulation;
-        case kSocialAttributeAppearanceId:
-          return attr_appearance;
-      }
-      break;
+      return GetSocialAttributeValue(attributeId);
     case kAttributeGroupMentalId:
-      switch (attributeId) {
-        case kMentalAttributeIntelligenceId:
-          return attr_intelligence;
-        case kMentalAttributePerceptionId:
-          return attr_perception;
-        case kMentalAttributeWitsId:
-          return attr_wits;
-      }
-      break;
+      return GetMentalAttributeValue(attributeId);
   }
   return 0;
 }
@@ -673,10 +691,11 @@ int CharacterType::GetBackgroundValue(int backgroundId) const {
   return 0;
 }
 
-void CharacterType::FillBackgroundValues(std::vector<int> backgroundValues) const {
-  backgroundValues.clear();
-  for (int backgroundId = 0; backgroundId <= kBackgroundsCount; backgroundId++) {
-    backgroundValues[backgroundId] = GetBackgroundValue(backgroundId);
+void CharacterType::FillBackgroundValues(std::vector<int> values) const {
+  values.clear();
+  values.push_back(0);  // To pad the indexes.
+  for (int backgroundId = 1; backgroundId <= kBackgroundsCount; backgroundId++) {
+    values[backgroundId] = GetBackgroundValue(backgroundId);
   }
 }
 

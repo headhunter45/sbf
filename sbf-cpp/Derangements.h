@@ -33,7 +33,7 @@ const uint8_t kDerangementDelusionsOfGrandeurTextColor = kColorDarkMagenta;
 const std::string kDerangementDelusionsOfGrandeurLabel = "Delusions of Grandeur";
 const std::string kDerangementDelusionsOfGrandeurDescription = R"---(You imagine you are better than you are.)---";
 const int kDerangementFantasyId = 3;
-const uint8_t kDerangementFantasyTextColor = kColorDarkOrange;
+const uint8_t kDerangementFantasyTextColor = kColorDarkYellow;
 const std::string kDerangementFantasyLabel = "Fantasy";
 const std::string kDerangementFantasyDescription =
     R"---(You enter a self-created world where you are the forgotten hero.)---";

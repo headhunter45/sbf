@@ -148,7 +148,7 @@ TestResults test_DerangementType_operator_extract() {
           make_test<string, DerangementType>("should print amnesia",
                                              "Derangement: {id: 1, label: \"" + kDerangementAmnesiaLabel
                                                  + "\", description: \"" + kDerangementAmnesiaDescription
-                                                 + "\", textColor: 4}",
+                                                 + "\", textColor: 1}",
                                              make_tuple(kDerangementAmnesia)),
           make_test<string, DerangementType>("should print delusions of grandeur",
                                              "Derangement: {id: 2, label: \"" + kDerangementDelusionsOfGrandeurLabel
@@ -158,7 +158,7 @@ TestResults test_DerangementType_operator_extract() {
           make_test<string, DerangementType>("should print fantasy",
                                              "Derangement: {id: 3, label: \"" + kDerangementFantasyLabel
                                                  + "\", description: \"" + kDerangementFantasyDescription
-                                                 + "\", textColor: 6}",
+                                                 + "\", textColor: 3}",
                                              make_tuple(kDerangementFantasy)),
           make_test<string, DerangementType>("should print manic depression",
                                              "Derangement: {id: 4, label: \"" + kDerangementManicDepressionLabel
@@ -168,7 +168,7 @@ TestResults test_DerangementType_operator_extract() {
           make_test<string, DerangementType>("should print multiple personalities",
                                              "Derangement: {id: 5, label: \"" + kDerangementMultiplePersonalitiesLabel
                                                  + "\", description: \"" + kDerangementMultiplePersonalitiesDescription
-                                                 + "\", textColor: 1}",
+                                                 + "\", textColor: 4}",
                                              make_tuple(kDerangementMultiplePersonalities)),
           make_test<string, DerangementType>("should print obsession",
                                              "Derangement: {id: 6, label: \"" + kDerangementObsessionLabel
@@ -178,12 +178,12 @@ TestResults test_DerangementType_operator_extract() {
           make_test<string, DerangementType>("should print overcompensation",
                                              "Derangement: {id: 7, label: \"" + kDerangementOvercompensationLabel
                                                  + "\", description: \"" + kDerangementOvercompensationDescription
-                                                 + "\", textColor: 11}",
+                                                 + "\", textColor: 14}",
                                              make_tuple(kDerangementOvercompensation)),
           make_test<string, DerangementType>("should print paranoia",
                                              "Derangement: {id: 8, label: \"" + kDerangementParanoiaLabel
                                                  + "\", description: \"" + kDerangementParanoiaDescription
-                                                 + "\", textColor: 12}",
+                                                 + "\", textColor: 9}",
                                              make_tuple(kDerangementParanoia)),
           make_test<string, DerangementType>("should print perfection",
                                              "Derangement: {id: 9, label: \"" + kDerangementPerfectionLabel
@@ -193,7 +193,7 @@ TestResults test_DerangementType_operator_extract() {
           make_test<string, DerangementType>("should print regression",
                                              "Derangement: {id: 10, label: \"" + kDerangementRegressionLabel
                                                  + "\", description: \"" + kDerangementRegressionDescription
-                                                 + "\", textColor: 14}",
+                                                 + "\", textColor: 11}",
                                              make_tuple(kDerangementRegression)),
           make_test<string, DerangementType>(
               "should print an unknown derangement",
