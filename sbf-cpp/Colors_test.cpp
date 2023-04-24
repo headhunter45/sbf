@@ -132,15 +132,15 @@ TestResults test_GetForegroundColor() {
 }
 
 TestResults test_SetBackgroundColor() {
-  // TODO: Test that SetBackgroundColor returns the previous background color.
-  auto fnToTest = [](uint8_t color) -> uint8_t {
+  TestResults results;
+  auto set_background_color_get_background_color = [](uint8_t color) -> uint8_t {
     SBF::g_background_color = 255;
     SetBackgroundColor(color);
     return SBF::g_background_color;
   };
-  return execute_suite<uint32_t, uint32_t>(make_test_suite(
+  results += execute_suite<uint32_t, uint32_t>(make_test_suite(
       "SBF::SetBackgroundColor",
-      fnToTest,
+      set_background_color_get_background_color,
       vector<TestTuple<uint32_t, uint32_t>>({
           make_test<uint32_t, uint32_t>(
               "should set background color to kColorDarkBlack when color is 0", kColorDarkBlack, make_tuple(0U)),
@@ -177,18 +177,42 @@ TestResults test_SetBackgroundColor() {
           make_test<uint32_t, uint32_t>(
               "should set background color to kColorBrightWhite when color is 15", kColorBrightWhite, make_tuple(15U)),
       })));
+
+  auto set_background_color_returns = [](uint8_t color, uint8_t previous_color) -> uint32_t {
+    SBF::g_background_color = previous_color;
+    return SetBackgroundColor(color);
+  };
+  results += execute_suite<uint32_t, uint8_t, uint8_t>(make_test_suite(
+      "SBF::SetBackgroundColor",
+      set_background_color_returns,
+      vector<TestTuple<uint32_t, uint8_t, uint8_t>>({
+          make_test<uint32_t, uint8_t, uint8_t>(
+              "should set return the previous color when changing from kColorBrightYellow to kColorDarkGreen",
+              uint32_t(kColorBrightYellow),
+              make_tuple(kColorDarkGreen, kColorBrightYellow)),
+          make_test<uint32_t, uint8_t, uint8_t>(
+              "should set return the previous color when changing from kColorBrightMagenta to kColorDarkMagenta",
+              uint32_t(kColorBrightMagenta),
+              make_tuple(kColorDarkMagenta, kColorBrightMagenta)),
+          make_test<uint32_t, uint8_t, uint8_t>(
+              "should set return the previous color when changing from kColorBrightCyan to kColorBrightCyan",
+              uint32_t(kColorBrightCyan),
+              make_tuple(kColorBrightCyan, kColorBrightCyan)),
+      })));
+
+  return results;
 }
 
 TestResults test_SetForegroundColor() {
-  // TODO: Test that SetForegroundColor returns the previous background color.
-  auto fnToTest = [](uint8_t color) -> uint8_t {
+  TestResults results;
+  auto set_foreground_color_get_foreground_color = [](uint8_t color) -> uint8_t {
     SBF::g_foreground_color = 255;
     SetForegroundColor(color);
     return SBF::g_foreground_color;
   };
-  return execute_suite<uint32_t, uint32_t>(make_test_suite(
+  results += execute_suite<uint32_t, uint32_t>(make_test_suite(
       "SBF::SetForegroundColor",
-      fnToTest,
+      set_foreground_color_get_foreground_color,
       vector<TestTuple<uint32_t, uint32_t>>({
           make_test<uint32_t, uint32_t>(
               "should set foreground color to kColorDarkBlack when color is 0", kColorDarkBlack, make_tuple(0U)),
@@ -225,6 +249,30 @@ TestResults test_SetForegroundColor() {
           make_test<uint32_t, uint32_t>(
               "should set foreground color to kColorBrightWhite when color is 15", kColorBrightWhite, make_tuple(15U)),
       })));
+
+  auto set_foreground_color_returns = [](uint8_t color, uint8_t previous_color) -> uint32_t {
+    SBF::g_foreground_color = previous_color;
+    return SetForegroundColor(color);
+  };
+  results += execute_suite<uint32_t, uint8_t, uint8_t>(make_test_suite(
+      "SBF::SetForegroundColor",
+      set_foreground_color_returns,
+      vector<TestTuple<uint32_t, uint8_t, uint8_t>>({
+          make_test<uint32_t, uint8_t, uint8_t>(
+              "should set return the previous color when changing from kColorBrightYellow to kColorDarkGreen",
+              uint32_t(kColorBrightYellow),
+              make_tuple(kColorDarkGreen, kColorBrightYellow)),
+          make_test<uint32_t, uint8_t, uint8_t>(
+              "should set return the previous color when changing from kColorBrightMagenta to kColorDarkMagenta",
+              uint32_t(kColorBrightMagenta),
+              make_tuple(kColorDarkMagenta, kColorBrightMagenta)),
+          make_test<uint32_t, uint8_t, uint8_t>(
+              "should set return the previous color when changing from kColorBrightCyan to kColorBrightCyan",
+              uint32_t(kColorBrightCyan),
+              make_tuple(kColorBrightCyan, kColorBrightCyan)),
+      })));
+
+  return results;
 }
 
 TestResults test_Reset() {
@@ -295,27 +343,44 @@ TestResults test_BackgroundColor() {
 TestResults test_Colors() {
   // TODO: Find a way to check for the presence of both colors and no extra characters without regard to their order.
   auto fnToTest = [](uint8_t foreground_color, uint8_t background_color) -> string {
+    ostringstream error_message;
     SetForegroundColor(foreground_color);
     SetBackgroundColor(background_color);
+    regex foreground_color_regex("\033\\[38;5;" + to_string(foreground_color) + "m");
+    regex background_color_regex("\033\\[48;5;" + to_string(background_color) + "m");
     ostringstream os;
     os << SBF::Colors;
-    return escape_string(os.str());
+    string colors_string = os.str();
+    if (!regex_search(colors_string, foreground_color_regex)) {
+      error_message << "missing foreground color ";
+    }
+    if (!regex_search(colors_string, background_color_regex)) {
+      error_message << "missing background color ";
+    }
+    if (!regex_replace(regex_replace(colors_string, foreground_color_regex, ""), background_color_regex, "").empty()) {
+      error_message << "extra characters in stream ";
+    }
+    if (!error_message.str().empty()) {
+      error_message << " actual: " << escape_string(os.str());
+      return error_message.str();
+    }
+    return "no errors";
   };
   return execute_suite(make_test_suite(
-      "SBF::ForegroundColor",
+      "SBF::Colors",
       fnToTest,
       vector<TestTuple<string, uint8_t, uint8_t>>({
           make_test<string, uint8_t, uint8_t>("should write \"\\033[38;5;15m\\033[48;5;6m\" to the stream",
-                                              "\\033[38;5;15m\\033[48;5;6m",
+                                              "no errors",
                                               make_tuple(kColorBrightWhite, kColorDarkCyan)),
           make_test<string, uint8_t, uint8_t>("should write \"\\033[38;5;11m\\033[48;5;2m\" to the stream",
-                                              "\\033[38;5;11m\\033[48;5;2m",
+                                              "no errors",
                                               make_tuple(kColorBrightYellow, kColorDarkGreen)),
           make_test<string, uint8_t, uint8_t>("should write \"\\033[38;5;2m\\033[48;5;13m\" to the stream",
-                                              "\\033[38;5;2m\\033[48;5;13m",
+                                              "no errors",
                                               make_tuple(kColorDarkGreen, kColorBrightMagenta)),
           make_test<string, uint8_t, uint8_t>("should write \"\\033[38;5;4m\\033[48;5;1m\" to the stream",
-                                              "\\033[38;5;4m\\033[48;5;1m",
+                                              "no errors",
                                               make_tuple(kColorDarkBlue, kColorDarkRed)),
       })));
 }

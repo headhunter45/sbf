@@ -21,13 +21,13 @@ uint8_t GetForegroundColor() {
 }
 
 uint8_t SetBackgroundColor(uint8_t color) {
-  uint8_t previous_color = color;
+  uint8_t previous_color = g_background_color;
   g_background_color = color;
   return previous_color;
 }
 
 uint8_t SetForegroundColor(uint8_t color) {
-  uint8_t previous_color = color;
+  uint8_t previous_color = g_foreground_color;
   g_foreground_color = color;
   return previous_color;
 }
