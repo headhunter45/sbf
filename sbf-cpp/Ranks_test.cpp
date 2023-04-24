@@ -8,41 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Ranks {
-TestResults test_RankType_operator_extract();
-TestResults test_RankType_operator_equal_to();
-TestResults test_RankType_operator_not_equal_to();
-TestResults test_GetRank();
-TestResults test_FillRanks();
-}  // End namespace Test::Ranks
-
-using namespace Test::Ranks;
-
-TestResults main_test_Ranks(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_RankType_operator_extract();
-  results += test_RankType_operator_equal_to();
-  results += test_RankType_operator_not_equal_to();
-  results += test_GetRank();
-  results += test_FillRanks();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Ranks(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Ranks {
 TestResults test_GetRank() {
   return execute_suite<RankType, int>(make_test_suite(
       "SBF::GetRank",
@@ -137,4 +108,17 @@ TestResults test_RankType_operator_not_equal_to() {
                                               make_tuple(kRankSecondary, kRankTertiary)),
       })));
 }
-}  // namespace Test::Ranks
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_RankType_operator_extract();
+  results += test_RankType_operator_equal_to();
+  results += test_RankType_operator_not_equal_to();
+  results += test_GetRank();
+  results += test_FillRanks();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}

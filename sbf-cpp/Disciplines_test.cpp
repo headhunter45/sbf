@@ -8,35 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Disciplines {
-TestResults test_GetDisciplineLabel();
-TestResults test_FillDisciplineLabels();
-}  // End namespace Test::Disciplines
-
-using namespace Test::Disciplines;
-
-TestResults main_test_Disciplines(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_GetDisciplineLabel();
-  results += test_FillDisciplineLabels();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Disciplines(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Disciplines {
 TestResults test_GetDisciplineLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetDisciplineLabel",
@@ -100,4 +77,12 @@ TestResults test_FillDisciplineLabels() {
                           make_test<string>("should fill disciplines", "no errors", make_tuple()),
                       })));
 }
-}  // End namespace Test::Disciplines
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_GetDisciplineLabel();
+  results += test_FillDisciplineLabels();
+
+  return results.failed() + results.errors();
+}

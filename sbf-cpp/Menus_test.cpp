@@ -10,60 +10,16 @@
 #include "Colors.h"
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Menus {
-TestResults test_MenuItem_constructor();
-TestResults test_MenuItem_constructor_string_int();
-TestResults test_MenuItem_constructor_string_int_int();
-TestResults test_MenuItem_constructor_string_int_uint8_t();
-TestResults test_MenuStyle_constructor();
-TestResults test_MenuStyle_Adjust();
-TestResults test_GetRandomMenuItemId();
-TestResults test_BuildMenu();
-TestResults test_BuildMenuWithValues();
-TestResults test_BuildMenuWithColors();
-TestResults test_PrintMenu();
-TestResults test_GetTitle();
-TestResults test_GetTitleWithoutValue();
-TestResults test_PrintWithMaybeColor();
-string escape_string(const string& text, const string& pattern = "\033", const string& replace = "\\033");
-}  // End namespace Test::Menus
-
-using namespace Test::Menus;
-
-TestResults main_test_Menus(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_MenuItem_constructor();
-  results += test_MenuItem_constructor_string_int();
-  results += test_MenuItem_constructor_string_int_int();
-  results += test_MenuItem_constructor_string_int_uint8_t();
-  results += test_MenuStyle_constructor();
-  results += test_MenuStyle_Adjust();
-  results += test_GetRandomMenuItemId();
-  results += test_BuildMenu();
-  results += test_BuildMenuWithValues();
-  results += test_BuildMenuWithColors();
-  results += test_PrintMenu();
-  results += test_GetTitle();
-  results += test_GetTitleWithoutValue();
-  results += test_PrintWithMaybeColor();
-
-  PrintResults(cout, results);
-
-  return results;
+string escape_string(const string& text, const string& pattern = "\033", const string& replace = "\\033") {
+  return regex_replace(text, regex(pattern), replace);
 }
 
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Menus(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Menus {
 TestResults test_MenuItem_constructor() {
   return TestResults().skip("// TODO: test_MenuItem_constructor");
 }
@@ -149,7 +105,25 @@ TestResults test_PrintWithMaybeColor() {
                       })));
 }
 
-string escape_string(const string& text, const string& pattern, const string& replace) {
-  return regex_replace(text, regex(pattern), replace);
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_MenuItem_constructor();
+  results += test_MenuItem_constructor_string_int();
+  results += test_MenuItem_constructor_string_int_int();
+  results += test_MenuItem_constructor_string_int_uint8_t();
+  results += test_MenuStyle_constructor();
+  results += test_MenuStyle_Adjust();
+  results += test_GetRandomMenuItemId();
+  results += test_BuildMenu();
+  results += test_BuildMenuWithValues();
+  results += test_BuildMenuWithColors();
+  results += test_PrintMenu();
+  results += test_GetTitle();
+  results += test_GetTitleWithoutValue();
+  results += test_PrintWithMaybeColor();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
 }
-}  // namespace Test::Menus

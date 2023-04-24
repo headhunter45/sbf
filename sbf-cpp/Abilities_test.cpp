@@ -4,61 +4,13 @@
 #include <sstream>
 
 #include "test.h"
+
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Abilities {
-TestResults test_AbilityType_operator_extract();
-TestResults test_AbilityType_operator_equal_to();
-TestResults test_AbilityType_operator_not_equal_to();
-TestResults test_FillAbilities();
-TestResults test_FillAbilitiesForAbilityGroup();
-TestResults test_FillAbilityLabels();
-TestResults test_FillKnowledgeLabels();
-TestResults test_FillSkillLabels();
-TestResults test_FillTalentLabels();
-TestResults test_GetAbility();
-TestResults test_GetAbilityLabel();
-TestResults test_GetKnowledgeLabel();
-TestResults test_GetNumItemsForAbilityGroup();
-TestResults test_GetSkillLabel();
-TestResults test_GetTalentLabel();
-}  // End namespace Test::Abilities
-
-using namespace Test::Abilities;
-
-TestResults main_test_Abilities(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_AbilityType_operator_extract();
-  results += test_AbilityType_operator_equal_to();
-  results += test_AbilityType_operator_not_equal_to();
-  results += test_FillAbilities();
-  results += test_FillAbilitiesForAbilityGroup();
-  results += test_FillAbilityLabels();
-  results += test_FillKnowledgeLabels();
-  results += test_FillSkillLabels();
-  results += test_FillTalentLabels();
-  results += test_GetAbility();
-  results += test_GetAbilityLabel();
-  results += test_GetKnowledgeLabel();
-  results += test_GetNumItemsForAbilityGroup();
-  results += test_GetSkillLabel();
-  results += test_GetTalentLabel();
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Abilities(argc, argv);
-
-  PrintResults(cout, results);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Abilities {
 TestResults test_AbilityType_operator_extract() {
   return execute_suite<string, AbilityType>(make_test_suite(
       "SBF::AbilityType::operator<<",
@@ -478,4 +430,27 @@ TestResults test_GetTalentLabel() {
                           make_test<string, int>("should get and empty string for id 11", "", make_tuple(11)),
                       })));
 }
-}  // End namespace Test::Abilities
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_AbilityType_operator_extract();
+  results += test_AbilityType_operator_equal_to();
+  results += test_AbilityType_operator_not_equal_to();
+  results += test_FillAbilities();
+  results += test_FillAbilitiesForAbilityGroup();
+  results += test_FillAbilityLabels();
+  results += test_FillKnowledgeLabels();
+  results += test_FillSkillLabels();
+  results += test_FillTalentLabels();
+  results += test_GetAbility();
+  results += test_GetAbilityLabel();
+  results += test_GetKnowledgeLabel();
+  results += test_GetNumItemsForAbilityGroup();
+  results += test_GetSkillLabel();
+  results += test_GetTalentLabel();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}

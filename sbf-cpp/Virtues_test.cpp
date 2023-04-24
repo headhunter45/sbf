@@ -7,35 +7,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Virtues {
-TestResults test_GetVirtueLabel();
-TestResults test_FillVirtueLabels();
-}  // End namespace Test::Virtues
-
-using namespace Test::Virtues;
-
-TestResults main_test_Virtues(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_GetVirtueLabel();
-  results += test_FillVirtueLabels();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Virtues(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Virtues {
 TestResults test_GetVirtueLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetVirtueLabel",
@@ -73,4 +50,13 @@ TestResults test_FillVirtueLabels() {
                                                })));
 }
 
-}  // End namespace Test::Virtues
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_GetVirtueLabel();
+  results += test_FillVirtueLabels();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}

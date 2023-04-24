@@ -8,41 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Freebies {
-TestResults test_FreebieType_operator_extract();
-TestResults test_FreebieType_operator_equal_to();
-TestResults test_FreebieType_operator_not_equal_to();
-TestResults test_GetFreebie();
-TestResults test_FillFreebies();
-}  // End namespace Test::Freebies
-
-using namespace Test::Freebies;
-
-TestResults main_test_Freebies(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_FreebieType_operator_extract();
-  results += test_FreebieType_operator_equal_to();
-  results += test_FreebieType_operator_not_equal_to();
-  results += test_GetFreebie();
-  results += test_FillFreebies();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Freebies(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Freebies {
 TestResults test_FreebieType_operator_extract() {
   auto fnToTest = [](const FreebieType& freebie) -> string {
     ostringstream os;
@@ -188,4 +159,14 @@ TestResults test_FillFreebies() {
       vector<TestTuple<string>>({make_test<string>("should fill freebies", "no errors", make_tuple())})));
 }
 
-}  // End namespace Test::Freebies
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_FreebieType_operator_extract();
+  results += test_FreebieType_operator_equal_to();
+  results += test_FreebieType_operator_not_equal_to();
+  results += test_GetFreebie();
+  results += test_FillFreebies();
+
+  return results.failed() + results.errors();
+}

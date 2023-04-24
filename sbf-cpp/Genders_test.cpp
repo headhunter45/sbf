@@ -8,35 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Genders {
-TestResults test_GetGenderLabel();
-TestResults test_FillGenderLabels();
-}  // End namespace Test::Genders
-
-using namespace Test::Genders;
-
-TestResults main_test_Genders(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_GetGenderLabel();
-  results += test_FillGenderLabels();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Genders(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Genders {
 TestResults test_GetGenderLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetGenderLabel",
@@ -77,4 +54,12 @@ TestResults test_FillGenderLabels() {
                                                    make_test<string>("should fill genders", "no errors", make_tuple()),
                                                })));
 }
-}  // End namespace Test::Genders
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_GetGenderLabel();
+  results += test_FillGenderLabels();
+
+  return results.failed() + results.errors();
+}

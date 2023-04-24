@@ -8,35 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Clans {
-TestResults test_GetClanLabel();
-TestResults test_FillClanLabels();
-}  // End namespace Test::Clans
-
-using namespace Test::Clans;
-
-TestResults main_test_Clans(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_GetClanLabel();
-  results += test_FillClanLabels();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Clans(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Clans {
 TestResults test_GetClanLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetClanLabel",
@@ -104,4 +81,12 @@ TestResults test_FillClanLabels() {
 
           ));
 }
-}  // End namespace Test::Clans
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_GetClanLabel();
+  results += test_FillClanLabels();
+
+  return results.failed() + results.errors();
+}

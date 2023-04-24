@@ -8,35 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // namespace
 
-namespace Test::Backgrounds {
-TestResults test_GetBackgroundLabel();
-TestResults test_FillBackgroundLabels();
-}  // namespace Test::Backgrounds
-
-using namespace Test::Backgrounds;
-
-TestResults main_test_Backgrounds(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_GetBackgroundLabel();
-  results += test_FillBackgroundLabels();
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Backgrounds(argc, argv);
-
-  PrintResults(cout, results);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Backgrounds {
 TestResults test_GetBackgroundLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetBackgroundLabel",
@@ -95,4 +72,14 @@ TestResults test_FillBackgroundLabels() {
 
           ));
 }
-}  // End namespace Test::Backgrounds
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_GetBackgroundLabel();
+  results += test_FillBackgroundLabels();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}

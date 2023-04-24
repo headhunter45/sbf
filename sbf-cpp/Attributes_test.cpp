@@ -8,61 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Attributes {
-TestResults test_GetAttributeGroupLabel();
-TestResults test_GetAttributeLabel();
-TestResults test_GetAttributeLabelAbbreviation();
-TestResults test_GetNumAttributesInGroup();
-TestResults test_GetPhysicalAttributeLabel();
-TestResults test_GetPhysicalAttributeLabelAbbreviation();
-TestResults test_GetSocialAttributeLabel();
-TestResults test_GetSocialAttributeLabelAbbreviation();
-TestResults test_GetMentalAttributeLabel();
-TestResults test_GetMentalAttributeLabelAbbreviation();
-TestResults test_FillAttributeGroupLabels();
-TestResults test_FillAttributeLabelsInGroup();
-TestResults test_FillPhysicalAttributeLabels();
-TestResults test_FillSocialAttributeLabels();
-TestResults test_FillMentalAttributeLabels();
-}  // End namespace Test::Attributes
-
-using namespace Test::Attributes;
-
-TestResults main_test_Attributes(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_GetAttributeGroupLabel();
-  results += test_GetAttributeLabel();
-  results += test_GetAttributeLabelAbbreviation();
-  results += test_GetNumAttributesInGroup();
-  results += test_GetPhysicalAttributeLabel();
-  results += test_GetPhysicalAttributeLabelAbbreviation();
-  results += test_GetSocialAttributeLabel();
-  results += test_GetSocialAttributeLabelAbbreviation();
-  results += test_GetMentalAttributeLabel();
-  results += test_GetMentalAttributeLabelAbbreviation();
-  results += test_FillAttributeGroupLabels();
-  results += test_FillAttributeLabelsInGroup();
-  results += test_FillPhysicalAttributeLabels();
-  results += test_FillSocialAttributeLabels();
-  results += test_FillMentalAttributeLabels();
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Attributes(argc, argv);
-
-  PrintResults(cout, results);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Attributes {
 TestResults test_GetAttributeGroupLabel() {
   return execute_suite<string, int>(
       make_test_suite("SBF::GetAttributeGroupLabel",
@@ -330,4 +281,27 @@ TestResults test_FillMentalAttributeLabels() {
           make_test<string>("should fill mental attribute labels", "no errors", make_tuple()),
       })));
 }
-}  // namespace Test::Attributes
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_GetAttributeGroupLabel();
+  results += test_GetAttributeLabel();
+  results += test_GetAttributeLabelAbbreviation();
+  results += test_GetNumAttributesInGroup();
+  results += test_GetPhysicalAttributeLabel();
+  results += test_GetPhysicalAttributeLabelAbbreviation();
+  results += test_GetSocialAttributeLabel();
+  results += test_GetSocialAttributeLabelAbbreviation();
+  results += test_GetMentalAttributeLabel();
+  results += test_GetMentalAttributeLabelAbbreviation();
+  results += test_FillAttributeGroupLabels();
+  results += test_FillAttributeLabelsInGroup();
+  results += test_FillPhysicalAttributeLabels();
+  results += test_FillSocialAttributeLabels();
+  results += test_FillMentalAttributeLabels();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}

@@ -7,53 +7,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Utils {
-TestResults test_get_index_of();
-TestResults test_get_substring();
-TestResults test_left();
-TestResults test_left_trim();
-TestResults test_make_fit_c();
-TestResults test_make_fit_l();
-TestResults test_make_fit_r();
-TestResults test_right();
-TestResults test_right_trim();
-TestResults test_string_dollar();
-TestResults test_word_wrap();
-}  // End namespace Test::Utils
-
-using namespace Test::Utils;
-
-TestResults main_test_Utils(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_get_index_of();
-  results += test_get_substring();
-  results += test_left();
-  results += test_left_trim();
-  results += test_make_fit_c();
-  results += test_make_fit_l();
-  results += test_make_fit_r();
-  results += test_right();
-  results += test_right_trim();
-  results += test_string_dollar();
-  results += test_word_wrap();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Utils(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Utils {
 TestResults test_get_index_of() {
   string long_text =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's "
@@ -63,7 +22,7 @@ TestResults test_get_index_of() {
       "sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker "
       "including versions of Lorem Ipsum.";
   return execute_suite<size_t, string, string, size_t>(make_test_suite(
-      "SBF::get_index_of",
+      "SBF::Utils::get_index_of",
       get_index_of,
       vector<TestTuple<size_t, string, string, size_t>>({
           make_test<size_t, string, string, size_t>(
@@ -97,7 +56,7 @@ TestResults test_get_index_of() {
 
 TestResults test_get_substring() {
   return execute_suite<string, string, size_t, size_t>(make_test_suite(
-      "SBF::get_substring",
+      "SBF::Utils::get_substring",
       get_substring,
       vector<TestTuple<string, string, size_t, size_t>>({
           make_test<string, string, size_t, size_t>(
@@ -120,7 +79,7 @@ TestResults test_get_substring() {
 
 TestResults test_left() {
   return execute_suite<string, string, size_t>(make_test_suite(
-      "SBF::left",
+      "SBF::Utils::left",
       SBF::left,
       vector<TestTuple<string, string, size_t>>({
           make_test<string, string, size_t>(
@@ -140,7 +99,7 @@ TestResults test_left() {
 
 TestResults test_right() {
   return execute_suite<string, string, size_t>(make_test_suite(
-      "SBF::right",
+      "SBF::Utils::right",
       SBF::right,
       vector<TestTuple<string, string, size_t>>({
           make_test<string, string, size_t>(
@@ -160,7 +119,7 @@ TestResults test_right() {
 
 TestResults test_make_fit_c() {
   return execute_suite<string, string, int32_t, char>(make_test_suite(
-      "SBF::make_fit_c",
+      "SBF::Utils::make_fit_c",
       make_fit_c,
       vector<TestTuple<string, string, int32_t, char>>({
           make_test<string, string, int32_t, char>(
@@ -179,7 +138,7 @@ TestResults test_make_fit_c() {
 
 TestResults test_make_fit_l() {
   return execute_suite<string, string, int32_t, char>(make_test_suite(
-      "SBF::make_fit_l",
+      "SBF::Utils::make_fit_l",
       make_fit_l,
       vector<TestTuple<string, string, int32_t, char>>({
           make_test<string, string, int32_t, char>(
@@ -198,7 +157,7 @@ TestResults test_make_fit_l() {
 
 TestResults test_make_fit_r() {
   return execute_suite<string, string, int32_t, char>(make_test_suite(
-      "SBF::make_fit_r",
+      "SBF::Utils::make_fit_r",
       make_fit_r,
       vector<TestTuple<string, string, int32_t, char>>({
           make_test<string, string, int32_t, char>(
@@ -217,7 +176,7 @@ TestResults test_make_fit_r() {
 
 TestResults test_left_trim() {
   return execute_suite<string, string>(make_test_suite(
-      "SBF::left_trim",
+      "SBF::Utils::left_trim",
       left_trim,
       vector<TestTuple<string, string>>({
           make_test<string, string>("should trim a string with spaces",
@@ -248,7 +207,7 @@ TestResults test_left_trim() {
 
 TestResults test_right_trim() {
   return execute_suite<string, string>(make_test_suite(
-      "SBF::right_trim",
+      "SBF::Utils::right_trim",
       right_trim,
       vector<TestTuple<string, string>>({
           make_test<string, string>("should trim a string with spaces",
@@ -279,7 +238,7 @@ TestResults test_right_trim() {
 
 TestResults test_string_dollar() {
   return execute_suite<string, size_t, char>(make_test_suite(
-      "SBF::string_dollar",
+      "SBF::Utils::string_dollar",
       string_dollar,
       vector<TestTuple<string, size_t, char>>({
           make_test<string, size_t, char>("should make a string", "YYYYY", make_tuple(size_t(5), 'Y')),
@@ -289,31 +248,72 @@ TestResults test_string_dollar() {
       })));
 }
 
-// string word_wrap(const string& text, int maxWidth);
 TestResults test_word_wrap() {
-  return TestResults().skip("SBF::word_wrap");
-  //   return execute_suite<string, string, int32_t>(make_test_suite(
-  //       "SBF::word_wrap",
-  //       word_wrap,
-  //       vector<TestTuple<string, string, int32_t>>({
-  //           make_test<string, string, int32_t>(
-  //               "should return the string if it is shorter than max_width", "0123_", make_tuple(string("0123"), 5)),
-  //           make_test<string, string, int32_t>(
-  //               "should return the string if its length is equal to max_width", "01234", make_tuple(string("01234"),
-  //               5)),
-  //           make_test<string, string, int32_t>("should wrap a string to two lines if it has no whitespace",
-  //                                              "01234\n5____",
-  //                                              make_tuple(string("012345"), 5)),
-  //           make_test<string, string, int32_t>("should wrap a string to three lines if it has no whitespace",
-  //                                              "01234\n56789\n0____",
-  //                                              make_tuple(string("01234567890"), 5)),
-  //           make_test<string, string, int32_t>("should wrap a string with even spacing",
-  //                                              "01 23\n45 67\n89 01",
-  //                                              make_tuple(string("01 23 45 67 89 01"), 5)),
-  //           make_test<string, string, int32_t>("should collapse whitespace to a single space",
-  //                                              "01 34\n67 90\n23 56\n89___",
-  //                                              make_tuple(string("01 34 67 90 23 56    89      "), 5)),
-  //           // TODO: Treat newlines and tabs in text as spaces.
-  //       })));
+  // TODO: Treat newlines and tabs in text as spaces.
+  auto fnToTest = [](string text, int32_t column_width, vector<string> expected) -> string {
+    ostringstream error_message;
+    try {
+      vector<string> actual = word_wrap(text, column_width);
+      compare(error_message, expected, actual);
+    } catch (const exception& ex) {
+      error_message << ex.what();
+    } catch (...) {
+      error_message << "threw something that was not an exception";
+    }
+    string error_string = error_message.str();
+    if (error_string.size() > 0) {
+      return error_message.str();
+    }
+    return "no errors";
+  };
+  return execute_suite<string, string, int32_t, vector<string>>(make_test_suite(
+      "SBF::Utils::word_wrap",
+      fnToTest,
+      vector<TestTuple<string, string, int32_t, vector<string>>>({
+          make_test<string, string, int32_t, vector<string>>("should return the string if it is shorter than max_width",
+                                                             "no errors",
+                                                             make_tuple(string("0123"), 5, vector<string>({"0123_"}))),
+          make_test<string, string, int32_t, vector<string>>(
+              "should return the string if its length is equal to max_width",
+              "no errors",
+              make_tuple(string("01234"), 5, vector<string>({"01234"}))),
+          make_test<string, string, int32_t, vector<string>>(
+              "should wrap a string to two lines if it has no whitespace",
+              "no errors",
+              make_tuple(string("012345"), 5, vector<string>({"01234", "5____"}))),
+          make_test<string, string, int32_t, vector<string>>(
+              "should wrap a string to three lines if it has no whitespace",
+              "no errors",
+              make_tuple(string("01234567890"), 5, vector<string>({"01234", "56789", "0____"}))),
+          make_test<string, string, int32_t, vector<string>>(
+              "should wrap a string with even spacing",
+              "no errors",
+              make_tuple(string("01 23 45 67 89 01"), 5, vector<string>({"01 23", "45 67", "89 01"}))),
+          make_test<string, string, int32_t, vector<string>>(
+              "should collapse whitespace to a single space",
+              "no errors",
+              make_tuple(
+                  string("01 34 67 90 23 56    89      "), 5, vector<string>({"01 34", "67 90", "23 56", "89___"}))),
+
+      })));
 }
-}  // End namespace Test::Utils
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_get_index_of();
+  results += test_get_substring();
+  results += test_left();
+  results += test_left_trim();
+  results += test_make_fit_c();
+  results += test_make_fit_l();
+  results += test_make_fit_r();
+  results += test_right();
+  results += test_right_trim();
+  results += test_string_dollar();
+  results += test_word_wrap();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}

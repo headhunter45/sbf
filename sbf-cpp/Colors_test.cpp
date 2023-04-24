@@ -8,59 +8,21 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
-
-namespace Test::Colors {
-TestResults test_FillColors();
-TestResults test_GetBackgroundColor();
-TestResults test_GetForegroundColor();
-TestResults test_SetBackgroundColor();
-TestResults test_SetForegroundColor();
-TestResults test_Reset();
-TestResults test_ForegroundColor();
-TestResults test_BackgroundColor();
-TestResults test_Colors();
-TestResults test_TrueColorForeground();
-TestResults test_TrueColorBackground();
-string escape_string(const string& text, const string& pattern = "\033", const string& replace = "\\033");
-}  // End namespace Test::Colors
-
-using namespace Test::Colors;
+}  // End namespace
 
 namespace SBF {
 extern uint8_t g_foreground_color;
 extern uint8_t g_background_color;
 }  // namespace SBF
 
-TestResults main_test_Colors(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_FillColors();
-  results += test_GetBackgroundColor();
-  results += test_GetForegroundColor();
-  results += test_SetBackgroundColor();
-  results += test_SetForegroundColor();
-  results += test_Reset();
-  results += test_ForegroundColor();
-  results += test_BackgroundColor();
-  results += test_Colors();
-  results += test_TrueColorForeground();
-  results += test_TrueColorBackground();
-
-  return results;
+string escape_string(const string& text, const string& pattern = "\033", const string& replace = "\\033") {
+  return regex_replace(text, regex(pattern), replace);
 }
 
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Colors(argc, argv);
-
-  PrintResults(cout, results);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Colors {
 TestResults test_FillColors() {
   return execute_suite<string>(make_test_suite(
       "SBF::FillColors",
@@ -368,7 +330,22 @@ TestResults test_TrueColorBackground() {
   return TestResults().skip("// TODO: test_TrueColorBackground");
 }
 
-string escape_string(const string& text, const string& pattern, const string& replace) {
-  return regex_replace(text, regex(pattern), replace);
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_FillColors();
+  results += test_GetBackgroundColor();
+  results += test_GetForegroundColor();
+  results += test_SetBackgroundColor();
+  results += test_SetForegroundColor();
+  results += test_Reset();
+  results += test_ForegroundColor();
+  results += test_BackgroundColor();
+  results += test_Colors();
+  results += test_TrueColorForeground();
+  results += test_TrueColorBackground();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
 }
-}  // End namespace Test::Colors

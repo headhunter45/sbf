@@ -8,41 +8,12 @@
 
 #include "test.h"
 
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // namespace
 
-namespace Test::Derangements {
-TestResults test_DerangementType_operator_extract();
-TestResults test_DerangementType_operator_equal_to();
-TestResults test_DerangementType_operator_not_equal_to();
-TestResults test_GetDerangement();
-TestResults test_FillDerangements();
-}  // namespace Test::Derangements
-
-using namespace Test::Derangements;
-
-TestResults main_test_Derangements(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_DerangementType_operator_extract();
-  results += test_DerangementType_operator_equal_to();
-  results += test_DerangementType_operator_not_equal_to();
-  results += test_GetDerangement();
-  results += test_FillDerangements();
-
-  PrintResults(cout, results);
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Derangements(argc, argv);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Derangements {
 TestResults test_GetDerangement() {
   return execute_suite<DerangementType, int>(make_test_suite(
       "SBF::GetDerangement",
@@ -259,4 +230,14 @@ TestResults test_DerangementType_operator_not_equal_to() {
       })));
 }
 
-}  // namespace Test::Derangements
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_DerangementType_operator_extract();
+  results += test_DerangementType_operator_equal_to();
+  results += test_DerangementType_operator_not_equal_to();
+  results += test_GetDerangement();
+  results += test_FillDerangements();
+
+  return results.failed() + results.errors();
+}

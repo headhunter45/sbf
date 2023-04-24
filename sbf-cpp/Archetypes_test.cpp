@@ -4,35 +4,13 @@
 #include <sstream>
 
 #include "test.h"
+
+namespace {
 using namespace SBF;
 using namespace Test;
 using namespace std;
+}  // End namespace
 
-namespace Test::Archetypes {
-TestResults test_GetArchetypeLabel();
-TestResults test_FillArchetypeLabels();
-}  // End namespace Test::Archetypes
-
-using namespace Test::Archetypes;
-
-TestResults main_test_Archetypes(int argc, char* argv[]) {
-  TestResults results;
-
-  results += test_GetArchetypeLabel();
-  results += test_FillArchetypeLabels();
-
-  return results;
-}
-
-int main(int argc, char* argv[]) {
-  TestResults results = main_test_Archetypes(argc, argv);
-
-  PrintResults(cout, results);
-
-  return results.failed() + results.errors();
-}
-
-namespace Test::Archetypes {
 TestResults test_GetArchetypeLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetArchetypeLabel",
@@ -96,4 +74,14 @@ TestResults test_FillArchetypeLabels() {
           make_test<string>("should fill archetype labels", "no errors", make_tuple()),
       })));
 }
-}  // End namespace Test::Archetypes
+
+int main(int argc, char* argv[]) {
+  TestResults results;
+
+  results += test_GetArchetypeLabel();
+  results += test_FillArchetypeLabels();
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}
