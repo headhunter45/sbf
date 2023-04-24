@@ -1,5 +1,6 @@
 ﻿#include "Backgrounds.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -25,6 +26,14 @@ TestResults main_test_Backgrounds(int argc, char* argv[]) {
   results += test_FillBackgroundLabels();
 
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Backgrounds(argc, argv);
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Backgrounds {

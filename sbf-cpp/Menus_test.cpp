@@ -1,5 +1,6 @@
 #include "Menus.h"
 
+#include <iostream>
 #include <regex>
 #include <sstream>
 #include <string>
@@ -51,7 +52,15 @@ TestResults main_test_Menus(int argc, char* argv[]) {
   results += test_GetTitleWithoutValue();
   results += test_PrintWithMaybeColor();
 
+  PrintResults(cout, results);
+
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Menus(argc, argv);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Menus {

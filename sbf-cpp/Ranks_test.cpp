@@ -1,5 +1,6 @@
 ﻿#include "Ranks.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -30,7 +31,15 @@ TestResults main_test_Ranks(int argc, char* argv[]) {
   results += test_GetRank();
   results += test_FillRanks();
 
+  PrintResults(cout, results);
+
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Ranks(argc, argv);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Ranks {

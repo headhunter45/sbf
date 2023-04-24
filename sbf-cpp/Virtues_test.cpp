@@ -1,5 +1,6 @@
 ﻿#include "Virtues.h"
 
+#include <iostream>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -23,7 +24,15 @@ TestResults main_test_Virtues(int argc, char* argv[]) {
   results += test_GetVirtueLabel();
   results += test_FillVirtueLabels();
 
+  PrintResults(cout, results);
+
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Virtues(argc, argv);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Virtues {

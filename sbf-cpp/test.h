@@ -486,6 +486,11 @@ MaybeTestConfigureFunction coalesce(MaybeTestConfigureFunction first, MaybeTestC
     return second;
   }
 }
+
+/// @brief Writes a friendly version of results to the provided stream.
+/// @param os The stream to write to.
+/// @param results The TestResults to write.
+void PrintResults(std::ostream& os, TestResults results);
 }  // End namespace Test
 
 // TODO: define operator<< for std::tuple.

@@ -1,5 +1,6 @@
 #include "Random.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -22,7 +23,15 @@ TestResults main_test_Random(int argc, char* argv[]) {
 
   results += test_something();
 
+  PrintResults(cout, results);
+
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Random(argc, argv);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Random {

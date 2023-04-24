@@ -24,6 +24,14 @@ TestResults main_test_Archetypes(int argc, char* argv[]) {
   return results;
 }
 
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Archetypes(argc, argv);
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}
+
 namespace Test::Archetypes {
 TestResults test_GetArchetypeLabel() {
   return execute_suite<string, int>(make_test_suite(

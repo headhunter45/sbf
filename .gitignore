@@ -1,3 +1,7 @@
+/bazel-bin
+/bazel-out
+/bazel-sbf2000
+/bazel-testlogs
 /dos/qb45
 /dos/qbasic11
 /tmp

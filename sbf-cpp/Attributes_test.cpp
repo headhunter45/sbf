@@ -1,5 +1,6 @@
 ﻿#include "Attributes.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -51,6 +52,14 @@ TestResults main_test_Attributes(int argc, char* argv[]) {
   results += test_FillMentalAttributeLabels();
 
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Attributes(argc, argv);
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Attributes {

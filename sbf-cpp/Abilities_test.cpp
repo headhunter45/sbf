@@ -50,6 +50,14 @@ TestResults main_test_Abilities(int argc, char* argv[]) {
   return results;
 }
 
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Abilities(argc, argv);
+
+  PrintResults(cout, results);
+
+  return results.failed() + results.errors();
+}
+
 namespace Test::Abilities {
 TestResults test_AbilityType_operator_extract() {
   return execute_suite<string, AbilityType>(make_test_suite(

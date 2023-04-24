@@ -1,5 +1,6 @@
 ﻿#include "Genders.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <tuple>
@@ -24,7 +25,15 @@ TestResults main_test_Genders(int argc, char* argv[]) {
   results += test_GetGenderLabel();
   results += test_FillGenderLabels();
 
+  PrintResults(cout, results);
+
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Genders(argc, argv);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Genders {

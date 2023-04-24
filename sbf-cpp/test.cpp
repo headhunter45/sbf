@@ -7,13 +7,13 @@
 #include <string>
 #include <vector>
 
-// using namespace std;
+namespace Test {
+namespace {
+using std::endl;
 using std::string;
 using std::vector;
+}  // End namespace
 
-// using namespace Test;
-
-namespace Test {
 // Test lifecycle
 // suiteSetupFn(); - This is called to allocate any suite level resources. This is called once when the suite begins.
 // These functions may be called in parallel but execution will not proceed past this block until they have all
@@ -246,5 +246,34 @@ TestResults& TestResults::operator+=(const TestResults& other) {
   skipped_ += other.skipped_;
   total_ += other.total_;
   return *this;
+}
+
+void PrintResults(std::ostream& os, TestResults results) {
+  auto skip_messages = results.skip_messages();
+  if (skip_messages.size() > 0) {
+    os << "Skipped:" << endl;
+    for_each(skip_messages.begin(), skip_messages.end(), [&os](const string& message) {
+      os << "🚧Skipped: " << message << endl;
+    });
+  }
+  auto failure_messages = results.failure_messages();
+  if (failure_messages.size() > 0) {
+    os << "Failures:" << endl;
+    for_each(failure_messages.begin(), failure_messages.end(), [&os](const string& message) {
+      os << "❌FAILED: " << message << endl;
+    });
+  }
+  auto error_messages = results.error_messages();
+  if (error_messages.size() > 0) {
+    os << "Errors:" << endl;
+    for_each(error_messages.begin(), error_messages.end(), [&os](const string& message) {
+      os << "🔥ERROR: " << message << endl;
+    });
+  }
+  os << "Total tests: " << results.total() << endl;
+  os << "Passed:      " << results.passed() << " ✅" << endl;
+  os << "Failed:      " << results.failed() << " ❌" << endl;
+  os << "Skipped:     " << results.skipped() << " 🚧" << endl;
+  os << "Errors:      " << results.errors() << " 🔥" << endl;
 }
 }  // End namespace Test

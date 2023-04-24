@@ -7,15 +7,13 @@
 #include <string>
 #include <vector>
 
-#include "test.h"
-
 using namespace SBF;
-using namespace Test;
 
 namespace SBF {
 namespace {
 using std::string;
 using std::to_string;
+using std::vector;
 }  // End namespace
 
 vector<string> word_wrap(const string& text, const size_t max_width) {

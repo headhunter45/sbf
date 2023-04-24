@@ -1,5 +1,6 @@
 ﻿#include "Utils.h"
 
+#include <iostream>
 #include <string>
 #include <tuple>
 #include <vector>
@@ -41,7 +42,15 @@ TestResults main_test_Utils(int argc, char* argv[]) {
   results += test_string_dollar();
   results += test_word_wrap();
 
+  PrintResults(cout, results);
+
   return results;
+}
+
+int main(int argc, char* argv[]) {
+  TestResults results = main_test_Utils(argc, argv);
+
+  return results.failed() + results.errors();
 }
 
 namespace Test::Utils {
