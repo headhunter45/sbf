@@ -39,7 +39,7 @@ void CGSpendFreebiePoints(CharacterType& ch);
 void CGSpendVirtuePoints(CharacterType& ch);
 void CharacterGenerator();
 void CharacterGeneratorForDummies();
-int ChooseStringId(vector<string> labels, MenuStyle style, string prompt);
+int ChooseStringId(vector<string> labels, MenuStyle style, const string& prompt);
 void CombatComputer();
 void DiceRoller();
 int GetChoice(int min, int max);
@@ -54,8 +54,9 @@ void ShowCharacterSheet(CharacterType& ch);
 void ShowSplashScreen();
 void VehicleGenerator();
 void WaitForKeypress();
-int ChooseStringIdWithValues(vector<string> labels, vector<int> values, MenuStyle style, string prompt);
+int ChooseStringIdWithValues(vector<string> labels, vector<int> values, MenuStyle style, const string& prompt);
 int ChooseMenuItemId(vector<MenuItem> menu_items, MenuStyle style, const string& prompt, bool ignore_value);
+int ChooseStringIdWithColors(vector<string> labels, vector<uint8_t> colors, MenuStyle style, const string& prompt);
 
 int main(int argc, char* argv[]) {
   setlocale(LC_ALL, "");
@@ -333,8 +334,13 @@ void CGSpendVirtuePoints(CharacterType& ch) {
 }
 
 void CGGetDerangement(CharacterType& ch) {
-  // TODO: Fill this in.
-  cout << "// TODO: CGGetDerangement(CharacterType&)" << endl;
+  if (ch.clanId == kClanMalkavian) {
+    // If the clan is malkavian then pick a derangement.
+    MenuStyle ms;
+    ms.use_colors = true;
+    ch.derangementId =
+        ChooseStringIdWithColors(GetDerangementLabels(), GetDerangementColors(), ms, "Which derangement do you want?");
+  }
 }
 
 void CGSpendFreebiePoints(CharacterType& ch) {
@@ -523,7 +529,7 @@ string GetString(string prompt) {
   return response;
 }
 
-int ChooseStringId(vector<string> labels, MenuStyle style, string prompt) {
+int ChooseStringId(vector<string> labels, MenuStyle style, const string& prompt) {
   MaybeClearScreen();
   vector<MenuItem> menu_items = BuildMenu(labels);
   style.Adjust(menu_items);
@@ -554,10 +560,24 @@ int GetMenuChoice(vector<MenuItem> menu_items, MenuStyle style) {
   }
 }
 
-int ChooseStringIdWithValues(vector<string> labels, vector<int> values, MenuStyle style, string prompt) {
+int ChooseStringIdWithValues(vector<string> labels, vector<int> values, MenuStyle style, const string& prompt) {
   MaybeClearScreen();
   vector<MenuItem> menu_items = BuildMenuWithValues(labels, values);
   style.Adjust(menu_items, false);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice;
+}
+
+int ChooseStringIdWithColors(vector<string> labels, vector<uint8_t> colors, MenuStyle style, const string& prompt) {
+  MaybeClearScreen();
+  // Check array bounds
+  vector<MenuItem> menu_items = BuildMenuWithColors(labels, colors);
+  style.Adjust(menu_items);
   cout << prompt << endl;
   PrintMenu(cout, menu_items, style);
   int choice = GetMenuChoice(menu_items, style);

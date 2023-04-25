@@ -216,6 +216,10 @@ DerangementType GetDerangement(int derangement_id);
 /// @brief Fills the provided vector with all valid derangements.
 /// @param derangements The vector to fill. It will be emptied first.
 void FillDerangements(std::vector<DerangementType>& derangements);
+
+std::vector<std::string> GetDerangementLabels();
+
+std::vector<uint8_t> GetDerangementColors();
 }  // End namespace SBF
 
 /** @}*/
