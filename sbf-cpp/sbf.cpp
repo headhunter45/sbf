@@ -314,8 +314,8 @@ void CGGetBackgrounds(CharacterType& ch) {
 }
 
 void CGGetRoad(CharacterType& ch) {
-  // TODO: Fill this in.
-  cout << "// TODO: CGGetRoad(CharacterType&)" << endl;
+  // TODO: Update this to actually pick a road for VtDA.
+  ch.roadName = "Humanity";
 }
 
 void CGSpendVirtuePoints(CharacterType& ch) {
