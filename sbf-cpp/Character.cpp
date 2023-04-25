@@ -51,7 +51,7 @@ CharacterType::CharacterType() {
   }
 
   // Attributes
-  for (int group_id = 1; group_id <= kAttributeGroupsCount; group_id++) {
+  for (int group_id = 1; group_id <= GetNumAttributeGroups(); group_id++) {
     const int numAttributes = GetNumAttributesInGroup(group_id);
     for (int id = 1; id <= numAttributes; id++) {
       SetAttributeValue(group_id, id, 1);
@@ -277,48 +277,6 @@ vector<int> CharacterType::GetAttributeValuesInGroup(int group_id) const {
   vector<int> values;
   FillAttributeValues(values, group_id);
   return values;
-}
-
-void FillAttributeLabelsInGroup(std::vector<string> labels, int group_id) {
-  labels.clear();
-  switch (group_id) {
-    case kAttributeGroupPhysicalId:
-      for (int id = 0; id <= kPhysicalAttributesCount; id++) {
-        labels.push_back(kPhysicalAttributeLabels[id]);
-      }
-      break;
-    case kAttributeGroupSocialId:
-      for (int id = 0; id <= kSocialAttributesCount; id++) {
-        labels.push_back(kSocialAttributeLabels[id]);
-      }
-      break;
-    case kAttributeGroupMentalId:
-      for (int id = 0; id <= kMentalAttributesCount; id++) {
-        labels.push_back(kMentalAttributeLabels[id]);
-      }
-      break;
-  }
-}
-
-void FillAttributeAbbreviationsInGroup(std::vector<string> abbreviations, int group_id) {
-  abbreviations.clear();
-  switch (group_id) {
-    case kAttributeGroupPhysicalId:
-      for (int id = 0; id <= kPhysicalAttributesCount; id++) {
-        abbreviations.push_back(kPhysicalAttributeLabelAbbreviations[id]);
-      }
-      break;
-    case kAttributeGroupSocialId:
-      for (int id = 0; id <= kSocialAttributesCount; id++) {
-        abbreviations.push_back(kSocialAttributeLabelAbbreviations[id]);
-      }
-      break;
-    case kAttributeGroupMentalId:
-      for (int id = 0; id <= kMentalAttributesCount; id++) {
-        abbreviations.push_back(kMentalAttributeLabelAbbreviations[id]);
-      }
-      break;
-  }
 }
 
 void CharacterType::SetPhysicalAttributeValue(int id, int value) {

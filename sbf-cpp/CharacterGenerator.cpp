@@ -66,18 +66,18 @@ void CGGetAttributes(CharacterType& ch) {
   MenuStyle ms_without_values;
   MenuStyle ms_with_values;
   // indexed by group_id - 1 holds the rank_id
-  vector<int> attribute_ranks(kAttributeGroupsCount);
+  vector<int> attribute_ranks(GetNumAttributeGroups());
 
   // Attribute groups menu (physical/social/mental)
   vector<MenuItem> attribute_groups_menu_items;
-  for (size_t i = 1; i <= kAttributeGroupsCount; i++) {
+  for (size_t i = 1; i <= GetNumAttributeGroups(); i++) {
     attribute_groups_menu_items.push_back(MenuItem(GetAttributeGroupLabel(i), i));
   }
 
   // Choose attribute group priorities.
   int group_sum = 0;
   int rank_sum = 1;
-  for (size_t i = 1; i < kAttributeGroupsCount; i++) {
+  for (size_t i = 1; i < GetNumAttributeGroups(); i++) {
     int next_group_id = ChooseMenuItemId(attribute_groups_menu_items,
                                          ms_without_values,
                                          "Choose your " + ToLower(GetRank(i).label) + " attribute?",
@@ -92,10 +92,10 @@ void CGGetAttributes(CharacterType& ch) {
   // General formula for last choice given 1 to count based indexing is this. (Sum from 1 to count) - (Sum of all
   // previous choice IDs). Sum(1..AllAttributesCount)-Sum(Choice[1..Choice[AllAttributesCount-1]).
   int last_group = rank_sum - group_sum;
-  attribute_ranks[last_group - 1] = kAttributeGroupsCount;
+  attribute_ranks[last_group - 1] = GetNumAttributeGroups();
 
   // Spend attribute points
-  for (int group_id = 1; group_id <= kAttributeGroupsCount; group_id++) {
+  for (int group_id = 1; group_id <= GetNumAttributeGroups(); group_id++) {
     int group_index = group_id - 1;
     vector<string> attribute_labels = GetAttributeLabelsInGroup(group_id);
     int rank_id = attribute_ranks.at(group_index);
@@ -232,7 +232,7 @@ void CGSpendAttributePoint(CharacterType& ch) {
   ms.show_cancel = true;
   int num_attributes = 0;
   vector<int> num_attributes_in_group;
-  for (int group_id = 1; group_id <= kAttributeGroupsCount; group_id++) {
+  for (int group_id = 1; group_id <= GetNumAttributeGroups(); group_id++) {
     int count = GetNumAttributesInGroup(group_id);
     num_attributes_in_group.push_back(count);
     num_attributes += count;
@@ -243,7 +243,7 @@ void CGSpendAttributePoint(CharacterType& ch) {
   vector<int> values;
 
   int attribute_id = 1;
-  for (int attribute_group_id = 1; attribute_group_id <= kAttributeGroupsCount; attribute_group_id++) {
+  for (int attribute_group_id = 1; attribute_group_id <= GetNumAttributeGroups(); attribute_group_id++) {
     int attribute_group_index = attribute_group_id - 1;
     for (int id = 1; id <= num_attributes_in_group.at(attribute_group_index); id++) {
       GroupedStatReference attribute_ref = {attribute_id, attribute_group_id, id};
