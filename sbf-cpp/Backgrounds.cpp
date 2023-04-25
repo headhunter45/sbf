@@ -9,6 +9,30 @@ using std::string;
 using std::vector;
 }  // End namespace
 
+const std::string kBackgroundAlliesLabel = "Allies";
+const std::string kBackgroundContactsLabel = "Contacts";
+const std::string kBackgroundFameLabel = "Fame";
+const std::string kBackgroundGenerationLabel = "Generation";
+const std::string kBackgroundHerdLabel = "Herd";
+const std::string kBackgroundInfluenceLabel = "Influence";
+const std::string kBackgroundMentorLabel = "Mentor";
+const std::string kBackgroundResourcesLabel = "Resources";
+const std::string kBackgroundRetainersLabel = "Retainers";
+const std::string kBackgroundStatusLabel = "Status";
+const std::string kBackgroundLabels[] = {
+    "",
+    kBackgroundAlliesLabel,
+    kBackgroundContactsLabel,
+    kBackgroundFameLabel,
+    kBackgroundGenerationLabel,
+    kBackgroundHerdLabel,
+    kBackgroundInfluenceLabel,
+    kBackgroundMentorLabel,
+    kBackgroundResourcesLabel,
+    kBackgroundRetainersLabel,
+    kBackgroundStatusLabel,
+};
+
 string GetBackgroundLabel(int backgroundId) {
   if (backgroundId > 0 && backgroundId <= kBackgroundsCount) {
     return kBackgroundLabels[backgroundId];

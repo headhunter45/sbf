@@ -16,6 +16,8 @@ using std::string;
 using std::vector;
 }  // namespace
 
+const int kBackgroundPoints = 5;
+
 CharacterType::CharacterType() {
   // Scalars
   name = "";
