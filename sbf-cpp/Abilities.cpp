@@ -8,6 +8,111 @@ using std::ostream;
 using std::string;
 using std::vector;
 
+const int kAbilitiesCount = 3;
+
+const std::string kAbilityUnknownLabel = "";
+const std::string kAbilityTalentsSingular = "Talent";
+const std::string kAbilityTalentsPlural = "Talents";
+const std::string kAbilitySkillsSingular = "Skill";
+const std::string kAbilitySkillsPlural = "Skills";
+const std::string kAbilityKnowledgesSingular = "Knowledge";
+const std::string kAbilityKnowledgesPlural = "Knowledges";
+const AbilityType kAbilityGroupUnknown = {0, "", ""};
+const AbilityType kAbilityGroupTalents = {
+    kAbilityTalentsId,
+    kAbilityTalentsSingular,
+    kAbilityTalentsPlural,
+};
+const AbilityType kAbilityGroupSkills = {
+    kAbilitySkillsId,
+    kAbilitySkillsSingular,
+    kAbilitySkillsPlural,
+};
+const AbilityType kAbilityGroupKnowledges = {
+    kAbilityKnowledgesId,
+    kAbilityKnowledgesSingular,
+    kAbilityKnowledgesPlural,
+};
+const AbilityType kAbilities[]{
+    kAbilityGroupUnknown,
+    kAbilityGroupTalents,
+    kAbilityGroupSkills,
+    kAbilityGroupKnowledges,
+};
+
+const std::string kTalentActingLabel = "Acting";
+const std::string kTalentAlertnessLabel = "Alertness";
+const std::string kTalentAthleticsLabel = "Athletics";
+const std::string kTalentBrawlLabel = "Brawl";
+const std::string kTalentDodgeLabel = "Dodge";
+const std::string kTalentEmpathyLabel = "Empathy";
+const std::string kTalentIntimidationLabel = "Intimidation";
+const std::string kTalentLeadershipLabel = "Leadership";
+const std::string kTalentStreetwiseLabel = "Streetwise";
+const std::string kTalentSubterfugeLabel = "Subterfuge";
+const std::string kSkillAnimalKenLabel = "Animal Ken";
+const std::string kSkillDriveLabel = "Drive";
+const std::string kSkillEtiquetteLabel = "Etiquette";
+const std::string kSkillFirearmsLabel = "Firearms";
+const std::string kSkillMeleeLabel = "Melee";
+const std::string kSkillMusicLabel = "Music";
+const std::string kSkillRepairLabel = "Repair";
+const std::string kSkillSecurityLabel = "Security";
+const std::string kSkillStealthLabel = "Stealth";
+const std::string kSkillSurvivalLabel = "Survival";
+const std::string kKnowledgeBureaucracyLabel = "Bureaucracy";
+const std::string kKnowledgeComputerLabel = "Computer";
+const std::string kKnowledgeFinanceLabel = "Finance";
+const std::string kKnowledgeInvestigationLabel = "Investigation";
+const std::string kKnowledgeLawLabel = "Law";
+const std::string kKnowledgeLinguisticsLabel = "Linguistics";
+const std::string kKnowledgeMedicineLabel = "Medicine";
+const std::string kKnowledgeOccultLabel = "Occult";
+const std::string kKnowledgePoliticsLabel = "Politics";
+const std::string kKnowledgeScienceLabel = "Science";
+const int kTalentsCount = 10;
+const int kSkillsCount = 10;
+const int kKnowledgesCount = 10;
+const std::string kSkills[] = {
+    kAbilityUnknownLabel,
+    kSkillAnimalKenLabel,
+    kSkillDriveLabel,
+    kSkillEtiquetteLabel,
+    kSkillFirearmsLabel,
+    kSkillMeleeLabel,
+    kSkillMusicLabel,
+    kSkillRepairLabel,
+    kSkillSecurityLabel,
+    kSkillStealthLabel,
+    kSkillSurvivalLabel,
+};
+const std::string kTalents[] = {
+    kAbilityUnknownLabel,
+    kTalentActingLabel,
+    kTalentAlertnessLabel,
+    kTalentAthleticsLabel,
+    kTalentBrawlLabel,
+    kTalentDodgeLabel,
+    kTalentEmpathyLabel,
+    kTalentIntimidationLabel,
+    kTalentLeadershipLabel,
+    kTalentStreetwiseLabel,
+    kTalentSubterfugeLabel,
+};
+const std::string kKnowledges[] = {
+    kAbilityUnknownLabel,
+    kKnowledgeBureaucracyLabel,
+    kKnowledgeComputerLabel,
+    kKnowledgeFinanceLabel,
+    kKnowledgeInvestigationLabel,
+    kKnowledgeLawLabel,
+    kKnowledgeLinguisticsLabel,
+    kKnowledgeMedicineLabel,
+    kKnowledgeOccultLabel,
+    kKnowledgePoliticsLabel,
+    kKnowledgeScienceLabel,
+};
+
 ostream& operator<<(ostream& os, const AbilityType& ability) {
   os << "AbilityGroup: {id: " << ability.id << ", singular: \"" << ability.singular << "\", plural: \""
      << ability.plural << "\"}";
@@ -168,4 +273,7 @@ const std::string GetTalentLabel(int talent_id) {
   return "";
 }
 
+int GetNumAbilityGroups() {
+  return kAbilitiesCount;
+}
 }  // End namespace SBF

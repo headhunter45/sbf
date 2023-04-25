@@ -11,6 +11,7 @@
 #include "Menus.h"
 #include "Random.h"
 #include "Utils.h"
+#include "sbf-cpp/Abilities.h"
 
 namespace SBF {
 namespace {
@@ -270,7 +271,7 @@ void CGSpendAbilityPoint(CharacterType& ch) {
   bool done = false;
   while (!done) {
     MaybeClearScreen();
-    ms.cancel_item_id = kAbilitiesCount;
+    ms.cancel_item_id = GetNumAbilityGroups();
     int ability_group_id =
         ChooseStringId(GetAbilityGroupPluralLabels(), ms, "What kind of ability would you like to add 1 dot to?");
     if (ability_group_id == ms.cancel_item_id) {

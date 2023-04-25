@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "Attributes.h"
+#include "sbf-cpp/Abilities.h"
 #include "sbf-cpp/Disciplines.h"
 
 namespace SBF {
@@ -42,7 +43,7 @@ CharacterType::CharacterType() {
 
   // Arrays/Objects
   // Abilities (Talents/Skills/Knowledges)
-  for (int group_id = 1; group_id <= kAbilitiesCount; group_id++) {
+  for (int group_id = 1; group_id <= GetNumAbilityGroups(); group_id++) {
     const int num_abilities = GetNumItemsForAbilityGroup(group_id);
     for (int id = 1; id <= num_abilities; id++) {
       SetAbilityValue(group_id, id, 0);

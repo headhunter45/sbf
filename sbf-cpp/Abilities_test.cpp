@@ -22,54 +22,60 @@ TestResults test_AbilityType_operator_extract() {
       vector<TestTuple<string, AbilityType>>({
           make_test<string, AbilityType>("should print talents",
                                          "AbilityGroup: {id: 1, singular: \"Talent\", plural: \"Talents\"}",
-                                         make_tuple(kAbilityGroupTalents)),
+                                         make_tuple(GetAbility(kAbilityTalentsId))),
           make_test<string, AbilityType>("should print skills",
                                          "AbilityGroup: {id: 2, singular: \"Skill\", plural: \"Skills\"}",
-                                         make_tuple(kAbilityGroupSkills)),
+                                         make_tuple(GetAbility(kAbilitySkillsId))),
           make_test<string, AbilityType>("should print knowledges",
                                          "AbilityGroup: {id: 3, singular: \"Knowledge\", plural: \"Knowledges\"}",
-                                         make_tuple(kAbilityGroupKnowledges)),
+                                         make_tuple(GetAbility(kAbilityKnowledgesId))),
           make_test<string, AbilityType>("should print an unknown ability group",
                                          "AbilityGroup: {id: 0, singular: \"\", plural: \"\"}",
-                                         make_tuple(kAbilityGroupUnknown)),
+                                         make_tuple(GetAbility(0))),
       })));
 }
 
 TestResults test_AbilityType_operator_equal_to() {
+  AbilityType skills = GetAbility(kAbilitySkillsId);
   return execute_suite<bool, AbilityType, AbilityType>(make_test_suite(
       "SBF::AbilityType::operator==",
       [](const AbilityType& left, const AbilityType& right) { return left == right; },
       vector<TestTuple<bool, AbilityType, AbilityType>>({
-          make_test<bool, AbilityType, AbilityType>("should return true when comparing an ability group to itself",
-                                                    true,
-                                                    make_tuple(kAbilityGroupTalents, kAbilityGroupTalents)),
+          make_test<bool, AbilityType, AbilityType>(
+              "should return true when comparing an ability group to itself",
+              true,
+              make_tuple(GetAbility(kAbilityTalentsId), GetAbility(kAbilityTalentsId))),
           make_test<bool, AbilityType, AbilityType>(
               "should return true when comparing two different instances created with the same values",
               true,
-              make_tuple(kAbilityGroupSkills,
-                         AbilityType({kAbilitySkillsId, kAbilitySkillsSingular, kAbilitySkillsPlural}))),
-          make_test<bool, AbilityType, AbilityType>("should return false when comparing two different ability gropus",
-                                                    false,
-                                                    make_tuple(kAbilityGroupKnowledges, kAbilityGroupSkills)),
+              make_tuple(GetAbility(kAbilitySkillsId),
+                         AbilityType({kAbilitySkillsId, skills.singular, skills.plural}))),
+          make_test<bool, AbilityType, AbilityType>(
+              "should return false when comparing two different ability gropus",
+              false,
+              make_tuple(GetAbility(kAbilityKnowledgesId), GetAbility(kAbilitySkillsId))),
       })));
 }
 
 TestResults test_AbilityType_operator_not_equal_to() {
+  AbilityType skills = GetAbility(kAbilitySkillsId);
   return execute_suite<bool, AbilityType, AbilityType>(make_test_suite(
       "SBF::AbilityType::operator!=",
       [](const AbilityType& left, const AbilityType& right) { return left != right; },
       vector<TestTuple<bool, AbilityType, AbilityType>>({
-          make_test<bool, AbilityType, AbilityType>("should return false when comparing an ability group to itself",
-                                                    false,
-                                                    make_tuple(kAbilityGroupTalents, kAbilityGroupTalents)),
+          make_test<bool, AbilityType, AbilityType>(
+              "should return false when comparing an ability group to itself",
+              false,
+              make_tuple(GetAbility(kAbilityTalentsId), GetAbility(kAbilityTalentsId))),
           make_test<bool, AbilityType, AbilityType>(
               "should return false when comparing two different instances created with the same values",
               false,
-              make_tuple(kAbilityGroupSkills,
-                         AbilityType({kAbilitySkillsId, kAbilitySkillsSingular, kAbilitySkillsPlural}))),
-          make_test<bool, AbilityType, AbilityType>("should return true when comparing two different ability gropus",
-                                                    true,
-                                                    make_tuple(kAbilityGroupKnowledges, kAbilityGroupSkills)),
+              make_tuple(GetAbility(kAbilitySkillsId),
+                         AbilityType({kAbilitySkillsId, skills.singular, skills.plural}))),
+          make_test<bool, AbilityType, AbilityType>(
+              "should return true when comparing two different ability gropus",
+              true,
+              make_tuple(GetAbility(kAbilityKnowledgesId), GetAbility(kAbilitySkillsId))),
       })));
 }
 
@@ -79,7 +85,8 @@ TestResults test_FillAbilities() {
       []() -> string {
         ostringstream error_message;
         vector<AbilityType> actual = {{-1, "This should be removed.", "This should be removed."}};
-        vector<AbilityType> expected = {kAbilityGroupTalents, kAbilityGroupSkills, kAbilityGroupKnowledges};
+        vector<AbilityType> expected = {
+            GetAbility(kAbilityTalentsId), GetAbility(kAbilitySkillsId), GetAbility(kAbilityKnowledgesId)};
         FillAbilities(actual);
         compare(error_message, expected, actual);
         string error = error_message.str();
@@ -104,7 +111,7 @@ TestResults test_FillAbilitiesForAbilityGroup() {
       vector<TestTuple<vector<string>, int>>({
           make_test<vector<string>, int>(
               "should clear the vector for group 0, kAbilityGropuUnknownId", {}, make_tuple(0)),
-          make_test<vector<string>, int>("should fill talents for group 1 kAbilityGroupTalentsId",
+          make_test<vector<string>, int>("should fill talents for group 1 GetAbility(kAbilityTalentsId)Id",
                                          {
                                              "Acting",
                                              "Alertness",
@@ -133,7 +140,7 @@ TestResults test_FillAbilitiesForAbilityGroup() {
                                              "Survival",
                                          },
                                          make_tuple(2)),
-          make_test<vector<string>, int>("should fill knowledges for group 3 kAbilityGroupKnowledgesId",
+          make_test<vector<string>, int>("should fill knowledges for group 3 GetAbility(kAbilityKnowledgesId)Id",
                                          {
                                              "Bureaucracy",
                                              "Computer",
@@ -162,7 +169,7 @@ TestResults test_FillAbilityLabels() {
       vector<TestTuple<vector<string>, int>>({
           make_test<vector<string>, int>(
               "should clear the vector for group 0, kAbilityGropuUnknownId", {}, make_tuple(0)),
-          make_test<vector<string>, int>("should fill talents for group 1 kAbilityGroupTalentsId",
+          make_test<vector<string>, int>("should fill talents for group 1 GetAbility(kAbilityTalentsId)Id",
                                          {
                                              "Acting",
                                              "Alertness",
@@ -190,7 +197,7 @@ TestResults test_FillAbilityLabels() {
                                              "Survival",
                                          },
                                          make_tuple(2)),
-          make_test<vector<string>, int>("should fill knowledges for group 3 kAbilityGroupKnowledgesId",
+          make_test<vector<string>, int>("should fill knowledges for group 3 GetAbility(kAbilityKnowledgesId)Id",
                                          {
                                              "Bureaucracy",
                                              "Computer",
@@ -306,12 +313,13 @@ TestResults test_GetAbility() {
       "SBF::GetAbility",
       GetAbility,
       vector<TestTuple<AbilityType, int>>({
-          make_test<AbilityType, int>("should get talents", kAbilityGroupTalents, make_tuple(kAbilityTalentsId)),
-          make_test<AbilityType, int>("should get skills", kAbilityGroupSkills, make_tuple(kAbilitySkillsId)),
           make_test<AbilityType, int>(
-              "should get knowledges", kAbilityGroupKnowledges, make_tuple(kAbilityKnowledgesId)),
-          make_test<AbilityType, int>("should get unknown for id 0", kAbilityGroupUnknown, make_tuple(0)),
-          make_test<AbilityType, int>("should get unknown for an invalid id", kAbilityGroupUnknown, make_tuple(4)),
+              "should get talents", GetAbility(kAbilityTalentsId), make_tuple(kAbilityTalentsId)),
+          make_test<AbilityType, int>("should get skills", GetAbility(kAbilitySkillsId), make_tuple(kAbilitySkillsId)),
+          make_test<AbilityType, int>(
+              "should get knowledges", GetAbility(kAbilityKnowledgesId), make_tuple(kAbilityKnowledgesId)),
+          make_test<AbilityType, int>("should get unknown for id 0", GetAbility(0), make_tuple(0)),
+          make_test<AbilityType, int>("should get unknown for an invalid id", GetAbility(0), make_tuple(4)),
       })));
 }
 
@@ -431,6 +439,14 @@ TestResults test_GetTalentLabel() {
                       })));
 }
 
+TestResults test_GetNumAbilityGroups() {
+  return execute_suite<int>(make_test_suite("SBF::Abilities::GetNumAbilityGroups",
+                                            GetNumAbilityGroups,
+                                            vector<TestTuple<int>>({
+                                                make_test<int>("should get 3", 3, make_tuple()),
+                                            })));
+}
+
 int main(int argc, char* argv[]) {
   TestResults results;
 
@@ -446,6 +462,7 @@ int main(int argc, char* argv[]) {
   results += test_GetAbility();
   results += test_GetAbilityLabel();
   results += test_GetKnowledgeLabel();
+  results += test_GetNumAbilityGroups();
   results += test_GetNumItemsForAbilityGroup();
   results += test_GetSkillLabel();
   results += test_GetTalentLabel();

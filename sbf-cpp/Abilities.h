@@ -17,15 +17,41 @@
  */
 namespace SBF {
 const int kAbilityTalentsId = 1;
-const std::string kAbilityTalentsSingular = "Talent";
-const std::string kAbilityTalentsPlural = "Talents";
 const int kAbilitySkillsId = 2;
-const std::string kAbilitySkillsSingular = "Skill";
-const std::string kAbilitySkillsPlural = "Skills";
 const int kAbilityKnowledgesId = 3;
-const std::string kAbilityKnowledgesSingular = "Knowledge";
-const std::string kAbilityKnowledgesPlural = "Knowledges";
-const int kAbilitiesCount = 3;
+
+const int kTalentActingId = 1;
+const int kTalentAlertnessId = 2;
+const int kTalentAthleticsId = 3;
+const int kTalentBrawlId = 4;
+const int kTalentDodgeId = 5;
+const int kTalentEmpathyId = 6;
+const int kTalentIntimidationId = 7;
+const int kTalentLeadershipId = 8;
+const int kTalentStreetwiseId = 9;
+const int kTalentSubterfugeId = 10;
+
+const int kSkillAnimalKenId = 1;
+const int kSkillDriveId = 2;
+const int kSkillEtiquetteId = 3;
+const int kSkillFirearmsId = 4;
+const int kSkillMeleeId = 5;
+const int kSkillMusicId = 6;
+const int kSkillRepairId = 7;
+const int kSkillSecurityId = 8;
+const int kSkillStealthId = 9;
+const int kSkillSurvivalId = 10;
+
+const int kKnowledgeBureaucracyId = 1;
+const int kKnowledgeComputerId = 2;
+const int kKnowledgeFinanceId = 3;
+const int kKnowledgeInvestigationId = 4;
+const int kKnowledgeLawId = 5;
+const int kKnowledgeLinguisticsId = 6;
+const int kKnowledgeMedicineId = 7;
+const int kKnowledgeOccultId = 8;
+const int kKnowledgePoliticsId = 9;
+const int kKnowledgeScienceId = 10;
 
 /// @brief This type represents an ability group such as Talents, Skills or Knowledges.
 struct AbilityType {
@@ -35,136 +61,6 @@ struct AbilityType {
   std::string singular;
   /// @brief The plural form of this group i.e. Talents.
   std::string plural;
-};
-
-const AbilityType kAbilityGroupUnknown = {0, "", ""};
-const AbilityType kAbilityGroupTalents = {
-    kAbilityTalentsId,
-    kAbilityTalentsSingular,
-    kAbilityTalentsPlural,
-};
-const AbilityType kAbilityGroupSkills = {
-    kAbilitySkillsId,
-    kAbilitySkillsSingular,
-    kAbilitySkillsPlural,
-};
-const AbilityType kAbilityGroupKnowledges = {
-    kAbilityKnowledgesId,
-    kAbilityKnowledgesSingular,
-    kAbilityKnowledgesPlural,
-};
-const AbilityType kAbilities[]{
-    kAbilityGroupUnknown,
-    kAbilityGroupTalents,
-    kAbilityGroupSkills,
-    kAbilityGroupKnowledges,
-};
-
-const std::string kAbilityUnknownLabel = "";
-
-const int kTalentActingId = 1;
-const std::string kTalentActingLabel = "Acting";
-const int kTalentAlertnessId = 2;
-const std::string kTalentAlertnessLabel = "Alertness";
-const int kTalentAthleticsId = 3;
-const std::string kTalentAthleticsLabel = "Athletics";
-const int kTalentBrawlId = 4;
-const std::string kTalentBrawlLabel = "Brawl";
-const int kTalentDodgeId = 5;
-const std::string kTalentDodgeLabel = "Dodge";
-const int kTalentEmpathyId = 6;
-const std::string kTalentEmpathyLabel = "Empathy";
-const int kTalentIntimidationId = 7;
-const std::string kTalentIntimidationLabel = "Intimidation";
-const int kTalentLeadershipId = 8;
-const std::string kTalentLeadershipLabel = "Leadership";
-const int kTalentStreetwiseId = 9;
-const std::string kTalentStreetwiseLabel = "Streetwise";
-const int kTalentSubterfugeId = 10;
-const std::string kTalentSubterfugeLabel = "Subterfuge";
-const int kTalentsCount = 10;
-const std::string kTalents[] = {
-    kAbilityUnknownLabel,
-    kTalentActingLabel,
-    kTalentAlertnessLabel,
-    kTalentAthleticsLabel,
-    kTalentBrawlLabel,
-    kTalentDodgeLabel,
-    kTalentEmpathyLabel,
-    kTalentIntimidationLabel,
-    kTalentLeadershipLabel,
-    kTalentStreetwiseLabel,
-    kTalentSubterfugeLabel,
-};
-
-const int kSkillAnimalKenId = 1;
-const std::string kSkillAnimalKenLabel = "Animal Ken";
-const int kSkillDriveId = 2;
-const std::string kSkillDriveLabel = "Drive";
-const int kSkillEtiquetteId = 3;
-const std::string kSkillEtiquetteLabel = "Etiquette";
-const int kSkillFirearmsId = 4;
-const std::string kSkillFirearmsLabel = "Firearms";
-const int kSkillMeleeId = 5;
-const std::string kSkillMeleeLabel = "Melee";
-const int kSkillMusicId = 6;
-const std::string kSkillMusicLabel = "Music";
-const int kSkillRepairId = 7;
-const std::string kSkillRepairLabel = "Repair";
-const int kSkillSecurityId = 8;
-const std::string kSkillSecurityLabel = "Security";
-const int kSkillStealthId = 9;
-const std::string kSkillStealthLabel = "Stealth";
-const int kSkillSurvivalId = 10;
-const std::string kSkillSurvivalLabel = "Survival";
-const int kSkillsCount = 10;
-const std::string kSkills[] = {
-    kAbilityUnknownLabel,
-    kSkillAnimalKenLabel,
-    kSkillDriveLabel,
-    kSkillEtiquetteLabel,
-    kSkillFirearmsLabel,
-    kSkillMeleeLabel,
-    kSkillMusicLabel,
-    kSkillRepairLabel,
-    kSkillSecurityLabel,
-    kSkillStealthLabel,
-    kSkillSurvivalLabel,
-};
-
-const int kKnowledgeBureaucracyId = 1;
-const std::string kKnowledgeBureaucracyLabel = "Bureaucracy";
-const int kKnowledgeComputerId = 2;
-const std::string kKnowledgeComputerLabel = "Computer";
-const int kKnowledgeFinanceId = 3;
-const std::string kKnowledgeFinanceLabel = "Finance";
-const int kKnowledgeInvestigationId = 4;
-const std::string kKnowledgeInvestigationLabel = "Investigation";
-const int kKnowledgeLawId = 5;
-const std::string kKnowledgeLawLabel = "Law";
-const int kKnowledgeLinguisticsId = 6;
-const std::string kKnowledgeLinguisticsLabel = "Linguistics";
-const int kKnowledgeMedicineId = 7;
-const std::string kKnowledgeMedicineLabel = "Medicine";
-const int kKnowledgeOccultId = 8;
-const std::string kKnowledgeOccultLabel = "Occult";
-const int kKnowledgePoliticsId = 9;
-const std::string kKnowledgePoliticsLabel = "Politics";
-const int kKnowledgeScienceId = 10;
-const std::string kKnowledgeScienceLabel = "Science";
-const int kKnowledgesCount = 10;
-const std::string kKnowledges[] = {
-    kAbilityUnknownLabel,
-    kKnowledgeBureaucracyLabel,
-    kKnowledgeComputerLabel,
-    kKnowledgeFinanceLabel,
-    kKnowledgeInvestigationLabel,
-    kKnowledgeLawLabel,
-    kKnowledgeLinguisticsLabel,
-    kKnowledgeMedicineLabel,
-    kKnowledgeOccultLabel,
-    kKnowledgePoliticsLabel,
-    kKnowledgeScienceLabel,
 };
 
 /// @brief This function writes an AbilityType value to an output stream;
@@ -248,6 +144,8 @@ const std::string GetSkillLabel(int id);
 /// @param id The id of the ability to return.
 /// @return The label for the specific ability.
 const std::string GetTalentLabel(int id);
+
+int GetNumAbilityGroups();
 }  // End namespace SBF
 
 /** @}*/
