@@ -13,6 +13,17 @@ using namespace Test;
 using namespace std;
 }  // End namespace
 
+const std::string kVirtueUnknownLabel = "";
+const std::string kVirtueSelfControlLabel = "Self-Control";
+const std::string kVirtueCourageLabel = "Courage";
+const std::string kVirtueConscienceLabel = "Conscience";
+const std::string kVirtueLabels[] = {
+    kVirtueUnknownLabel,
+    kVirtueSelfControlLabel,
+    kVirtueCourageLabel,
+    kVirtueConscienceLabel,
+};
+
 TestResults test_GetVirtueLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetVirtueLabel",

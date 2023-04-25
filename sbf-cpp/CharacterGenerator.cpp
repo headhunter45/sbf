@@ -295,7 +295,7 @@ void CGSpendAbilityPoint(CharacterType& ch) {
 void CGSpendVirtuePoint(CharacterType& ch) {
   MenuStyle ms;
   ms.show_cancel = true;
-  ms.cancel_item_id = kVirtuesCount + 1;
+  ms.cancel_item_id = GetNumVirtues() + 1;
   string prompt = "What virtue would you like to add 1 dot to?";
   int id = ChooseStringIdWithValues(GetVirtueLabels(), ch.GetVirtueValues(), ms, prompt);
   if (id != ms.cancel_item_id) {

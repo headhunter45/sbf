@@ -16,20 +16,9 @@
  */
 namespace SBF {
 const int kVirtuePoints = 7;
-const std::string kVirtueUnknownLabel = "";
 const int kVirtueSelfControlId = 1;
-const std::string kVirtueSelfControlLabel = "Self-Control";
 const int kVirtueCourageId = 2;
-const std::string kVirtueCourageLabel = "Courage";
 const int kVirtueConscienceId = 3;
-const std::string kVirtueConscienceLabel = "Conscience";
-const int kVirtuesCount = 3;
-const std::string kVirtueLabels[] = {
-    kVirtueUnknownLabel,
-    kVirtueSelfControlLabel,
-    kVirtueCourageLabel,
-    kVirtueConscienceLabel,
-};
 
 /// @brief Gets the label for virtue with the specified id.
 /// @param virtue_id The id of the virtue to find.
@@ -41,6 +30,7 @@ const std::string GetVirtueLabel(int virtue_id);
 void FillVirtueLabels(std::vector<std::string>& virtue_labels);
 
 std::vector<std::string> GetVirtueLabels();
+int GetNumVirtues();
 }  // End namespace SBF
 
 /** @}*/

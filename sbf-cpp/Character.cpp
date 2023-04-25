@@ -257,7 +257,7 @@ int CharacterType::GetVirtueValue(int id) const {
 
 void CharacterType::FillVirtueValues(std::vector<int>& values) const {
   values.clear();
-  for (int id = 0; id <= kVirtuesCount; id++) {
+  for (int id = 0; id <= GetNumVirtues(); id++) {
     values.push_back(GetVirtueValue(id));
   }
 }
