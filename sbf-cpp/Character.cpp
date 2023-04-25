@@ -1,10 +1,12 @@
-﻿#include "Character.h"
+#include "Character.h"
 
+#include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
 
 #include "Attributes.h"
+#include "sbf-cpp/Disciplines.h"
 
 namespace SBF {
 namespace {
@@ -201,13 +203,19 @@ int GetDisciplinePoints() {
   return kDisciplinePoints;
 }
 
-void CharacterType::FillDisciplineValues(std::vector<int> values) const {
+void CharacterType::FillDisciplineValues(std::vector<int>& values) const {
   // TODO: This method sucks, but was needed in QBasic.
   values.clear();
   values.push_back(0);  // To pad the indexes.
   for (int id = 1; id <= kDisciplinesCount; id++) {
     values.push_back(GetDisciplineValue(id));
   }
+}
+
+vector<int> CharacterType::GetDisciplineValues() const {
+  vector<int> values;
+  FillDisciplineValues(values);
+  return values;
 }
 
 int GetVirtuePoints() {
@@ -241,7 +249,7 @@ int CharacterType::GetVirtueValue(int virtueId) const {
   }
 }
 
-void CharacterType::FillVirtueValues(std::vector<int> virtueValues) const {
+void CharacterType::FillVirtueValues(std::vector<int>& virtueValues) const {
   // TODO: This method sucks, but was needed in QBasic.
   virtueValues.clear();
   for (int id = 0; id <= kVirtuesCount; id++) {
@@ -249,13 +257,19 @@ void CharacterType::FillVirtueValues(std::vector<int> virtueValues) const {
   }
 }
 
-void CharacterType::FillAttributeValues(std::vector<int> attributeValues, int attributeGroupId) const {
+void CharacterType::FillAttributeValues(std::vector<int>& attributeValues, int attributeGroupId) const {
   // TODO: This method sucks, but was needed in QBasic.
   const int numAttributes = GetNumAttributesInGroup(attributeGroupId);
   attributeValues.clear();
-  for (int attributeId = 0; attributeId <= numAttributes; attributeId++) {
-    attributeValues[attributeId] = GetAttributeValue(attributeGroupId, attributeId);
+  for (int attributeId = 1; attributeId <= numAttributes; attributeId++) {
+    attributeValues.push_back(GetAttributeValue(attributeGroupId, attributeId));
   }
+}
+
+vector<int> CharacterType::GetAttributeValuesInGroup(int group_id) const {
+  vector<int> values;
+  FillAttributeValues(values, group_id);
+  return values;
 }
 
 void FillAttributeLabelsInGroup(std::vector<string> attributeLabels, int attributeGroupId) {
@@ -304,10 +318,13 @@ void CharacterType::SetPhysicalAttributeValue(int id, int value) {
   switch (id) {
     case kPhysicalAttributeDexterityId:
       attr_dexterity = value;
+      break;
     case kPhysicalAttributeStaminaId:
       attr_stamina = value;
+      break;
     case kPhysicalAttributeStrengthId:
       attr_strength = value;
+      break;
   }
 }
 
@@ -315,10 +332,13 @@ void CharacterType::SetSocialAttributeValue(int id, int value) {
   switch (id) {
     case kSocialAttributeAppearanceId:
       attr_appearance = value;
+      break;
     case kSocialAttributeCharismaId:
       attr_charisma = value;
+      break;
     case kSocialAttributeManipulationId:
       attr_manipulation = value;
+      break;
   }
 }
 
@@ -326,10 +346,13 @@ void CharacterType::SetMentalAttributeValue(int id, int value) {
   switch (id) {
     case kMentalAttributeIntelligenceId:
       attr_intelligence = value;
+      break;
     case kMentalAttributePerceptionId:
       attr_perception = value;
+      break;
     case kMentalAttributeWitsId:
       attr_wits = value;
+      break;
   }
 }
 
@@ -445,7 +468,7 @@ int GetAbilityPointsForRank(int rankId) {
   return 0;
 }
 
-void CharacterType::FillAbilityValues(std::vector<int> abilityValues, int abilityGroupId) const {
+void CharacterType::FillAbilityValues(std::vector<int>& abilityValues, int abilityGroupId) const {
   int numAbilities = GetNumItemsForAbilityGroup(abilityGroupId);
   abilityValues.clear();
   for (int abilityId = 0; abilityId <= numAbilities; abilityId++) {
@@ -697,7 +720,7 @@ int CharacterType::GetBackgroundValue(int backgroundId) const {
   return 0;
 }
 
-void CharacterType::FillBackgroundValues(std::vector<int> values) const {
+void CharacterType::FillBackgroundValues(std::vector<int>& values) const {
   values.clear();
   values.push_back(0);  // To pad the indexes.
   for (int backgroundId = 1; backgroundId <= kBackgroundsCount; backgroundId++) {

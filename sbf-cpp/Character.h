@@ -26,25 +26,28 @@
  * @{
  */
 namespace SBF {
+int GetAttributePointsForRank(int rankId);
 int GetDisciplinePoints();
 int GetVirtuePoints();
 
 class CharacterType {
  public:
   CharacterType();
-  void FillAbilityValues(std::vector<int> abilityValues, int abilityGroupId) const;
-  void FillAttributeValues(std::vector<int> attributeValues, int groupId) const;
-  void FillBackgroundValues(std::vector<int> backgroundValues) const;
-  void FillDisciplineValues(std::vector<int> disciplineValues) const;
-  void FillVirtueValues(std::vector<int> virtueValues) const;
+  void FillAbilityValues(std::vector<int>& abilityValues, int abilityGroupId) const;
+  void FillAttributeValues(std::vector<int>& attributeValues, int groupId) const;
+  void FillBackgroundValues(std::vector<int>& backgroundValues) const;
+  void FillDisciplineValues(std::vector<int>& disciplineValues) const;
+  void FillVirtueValues(std::vector<int>& virtueValues) const;
   int GetAbilityValue(int abilityGroupId, int abilityId) const;
   int GetAttributeValue(int attributeGroupId, int abilityId) const;
+  std::vector<int> GetAttributeValuesInGroup(int group_id) const;
   int GetPhysicalAttributeValue(int id) const;
   int GetSocialAttributeValue(int id) const;
   int GetMentalAttributeValue(int id) const;
   int GetBackgroundValue(int backgroundId) const;
   std::string GetAllDerangementsLine() const;
   int GetDisciplineValue(int disciplineId) const;
+  std::vector<int> GetDisciplineValues() const;
   int GetKnowledgeValue(int knowledgeId) const;
   int GetSkillValue(int skillId) const;
   int GetTalentValue(int talentId) const;
