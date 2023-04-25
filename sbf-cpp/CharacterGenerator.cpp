@@ -218,7 +218,7 @@ void CGSpendDisciplinePoint(CharacterType& ch) {
   int discipline_id = ChooseStringIdWithValues(labels, values, ms, prompt);
   if (discipline_id != ms.cancel_item_id) {
     ch.SetDisciplineValue(discipline_id, ch.GetDisciplineValue(discipline_id) + 1);
-    ch.SetFreebiePoints(ch.GetFreebiePoints() - kFreebieDisciplineCost);
+    ch.SetFreebiePoints(ch.GetFreebiePoints() - GetFreebieCost(kFreebieDisciplineId));
   }
 }
 
@@ -264,7 +264,7 @@ void CGSpendAttributePoint(CharacterType& ch) {
   }
   GroupedStatReference ref = attribute_refs.at(id - 1);
   ch.SetAttributeValue(ref.group_id, ref.item_id, ch.GetAttributeValue(ref.group_id, ref.item_id) + 1);
-  ch.SetFreebiePoints(ch.GetFreebiePoints() - kFreebieAttributeCost);
+  ch.SetFreebiePoints(ch.GetFreebiePoints() - GetFreebieCost(kFreebieAttributeId));
 }
 
 void CGSpendAbilityPoint(CharacterType& ch) {
@@ -287,7 +287,7 @@ void CGSpendAbilityPoint(CharacterType& ch) {
         ChooseStringId(labels, ms, "What " + ToLower(ability.singular) + " would you like to add 1 dot to?");
     if (ability_id != ms.cancel_item_id) {
       ch.SetAbilityValue(ability_group_id, ability_id, ch.GetAbilityValue(ability_group_id, ability_id) + 1);
-      ch.SetFreebiePoints(ch.GetFreebiePoints() - kFreebieAbilityCost);
+      ch.SetFreebiePoints(ch.GetFreebiePoints() - GetFreebieCost(kFreebieAbilityId));
     }
   }
 }
@@ -300,7 +300,7 @@ void CGSpendVirtuePoint(CharacterType& ch) {
   int id = ChooseStringIdWithValues(GetVirtueLabels(), ch.GetVirtueValues(), ms, prompt);
   if (id != ms.cancel_item_id) {
     ch.SetVirtueValue(id, ch.GetVirtueValue(id) + 1);
-    ch.SetFreebiePoints(ch.GetFreebiePoints() - kFreebieVirtueCost);
+    ch.SetFreebiePoints(ch.GetFreebiePoints() - GetFreebieCost(kFreebieVirtueId));
   }
 }
 
@@ -311,7 +311,7 @@ void CGSpendHumanityPoint(CharacterType& ch) {
   ms.show_random = false;
   if (ChooseYesOrNo(prompt)) {
     ch.SetRoadValue(ch.GetRoadValue() - 1);
-    ch.SetFreebiePoints(ch.GetFreebiePoints() - kFreebieHumanityCost);
+    ch.SetFreebiePoints(ch.GetFreebiePoints() - GetFreebieCost(kFreebieHumanityId));
   }
 }
 
@@ -324,7 +324,7 @@ void CGSpendBackgroundPoint(CharacterType& ch) {
   int id = ChooseStringId(labels, ms, prompt);
   if (id != ms.cancel_item_id) {
     ch.SetBackgroundValue(id, ch.GetBackgroundValue(id) + 1);
-    ch.SetFreebiePoints(ch.GetFreebiePoints() - kFreebieBackgroundCost);
+    ch.SetFreebiePoints(ch.GetFreebiePoints() - GetFreebieCost(kFreebieBackgroundId));
   }
 }
 
