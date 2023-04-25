@@ -20,6 +20,8 @@ class MenuItem;
 // End forward declarations
 #include <cstdint>
 #include <string>
+#include <utility>
+#include <vector>
 
 /** \addtogroup Menus
  * @{
@@ -50,6 +52,9 @@ class MenuStyle {
  public:
   MenuStyle();
   void Adjust(std::vector<MenuItem> menu_items, bool ignore_value = true);
+  friend std::ostream& operator<<(std::ostream& os, const MenuStyle& style);
+  bool operator==(const MenuStyle& other);
+  bool operator!=(const MenuStyle& other);
   int id_width;
   int label_width;
   int value_width;
@@ -74,6 +79,9 @@ class MenuItem {
   MenuItem(std::string label, int id);
   MenuItem(std::string label, int id, int value);
   MenuItem(std::string label, int id, uint8_t color);
+  friend std::ostream& operator<<(std::ostream& os, const MenuItem& item);
+  bool operator==(const MenuItem& other);
+  bool operator!=(const MenuItem& other);
   string label;
   int id;
   int value;
@@ -85,8 +93,10 @@ class MenuItem {
 // TODO: Make a menu class to hold GetRandomMenuItemId, the various BuildMenu* methods, and possibly PrintMenu.
 int GetRandomMenuItemId(std::vector<MenuItem> items);
 std::vector<MenuItem> BuildMenu(std::vector<string> labels);
-void BuildMenuWithValues(std::vector<MenuItem> items, std::vector<string> labels, std::vector<int> values);
-void BuildMenuWithColors(std::vector<MenuItem> items, std::vector<string> labels, std::vector<uint8_t> colors);
+std::vector<MenuItem> BuildMenuWithValues(std::vector<std::pair<std::string, int>> items);
+std::vector<MenuItem> BuildMenuWithValues(std::vector<std::string> labels, std::vector<int> values);
+std::vector<MenuItem> BuildMenuWithColors(std::vector<std::pair<std::string, uint8_t>> items);
+std::vector<MenuItem> BuildMenuWithColors(std::vector<std::string> labels, std::vector<uint8_t> colors);
 std::ostream& PrintMenu(std::ostream& os, std::vector<MenuItem> items, MenuStyle style);
 string GetTitle(MenuItem item, MenuStyle style);
 string GetTitleWithoutValue(MenuItem item, MenuStyle style);

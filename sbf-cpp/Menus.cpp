@@ -1,6 +1,9 @@
-﻿#include "Menus.h"
+#include "Menus.h"
 
+#include <cstdint>
 #include <iostream>
+#include <string>
+#include <utility>
 #include <vector>
 
 #include "Colors.h"
@@ -12,6 +15,8 @@ namespace {
 using std::cout;
 using std::endl;
 using std::ostream;
+using std::pair;
+using std::to_string;
 using std::vector;
 }  // End namespace
 
@@ -31,17 +36,17 @@ void MenuStyle::Adjust(vector<MenuItem> menu_items, bool ignore_value) {
   size_t max_value_width = 0;
   for_each(menu_items.begin(), menu_items.end(), [&](MenuItem menu_item) {
     if (menu_item.is_visible) {
-      max_id_width = std::max(max_id_width, itos(menu_item.id).size());
+      max_id_width = std::max(max_id_width, to_string(menu_item.id).size());
       max_item_width = std::max(max_item_width, (menu_item.label + label_value_separator).size());
-      max_value_width = std::max(max_value_width, itos(menu_item.value).size());
+      max_value_width = std::max(max_value_width, to_string(menu_item.value).size());
     }
   });
   if (show_random) {
-    max_id_width = std::max(max_id_width, itos(random_item_id).size());
+    max_id_width = std::max(max_id_width, to_string(random_item_id).size());
     max_item_width = std::max(max_item_width, random_item_name.size());
   }
   if (show_cancel) {
-    max_id_width = std::max(max_id_width, itos(cancel_item_id).size());
+    max_id_width = std::max(max_id_width, to_string(cancel_item_id).size());
     max_item_width = std::max(max_item_width, cancel_item_name.size());
   }
   id_width = max_id_width;
@@ -94,11 +99,11 @@ ostream& PrintMenu(ostream& os, vector<MenuItem> items, MenuStyle style) {
         if (column != items_per_row - 1) {
           if (i != count || style.show_random || style.show_cancel) {
             size_t text_length = item_text.size();
-            item_text = make_fit_l(
-                right_trim(item_text) + style.menu_item_spacer, text_length + style.menu_item_spacer.size(), ' ');
+            item_text = MakeFitL(
+                RightTrim(item_text) + style.menu_item_spacer, text_length + style.menu_item_spacer.size(), ' ');
           }
         }
-        string label = make_fit_c(item_text, column_width, ' ');
+        string label = MakeFitC(item_text, column_width, ' ');
         PrintWithMaybeColor(os, label, item.color, style.use_colors);
         column = (column + 1) % items_per_row;
         if (column == 0) {
@@ -107,11 +112,11 @@ ostream& PrintMenu(ostream& os, vector<MenuItem> items, MenuStyle style) {
       }
     }
     if (style.show_cancel) {
-      string title = make_fit_c(GetTitleWithoutValue(cancel_item, style), column_width, ' ');
+      string title = MakeFitC(GetTitleWithoutValue(cancel_item, style), column_width, ' ');
       PrintWithMaybeColor(os, title, cancel_item.color, style.use_colors) << endl;
     }
     if (style.show_random) {
-      string title = make_fit_c(GetTitleWithoutValue(random_item, style), column_width, ' ');
+      string title = MakeFitC(GetTitleWithoutValue(random_item, style), column_width, ' ');
       PrintWithMaybeColor(os, title, random_item.color, style.use_colors) << endl;
     }
   }
@@ -126,13 +131,50 @@ vector<MenuItem> BuildMenu(vector<string> labels) {
   return menu_items;
 }
 
+vector<MenuItem> BuildMenuWithValues(vector<pair<string, int>> items) {
+  vector<MenuItem> menu_items;
+  size_t id = 1;
+  for (auto pr : items) {
+    menu_items.push_back(MenuItem(pr.first, id, pr.second));
+  }
+  return menu_items;
+}
+
+vector<MenuItem> BuildMenuWithValues(vector<string> labels, vector<int> values) {
+  vector<MenuItem> menu_items;
+  size_t count = std::min(labels.size(), values.size());
+  for (size_t i = 0; i < count; i++) {
+    menu_items.push_back(MenuItem(labels.at(i), i + 1, values.at(i)));
+  }
+  return menu_items;
+}
+
+vector<MenuItem> BuildMenuWithColors(vector<pair<string, uint8_t>> items) {
+  vector<MenuItem> menu_items;
+  size_t id = 1;
+  for (auto pr : items) {
+    menu_items.push_back(MenuItem(pr.first, id, pr.second));
+  }
+  return menu_items;
+}
+
+vector<MenuItem> BuildMenuWithColors(vector<string> labels, vector<uint8_t> colors) {
+  vector<MenuItem> menu_items;
+  size_t count = std::min(labels.size(), colors.size());
+  for (size_t i = 0; i < count; i++) {
+    menu_items.push_back(MenuItem(labels.at(i), i + 1, colors.at(i)));
+  }
+  return menu_items;
+}
+
 int GetRandomMenuItemId(vector<MenuItem> items) {
   int num_visible_items = 0;
   size_t count = items.size();
   vector<int> visible_item_ids;
-  for (int i = 1; i <= count; i++) {
-    if (items[i].is_visible && items[i].include_in_random) {
-      visible_item_ids.push_back(i);
+  for (int i = 0; i < count; i++) {
+    MenuItem item = items.at(i);
+    if (item.is_visible && item.include_in_random) {
+      visible_item_ids.push_back(item.id);
       num_visible_items++;
     }
   }
@@ -184,172 +226,67 @@ ostream& PrintWithMaybeColor(ostream& os, const string& text, uint8_t text_color
 }
 
 string GetTitleWithoutValue(MenuItem item, MenuStyle style) {
-  string id_string = make_fit_r(itos(item.id), style.id_width, ' ');
+  string id_string = MakeFitR(to_string(item.id), style.id_width, ' ');
   int label_width = style.label_width + style.value_width + style.label_value_separator.size();
-  string label_string = make_fit_l(item.label, label_width, ' ');
+  string label_string = MakeFitL(item.label, label_width, ' ');
   return id_string + style.id_label_separator + label_string;
 }
 
 string GetTitle(MenuItem item, MenuStyle style) {
-  string id = itos(item.id);
+  string id = to_string(item.id);
   string label = item.label;
-  // cout << "GetTitle item.id: " << item.id << ", item.label: " << item.label << ", style.id_width: " << style.id_width
-  // << ", style.label_width: " << style.label_width << ", style.value_width: " << style.value_width << endl;
   if (style.value_width > 0) {
     label += style.label_value_separator;
   }
-  string value = itos(item.value);
-  string formatted_id = make_fit_r(id, style.id_width);
-  string formatted_label = make_fit_l(label, style.label_width);
-  string formatted_value = make_fit_r(value, style.value_width);
+  string value = to_string(item.value);
+  string formatted_id = MakeFitR(id, style.id_width);
+  string formatted_label = MakeFitL(label, style.label_width);
+  string formatted_value = MakeFitR(value, style.value_width);
   return formatted_id + style.id_label_separator + formatted_label + formatted_value;
 }
 
+std::ostream& operator<<(std::ostream& os, const MenuStyle& style) {
+  os << "MenuStyle {id_width: " << style.id_width << ", label_width: " << style.label_width
+     << ", value_width: " << style.value_width << ", screen_width: " << style.screen_width
+     << ", show_random: " << (style.show_random ? "true" : "false") << ", random_item_id: " << style.random_item_id
+     << ", random_item_name: " << style.random_item_name << ", random_item_color: " << (int)style.random_item_color
+     << ", show_cancel: " << (style.show_cancel ? "true" : "false") << ", cancel_item_id: " << style.cancel_item_id
+     << ", cancel_item_name: " << style.cancel_item_name << ", cancel_item_color: " << (int)style.cancel_item_color
+     << ", id_label_separator: \"" << style.id_label_separator << "\", label_value_separator: \""
+     << style.label_value_separator << "\", menu_item_spacer: \"" << style.menu_item_spacer
+     << "\", use_colors: " << (style.use_colors ? "true" : "false") << "}";
+  return os;
+}
+
+std::ostream& operator<<(std::ostream& os, const MenuItem& item) {
+  os << "MenuItem {id: " << item.id << ", label: \"" << item.label << "\", value: " << item.value
+     << ", color: " << (int)item.color << ", is_visible: " << (item.is_visible ? "true" : "false")
+     << ", include_in_random: " << (item.include_in_random ? "true" : "false") << "}";
+  return os;
+}
+
+bool MenuStyle::operator==(const MenuStyle& other) {
+  return cancel_item_color == other.cancel_item_color && cancel_item_id == other.cancel_item_id
+      && cancel_item_name == other.cancel_item_name && id_label_separator == other.id_label_separator
+      && id_width == other.id_width && label_value_separator == other.label_value_separator
+      && label_width == other.label_width && menu_item_spacer == other.menu_item_spacer
+      && random_item_color == other.random_item_color && random_item_id == other.random_item_id
+      && random_item_name == other.random_item_name && screen_width == other.screen_width
+      && show_cancel == other.show_cancel && show_random == other.show_random && use_colors == other.use_colors
+      && value_width == other.value_width;
+}
+
+bool MenuStyle::operator!=(const MenuStyle& other) {
+  return !(*this == other);
+}
+
+bool MenuItem::operator==(const MenuItem& other) {
+  return color == other.color && id == other.id && include_in_random == other.include_in_random
+      && is_visible == other.is_visible && label == other.label && value == other.value;
+}
+
+bool MenuItem::operator!=(const MenuItem& other) {
+  return !(*this == other);
+}
+
 }  // End namespace SBF
-
-/*
-Function GetRandomMenuItemId (items() As MenuItem, count As Integer)
-    numVisibleItems = 0
-    Dim visibleItems(count) As Integer
-    For i = 1 To count
-        If items(i).isVisible Then
-            visibleItems(numVisibleItems) = i
-            numVisibleItems = numVisibleItems + 1
-        End If
-    Next
-    i = GetRandomInt(0, numVisibleItems - 1)
-    GetRandomMenuItemId = visibleItems(i)
-End Function
-
-Sub BuildMenu (items() As MenuItem, labels() As String, count As Integer)
-    For i = 1 To count
-        Dim mi As MenuItem
-        Call NewMenuItem(mi, labels(i), i)
-        items(i) = mi
-    Next
-End Sub
-
-
-Sub BuildMenuWithValues (items() As MenuItem, labels() As String, values() As Integer, count As Integer)
-    For i = 1 To count
-        Dim mi As MenuItem
-        Call NewMenuItemWithValue(mi, labels(i), i, values(i))
-        items(i) = mi
-    Next
-End Sub
-
-Sub BuildMenuWithColors (items() As MenuItem, labels() As String, colors() As Integer)
-    ' Check array bounds
-    If LBound(items) <> 1 Or LBound(colors) <> 1 Or UBound(items) <> UBound(colors) Then End
-
-    count = UBound(items)
-    For i = 1 To count
-        Dim mi As MenuItem
-        Call NewMenuItemWithColor(mi, labels(i), colors(i), i)
-        items(i) = mi
-    Next
-End Sub
-
-Sub AdjustMenuStyle (style As MenuStyle, items() As MenuItem, count As Integer, ignoreValue As Integer)
-    maxIdWidth = 0
-    maxItemWidth = 0
-    maxValueWidth = 0
-
-    For i = 1 To count
-        If items(i).isVisible Then
-            maxIdWidth = MaxI(maxIdWidth, Len(itos$(items(i).id)))
-            maxItemWidth = MaxI(maxItemWidth, Len(items(i).label + style.labelValueSeparator))
-            maxValueWidth = MaxI(maxValueWidth, Len(itos$(items(i).value)))
-        End If
-    Next
-    If style.showRandom Then
-        maxIdWidth = MaxI(maxIdWidth, Len("0"))
-        maxItemWidth = MaxI(maxItemWidth, Len(style.randomItemName))
-    End If
-    style.idWidth = maxIdWidth
-    style.labelWidth = maxItemWidth
-    If Not ignoreValue Then style.valueWidth = maxValueWidth Else style.valueWidth = 0
-End Sub
-
-Sub PrintMenu (items() As MenuItem, count As Integer, style As MenuStyle)
-    Dim randomItem As MenuItem
-    Call NewMenuItem(randomItem, style.randomItemName, style.randomItemId)
-    If count <= 10 Then
-        For i = 1 To count
-            If items(i).isVisible Then
-                If style.useColors Then
-                    oldColor = GetColor
-                    SetColor (items(i).color)
-                End If
-                Print GetTitle$(items(i), style)
-                If style.useColors Then
-                    Call SetColor(oldColor)
-                End If
-            End If
-        Next
-        If style.showRandom Then
-            Print GetTitleWithoutValue$(randomItem, style)
-        End If
-    Else
-        Dim emptyItem As MenuItem
-        Call NewMenuItem(emptyItem, "", 0)
-        itemWidth = Len(GetTitle$(emptyItem, style))
-        itemsPerRow = style.screenWidth \ (itemWidth + Len(style.menuItemSpacer))
-        columnWidth = style.screenWidth \ itemsPerRow
-
-        column = 0
-        For i = 1 To count
-            If items(i).isVisible Then
-                itemText$ = GetTitle$(items(i), style)
-                If column <> (itemsPerRow - 1) Then
-                    If i <> count Or style.showRandom Then
-                        textLength = Len(itemText$)
-                        itemText$ = make_fit_l$(right_trim$(itemText$) + style.menuItemSpacer, textLength +
-Len(style.menuItemSpacer), ' ') End If End If Print make_fit_c$(itemText$, columnWidth, ' '); End If column = (column +
-1) Mod itemsPerRow If column = 0 Then Print "" Next If style.showRandom Then Print
-make_fit_c$(GetTitleWithoutValue$(randomItem, style), columnWidth, ' ') End If End If End Sub
-
-
-
-Function GetTitleWithoutValue$ (mi As MenuItem, ms As MenuStyle)
-    GetTitleWithoutValue$ = MakeFitR$(itos(mi.id), ms.idWidth, ' ') + ms.idLabelSeparator + make_fit_l$(mi.label,
-ms.labelWidth + ms.valueWidth + Len(ms.labelValueSeparator), ' ') End Function
-
-Sub NewMenuStyle (ms As MenuStyle)
-    ms.idWidth = 0
-    ms.labelWidth = 0
-    ms.valueWidth = 0
-    ms.screenWidth = 80
-    ms.randomItemName = "Random"
-    ms.randomItemId = 0
-    ms.idLabelSeparator = " = "
-    ms.labelValueSeparator = ": "
-    ms.menuItemSpacer = ", "
-    ms.showRandom = TRUE
-    ms.useColors = FALSE
-End Sub
-
-Sub NewMenuItem (mi As MenuItem, label As String, id As Integer)
-    mi.id = id
-    mi.label = label
-    mi.value = 0
-    mi.color = COLOR_DEFAULT
-    mi.isVisible = TRUE
-End Sub
-
-Sub NewMenuItemWithValue (mi As MenuItem, label As String, id As Integer, value As Integer)
-    mi.id = id
-    mi.label = label
-    mi.value = value
-    mi.color = COLOR_DEFAULT
-    mi.isVisible = TRUE
-End Sub
-
-Sub NewMenuItemWithColor (mi As MenuItem, label As String, textColor As Integer, id As Integer)
-    mi.id = id
-    mi.label = label
-    mi.value = 0
-    mi.color = textColor
-    mi.isVisible = TRUE
-End Sub
-*/
