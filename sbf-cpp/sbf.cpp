@@ -296,8 +296,21 @@ void CGGetAttributes(CharacterType& ch) {
 }
 
 void CGGetBackgrounds(CharacterType& ch) {
-  // TODO: Fill this in.
-  cout << "// TODO: CGGetBackgrounds(CharacterType&)" << endl;
+  // Spend background points
+  MenuStyle ms;
+  int background_points = GetBackgroundPoints();
+  vector<string> background_labels = GetBackgroundLabels();
+  while (background_points > 0) {
+    MaybeClearScreen();
+    vector<int> background_values = ch.GetBackgroundValues();
+    int background_id = ChooseStringIdWithValues(
+        background_labels,
+        background_values,
+        ms,
+        "Which background do you want to spend 1 of your " + to_string(background_points) + " points on?");
+    ch.SetBackgroundValue(background_id, ch.GetBackgroundValue(background_id) + 1);
+    background_points--;
+  }
 }
 
 void CGGetRoad(CharacterType& ch) {
