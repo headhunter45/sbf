@@ -1,4 +1,4 @@
-#define _XOPEN_SOURCE_EXTENDED
+﻿#define _XOPEN_SOURCE_EXTENDED
 #include "Utils.h"
 
 #include <cstdint>
@@ -12,6 +12,7 @@ using namespace SBF;
 
 namespace SBF {
 namespace {
+using std::ostringstream;
 using std::string;
 using std::vector;
 }  // End namespace
