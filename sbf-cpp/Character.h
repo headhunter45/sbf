@@ -30,6 +30,7 @@ int GetAttributePointsForRank(int rank_id);
 int GetBackgroundPoints();
 int GetDisciplinePoints();
 int GetVirtuePoints();
+const int kInitialGeneration = 13;
 
 class CharacterType {
  public:
@@ -47,9 +48,12 @@ class CharacterType {
   std::vector<int> GetBackgroundValues() const;
   int GetDisciplineValue(int id) const;
   std::vector<int> GetDisciplineValues() const;
+  int GetFreebiePoints() const;
   int GetKnowledgeValue(int id) const;
   int GetMentalAttributeValue(int id) const;
   int GetPhysicalAttributeValue(int id) const;
+  std::string GetRoadName() const;
+  int GetRoadValue() const;
   int GetSkillValue(int id) const;
   int GetSocialAttributeValue(int id) const;
   int GetTalentValue(int id) const;
@@ -59,13 +63,17 @@ class CharacterType {
   void SetAttributeValue(int group_id, int id, int value);
   void SetBackgroundValue(int id, int value);
   void SetDisciplineValue(int id, int value);
+  void SetFreebiePoints(int value);
   void SetKnowledgeValue(int id, int value);
   void SetMentalAttributeValue(int id, int value);
   void SetPhysicalAttributeValue(int id, int value);
+  void SetRoadName(std::string name);
+  void SetRoadValue(int value);
   void SetSkillValue(int id, int value);
   void SetSocialAttributeValue(int id, int value);
   void SetTalentValue(int id, int value);
   void SetVirtueValue(int id, int value);
+
   std::string name;
   std::string player;
   std::string chronicle;
@@ -80,13 +88,16 @@ class CharacterType {
   int selfControl;
   int courage;
   int generation;
-  std::string roadName;
-  int roadValue;
   int willpower;
   int bloodPool;
   int derangementId;
 
  private:
+  // Scalars
+  int freebie_points;
+  std::string road_name;
+  int road_value;
+
   // Disciplines
   int discipline_animalism;
   int discipline_auspex;

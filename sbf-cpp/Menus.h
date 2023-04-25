@@ -27,8 +27,6 @@ class MenuItem;
  * @{
  */
 namespace SBF {
-using std::string;
-
 class MenuStyleBuilder {
  public:
   MenuStyleBuilder();
@@ -59,15 +57,15 @@ class MenuStyle {
   int label_width;
   int value_width;
   int screen_width;
-  string random_item_name;
+  std::string random_item_name;
   int random_item_id;
   uint8_t random_item_color;
-  string cancel_item_name;
+  std::string cancel_item_name;
   int cancel_item_id;
   uint8_t cancel_item_color;
-  string id_label_separator;
-  string label_value_separator;
-  string menu_item_spacer;
+  std::string id_label_separator;
+  std::string label_value_separator;
+  std::string menu_item_spacer;
   bool show_random;
   bool show_cancel;
   bool use_colors;
@@ -82,7 +80,7 @@ class MenuItem {
   friend std::ostream& operator<<(std::ostream& os, const MenuItem& item);
   bool operator==(const MenuItem& other);
   bool operator!=(const MenuItem& other);
-  string label;
+  std::string label;
   int id;
   int value;
   uint8_t color;
@@ -92,19 +90,41 @@ class MenuItem {
 
 // TODO: Make a menu class to hold GetRandomMenuItemId, the various BuildMenu* methods, and possibly PrintMenu.
 int GetRandomMenuItemId(std::vector<MenuItem> items);
-std::vector<MenuItem> BuildMenu(std::vector<string> labels);
+std::vector<MenuItem> BuildMenu(std::vector<std::string> labels);
 std::vector<MenuItem> BuildMenuWithValues(std::vector<std::pair<std::string, int>> items);
 std::vector<MenuItem> BuildMenuWithValues(std::vector<std::string> labels, std::vector<int> values);
 std::vector<MenuItem> BuildMenuWithColors(std::vector<std::pair<std::string, uint8_t>> items);
 std::vector<MenuItem> BuildMenuWithColors(std::vector<std::string> labels, std::vector<uint8_t> colors);
 std::ostream& PrintMenu(std::ostream& os, std::vector<MenuItem> items, MenuStyle style);
-string GetTitle(MenuItem item, MenuStyle style);
-string GetTitleWithoutValue(MenuItem item, MenuStyle style);
+std::string GetTitle(MenuItem item, MenuStyle style);
+std::string GetTitleWithoutValue(MenuItem item, MenuStyle style);
 std::ostream& PrintWithMaybeColor(std::ostream& os,
                                   const std::string& text,
                                   uint8_t text_color = kColorDefaultForeground,
                                   bool use_colors = false);
+int ChooseStringId(std::vector<std::string> labels, MenuStyle style, const std::string& prompt);
+bool ChooseYesOrNo(std::string prompt);
+int GetChoice(int min, int max);
+int GetChoice();
+int GetMenuChoice(std::vector<MenuItem> menu_items, MenuStyle style);
+std::string GetString(std::string prompt);
+int ChooseStringIdWithValues(std::vector<std::string> labels,
+                             std::vector<int> values,
+                             MenuStyle style,
+                             const std::string& prompt);
+int ChooseMenuItemId(std::vector<MenuItem> menu_items, MenuStyle style, const std::string& prompt, bool ignore_value);
+int ChooseStringIdWithColors(std::vector<std::string> labels,
+                             std::vector<uint8_t> colors,
+                             MenuStyle style,
+                             const std::string& prompt);
+void WaitForKeypress();
 
+/// Clears the screen if not a debug build.
+inline void MaybeClearScreen() {
+#if !defined(DEBUG)
+  cout << "\033[1;1H\033[2J";
+#endif
+}
 }  // End namespace SBF
 
 /** @}*/

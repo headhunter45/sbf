@@ -183,6 +183,28 @@ cc_test(
     ],
 )
 
+cc_library(
+    name = "character_generator",
+    srcs = ["CharacterGenerator.cpp"],
+    hdrs = ["CharacterGenerator.h"],
+    deps = [
+        "archetypes",
+        "character",
+        "freebies",
+        "genders",
+        "menus",
+    ],
+)
+
+cc_test(
+    name = "character_generator_test",
+    srcs = ["CharacterGenerator_test.cpp"],
+    deps = [
+        ":character_generator",
+        ":tinytest",
+    ],
+)
+
 # cc_library(
 #     name = "main",
 #     srcs = ["main.cpp"],
@@ -255,13 +277,7 @@ cc_binary(
         "sbf.h",
     ],
     deps = [
-        ":abilities",
-        ":archetypes",
-        ":attributes",
-        ":backgrounds",
-        ":character",
-        ":clans",
-        ":genders",
+        ":character_generator",
         ":menus",
     ],
 )

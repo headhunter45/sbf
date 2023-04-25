@@ -12,10 +12,12 @@
 
 namespace SBF {
 namespace {
+using std::cin;
 using std::cout;
 using std::endl;
 using std::ostream;
 using std::pair;
+using std::string;
 using std::to_string;
 using std::vector;
 }  // End namespace
@@ -287,6 +289,128 @@ bool MenuItem::operator==(const MenuItem& other) {
 
 bool MenuItem::operator!=(const MenuItem& other) {
   return !(*this == other);
+}
+
+int GetChoice(int min, int max) {
+  int choice;
+  do {
+    choice = GetChoice();
+  } while (choice < min || choice > max);
+  return choice;
+}
+
+int GetChoice() {
+  int choice;
+  string line;
+  bool has_error;
+  do {
+    has_error = false;
+    getline(cin, line);
+    try {
+      if (line.empty()) {
+        return 0;
+      }
+      choice = stoi(line);
+    } catch (...) {
+      has_error = true;
+    }
+  } while (has_error);
+  return choice;
+}
+
+int GetMenuChoice(vector<MenuItem> menu_items, MenuStyle style) {
+  int choice;
+  while (true) {
+    choice = GetChoice();
+    if (style.show_random && choice == style.random_item_id) {
+      return choice;
+    }
+    if (style.show_cancel && choice == style.cancel_item_id) {
+      return choice;
+    }
+    for (MenuItem item : menu_items) {
+      if (item.id == choice) {
+        return choice;
+      }
+    }
+  }
+}
+
+string GetString(string prompt) {
+  cout << prompt << endl;
+  string response;
+  getline(cin, response);
+  return response;
+}
+
+int ChooseStringId(vector<string> labels, MenuStyle style, const string& prompt) {
+  MaybeClearScreen();
+  vector<MenuItem> menu_items = BuildMenu(labels);
+  style.Adjust(menu_items);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice;
+}
+
+bool ChooseYesOrNo(string prompt) {
+  MenuStyle style;
+  style.show_random = false;
+  vector<MenuItem> menu_items = BuildMenu({"Yes", "No"});
+  style.Adjust(menu_items, true);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice == 1;
+}
+
+int ChooseStringIdWithValues(vector<string> labels, vector<int> values, MenuStyle style, const string& prompt) {
+  MaybeClearScreen();
+  vector<MenuItem> menu_items = BuildMenuWithValues(labels, values);
+  style.Adjust(menu_items, false);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice;
+}
+
+int ChooseStringIdWithColors(vector<string> labels, vector<uint8_t> colors, MenuStyle style, const string& prompt) {
+  MaybeClearScreen();
+  // Check array bounds
+  vector<MenuItem> menu_items = BuildMenuWithColors(labels, colors);
+  style.Adjust(menu_items);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice;
+}
+
+int ChooseMenuItemId(vector<MenuItem> menu_items, MenuStyle style, const string& prompt, bool ignore_value) {
+  MaybeClearScreen();
+  style.Adjust(menu_items, ignore_value);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice;
+}
+
+void WaitForKeypress() {
+  // TODO: Make this press any key to continue.
 }
 
 }  // End namespace SBF

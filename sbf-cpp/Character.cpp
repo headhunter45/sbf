@@ -28,11 +28,12 @@ CharacterType::CharacterType() {
   natureId = 0;
   demeanorId = 0;
   generation = 3;
-  roadName = "";
-  roadValue = 0;
+  road_name = "";
+  road_value = 0;
   willpower = 0;
   bloodPool = 0;
   derangementId = -1;
+  freebie_points = 15;
 
   // Virtues
   selfControl = 1;
@@ -250,10 +251,9 @@ int CharacterType::GetVirtueValue(int id) const {
 }
 
 void CharacterType::FillVirtueValues(std::vector<int>& values) const {
-  // TODO: This method sucks, but was needed in QBasic.
   values.clear();
   for (int id = 0; id <= kVirtuesCount; id++) {
-    values[id] = GetVirtueValue(id);
+    values.push_back(GetVirtueValue(id));
   }
 }
 
@@ -755,5 +755,29 @@ string CharacterType::GetAllDerangementsLine() const {
     return GetDerangement(derangementId).label;
   }
   return "";
+}
+
+int CharacterType::GetFreebiePoints() const {
+  return freebie_points;
+}
+
+void CharacterType::SetFreebiePoints(int value) {
+  freebie_points = value;
+}
+
+string CharacterType::GetRoadName() const {
+  return road_name;
+}
+
+void CharacterType::SetRoadName(string name) {
+  road_name = name;
+}
+
+int CharacterType::GetRoadValue() const {
+  return road_value;
+}
+
+void CharacterType::SetRoadValue(int value) {
+  road_value = value;
 }
 }  // End namespace SBF
