@@ -5,6 +5,7 @@
 namespace SBF {
 namespace {
 using std::ostream;
+using std::vector;
 }  // End namespace
 
 ostream& operator<<(ostream& os, const FreebieType& freebie) {
@@ -28,10 +29,31 @@ FreebieType GetFreebie(int freebie_id) {
   return kFreebieUnknown;
 }
 
-void FillFreebies(std::vector<FreebieType>& freebies) {
+void FillFreebies(vector<FreebieType>& freebies) {
   freebies.clear();
   for (int id = 1; id <= kFreebiesCount; id++) {
     freebies.push_back(GetFreebie(id));
   }
+}
+
+vector<FreebieType> GetFreebies() {
+  vector<FreebieType> freebies;
+
+  FillFreebies(freebies);
+
+  return freebies;
+}
+
+vector<FreebieType> GetAvailableFreebies(int freebie_points) {
+  vector<FreebieType> freebies;
+
+  for (int id = 1; id <= kFreebiesCount; id++) {
+    FreebieType freebie = GetFreebie(id);
+    if (freebie.cost <= freebie_points) {
+      freebies.push_back(freebie);
+    }
+  }
+
+  return freebies;
 }
 }  // End namespace SBF

@@ -148,6 +148,10 @@ FreebieType GetFreebie(int freebie_id);
 /// @param freebies The vector to fill. It will be cleared first.
 void FillFreebies(std::vector<FreebieType>& freebies);
 
+std::vector<FreebieType> GetFreebies();
+
+std::vector<FreebieType> GetAvailableFreebies(int freebie_points);
+
 }  // End namespace SBF
 
 #endif
