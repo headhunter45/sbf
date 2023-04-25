@@ -26,44 +26,45 @@
  * @{
  */
 namespace SBF {
-int GetAttributePointsForRank(int rankId);
+int GetAttributePointsForRank(int rank_id);
+int GetBackgroundPoints();
 int GetDisciplinePoints();
 int GetVirtuePoints();
 
 class CharacterType {
  public:
   CharacterType();
-  void FillAbilityValues(std::vector<int>& abilityValues, int abilityGroupId) const;
-  void FillAttributeValues(std::vector<int>& attributeValues, int groupId) const;
-  void FillBackgroundValues(std::vector<int>& backgroundValues) const;
-  void FillDisciplineValues(std::vector<int>& disciplineValues) const;
-  void FillVirtueValues(std::vector<int>& virtueValues) const;
-  int GetAbilityValue(int abilityGroupId, int abilityId) const;
-  int GetAttributeValue(int attributeGroupId, int abilityId) const;
-  std::vector<int> GetAttributeValuesInGroup(int group_id) const;
-  int GetPhysicalAttributeValue(int id) const;
-  int GetSocialAttributeValue(int id) const;
-  int GetMentalAttributeValue(int id) const;
-  int GetBackgroundValue(int backgroundId) const;
+  void FillAbilityValues(std::vector<int>& values, int group_id) const;
+  void FillAttributeValues(std::vector<int>& values, int group_id) const;
+  void FillBackgroundValues(std::vector<int>& values) const;
+  void FillDisciplineValues(std::vector<int>& values) const;
+  void FillVirtueValues(std::vector<int>& values) const;
+  int GetAbilityValue(int group_id, int id) const;
   std::string GetAllDerangementsLine() const;
-  int GetDisciplineValue(int disciplineId) const;
+  int GetAttributeValue(int group_id, int id) const;
+  std::vector<int> GetAttributeValuesInGroup(int group_id) const;
+  int GetBackgroundValue(int id) const;
+  std::vector<int> GetBackgroundValues() const;
+  int GetDisciplineValue(int id) const;
   std::vector<int> GetDisciplineValues() const;
-  int GetKnowledgeValue(int knowledgeId) const;
-  int GetSkillValue(int skillId) const;
-  int GetTalentValue(int talentId) const;
-  int GetVirtueValue(int virtueId) const;
-  void SetAbilityValue(int abilityGroupId, int abilityId, int value);
-  void SetAttributeValue(int attributeGroupId, int attributeId, int value);
-  void SetPhysicalAttributeValue(int id, int value);
+  int GetKnowledgeValue(int id) const;
+  int GetMentalAttributeValue(int id) const;
+  int GetPhysicalAttributeValue(int id) const;
+  int GetSkillValue(int id) const;
+  int GetSocialAttributeValue(int id) const;
+  int GetTalentValue(int id) const;
+  int GetVirtueValue(int id) const;
+  void SetAbilityValue(int group_id, int id, int value);
+  void SetAttributeValue(int group_id, int id, int value);
+  void SetBackgroundValue(int id, int value);
+  void SetDisciplineValue(int id, int value);
+  void SetKnowledgeValue(int id, int value);
   void SetMentalAttributeValue(int id, int value);
+  void SetPhysicalAttributeValue(int id, int value);
+  void SetSkillValue(int id, int value);
   void SetSocialAttributeValue(int id, int value);
-  void SetBackgroundValue(int backgroundId, int value);
-  void SetDisciplineValue(int disciplineId, int value);
-  void SetKnowledgeValue(int knowledgeId, int value);
-  void SetSkillValue(int skillId, int value);
-  void SetTalentValue(int talentId, int value);
-  void SetVirtueValue(int virtueId, int value);
-
+  void SetTalentValue(int id, int value);
+  void SetVirtueValue(int id, int value);
   std::string name;
   std::string player;
   std::string chronicle;

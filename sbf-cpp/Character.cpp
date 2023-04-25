@@ -1,4 +1,4 @@
-#include "Character.h"
+﻿#include "Character.h"
 
 #include <iostream>
 #include <sstream>
@@ -41,18 +41,18 @@ CharacterType::CharacterType() {
 
   // Arrays/Objects
   // Abilities (Talents/Skills/Knowledges)
-  for (int groupId = 1; groupId <= kAbilitiesCount; groupId++) {
-    const int numAbilities = GetNumItemsForAbilityGroup(groupId);
-    for (int abilityId = 1; abilityId <= numAbilities; abilityId++) {
-      SetAbilityValue(groupId, abilityId, 0);
+  for (int group_id = 1; group_id <= kAbilitiesCount; group_id++) {
+    const int num_abilities = GetNumItemsForAbilityGroup(group_id);
+    for (int id = 1; id <= num_abilities; id++) {
+      SetAbilityValue(group_id, id, 0);
     }
   }
 
   // Attributes
-  for (int groupId = 1; groupId <= kAttributeGroupsCount; groupId++) {
-    const int numAttributes = GetNumAttributesInGroup(groupId);
-    for (int attributeId = 1; attributeId <= numAttributes; attributeId++) {
-      SetAttributeValue(groupId, attributeId, 1);
+  for (int group_id = 1; group_id <= kAttributeGroupsCount; group_id++) {
+    const int numAttributes = GetNumAttributesInGroup(group_id);
+    for (int id = 1; id <= numAttributes; id++) {
+      SetAttributeValue(group_id, id, 1);
     }
   }
 
@@ -67,8 +67,8 @@ CharacterType::CharacterType() {
   }
 }
 
-void CharacterType::SetDisciplineValue(int disciplineId, int value) {
-  switch (disciplineId) {
+void CharacterType::SetDisciplineValue(int id, int value) {
+  switch (id) {
     case kDisciplineAnimalismId:
       discipline_animalism = value;
       break;
@@ -144,8 +144,8 @@ void CharacterType::SetDisciplineValue(int disciplineId, int value) {
   }
 }
 
-int CharacterType::GetDisciplineValue(int disciplineId) const {
-  switch (disciplineId) {
+int CharacterType::GetDisciplineValue(int id) const {
+  switch (id) {
     case kDisciplineAnimalismId:
       return discipline_animalism;
     case kDisciplineAuspexId:
@@ -222,8 +222,8 @@ int GetVirtuePoints() {
   return kVirtuePoints;
 }
 
-void CharacterType::SetVirtueValue(int virtueId, int value) {
-  switch (virtueId) {
+void CharacterType::SetVirtueValue(int id, int value) {
+  switch (id) {
     case kVirtueSelfControlId:
       selfControl = value;
       break;
@@ -236,8 +236,8 @@ void CharacterType::SetVirtueValue(int virtueId, int value) {
   }
 }
 
-int CharacterType::GetVirtueValue(int virtueId) const {
-  switch (virtueId) {
+int CharacterType::GetVirtueValue(int id) const {
+  switch (id) {
     case kVirtueSelfControlId:
       return selfControl;
     case kVirtueCourageId:
@@ -249,20 +249,20 @@ int CharacterType::GetVirtueValue(int virtueId) const {
   }
 }
 
-void CharacterType::FillVirtueValues(std::vector<int>& virtueValues) const {
+void CharacterType::FillVirtueValues(std::vector<int>& values) const {
   // TODO: This method sucks, but was needed in QBasic.
-  virtueValues.clear();
+  values.clear();
   for (int id = 0; id <= kVirtuesCount; id++) {
-    virtueValues[id] = GetVirtueValue(id);
+    values[id] = GetVirtueValue(id);
   }
 }
 
-void CharacterType::FillAttributeValues(std::vector<int>& attributeValues, int attributeGroupId) const {
+void CharacterType::FillAttributeValues(std::vector<int>& values, int group_id) const {
   // TODO: This method sucks, but was needed in QBasic.
-  const int numAttributes = GetNumAttributesInGroup(attributeGroupId);
-  attributeValues.clear();
-  for (int attributeId = 1; attributeId <= numAttributes; attributeId++) {
-    attributeValues.push_back(GetAttributeValue(attributeGroupId, attributeId));
+  const int numAttributes = GetNumAttributesInGroup(group_id);
+  values.clear();
+  for (int id = 1; id <= numAttributes; id++) {
+    values.push_back(GetAttributeValue(group_id, id));
   }
 }
 
@@ -272,43 +272,43 @@ vector<int> CharacterType::GetAttributeValuesInGroup(int group_id) const {
   return values;
 }
 
-void FillAttributeLabelsInGroup(std::vector<string> attributeLabels, int attributeGroupId) {
-  attributeLabels.clear();
-  switch (attributeGroupId) {
+void FillAttributeLabelsInGroup(std::vector<string> labels, int group_id) {
+  labels.clear();
+  switch (group_id) {
     case kAttributeGroupPhysicalId:
-      for (int attributeId = 0; attributeId <= kPhysicalAttributesCount; attributeId++) {
-        attributeLabels[attributeId] = kPhysicalAttributeLabels[attributeId];
+      for (int id = 0; id <= kPhysicalAttributesCount; id++) {
+        labels.push_back(kPhysicalAttributeLabels[id]);
       }
       break;
     case kAttributeGroupSocialId:
-      for (int attributeId = 0; attributeId <= kSocialAttributesCount; attributeId++) {
-        attributeLabels[attributeId] = kSocialAttributeLabels[attributeId];
+      for (int id = 0; id <= kSocialAttributesCount; id++) {
+        labels.push_back(kSocialAttributeLabels[id]);
       }
       break;
     case kAttributeGroupMentalId:
-      for (int attributeId = 0; attributeId <= kMentalAttributesCount; attributeId++) {
-        attributeLabels[attributeId] = kMentalAttributeLabels[attributeId];
+      for (int id = 0; id <= kMentalAttributesCount; id++) {
+        labels.push_back(kMentalAttributeLabels[id]);
       }
       break;
   }
 }
 
-void FillAttributeAbbreviationsInGroup(std::vector<string> attributeAbbreviations, int attributeGroupId) {
-  attributeAbbreviations.clear();
-  switch (attributeGroupId) {
+void FillAttributeAbbreviationsInGroup(std::vector<string> abbreviations, int group_id) {
+  abbreviations.clear();
+  switch (group_id) {
     case kAttributeGroupPhysicalId:
-      for (int attributeId = 0; attributeId <= kPhysicalAttributesCount; attributeId++) {
-        attributeAbbreviations[attributeId] = kPhysicalAttributeLabelAbbreviations[attributeId];
+      for (int id = 0; id <= kPhysicalAttributesCount; id++) {
+        abbreviations.push_back(kPhysicalAttributeLabelAbbreviations[id]);
       }
       break;
     case kAttributeGroupSocialId:
-      for (int attributeId = 0; attributeId <= kSocialAttributesCount; attributeId++) {
-        attributeAbbreviations[attributeId] = kSocialAttributeLabelAbbreviations[attributeId];
+      for (int id = 0; id <= kSocialAttributesCount; id++) {
+        abbreviations.push_back(kSocialAttributeLabelAbbreviations[id]);
       }
       break;
     case kAttributeGroupMentalId:
-      for (int attributeId = 0; attributeId <= kMentalAttributesCount; attributeId++) {
-        attributeAbbreviations[attributeId] = kMentalAttributeLabelAbbreviations[attributeId];
+      for (int id = 0; id <= kMentalAttributesCount; id++) {
+        abbreviations.push_back(kMentalAttributeLabelAbbreviations[id]);
       }
       break;
   }
@@ -356,16 +356,16 @@ void CharacterType::SetMentalAttributeValue(int id, int value) {
   }
 }
 
-void CharacterType::SetAttributeValue(int attributeGroupId, int attributeId, int value) {
-  switch (attributeGroupId) {
+void CharacterType::SetAttributeValue(int group_id, int id, int value) {
+  switch (group_id) {
     case kAttributeGroupPhysicalId:
-      SetPhysicalAttributeValue(attributeId, value);
+      SetPhysicalAttributeValue(id, value);
       break;
     case kAttributeGroupSocialId:
-      SetSocialAttributeValue(attributeId, value);
+      SetSocialAttributeValue(id, value);
       break;
     case kAttributeGroupMentalId:
-      SetMentalAttributeValue(attributeId, value);
+      SetMentalAttributeValue(id, value);
       break;
   }
 }
@@ -406,20 +406,20 @@ int CharacterType::GetMentalAttributeValue(int id) const {
   return 0;
 }
 
-int CharacterType::GetAttributeValue(int attributeGroupId, int attributeId) const {
-  switch (attributeGroupId) {
+int CharacterType::GetAttributeValue(int group_id, int id) const {
+  switch (group_id) {
     case kAttributeGroupPhysicalId:
-      return GetPhysicalAttributeValue(attributeId);
+      return GetPhysicalAttributeValue(id);
     case kAttributeGroupSocialId:
-      return GetSocialAttributeValue(attributeId);
+      return GetSocialAttributeValue(id);
     case kAttributeGroupMentalId:
-      return GetMentalAttributeValue(attributeId);
+      return GetMentalAttributeValue(id);
   }
   return 0;
 }
 
-int GetAttributePointsForRank(int rankId) {
-  switch (rankId) {
+int GetAttributePointsForRank(int id) {
+  switch (id) {
     case kRankPrimaryId:
       return 7;
     case kRankSecondaryId:
@@ -430,34 +430,34 @@ int GetAttributePointsForRank(int rankId) {
   return 0;
 }
 
-void CharacterType::SetAbilityValue(int abilityGroupId, int abilityId, int value) {
-  switch (abilityGroupId) {
+void CharacterType::SetAbilityValue(int group_id, int id, int value) {
+  switch (group_id) {
     case kAbilityTalentsId:
-      SetTalentValue(abilityId, value);
+      SetTalentValue(id, value);
       break;
     case kAbilitySkillsId:
-      SetSkillValue(abilityId, value);
+      SetSkillValue(id, value);
       break;
     case kAbilityKnowledgesId:
-      SetKnowledgeValue(abilityId, value);
+      SetKnowledgeValue(id, value);
       break;
   }
 }
 
-int CharacterType::GetAbilityValue(int abilityGroupId, int abilityId) const {
-  switch (abilityGroupId) {
+int CharacterType::GetAbilityValue(int group_id, int id) const {
+  switch (group_id) {
     case kAbilityTalentsId:
-      return GetTalentValue(abilityId);
+      return GetTalentValue(id);
     case kAbilityKnowledgesId:
-      return GetKnowledgeValue(abilityId);
+      return GetKnowledgeValue(id);
     case kAbilitySkillsId:
-      return GetSkillValue(abilityId);
+      return GetSkillValue(id);
   }
   return 0;
 }
 
-int GetAbilityPointsForRank(int rankId) {
-  switch (rankId) {
+int GetAbilityPointsForRank(int id) {
+  switch (id) {
     case kRankPrimaryId:
       return 13;
     case kRankSecondaryId:
@@ -468,16 +468,16 @@ int GetAbilityPointsForRank(int rankId) {
   return 0;
 }
 
-void CharacterType::FillAbilityValues(std::vector<int>& abilityValues, int abilityGroupId) const {
-  int numAbilities = GetNumItemsForAbilityGroup(abilityGroupId);
-  abilityValues.clear();
-  for (int abilityId = 0; abilityId <= numAbilities; abilityId++) {
-    abilityValues[abilityId] = GetAbilityValue(abilityGroupId, abilityId);
+void CharacterType::FillAbilityValues(std::vector<int>& values, int group_id) const {
+  int num_abilities = GetNumItemsForAbilityGroup(group_id);
+  values.clear();
+  for (int id = 0; id <= num_abilities; id++) {
+    values[id] = GetAbilityValue(group_id, id);
   }
 }
 
-void CharacterType::SetTalentValue(int talentId, int value) {
-  switch (talentId) {
+void CharacterType::SetTalentValue(int id, int value) {
+  switch (id) {
     case kTalentActingId:
       talent_acting = value;
       break;
@@ -511,8 +511,8 @@ void CharacterType::SetTalentValue(int talentId, int value) {
   }
 }
 
-int CharacterType::GetTalentValue(int talentId) const {
-  switch (talentId) {
+int CharacterType::GetTalentValue(int id) const {
+  switch (id) {
     case kTalentActingId:
       return talent_acting;
     case kTalentAlertnessId:
@@ -537,8 +537,8 @@ int CharacterType::GetTalentValue(int talentId) const {
   return 0;
 }
 
-void CharacterType::SetSkillValue(int skillId, int value) {
-  switch (skillId) {
+void CharacterType::SetSkillValue(int id, int value) {
+  switch (id) {
     case kSkillAnimalKenId:
       skill_animalKen = value;
       break;
@@ -572,8 +572,8 @@ void CharacterType::SetSkillValue(int skillId, int value) {
   }
 }
 
-int CharacterType::GetSkillValue(int skillId) const {
-  switch (skillId) {
+int CharacterType::GetSkillValue(int id) const {
+  switch (id) {
     case kSkillAnimalKenId:
       return skill_animalKen;
     case kSkillDriveId:
@@ -598,8 +598,8 @@ int CharacterType::GetSkillValue(int skillId) const {
   return 0;
 }
 
-void CharacterType::SetKnowledgeValue(int knowledgeId, int value) {
-  switch (knowledgeId) {
+void CharacterType::SetKnowledgeValue(int id, int value) {
+  switch (id) {
     case kKnowledgeBureaucracyId:
       knowledge_bureaucracy = value;
       break;
@@ -633,8 +633,8 @@ void CharacterType::SetKnowledgeValue(int knowledgeId, int value) {
   }
 }
 
-int CharacterType::GetKnowledgeValue(int knowledgeId) const {
-  switch (knowledgeId) {
+int CharacterType::GetKnowledgeValue(int id) const {
+  switch (id) {
     case kKnowledgeBureaucracyId:
       return knowledge_bureaucracy;
     case kKnowledgeComputerId:
@@ -659,8 +659,8 @@ int CharacterType::GetKnowledgeValue(int knowledgeId) const {
   return 0;
 }
 
-void CharacterType::SetBackgroundValue(int backgroundId, int value) {
-  switch (backgroundId) {
+void CharacterType::SetBackgroundValue(int id, int value) {
+  switch (id) {
     case kBackgroundAlliesId:
       background_allies = value;
       break;
@@ -694,8 +694,8 @@ void CharacterType::SetBackgroundValue(int backgroundId, int value) {
   }
 }
 
-int CharacterType::GetBackgroundValue(int backgroundId) const {
-  switch (backgroundId) {
+int CharacterType::GetBackgroundValue(int id) const {
+  switch (id) {
     case kBackgroundAlliesId:
       return background_allies;
     case kBackgroundContactsId:
@@ -722,10 +722,15 @@ int CharacterType::GetBackgroundValue(int backgroundId) const {
 
 void CharacterType::FillBackgroundValues(std::vector<int>& values) const {
   values.clear();
-  values.push_back(0);  // To pad the indexes.
-  for (int backgroundId = 1; backgroundId <= kBackgroundsCount; backgroundId++) {
-    values[backgroundId] = GetBackgroundValue(backgroundId);
+  for (int id = 1; id <= kBackgroundsCount; id++) {
+    values[id] = GetBackgroundValue(id);
   }
+}
+
+vector<int> CharacterType::GetBackgroundValues() const {
+  vector<int> values;
+  FillBackgroundValues(values);
+  return values;
 }
 
 int GetBackgroundPoints() {
