@@ -5,7 +5,10 @@
 #include <vector>
 
 namespace SBF {
+namespace {
 using std::string;
+using std::vector;
+}  // End namespace
 
 string GetAttributeGroupLabel(int attributeGroupId) {
   if (attributeGroupId > 0 && attributeGroupId <= kAttributeGroupsCount) {
@@ -114,6 +117,22 @@ void FillAttributeLabelsInGroup(std::vector<std::string>& labels, int groupId) {
       FillMentalAttributeLabels(labels);
       break;
   }
+}
+
+vector<string> GetAttributeLabelsInGroup(int group_id) {
+  vector<string> labels;
+  switch (group_id) {
+    case kAttributeGroupPhysicalId:
+      FillPhysicalAttributeLabels(labels);
+      break;
+    case kAttributeGroupSocialId:
+      FillSocialAttributeLabels(labels);
+      break;
+    case kAttributeGroupMentalId:
+      FillMentalAttributeLabels(labels);
+      break;
+  }
+  return labels;
 }
 
 void FillPhysicalAttributeLabels(std::vector<std::string>& labels) {

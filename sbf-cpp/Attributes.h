@@ -159,6 +159,11 @@ void FillAttributeGroupLabels(std::vector<std::string>& labels);
 /// @param group_id The group to fill attribute labels for.
 void FillAttributeLabelsInGroup(std::vector<std::string>& labels, int group_id);
 
+/// @brief Gets the valid attribute labels in a specific group.
+/// @param group_id The group to fill attribute labels for.
+/// @return The filled vector.
+std::vector<std::string> GetAttributeLabelsInGroup(int group_id);
+
 /// @brief Fills the provided vector with all of the valid physical attribute labels.
 /// @param labels The vector to fill. It will be cleared first.
 void FillPhysicalAttributeLabels(std::vector<std::string>& labels);
