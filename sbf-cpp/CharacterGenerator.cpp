@@ -12,6 +12,7 @@
 #include "Random.h"
 #include "Utils.h"
 #include "sbf-cpp/Abilities.h"
+#include "sbf-cpp/Backgrounds.h"
 
 namespace SBF {
 namespace {
@@ -379,7 +380,7 @@ void ShowCharacterSheet(CharacterType& ch) {
   MaybeClearScreen();
   cout << "╔══════════════════════════════════════╦═══════════════════════════════════════╗" << endl;
   cout << "║ Name: " << MakeFitL(ch.name, 30) << " ║ Gender: " << MakeFitL(GetGenderLabel(ch.genderId), 14)
-       << " Generation: " << MakeFitR(to_string(ch.generation), 2) << " ║" << endl;
+       << " Generation: " << MakeFitR(to_string(ch.GetGeneration()), 2) << " ║" << endl;
   cout << "║ Clan: " << MakeFitL(GetClanLabel(ch.clanId), 30) << " ║ Age: " << MakeFitL(ch.age, 32) << " ║" << endl;
   cout << "╠══════════════════════════════════════╣ Player: " << MakeFitL(ch.player, 29) << " ║" << endl;
   cout << "║              Attributes              ║ Chronicle: " << MakeFitL(ch.chronicle, 26) << " ║" << endl;
@@ -503,7 +504,7 @@ void CharacterGenerator() {
   CGGetRoad(ch);
   CGSpendVirtuePoints(ch);
   CGGetDerangement(ch);
-  ch.generation = kInitialGeneration - ch.GetBackgroundValue(kBackgroundGenerationId);
+  ch.SetGeneration(GetInitialGeneration() - ch.GetBackgroundValue(kBackgroundGenerationId));
   ch.willpower = ch.courage;
   ch.SetRoadValue(ch.conscience + ch.selfControl);
   ch.bloodPool = GetRandomInt(1, 10);

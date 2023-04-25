@@ -17,6 +17,7 @@ using std::vector;
 }  // namespace
 
 const int kBackgroundPoints = 5;
+const int kInitialGeneration = 13;
 
 CharacterType::CharacterType() {
   // Scalars
@@ -740,5 +741,17 @@ int CharacterType::GetRoadValue() const {
 
 void CharacterType::SetRoadValue(int value) {
   road_value = value;
+}
+
+void CharacterType::SetGeneration(int value) {
+  generation = value;
+}
+
+int CharacterType::GetGeneration() const {
+  return generation;
+}
+
+int GetInitialGeneration() {
+  return kInitialGeneration;
 }
 }  // End namespace SBF

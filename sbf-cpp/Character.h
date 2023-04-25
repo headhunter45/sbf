@@ -30,7 +30,7 @@ int GetAttributePointsForRank(int rank_id);
 int GetBackgroundPoints();
 int GetDisciplinePoints();
 int GetVirtuePoints();
-const int kInitialGeneration = 13;
+int GetInitialGeneration();
 
 class CharacterType {
  public:
@@ -49,6 +49,7 @@ class CharacterType {
   int GetDisciplineValue(int id) const;
   std::vector<int> GetDisciplineValues() const;
   int GetFreebiePoints() const;
+  int GetGeneration() const;
   int GetKnowledgeValue(int id) const;
   int GetMentalAttributeValue(int id) const;
   int GetPhysicalAttributeValue(int id) const;
@@ -64,6 +65,7 @@ class CharacterType {
   void SetBackgroundValue(int id, int value);
   void SetDisciplineValue(int id, int value);
   void SetFreebiePoints(int value);
+  void SetGeneration(int value);
   void SetKnowledgeValue(int id, int value);
   void SetMentalAttributeValue(int id, int value);
   void SetPhysicalAttributeValue(int id, int value);
@@ -87,7 +89,6 @@ class CharacterType {
   int conscience;
   int selfControl;
   int courage;
-  int generation;
   int willpower;
   int bloodPool;
   int derangementId;
@@ -95,6 +96,7 @@ class CharacterType {
  private:
   // Scalars
   int freebie_points;
+  int generation;
   std::string road_name;
   int road_value;
 
