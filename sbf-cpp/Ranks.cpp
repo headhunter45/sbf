@@ -11,6 +11,22 @@ using std::string;
 using std::vector;
 }  // End namespace
 
+const std::string kRankPrimaryLabel = "Primary";
+const std::string kRankSecondaryLabel = "Secondary";
+const std::string kRankTertiaryLabel = "Tertiary";
+const int kRanksCount = 3;
+const RankType kRankPrimary = {kRankPrimaryId, kRankPrimaryLabel};
+const RankType kRankSecondary = {kRankSecondaryId, kRankSecondaryLabel};
+const RankType kRankTertiary = {kRankTertiaryId, kRankTertiaryLabel};
+const RankType kRankUnknown = {0, ""};
+
+const RankType kRanks[]{
+    kRankUnknown,
+    kRankPrimary,
+    kRankSecondary,
+    kRankTertiary,
+};
+
 ostream& operator<<(ostream& os, const RankType& rank) {
   os << "Rank: {id: " << rank.id << ", label: \"" << rank.label << "\"}";
   return os;

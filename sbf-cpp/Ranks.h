@@ -16,28 +16,12 @@
  */
 namespace SBF {
 const int kRankPrimaryId = 1;
-const std::string kRankPrimaryLabel = "Primary";
 const int kRankSecondaryId = 2;
-const std::string kRankSecondaryLabel = "Secondary";
 const int kRankTertiaryId = 3;
-const std::string kRankTertiaryLabel = "Tertiary";
-const int kRanksCount = 3;
 
 struct RankType {
   int id;
   std::string label;
-};
-
-const RankType kRankPrimary = {kRankPrimaryId, kRankPrimaryLabel};
-const RankType kRankSecondary = {kRankSecondaryId, kRankSecondaryLabel};
-const RankType kRankTertiary = {kRankTertiaryId, kRankTertiaryLabel};
-const RankType kRankUnknown = {0, ""};
-
-const RankType kRanks[]{
-    kRankUnknown,
-    kRankPrimary,
-    kRankSecondary,
-    kRankTertiary,
 };
 
 /// @brief Writes a rank to an ostream.

@@ -14,6 +14,21 @@ using namespace Test;
 using namespace std;
 }  // End namespace
 
+const std::string kRankPrimaryLabel = "Primary";
+const std::string kRankSecondaryLabel = "Secondary";
+const std::string kRankTertiaryLabel = "Tertiary";
+const RankType kRankPrimary = {kRankPrimaryId, kRankPrimaryLabel};
+const RankType kRankSecondary = {kRankSecondaryId, kRankSecondaryLabel};
+const RankType kRankTertiary = {kRankTertiaryId, kRankTertiaryLabel};
+const RankType kRankUnknown = {0, ""};
+
+const RankType kRanks[]{
+    kRankUnknown,
+    kRankPrimary,
+    kRankSecondary,
+    kRankTertiary,
+};
+
 TestResults test_GetRank() {
   return execute_suite<RankType, int>(make_test_suite(
       "SBF::GetRank",
