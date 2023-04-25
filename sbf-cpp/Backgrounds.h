@@ -59,6 +59,10 @@ std::string GetBackgroundLabel(int background_id);
 /// @brief Fills the provided vector with all valid background labels.
 /// @param background_labels The vector to fill. It will be emptied first.
 void FillBackgroundLabels(std::vector<std::string>& background_labels);
+
+/// @brief Gets a vector of all the valid background labels.
+/// @return The filled vector with index = background_id -1.
+std::vector<std::string> GetBackgroundLabels();
 }  // End namespace SBF
 
 /** @}*/

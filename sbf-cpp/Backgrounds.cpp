@@ -4,17 +4,28 @@
 #include <vector>
 
 namespace SBF {
-std::string GetBackgroundLabel(int backgroundId) {
+namespace {
+using std::string;
+using std::vector;
+}  // End namespace
+
+string GetBackgroundLabel(int backgroundId) {
   if (backgroundId > 0 && backgroundId <= kBackgroundsCount) {
     return kBackgroundLabels[backgroundId];
   }
   return "";
 }
 
-void FillBackgroundLabels(std::vector<std::string>& labels) {
+void FillBackgroundLabels(vector<string>& labels) {
   labels.clear();
   for (int id = 1; id <= kBackgroundsCount; id++) {
     labels.push_back(kBackgroundLabels[id]);
   }
+}
+
+vector<string> GetBackgroundLabels() {
+  vector<string> labels;
+  FillBackgroundLabels(labels);
+  return labels;
 }
 }  // End namespace SBF
