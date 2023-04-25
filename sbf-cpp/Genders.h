@@ -16,24 +16,10 @@
  */
 namespace SBF {
 const int kGenderMaleId = 1;
-const std::string kGenderMaleLabel = "Male";
 const int kGenderFemaleId = 2;
-const std::string kGenderFemaleLabel = "Female";
 const int kGenderTransMaleId = 3;
-const std::string kGenderTransMaleLabel = "Trans-Male";
 const int kGenderTransFemaleId = 4;
-const std::string kGenderTransFemaleLabel = "Trans-Female";
 const int kGenderNonBinaryId = 5;
-const std::string kGenderNonBinaryLabel = "Non-Binary";
-const int kGendersCount = 5;
-const std::string kGenderLabels[] = {
-    "",
-    kGenderMaleLabel,
-    kGenderFemaleLabel,
-    kGenderTransMaleLabel,
-    kGenderTransFemaleLabel,
-    kGenderNonBinaryLabel,
-};
 
 /// @brief Gets a gender label with a specific id.
 /// @param gender_id The id of the gender to return the label for.

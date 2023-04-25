@@ -14,6 +14,12 @@ using namespace Test;
 using namespace std;
 }  // End namespace
 
+const std::string kGenderMaleLabel = "Male";
+const std::string kGenderFemaleLabel = "Female";
+const std::string kGenderTransMaleLabel = "Trans-Male";
+const std::string kGenderTransFemaleLabel = "Trans-Female";
+const std::string kGenderNonBinaryLabel = "Non-Binary";
+
 TestResults test_GetGenderLabel() {
   return execute_suite<string, int>(make_test_suite(
       "SBF::GetGenderLabel",
