@@ -15,64 +15,24 @@
  * @{
  */
 namespace SBF {
-const int kClanAnarch = 1;
-const std::string kClanAnarchLabel = "Anarch";
-const int kClanAssamite = 2;
-const std::string kClanAssamiteLabel = "Assamite";
-const int kClanBaali = 3;
-const std::string kClanBaaliLabel = "Baali";
-const int kClanBrujah = 4;
-const std::string kClanBrujahLabel = "Brujah";
-const int kClanCaitiff = 5;
-const std::string kClanCaitiffLabel = "Caitiff";
-const int kClanCappadocian = 6;
-const std::string kClanCappadocianLabel = "Cappadocian";
-const int kClanGangrel = 7;
-const std::string kClanGangrelLabel = "Gangrel";
-const int kClanGiovanni = 8;
-const std::string kClanGiovanniLabel = "Giovanni";
-const int kClanInconnu = 9;
-const std::string kClanInconnuLabel = "Inconnu";
-const int kClanLasombra = 10;
-const std::string kClanLasombraLabel = "Lasombra";
-const int kClanMalkavian = 11;
-const std::string kClanMalkavianLabel = "Malkavian";
-const int kClanNosferatu = 12;
-const std::string kClanNosferatuLabel = "Nosferatu";
-const int kClanRavanos = 13;
-const std::string kClanRavanosLabel = "Ravanos";
-const int kClanSettite = 14;
-const std::string kClanSettiteLabel = "Settite";
-const int kClanToreador = 15;
-const std::string kClanToreadorLabel = "Toreador";
-const int kClanTremere = 16;
-const std::string kClanTremereLabel = "Tremere";
-const int kClanTzismice = 17;
-const std::string kClanTzismiceLabel = "Tzismice";
-const int kClanVentrue = 18;
-const std::string kClanVentrueLabel = "Ventrue";
-const int kClansCount = 18;
-const std::string kClanLabels[] = {
-    "",
-    kClanAnarchLabel,
-    kClanAssamiteLabel,
-    kClanBaaliLabel,
-    kClanBrujahLabel,
-    kClanCaitiffLabel,
-    kClanCappadocianLabel,
-    kClanGangrelLabel,
-    kClanGiovanniLabel,
-    kClanInconnuLabel,
-    kClanLasombraLabel,
-    kClanMalkavianLabel,
-    kClanNosferatuLabel,
-    kClanRavanosLabel,
-    kClanSettiteLabel,
-    kClanToreadorLabel,
-    kClanTremereLabel,
-    kClanTzismiceLabel,
-    kClanVentrueLabel,
-};
+const int kClanAnarchId = 1;
+const int kClanAssamiteId = 2;
+const int kClanBaaliId = 3;
+const int kClanBrujahId = 4;
+const int kClanCaitiffId = 5;
+const int kClanCappadocianId = 6;
+const int kClanGangrelId = 7;
+const int kClanGiovanniId = 8;
+const int kClanInconnuId = 9;
+const int kClanLasombraId = 10;
+const int kClanMalkavianId = 11;
+const int kClanNosferatuId = 12;
+const int kClanRavanosId = 13;
+const int kClanSettiteId = 14;
+const int kClanToreadorId = 15;
+const int kClanTremereId = 16;
+const int kClanTzismiceId = 17;
+const int kClanVentrueId = 18;
 
 /// @brief Gets the label for a clan with a specific id.
 /// @param clan_id The id of the clan to get the label for.

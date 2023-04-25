@@ -28,7 +28,7 @@ CharacterType::CharacterType() {
   concept = "";
   age = "";
   genderId = 0;
-  clanId = 0;
+  clan_id = 0;
   natureId = 0;
   demeanorId = 0;
   generation = 3;
@@ -753,5 +753,13 @@ int CharacterType::GetGeneration() const {
 
 int GetInitialGeneration() {
   return kInitialGeneration;
+}
+
+int CharacterType::GetClanId() const {
+  return clan_id;
+}
+
+void CharacterType::SetClanId(int value) {
+  clan_id = value;
 }
 }  // End namespace SBF

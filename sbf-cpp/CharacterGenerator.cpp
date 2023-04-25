@@ -37,7 +37,7 @@ void CGGetHeader(CharacterType& ch) {
   ch.genderId = ChooseStringId(genders, ms, "What is the character's gender?");
   vector<string> clans;
   FillClanLabels(clans);
-  ch.clanId = ChooseStringId(clans, ms, "What clan is the character from?");
+  ch.SetClanId(ChooseStringId(clans, ms, "What clan is the character from?"));
   vector<string> archetypes;
   FillArchetypeLabels(archetypes);
   ch.natureId = ChooseStringId(archetypes, ms, "What is the character's nature?");
@@ -150,7 +150,7 @@ void CGSpendVirtuePoints(CharacterType& ch) {
 }
 
 void CGGetDerangement(CharacterType& ch) {
-  if (ch.clanId == kClanMalkavian) {
+  if (ch.GetClanId() == kClanMalkavianId) {
     // If the clan is malkavian then pick a derangement.
     MenuStyle ms;
     ms.use_colors = true;
@@ -381,7 +381,8 @@ void ShowCharacterSheet(CharacterType& ch) {
   cout << "╔══════════════════════════════════════╦═══════════════════════════════════════╗" << endl;
   cout << "║ Name: " << MakeFitL(ch.name, 30) << " ║ Gender: " << MakeFitL(GetGenderLabel(ch.genderId), 14)
        << " Generation: " << MakeFitR(to_string(ch.GetGeneration()), 2) << " ║" << endl;
-  cout << "║ Clan: " << MakeFitL(GetClanLabel(ch.clanId), 30) << " ║ Age: " << MakeFitL(ch.age, 32) << " ║" << endl;
+  cout << "║ Clan: " << MakeFitL(GetClanLabel(ch.GetClanId()), 30) << " ║ Age: " << MakeFitL(ch.age, 32) << " ║"
+       << endl;
   cout << "╠══════════════════════════════════════╣ Player: " << MakeFitL(ch.player, 29) << " ║" << endl;
   cout << "║              Attributes              ║ Chronicle: " << MakeFitL(ch.chronicle, 26) << " ║" << endl;
   cout << "║ " << MakeFitC("Physical", 12) << MakeFitC("Social", 12) << MakeFitC("Mental", 12)

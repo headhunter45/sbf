@@ -46,6 +46,7 @@ class CharacterType {
   std::vector<int> GetAttributeValuesInGroup(int group_id) const;
   int GetBackgroundValue(int id) const;
   std::vector<int> GetBackgroundValues() const;
+  int GetClanId() const;
   int GetDisciplineValue(int id) const;
   std::vector<int> GetDisciplineValues() const;
   int GetFreebiePoints() const;
@@ -63,6 +64,7 @@ class CharacterType {
   void SetAbilityValue(int group_id, int id, int value);
   void SetAttributeValue(int group_id, int id, int value);
   void SetBackgroundValue(int id, int value);
+  void SetClanId(int value);
   void SetDisciplineValue(int id, int value);
   void SetFreebiePoints(int value);
   void SetGeneration(int value);
@@ -83,7 +85,6 @@ class CharacterType {
   std::string concept;
   std::string age;
   int genderId;
-  int clanId;
   int natureId;
   int demeanorId;
   int conscience;
@@ -95,6 +96,7 @@ class CharacterType {
 
  private:
   // Scalars
+  int clan_id;
   int freebie_points;
   int generation;
   std::string road_name;
