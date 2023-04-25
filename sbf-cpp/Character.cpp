@@ -18,6 +18,7 @@ using std::vector;
 
 const int kBackgroundPoints = 5;
 const int kInitialGeneration = 13;
+const int kDisciplinePoints = 3;
 
 CharacterType::CharacterType() {
   // Scalars
@@ -67,7 +68,7 @@ CharacterType::CharacterType() {
   }
 
   // Disciplines
-  for (int id = 0; id <= kDisciplinesCount; id++) {
+  for (int id = 0; id <= GetNumDisciplines(); id++) {
     SetDisciplineValue(id, 0);
   }
 }
@@ -212,7 +213,7 @@ void CharacterType::FillDisciplineValues(std::vector<int>& values) const {
   // TODO: This method sucks, but was needed in QBasic.
   values.clear();
   values.push_back(0);  // To pad the indexes.
-  for (int id = 1; id <= kDisciplinesCount; id++) {
+  for (int id = 1; id <= GetNumDisciplines(); id++) {
     values.push_back(GetDisciplineValue(id));
   }
 }

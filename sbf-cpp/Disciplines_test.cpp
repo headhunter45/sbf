@@ -52,14 +52,10 @@ TestResults test_FillDisciplineLabels() {
   auto fnToTest = []() -> string {
     ostringstream error_message;
     vector<string> expected = {
-        kDisciplineAnimalismLabel,   kDisciplineAuspexLabel,      kDisciplineBardoLabel,
-        kDisciplineCelerityLabel,    kDisciplineChimestryLabel,   kDisciplineDementationLabel,
-        kDisciplineDominateLabel,    kDisciplineFortitudeLabel,   kDisciplineMelpomineeLabel,
-        kDisciplineMortisLabel,      kDisciplineMytherceriaLabel, kDisciplineNecromancyLabel,
-        kDisciplineObeahLabel,       kDisciplineObfuscateLabel,   kDisciplineObtenebrationLabel,
-        kDisciplinePotenceLabel,     kDisciplinePresenceLabel,    kDisciplineProteanLabel,
-        kDisciplineQuietusLabel,     kDisciplineSerpentisLabel,   kDisciplineSpiritusLabel,
-        kDisciplineThanantosisLabel, kDisciplineThaumaturgyLabel, kDisciplineVicissitudeLabel,
+        "Animalism", "Auspex",    "Bardo",         "Celerity",    "Chimestry",   "Dementation",
+        "Dominate",  "Fortitude", "Melpominee",    "Mortis",      "Mytherceria", "Necromancy",
+        "Obeah",     "Obfuscate", "Obtenebration", "Potence",     "Presence",    "Protean",
+        "Quietus",   "Serpentis", "Spiritus",      "Thanantosis", "Thaumaturgy", "Vicissitude",
     };
     vector<string> actual = {"This should be removed."};
     FillDisciplineLabels(actual);

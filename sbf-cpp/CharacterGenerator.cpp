@@ -13,6 +13,7 @@
 #include "Utils.h"
 #include "sbf-cpp/Abilities.h"
 #include "sbf-cpp/Backgrounds.h"
+#include "sbf-cpp/Disciplines.h"
 
 namespace SBF {
 namespace {
@@ -209,7 +210,7 @@ void CGSpendDisciplinePoint(CharacterType& ch) {
   MaybeClearScreen();
   MenuStyle ms;
   ms.show_cancel = true;
-  ms.cancel_item_id = kDisciplinesCount + 1;
+  ms.cancel_item_id = GetNumDisciplines() + 1;
   vector<int> values = ch.GetDisciplineValues();
   vector<string> labels;
   FillDisciplineLabels(labels);
@@ -345,7 +346,7 @@ void ShowCharacterSheet(CharacterType& ch) {
   const int kRightColumnWidth = 37;
   vector<string> discipline_strings;
   size_t index;
-  for (index = 1; index <= kDisciplinesCount; index++) {
+  for (index = 1; index <= GetNumDisciplines(); index++) {
     int value = ch.GetDisciplineValue(index);
     if (value > 0) {
       string suffix = "";
