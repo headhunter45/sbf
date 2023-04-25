@@ -257,6 +257,12 @@ void CharacterType::FillVirtueValues(std::vector<int>& values) const {
   }
 }
 
+vector<int> CharacterType::GetVirtueValues() const {
+  vector<int> values;
+  FillVirtueValues(values);
+  return values;
+}
+
 void CharacterType::FillAttributeValues(std::vector<int>& values, int group_id) const {
   // TODO: This method sucks, but was needed in QBasic.
   const int numAttributes = GetNumAttributesInGroup(group_id);

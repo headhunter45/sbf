@@ -54,6 +54,7 @@ class CharacterType {
   int GetSocialAttributeValue(int id) const;
   int GetTalentValue(int id) const;
   int GetVirtueValue(int id) const;
+  std::vector<int> GetVirtueValues() const;
   void SetAbilityValue(int group_id, int id, int value);
   void SetAttributeValue(int group_id, int id, int value);
   void SetBackgroundValue(int id, int value);

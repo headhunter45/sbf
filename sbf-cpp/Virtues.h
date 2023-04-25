@@ -39,6 +39,8 @@ const std::string GetVirtueLabel(int virtue_id);
 /// @brief Fills the vector with all of the valid virtue labels.
 /// @param virtue_labels The vector to fill. It will be cleared first.
 void FillVirtueLabels(std::vector<std::string>& virtue_labels);
+
+std::vector<std::string> GetVirtueLabels();
 }  // End namespace SBF
 
 /** @}*/

@@ -1,6 +1,5 @@
+#include "sbf-cpp/Virtues.h"
 #define _XOPEN_SOURCE_EXTENDED
-#include "sbf.h"
-
 #include <cstdio>
 #include <iostream>
 #include <string>
@@ -17,6 +16,7 @@
 #include "Menus.h"
 #include "Random.h"
 #include "Utils.h"
+#include "sbf.h"
 
 #define KEY_ESCAPE 0033
 
@@ -319,8 +319,17 @@ void CGGetRoad(CharacterType& ch) {
 }
 
 void CGSpendVirtuePoints(CharacterType& ch) {
-  // TODO: Fill this in.
-  cout << "// TODO: CGSpendVirtuePoints(CharacterType&)" << endl;
+  // Spend virtue points
+  MenuStyle ms;
+  int virtue_points = GetVirtuePoints();
+  vector<string> labels = GetVirtueLabels();
+  while (virtue_points > 0) {
+    vector<int> values = ch.GetVirtueValues();
+    int virtue_id = ChooseStringIdWithValues(
+        labels, values, ms, "Which virtue do you want to spend 1 of your " + to_string(virtue_points) + " points on?");
+    ch.SetVirtueValue(virtue_id, ch.GetVirtueValue(virtue_id) + 1);
+    virtue_points--;
+  }
 }
 
 void CGGetDerangement(CharacterType& ch) {
