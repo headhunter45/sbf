@@ -189,11 +189,15 @@ bool operator!=(const AbilityType& left, const AbilityType& right);
 /// @param abilities The vector to fill.
 void FillAbilities(std::vector<AbilityType>& abilities);
 
+std::vector<std::string> GetAbilityGroupPluralLabels();
+
 /// @brief Fills the provided vector with all of the ability labels in the specified group. It will be cleared before
 /// filling.
 /// @param abilities The vector to fill.
 /// @param id The id of the ability group to fill for.
 void FillAbilitiesForAbilityGroup(std::vector<std::string>& abilities, int id);
+
+std::vector<std::string> GetAbilityLabelsForAbilityGroup(int group_id);
 
 /// @brief Fills the provided vector with all of the ability labels in the specified group. It will be cleared before
 /// filling.

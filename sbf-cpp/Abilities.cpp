@@ -29,6 +29,16 @@ void FillAbilities(vector<AbilityType>& abilities) {
   abilities.push_back(kAbilityGroupKnowledges);
 }
 
+vector<string> GetAbilityGroupPluralLabels() {
+  vector<string> labels;
+
+  for (int id = 1; id <= kAbilitiesCount; id++) {
+    labels.push_back(GetAbility(id).plural);
+  }
+
+  return labels;
+}
+
 void FillAbilitiesForAbilityGroup(vector<string>& abilities, int id) {
   abilities.clear();
   int numAbilities = GetNumItemsForAbilityGroup(id);
@@ -49,6 +59,17 @@ void FillAbilitiesForAbilityGroup(vector<string>& abilities, int id) {
       }
       break;
   }
+}
+
+vector<string> GetAbilityLabelsForAbilityGroup(int group_id) {
+  vector<string> labels;
+
+  int count = GetNumItemsForAbilityGroup(group_id);
+  for (int id = 1; id <= count; id++) {
+    labels.push_back(GetAbilityLabel(group_id, id));
+  }
+
+  return labels;
 }
 
 void FillAbilityLabels(vector<string>& labels, int id) {
