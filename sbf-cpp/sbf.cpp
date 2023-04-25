@@ -1,24 +1,32 @@
-﻿#include "Abilities.h"
-#include "Attributes.h"
 #define _XOPEN_SOURCE_EXTENDED
+#include "sbf.h"
+
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <vector>
 
+#include "Abilities.h"
 #include "Archetypes.h"
+#include "Attributes.h"
 #include "Backgrounds.h"
+#include "Character.h"
 #include "Clans.h"
+#include "Disciplines.h"
 #include "Genders.h"
 #include "Menus.h"
 #include "Random.h"
 #include "Utils.h"
-#include "sbf.h"
 
 #define KEY_ESCAPE 0033
 
 namespace {
-using namespace std;
 using namespace SBF;
+using std::cin;
+using std::cout;
+using std::endl;
+using std::to_string;
+using std::vector;
 }  // namespace
 
 void CGGetAttributes(CharacterType& ch);
@@ -46,6 +54,8 @@ void ShowCharacterSheet(CharacterType& ch);
 void ShowSplashScreen();
 void VehicleGenerator();
 void WaitForKeypress();
+int ChooseStringIdWithValues(vector<string> labels, vector<int> values, MenuStyle style, string prompt);
+int ChooseMenuItemId(vector<MenuItem> menu_items, MenuStyle style, const string& prompt, bool ignore_value);
 
 int main(int argc, char* argv[]) {
   setlocale(LC_ALL, "");
@@ -218,13 +228,71 @@ void CGGetHeader(CharacterType& ch) {
 }
 
 void CGGetDisciplines(CharacterType& ch) {
-  // TODO: Fill this in.
-  cout << "// TODO: CGGetDisciplines(CharacterType&)" << endl;
+  MenuStyle ms;
+  int discipline_points = GetDisciplinePoints();
+  vector<int> discipline_values;
+  vector<string> discipline_labels;
+  FillDisciplineLabels(discipline_labels);
+  while (discipline_points > 0) {
+    MaybeClearScreen();
+    discipline_values = ch.GetDisciplineValues();
+    int discipline_id = ChooseStringIdWithValues(
+        discipline_labels,
+        discipline_values,
+        ms,
+        "Which discipline do you want to spend 1 of your " + to_string(discipline_points) + " points on?");
+    ch.SetDisciplineValue(discipline_id, ch.GetDisciplineValue(discipline_id) + 1);
+    discipline_points--;
+  }
 }
 
 void CGGetAttributes(CharacterType& ch) {
-  // TODO: Fill this in.
-  cout << "// TODO: CGGetAttributes(CharacterType&)" << endl;
+  MenuStyle ms_without_values;
+  MenuStyle ms_with_values;
+  // indexed by group_id - 1 holds the rank_id
+  vector<int> attribute_ranks(kAttributeGroupsCount);
+
+  // Attribute groups menu (physical/social/mental)
+  vector<MenuItem> attribute_groups_menu_items;
+  for (size_t i = 1; i <= kAttributeGroupsCount; i++) {
+    attribute_groups_menu_items.push_back(MenuItem(GetAttributeGroupLabel(i), i));
+  }
+
+  // Choose attribute group priorities.
+  int group_sum = 0;
+  int rank_sum = 1;
+  for (size_t i = 1; i < kAttributeGroupsCount; i++) {
+    int next_group_id = ChooseMenuItemId(attribute_groups_menu_items,
+                                         ms_without_values,
+                                         "Choose your " + ToLower(GetRank(i).label) + " attribute?",
+                                         true);
+    int next_group_index = next_group_id - 1;
+    attribute_groups_menu_items.at(next_group_index).is_visible = false;
+    attribute_ranks[next_group_index] = i;
+    rank_sum += i + 1;
+    group_sum += next_group_id;
+  }
+
+  // General formula for last choice given 1 to count based indexing is this. (Sum from 1 to count) - (Sum of all
+  // previous choice IDs). Sum(1..AllAttributesCount)-Sum(Choice[1..Choice[AllAttributesCount-1]).
+  int last_group = rank_sum - group_sum;
+  attribute_ranks[last_group - 1] = kAttributeGroupsCount;
+
+  // Spend attribute points
+  for (int group_id = 1; group_id <= kAttributeGroupsCount; group_id++) {
+    int group_index = group_id - 1;
+    vector<string> attribute_labels = GetAttributeLabelsInGroup(group_id);
+    int rank_id = attribute_ranks.at(group_index);
+    int attribute_points = GetAttributePointsForRank(rank_id);
+    while (attribute_points > 0) {
+      vector<int> values = ch.GetAttributeValuesInGroup(group_id);
+      string prompt = "Which " + ToLower(GetAttributeGroupLabel(group_id))
+                    + " attribute do you want to spend 1 of your " + to_string(attribute_points) + " points on?";
+      int attribute_id = ChooseStringIdWithValues(attribute_labels, values, ms_with_values, prompt);
+      ch.SetAttributeValue(group_id, attribute_id, ch.GetAttributeValue(group_id, attribute_id) + 1);
+      attribute_points--;
+    }
+  }
 }
 
 void CGGetBackgrounds(CharacterType& ch) {
@@ -253,11 +321,11 @@ void CGSpendFreebiePoints(CharacterType& ch) {
 }
 
 string FormatAttributeValue(const string& label, int value) {
-  return make_fit_c(label + make_fit_l(itos(value), 2), 12);
+  return MakeFitC(label + MakeFitL(to_string(value), 2), 12);
 }
 
 string FormatAbilityWithValue(const string& label, int value) {
-  return make_fit_c(make_fit_l(label + ":", 14) + itos(value), 24);
+  return MakeFitC(MakeFitL(label + ":", 14) + to_string(value), 24);
 }
 
 void SaveCharacterSheet(CharacterType& ch) {
@@ -275,13 +343,13 @@ void ShowCharacterSheet(CharacterType& ch) {
     if (value > 0) {
       string suffix = "";
       if (value > 1) {
-        suffix = " x" + itos(value);
+        suffix = " x" + to_string(value);
       }
       discipline_strings.push_back(GetDisciplineLabel(index) + suffix);
     }
   }
   while (discipline_strings.size() <= 3) {
-    discipline_strings.push_back(string_dollar(kLeftColumnWidth, '_'));
+    discipline_strings.push_back(RepeatChar(kLeftColumnWidth, '_'));
   }
   vector<string> background_strings(5);
   for (index = 1; index <= kBackgroundsCount; index++) {
@@ -289,32 +357,32 @@ void ShowCharacterSheet(CharacterType& ch) {
     if (value > 0) {
       string suffix = "";
       if (value > 1) {
-        suffix = " x" + itos(value);
+        suffix = " x" + to_string(value);
       }
       background_strings.push_back(GetBackgroundLabel(index) + suffix);
     }
   }
   while (background_strings.size() <= 5) {
-    background_strings.push_back(string_dollar(kLeftColumnWidth, '_'));
+    background_strings.push_back(RepeatChar(kLeftColumnWidth, '_'));
   }
   string all_derangements_line = ch.GetAllDerangementsLine();
-  vector<string> derangement_strings = word_wrap(all_derangements_line, kLeftColumnWidth);
+  vector<string> derangement_strings = WordWrap(all_derangements_line, kLeftColumnWidth);
   while (derangement_strings.size() <= 5) {
-    derangement_strings.push_back(string_dollar(kLeftColumnWidth, '_'));
+    derangement_strings.push_back(RepeatChar(kLeftColumnWidth, '_'));
   }
   MaybeClearScreen();
   cout << "╔══════════════════════════════════════╦═══════════════════════════════════════╗" << endl;
-  cout << "║ Name: " << make_fit_l(ch.name, 30) << " ║ Gender: " << make_fit_l(GetGenderLabel(ch.genderId), 14)
-       << " Generation: " << make_fit_r(itos(ch.generation), 2) << " ║" << endl;
-  cout << "║ Clan: " << make_fit_l(GetClanLabel(ch.clanId), 30) << " ║ Age: " << make_fit_l(ch.age, 32) << " ║" << endl;
-  cout << "╠══════════════════════════════════════╣ Player: " << make_fit_l(ch.player, 29) << " ║" << endl;
-  cout << "║              Attributes              ║ Chronicle: " << make_fit_l(ch.chronicle, 26) << " ║" << endl;
-  cout << "║ " << make_fit_c("Physical", 12) << make_fit_c("Social", 12) << make_fit_c("Mental", 12)
-       << " ║ Haven: " << make_fit_l(ch.haven, 30) + " ║" << endl;
+  cout << "║ Name: " << MakeFitL(ch.name, 30) << " ║ Gender: " << MakeFitL(GetGenderLabel(ch.genderId), 14)
+       << " Generation: " << MakeFitR(to_string(ch.generation), 2) << " ║" << endl;
+  cout << "║ Clan: " << MakeFitL(GetClanLabel(ch.clanId), 30) << " ║ Age: " << MakeFitL(ch.age, 32) << " ║" << endl;
+  cout << "╠══════════════════════════════════════╣ Player: " << MakeFitL(ch.player, 29) << " ║" << endl;
+  cout << "║              Attributes              ║ Chronicle: " << MakeFitL(ch.chronicle, 26) << " ║" << endl;
+  cout << "║ " << MakeFitC("Physical", 12) << MakeFitC("Social", 12) << MakeFitC("Mental", 12)
+       << " ║ Haven: " << MakeFitL(ch.haven, 30) + " ║" << endl;
   cout << "║ " << FormatAttributeValue("Str. ", ch.GetPhysicalAttributeValue(kPhysicalAttributeStrengthId))
        << FormatAttributeValue("App. ", ch.GetSocialAttributeValue(kSocialAttributeAppearanceId))
        << FormatAttributeValue("Int. ", ch.GetMentalAttributeValue(kMentalAttributeIntelligenceId))
-       << " ║ Concept: " << make_fit_l(ch.concept, 28) << " ║" << endl;
+       << " ║ Concept: " << MakeFitL(ch.concept, 28) << " ║" << endl;
   cout << "║ " << FormatAttributeValue("Dex. ", ch.GetPhysicalAttributeValue(kPhysicalAttributeDexterityId))
        << FormatAttributeValue("Cha. ", ch.GetSocialAttributeValue(kSocialAttributeCharismaId))
        << FormatAttributeValue("Per. ", ch.GetMentalAttributeValue(kMentalAttributePerceptionId))
@@ -323,21 +391,21 @@ void ShowCharacterSheet(CharacterType& ch) {
        << FormatAttributeValue("Man. ", ch.GetSocialAttributeValue(kSocialAttributeManipulationId))
        << FormatAttributeValue("Wit. ", ch.GetMentalAttributeValue(kMentalAttributeWitsId))
        << " ║ Derangements:                         ║" << endl;
-  cout << "╠══════════════════════════════════════╣ " << make_fit_l(derangement_strings[0], kRightColumnWidth, '_')
+  cout << "╠══════════════════════════════════════╣ " << MakeFitL(derangement_strings[0], kRightColumnWidth, '_')
        << " ║" << endl;
-  cout << "║ Disciplines:                         ║ " << make_fit_l(derangement_strings[1], kRightColumnWidth, '_')
+  cout << "║ Disciplines:                         ║ " << MakeFitL(derangement_strings[1], kRightColumnWidth, '_')
        << " ║" << endl;
-  cout << "║ " << make_fit_l(discipline_strings[0], kLeftColumnWidth) << " ║ "
-       << make_fit_l(derangement_strings[2], kRightColumnWidth, '_') << " ║" << endl;
-  cout << "║ " << make_fit_l(discipline_strings[1], kLeftColumnWidth) << " ║ "
-       << make_fit_l(derangement_strings[3], kRightColumnWidth, '_') << " ║" << endl;
-  cout << "║ " << make_fit_l(discipline_strings[2], kLeftColumnWidth) << " ║ "
-       << make_fit_l(derangement_strings[4], kRightColumnWidth, '_') << " ║" << endl;
+  cout << "║ " << MakeFitL(discipline_strings[0], kLeftColumnWidth) << " ║ "
+       << MakeFitL(derangement_strings[2], kRightColumnWidth, '_') << " ║" << endl;
+  cout << "║ " << MakeFitL(discipline_strings[1], kLeftColumnWidth) << " ║ "
+       << MakeFitL(derangement_strings[3], kRightColumnWidth, '_') << " ║" << endl;
+  cout << "║ " << MakeFitL(discipline_strings[2], kLeftColumnWidth) << " ║ "
+       << MakeFitL(derangement_strings[4], kRightColumnWidth, '_') << " ║" << endl;
   cout << "╠══════════════════════════════════════╬═══════════════════════════════════════╣" << endl;
-  cout << "║ " << make_fit_l(ch.roadName + ": " + itos(ch.roadValue), kLeftColumnWidth)
-       << " ║ Nature: " << make_fit_l(GetArchetypeLabel(ch.natureId), 29) << " ║" << endl;
-  cout << "║ Willpower: " << make_fit_l(itos(ch.willpower), 25)
-       << " ║ Demeanor: " << make_fit_l(GetArchetypeLabel(ch.demeanorId), 27) << " ║" << endl;
+  cout << "║ " << MakeFitL(ch.roadName + ": " + to_string(ch.roadValue), kLeftColumnWidth)
+       << " ║ Nature: " << MakeFitL(GetArchetypeLabel(ch.natureId), 29) << " ║" << endl;
+  cout << "║ Willpower: " << MakeFitL(to_string(ch.willpower), 25)
+       << " ║ Demeanor: " << MakeFitL(GetArchetypeLabel(ch.demeanorId), 27) << " ║" << endl;
   cout << "╠══════════════════════════════════════╩═══════════════════════════════════════╣" << endl;
   cout << "║                                                                              ║" << endl;
   cout << "║                                                                              ║" << endl;
@@ -346,27 +414,26 @@ void ShowCharacterSheet(CharacterType& ch) {
   cout << "╚══════════════════════════════════════════════════════════════════════════════╝" << endl;
   WaitForKeypress();
   cout << "╔══════════════════════════════════════════════════════════════════════════════╗" << endl;
-  cout << "║ " << make_fit_c("Abilities", 76) << " ║" << endl;
-  cout << "║   " << make_fit_c("Talents", 24) << make_fit_c("Skills", 24) << make_fit_c("Knowledges", 24) << "   ║"
-       << endl;
+  cout << "║ " << MakeFitC("Abilities", 76) << " ║" << endl;
+  cout << "║   " << MakeFitC("Talents", 24) << MakeFitC("Skills", 24) << MakeFitC("Knowledges", 24) << "   ║" << endl;
   for (index = 1; index <= 10; index++) {
     cout << "║   " << FormatAbilityWithValue(GetTalentLabel(index), ch.GetTalentValue(index))
          << FormatAbilityWithValue(GetSkillLabel(index), ch.GetSkillValue(index))
          << FormatAbilityWithValue(GetKnowledgeLabel(index), ch.GetKnowledgeValue(index)) << "   ║" << endl;
   }
   cout << "╠══════════════════════════════════════╦═══════════════════════════════════════╣" << endl;
-  cout << "║ " << make_fit_l("Backgrounds:", kLeftColumnWidth) << " ║ " << make_fit_l("Virtues:", kRightColumnWidth)
-       << " ║" << endl;
-  cout << "║ " << make_fit_l(background_strings[0], kLeftColumnWidth) << " ║ "
-       << make_fit_b("Conscience:", itos(ch.conscience), kRightColumnWidth) << " ║" << endl;
-  cout << "║ " << make_fit_l(background_strings[1], kLeftColumnWidth) << " ║ "
-       << make_fit_b("Self-Control:", itos(ch.selfControl), kRightColumnWidth) << " ║" << endl;
-  cout << "║ " << make_fit_l(background_strings[2], kLeftColumnWidth) << " ║ "
-       << make_fit_b("Courage:", itos(ch.courage), kRightColumnWidth) << " ║" << endl;
-  cout << "║ " << make_fit_l(background_strings[3], kLeftColumnWidth) << " ║ " << make_fit_l("", kRightColumnWidth)
-       << " ║" << endl;
-  cout << "║ " << make_fit_l(background_strings[4], kLeftColumnWidth) << " ║ " << make_fit_l("", kRightColumnWidth)
-       << " ║" << endl;
+  cout << "║ " << MakeFitL("Backgrounds:", kLeftColumnWidth) << " ║ " << MakeFitL("Virtues:", kRightColumnWidth) << " ║"
+       << endl;
+  cout << "║ " << MakeFitL(background_strings[0], kLeftColumnWidth) << " ║ "
+       << MakeFitB("Conscience:", to_string(ch.conscience), kRightColumnWidth) << " ║" << endl;
+  cout << "║ " << MakeFitL(background_strings[1], kLeftColumnWidth) << " ║ "
+       << MakeFitB("Self-Control:", to_string(ch.selfControl), kRightColumnWidth) << " ║" << endl;
+  cout << "║ " << MakeFitL(background_strings[2], kLeftColumnWidth) << " ║ "
+       << MakeFitB("Courage:", to_string(ch.courage), kRightColumnWidth) << " ║" << endl;
+  cout << "║ " << MakeFitL(background_strings[3], kLeftColumnWidth) << " ║ " << MakeFitL("", kRightColumnWidth) << " ║"
+       << endl;
+  cout << "║ " << MakeFitL(background_strings[4], kLeftColumnWidth) << " ║ " << MakeFitL("", kRightColumnWidth) << " ║"
+       << endl;
   cout << "╠══════════════════════════════════════╩═══════════════════════════════════════╣" << endl;
   cout << "║                        <<PRESS ANY KEY TO CONTINUE>>                         ║" << endl;
   cout << "╚══════════════════════════════════════════════════════════════════════════════╝" << endl;
@@ -463,4 +530,29 @@ int GetMenuChoice(vector<MenuItem> menu_items, MenuStyle style) {
       }
     }
   }
+}
+
+int ChooseStringIdWithValues(vector<string> labels, vector<int> values, MenuStyle style, string prompt) {
+  MaybeClearScreen();
+  vector<MenuItem> menu_items = BuildMenuWithValues(labels, values);
+  style.Adjust(menu_items, false);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice;
+}
+
+int ChooseMenuItemId(vector<MenuItem> menu_items, MenuStyle style, const string& prompt, bool ignore_value) {
+  MaybeClearScreen();
+  style.Adjust(menu_items, ignore_value);
+  cout << prompt << endl;
+  PrintMenu(cout, menu_items, style);
+  int choice = GetMenuChoice(menu_items, style);
+  if (choice == style.random_item_id) {
+    choice = GetRandomMenuItemId(menu_items);
+  }
+  return choice;
 }
