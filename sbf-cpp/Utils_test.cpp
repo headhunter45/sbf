@@ -13,7 +13,7 @@ using namespace Test;
 using namespace std;
 }  // End namespace
 
-TestResults test_get_index_of() {
+TestResults test_GetIndexOf() {
   string long_text =
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's "
       "standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to "
@@ -22,8 +22,8 @@ TestResults test_get_index_of() {
       "sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker "
       "including versions of Lorem Ipsum.";
   return execute_suite<size_t, string, string, size_t>(make_test_suite(
-      "SBF::Utils::get_index_of",
-      get_index_of,
+      "SBF::Utils::GetIndexOf(const std::string &text, const std::string &search, const size_t start)",
+      GetIndexOf,
       vector<TestTuple<size_t, string, string, size_t>>({
           make_test<size_t, string, string, size_t>(
               "should get 0 for the first word in a string", 0, make_tuple(long_text, string("Lorem"), size_t(0))),
@@ -54,10 +54,10 @@ TestResults test_get_index_of() {
       })));
 }
 
-TestResults test_get_substring() {
+TestResults test_GetSubstring() {
   return execute_suite<string, string, size_t, size_t>(make_test_suite(
-      "SBF::Utils::get_substring",
-      get_substring,
+      "SBF::Utils::GetSubstring(const std::string &text, const size_t start, const size_t length)",
+      GetSubstring,
       vector<TestTuple<string, string, size_t, size_t>>({
           make_test<string, string, size_t, size_t>(
               "should get an empty string if start is too big", "", make_tuple(string("asdf"), size_t(6), size_t(2))),
@@ -77,10 +77,10 @@ TestResults test_get_substring() {
       })));
 }
 
-TestResults test_left() {
+TestResults test_Left() {
   return execute_suite<string, string, size_t>(make_test_suite(
-      "SBF::Utils::left",
-      SBF::left,
+      "SBF::Utils::Left(const std::string& text, const size_t length)",
+      Left,
       vector<TestTuple<string, string, size_t>>({
           make_test<string, string, size_t>(
               "should get a substring", "Micro", make_tuple(string("Microsoft QBasic"), size_t(5))),
@@ -97,10 +97,10 @@ TestResults test_left() {
       })));
 }
 
-TestResults test_right() {
+TestResults test_Right() {
   return execute_suite<string, string, size_t>(make_test_suite(
-      "SBF::Utils::right",
-      SBF::right,
+      "SBF::Utils::Right(const std::string& text, const size_t length)",
+      Right,
       vector<TestTuple<string, string, size_t>>({
           make_test<string, string, size_t>(
               "should get a substring", "Basic", make_tuple(string("Microsoft QBasic"), size_t(5))),
@@ -117,10 +117,15 @@ TestResults test_right() {
       })));
 }
 
-TestResults test_make_fit_c() {
+TestResults test_MakeFitB() {
+  return TestResults().skip(
+      "SBF::Utils::MakeFitB(const std::string &prefix, const std::string &suffix, const size_t length)");
+}
+
+TestResults test_MakeFitC() {
   return execute_suite<string, string, int32_t, char>(make_test_suite(
-      "SBF::Utils::make_fit_c",
-      make_fit_c,
+      "SBF::Utils::MakeFitC(const std::string &text, const size_t length)",
+      MakeFitC,
       vector<TestTuple<string, string, int32_t, char>>({
           make_test<string, string, int32_t, char>(
               "should truncate a string that is too long", "soft ", make_tuple(string("Microsoft QBasic"), 5, 'A')),
@@ -136,10 +141,10 @@ TestResults test_make_fit_c() {
       })));
 }
 
-TestResults test_make_fit_l() {
+TestResults test_MakeFitL() {
   return execute_suite<string, string, int32_t, char>(make_test_suite(
-      "SBF::Utils::make_fit_l",
-      make_fit_l,
+      "SBF::Utils::MakeFitL(const std::string &text, const size_t length)",
+      MakeFitL,
       vector<TestTuple<string, string, int32_t, char>>({
           make_test<string, string, int32_t, char>(
               "should truncate a string that is too long", "Micro", make_tuple(string("Microsoft QBasic"), 5, 'A')),
@@ -155,10 +160,10 @@ TestResults test_make_fit_l() {
       })));
 }
 
-TestResults test_make_fit_r() {
+TestResults test_MakeFitR() {
   return execute_suite<string, string, int32_t, char>(make_test_suite(
-      "SBF::Utils::make_fit_r",
-      make_fit_r,
+      "SBF::Utils::MakeFitR(const std::string &text, const size_t length)",
+      MakeFitR,
       vector<TestTuple<string, string, int32_t, char>>({
           make_test<string, string, int32_t, char>(
               "should truncate a string that is too long", "Basic", make_tuple(string("Microsoft QBasic"), 5, 'A')),
@@ -174,10 +179,10 @@ TestResults test_make_fit_r() {
       })));
 }
 
-TestResults test_left_trim() {
+TestResults test_LeftTrim() {
   return execute_suite<string, string>(make_test_suite(
-      "SBF::Utils::left_trim",
-      left_trim,
+      "SBF::Utils::LeftTrim(const std::string &text)",
+      LeftTrim,
       vector<TestTuple<string, string>>({
           make_test<string, string>("should trim a string with spaces",
                                     "this is a string with spaces on either end     ",
@@ -205,10 +210,10 @@ TestResults test_left_trim() {
       })));
 }
 
-TestResults test_right_trim() {
+TestResults test_RightTrim() {
   return execute_suite<string, string>(make_test_suite(
-      "SBF::Utils::right_trim",
-      right_trim,
+      "SBF::Utils::RightTrim(const std::string &text)",
+      RightTrim,
       vector<TestTuple<string, string>>({
           make_test<string, string>("should trim a string with spaces",
                                     "     this is a string with spaces on either end",
@@ -236,10 +241,10 @@ TestResults test_right_trim() {
       })));
 }
 
-TestResults test_string_dollar() {
+TestResults test_RepeatChar() {
   return execute_suite<string, size_t, char>(make_test_suite(
-      "SBF::Utils::string_dollar",
-      string_dollar,
+      "SBF::Utils::RepeatChar(const size_t length, const char ch)",
+      RepeatChar,
       vector<TestTuple<string, size_t, char>>({
           make_test<string, size_t, char>("should make a string", "YYYYY", make_tuple(size_t(5), 'Y')),
           make_test<string, size_t, char>(
@@ -248,12 +253,20 @@ TestResults test_string_dollar() {
       })));
 }
 
-TestResults test_word_wrap() {
+TestResults test_RegexReplace() {
+  return TestResults()
+      .skip(
+          "SBF::Utils::RegexReplace(const string& text, const string& pattern, const string& replace) // TODO: Fill "
+          "this in.")
+      .skip("SBF::Utils::RegexReplace(const string& text, regex regex, const string& replace) // TODO: Fill this in.");
+}
+
+TestResults test_WordWrap() {
   // TODO: Treat newlines and tabs in text as spaces.
   auto fnToTest = [](string text, int32_t column_width, vector<string> expected) -> string {
     ostringstream error_message;
     try {
-      vector<string> actual = word_wrap(text, column_width);
+      vector<string> actual = WordWrap(text, column_width);
       compare(error_message, expected, actual);
     } catch (const exception& ex) {
       error_message << ex.what();
@@ -267,7 +280,7 @@ TestResults test_word_wrap() {
     return "no errors";
   };
   return execute_suite<string, string, int32_t, vector<string>>(make_test_suite(
-      "SBF::Utils::word_wrap",
+      "SBF::Utils::WordWrap(const std::string &text, const size_t max_width)",
       fnToTest,
       vector<TestTuple<string, string, int32_t, vector<string>>>({
           make_test<string, string, int32_t, vector<string>>("should return the string if it is shorter than max_width",
@@ -301,17 +314,18 @@ TestResults test_word_wrap() {
 int main(int argc, char* argv[]) {
   TestResults results;
 
-  results += test_get_index_of();
-  results += test_get_substring();
-  results += test_left();
-  results += test_left_trim();
-  results += test_make_fit_c();
-  results += test_make_fit_l();
-  results += test_make_fit_r();
-  results += test_right();
-  results += test_right_trim();
-  results += test_string_dollar();
-  results += test_word_wrap();
+  results += test_GetIndexOf();
+  results += test_GetSubstring();
+  results += test_Left();
+  results += test_LeftTrim();
+  results += test_MakeFitC();
+  results += test_MakeFitL();
+  results += test_MakeFitR();
+  results += test_RegexReplace();
+  results += test_Right();
+  results += test_RightTrim();
+  results += test_RepeatChar();
+  results += test_WordWrap();
 
   PrintResults(cout, results);
 

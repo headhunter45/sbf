@@ -21,41 +21,41 @@ namespace SBF {
 /// @param search The text to search for.
 /// @param start The position to start searching at.
 /// @return The position of the string if found and std::npos if not found.
-size_t get_index_of(const std::string& text, const std::string& search, const size_t start);
+size_t GetIndexOf(const std::string& text, const std::string& search, const size_t start);
 
 /// @brief Collapses white space and attempts to word wrap text to a max of max_width columns.
 /// @param text The text to wrap.
 /// @param max_width The number of columns to wrap to.
 /// @return The wrapped text.
-std::vector<std::string> word_wrap(const std::string& text, const size_t max_width);
+std::vector<std::string> WordWrap(const std::string& text, const size_t max_width);
 
 /// @brief Gets a substring of another string.
 /// @param text The text to split.
 /// @param start The starting position.
 /// @param length The length of the substring.
 /// @return The sub string of text.
-std::string get_substring(const std::string& text, const size_t start, const size_t length);
+std::string GetSubstring(const std::string& text, const size_t start, const size_t length);
 
 /// @brief Pads on the right or truncates text to length using pad_character.
 /// @param text The text to operate on.
 /// @param length The desired length to make text.
 /// @param pad_character The character to pad with.
 /// @return The modified string.
-std::string make_fit_l(const std::string& text, const size_t length, const char pad_character = ' ');
+std::string MakeFitL(const std::string& text, const size_t length, const char pad_character = ' ');
 
 /// @brief Pads on both sides or truncates text to length using pad_character.
 /// @param text The text to operate on.
 /// @param length The desired length to make text.
 /// @param pad_character The character to pad with.
 /// @return The modified string.
-std::string make_fit_c(const std::string& text, const size_t length, const char pad_character = ' ');
+std::string MakeFitC(const std::string& text, const size_t length, const char pad_character = ' ');
 
 /// @brief Pads on the left or truncates text to length using pad_character.
 /// @param text The text to operate on.
 /// @param length The desired length to make text.
 /// @param pad_character The character to pad with.
 /// @return The modified string.
-std::string make_fit_r(const std::string& text, const size_t length, const char pad_character = ' ');
+std::string MakeFitR(const std::string& text, const size_t length, const char pad_character = ' ');
 
 /// @brief Pads or truncates the space between two strings.
 /// @param prefix The text to put on the left.
@@ -63,41 +63,42 @@ std::string make_fit_r(const std::string& text, const size_t length, const char 
 /// @param length The desired length to make the result.
 /// @param pad_character The character to pad with.
 /// @return The modified string.
-std::string make_fit_b(const std::string& prefix,
-                       const std::string& suffix,
-                       const size_t length,
-                       const char pad_character = ' ');
+std::string MakeFitB(const std::string& prefix,
+                     const std::string& suffix,
+                     const size_t length,
+                     const char pad_character = ' ');
 
 /// @brief Gets the leftmost length characters of text.
 /// @param text The text to operate on.
 /// @param length The maximum number of characters to return.
 /// @return The leftmost n characters of text where n is the lesser of text.size and length.
-std::string left(const std::string& text, const size_t length);
+std::string Left(const std::string& text, const size_t length);
 
 /// @brief Gets the rightmost length of characters of text.
 /// @param text The text to operate on.
 /// @param length The maximum number of characters to return.
 /// @return The rightmost n characters of text where n is the lesser of text.size and length.
-std::string right(const std::string& text, const size_t length);
+std::string Right(const std::string& text, const size_t length);
 
 /// @brief Removes whitespace from the left side of text.
 /// @param text The text to operate on.
-std::string left_trim(const std::string& text);
+std::string LeftTrim(const std::string& text);
 
 /// @brief Removes whitespace from the right side of text.
 /// @param text The text to operate on.
-std::string right_trim(const std::string& text);
+std::string RightTrim(const std::string& text);
 
 /// @brief Gets a string made by repeating a character.
 /// @param length The length of the string to return.
 /// @param ch The character to repeat.
 /// @return The repeated string.
-std::string string_dollar(const size_t length, const char ch = ' ');
+std::string RepeatChar(const size_t length, const char ch = ' ');
 
-/// @brief Converts an int to a string.
-/// @param i The int to convert.
-/// @return The string representation of i.
-std::string itos(int i);
+/// @brief Gets the lowercase version of a string. This is a temporary hack until I figure out how to add ICU4C as a
+/// bazel dependency.
+/// @param text The text to convert.
+/// @return The lowercase version of text. Currently this only supports ASCII characters.
+std::string ToLower(const std::string& text);
 }  // End namespace SBF
 
 /** @}*/
