@@ -276,4 +276,8 @@ void PrintResults(std::ostream& os, TestResults results) {
   os << "Skipped:     " << results.skipped() << " 🚧" << endl;
   os << "Errors:      " << results.errors() << " 🔥" << endl;
 }
+
+MaybeTestConfigureFunction DefaultTestConfigureFunction() {
+  return std::nullopt;
+}
 }  // End namespace Test

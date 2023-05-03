@@ -273,18 +273,18 @@ void CGSpendAbilityPoint(CharacterType& ch) {
   bool done = false;
   while (!done) {
     MaybeClearScreen();
-    ms.cancel_item_id = GetNumAbilityGroups();
+    ms.cancel_item_id = AbilityGroup::GetCount();
     int ability_group_id =
-        ChooseStringId(GetAbilityGroupPluralLabels(), ms, "What kind of ability would you like to add 1 dot to?");
+        ChooseStringId(AbilityGroup::GetPluralLabels(), ms, "What kind of ability would you like to add 1 dot to?");
     if (ability_group_id == ms.cancel_item_id) {
       return;
     }
-    AbilityType ability = GetAbility(ability_group_id);
+    AbilityGroup ability_group = AbilityGroup::FromId(ability_group_id);
 
-    vector<string> labels = GetAbilityLabelsForAbilityGroup(ability_group_id);
+    vector<string> labels = ability_group.GetAbilityLabels();
     ms.cancel_item_id = labels.size() + 1;
     int ability_id =
-        ChooseStringId(labels, ms, "What " + ToLower(ability.singular) + " would you like to add 1 dot to?");
+        ChooseStringId(labels, ms, "What " + ToLower(ability_group.singular()) + " would you like to add 1 dot to?");
     if (ability_id != ms.cancel_item_id) {
       ch.SetAbilityValue(ability_group_id, ability_id, ch.GetAbilityValue(ability_group_id, ability_id) + 1);
       ch.SetFreebiePoints(ch.GetFreebiePoints() - GetFreebieCost(kFreebieAbilityId));
@@ -426,9 +426,9 @@ void ShowCharacterSheet(CharacterType& ch) {
   cout << "║ " << MakeFitC("Abilities", 76) << " ║" << endl;
   cout << "║   " << MakeFitC("Talents", 24) << MakeFitC("Skills", 24) << MakeFitC("Knowledges", 24) << "   ║" << endl;
   for (index = 1; index <= 10; index++) {
-    cout << "║   " << FormatAbilityWithValue(GetTalentLabel(index), ch.GetTalentValue(index))
-         << FormatAbilityWithValue(GetSkillLabel(index), ch.GetSkillValue(index))
-         << FormatAbilityWithValue(GetKnowledgeLabel(index), ch.GetKnowledgeValue(index)) << "   ║" << endl;
+    cout << "║   " << FormatAbilityWithValue(Ability::GetTalentLabel(index), ch.GetTalentValue(index))
+         << FormatAbilityWithValue(Ability::GetSkillLabel(index), ch.GetSkillValue(index))
+         << FormatAbilityWithValue(Ability::GetKnowledgeLabel(index), ch.GetKnowledgeValue(index)) << "   ║" << endl;
   }
   cout << "╠══════════════════════════════════════╦═══════════════════════════════════════╣" << endl;
   cout << "║ " << MakeFitL("Backgrounds:", kLeftColumnWidth) << " ║ " << MakeFitL("Virtues:", kRightColumnWidth) << " ║"

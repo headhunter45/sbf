@@ -47,8 +47,9 @@ CharacterType::CharacterType() {
 
   // Arrays/Objects
   // Abilities (Talents/Skills/Knowledges)
-  for (int group_id = 1; group_id <= GetNumAbilityGroups(); group_id++) {
-    const int num_abilities = GetNumItemsForAbilityGroup(group_id);
+  for (int group_id = 1; group_id <= AbilityGroup::GetCount(); group_id++) {
+    const AbilityGroup group = AbilityGroup::FromId(group_id);
+    const int num_abilities = group.GetAbilityCount();
     for (int id = 1; id <= num_abilities; id++) {
       SetAbilityValue(group_id, id, 0);
     }
@@ -401,13 +402,13 @@ int GetAttributePointsForRank(int id) {
 
 void CharacterType::SetAbilityValue(int group_id, int id, int value) {
   switch (group_id) {
-    case kAbilityTalentsId:
+    case kAbilityGroupTalentsId:
       SetTalentValue(id, value);
       break;
-    case kAbilitySkillsId:
+    case kAbilityGroupSkillsId:
       SetSkillValue(id, value);
       break;
-    case kAbilityKnowledgesId:
+    case kAbilityGroupKnowledgesId:
       SetKnowledgeValue(id, value);
       break;
   }
@@ -415,11 +416,11 @@ void CharacterType::SetAbilityValue(int group_id, int id, int value) {
 
 int CharacterType::GetAbilityValue(int group_id, int id) const {
   switch (group_id) {
-    case kAbilityTalentsId:
+    case kAbilityGroupTalentsId:
       return GetTalentValue(id);
-    case kAbilityKnowledgesId:
+    case kAbilityGroupKnowledgesId:
       return GetKnowledgeValue(id);
-    case kAbilitySkillsId:
+    case kAbilityGroupSkillsId:
       return GetSkillValue(id);
   }
   return 0;
@@ -438,7 +439,8 @@ int GetAbilityPointsForRank(int id) {
 }
 
 void CharacterType::FillAbilityValues(std::vector<int>& values, int group_id) const {
-  int num_abilities = GetNumItemsForAbilityGroup(group_id);
+  const AbilityGroup group = AbilityGroup::FromId(group_id);
+  int num_abilities = group.GetAbilityCount();
   values.clear();
   for (int id = 0; id <= num_abilities; id++) {
     values[id] = GetAbilityValue(group_id, id);

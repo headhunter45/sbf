@@ -205,8 +205,14 @@ using TestCompareFunction = std::function<bool(const TResult& expected, const TR
 template <typename TResult>
 using MaybeTestCompareFunction = std::optional<TestCompareFunction<TResult>>;
 
+template <typename TResult>
+MaybeTestCompareFunction<TResult> DefaultTestCompareFunction() {
+  return std::nullopt;
+}
+
 using TestConfigureFunction = std::function<void()>;
 using MaybeTestConfigureFunction = std::optional<TestConfigureFunction>;
+MaybeTestConfigureFunction DefaultTestConfigureFunction();
 
 // TODO: For some reason all hell breaks loose if test_name or expected output are const&. Figure out why.
 /// @brief
@@ -412,6 +418,31 @@ TestResults execute_suite(std::string suite_label,
 
 /// @brief
 /// @tparam TResult The result type of the test.
+/// @tparam TInputParams... The types of parameters sent to the test function.
+/// @param suite_label The label for this test suite. For example a class name such as "MortgageCalculator".
+/// @param function_to_test The function to be tested. It will be called with std::apply and a
+/// std::tuple<TInputParams...> made from each item in tests.
+/// @param tests A std::vector of test runs.
+/// @param suite_compare A function used to compare the expected and actual test results. This can be
+/// overridden per test by setting test_compare.
+/// @param after_all This is called before each suite is started to setup the environment. This is where you should
+/// build mocks, setup spies, and test fixtures.
+/// @param before_all This is called after each suite has completed to cleanup anything allocated in suite_before_each.
+/// @param is_enabled If false the test is reported as skipped. If true the test is run as normal.
+template <typename TResult, typename... TInputParams>
+TestResults execute_suite(std::string suite_label,
+                          std::function<TResult(TInputParams...)> function_to_test,
+                          std::initializer_list<TestTuple<TResult, TInputParams...>> tests,
+                          MaybeTestCompareFunction<TResult> suite_compare = std::nullopt,
+                          MaybeTestConfigureFunction before_all = std::nullopt,
+                          MaybeTestConfigureFunction after_all = std::nullopt,
+                          bool is_enabled = true) {
+  std::vector test_data = std::vector(tests);
+  return execute_suite(suite_label, function_to_test, tests, suite_compare, before_all, after_all, is_enabled);
+}
+
+/// @brief
+/// @tparam TResult The result type of the test.
 /// @tparam ...TInputParams The types of parameters sent to the test function.
 /// @param test_name The label for this test. For example "should calculate the interest".
 /// @param expected The expected output of calling the test function with these input parameters.
@@ -457,6 +488,22 @@ TestSuite<TResult, TInputParams...> make_test_suite(const string& suite_name,
   return make_tuple(suite_name, function_to_test, test_data, compare, before_each, after_each, is_enabled);
 }
 
+template <typename TResult, typename TFunctionToTest, typename... TInputParams>
+TestSuite<TResult, TInputParams...> make_test_suite(
+    const string& suite_name,
+    TFunctionToTest function_to_test,
+    std::initializer_list<TestTuple<TResult, TInputParams...>> test_data,
+    MaybeTestCompareFunction<TResult> compare = std::nullopt,
+    MaybeTestConfigureFunction before_each = std::nullopt,
+    MaybeTestConfigureFunction after_each = std::nullopt,
+    bool is_enabled = true) {
+  return make_tuple(suite_name, function_to_test, test_data, compare, before_each, after_each, is_enabled);
+}
+
+/// @brief
+/// @tparam TResult The result type of the test.
+/// @tparam TInputParams... The types of parameters sent to the test function.
+/// @param test_suite A tuple representing the test suite configuration.
 template <typename TResult, typename... TInputParams>
 TestResults execute_suite(const TestSuite<TResult, TInputParams...>& test_suite) {
   return execute_suite<TResult, TInputParams...>(
@@ -493,7 +540,6 @@ MaybeTestConfigureFunction coalesce(MaybeTestConfigureFunction first, MaybeTestC
 void PrintResults(std::ostream& os, TestResults results);
 }  // End namespace Test
 
-// TODO: define operator<< for std::tuple.
 // TODO: Add TShared(*)(string /*test_name*/, UUID /*test_run_id*/) allocate_shared_data to the test tuple to make some
 // shared data that can be used in a thread safe way by setup, teardown, and evaluate steps of the test.
 // TODO: Add TShared to be returned by the setup functions, and consumed by the evaluate and teardown functions.

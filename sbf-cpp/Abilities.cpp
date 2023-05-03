@@ -4,41 +4,34 @@
 #include <string>
 
 namespace SBF {
+namespace {
 using std::ostream;
 using std::string;
 using std::vector;
+}  // End namespace
 
-const int kAbilitiesCount = 3;
+const int kAbilityGroupUnknownId = 0;
+const std::string kAbilityGroupUnknownLabel = "";
+const std::string kAbilityGroupTalentsSingular = "Talent";
+const std::string kAbilityGroupTalentsPlural = "Talents";
+const std::string kAbilityGroupSkillsSingular = "Skill";
+const std::string kAbilityGroupSkillsPlural = "Skills";
+const std::string kAbilityGroupKnowledgesSingular = "Knowledge";
+const std::string kAbilityGroupKnowledgesPlural = "Knowledges";
 
+const AbilityGroup kAbilityGroupUnknown =
+    AbilityGroup(kAbilityGroupUnknownId, kAbilityGroupUnknownLabel, kAbilityGroupUnknownLabel);
+const AbilityGroup kAbilityGroupTalents =
+    AbilityGroup(kAbilityGroupTalentsId, kAbilityGroupTalentsSingular, kAbilityGroupTalentsPlural);
+const AbilityGroup kAbilityGroupSkills =
+    AbilityGroup(kAbilityGroupSkillsId, kAbilityGroupSkillsSingular, kAbilityGroupSkillsPlural);
+const AbilityGroup kAbilityGroupKnowledges =
+    AbilityGroup(kAbilityGroupKnowledgesId, kAbilityGroupKnowledgesSingular, kAbilityGroupKnowledgesPlural);
+const vector<AbilityGroup> kAbilityGroups = {kAbilityGroupTalents, kAbilityGroupSkills, kAbilityGroupKnowledges};
+
+const int kAbilityUnknownId = 0;
 const std::string kAbilityUnknownLabel = "";
-const std::string kAbilityTalentsSingular = "Talent";
-const std::string kAbilityTalentsPlural = "Talents";
-const std::string kAbilitySkillsSingular = "Skill";
-const std::string kAbilitySkillsPlural = "Skills";
-const std::string kAbilityKnowledgesSingular = "Knowledge";
-const std::string kAbilityKnowledgesPlural = "Knowledges";
-const AbilityType kAbilityGroupUnknown = {0, "", ""};
-const AbilityType kAbilityGroupTalents = {
-    kAbilityTalentsId,
-    kAbilityTalentsSingular,
-    kAbilityTalentsPlural,
-};
-const AbilityType kAbilityGroupSkills = {
-    kAbilitySkillsId,
-    kAbilitySkillsSingular,
-    kAbilitySkillsPlural,
-};
-const AbilityType kAbilityGroupKnowledges = {
-    kAbilityKnowledgesId,
-    kAbilityKnowledgesSingular,
-    kAbilityKnowledgesPlural,
-};
-const AbilityType kAbilities[]{
-    kAbilityGroupUnknown,
-    kAbilityGroupTalents,
-    kAbilityGroupSkills,
-    kAbilityGroupKnowledges,
-};
+const Ability kAbilityUnknown = Ability(kAbilityUnknownId, kAbilityGroupUnknownId, kAbilityUnknownLabel);
 
 const std::string kTalentActingLabel = "Acting";
 const std::string kTalentAlertnessLabel = "Alertness";
@@ -50,6 +43,29 @@ const std::string kTalentIntimidationLabel = "Intimidation";
 const std::string kTalentLeadershipLabel = "Leadership";
 const std::string kTalentStreetwiseLabel = "Streetwise";
 const std::string kTalentSubterfugeLabel = "Subterfuge";
+const Ability kTalentActing = Ability(kTalentActingId, kAbilityGroupTalentsId, kTalentActingLabel);
+const Ability kTalentAlertness = Ability(kTalentAlertnessId, kAbilityGroupTalentsId, kTalentAlertnessLabel);
+const Ability kTalentAthletics = Ability(kTalentAthleticsId, kAbilityGroupTalentsId, kTalentAthleticsLabel);
+const Ability kTalentBrawl = Ability(kTalentBrawlId, kAbilityGroupTalentsId, kTalentBrawlLabel);
+const Ability kTalentDodge = Ability(kTalentDodgeId, kAbilityGroupTalentsId, kTalentDodgeLabel);
+const Ability kTalentEmpathy = Ability(kTalentEmpathyId, kAbilityGroupTalentsId, kTalentEmpathyLabel);
+const Ability kTalentIntimidation = Ability(kTalentIntimidationId, kAbilityGroupTalentsId, kTalentIntimidationLabel);
+const Ability kTalentLeadership = Ability(kTalentLeadershipId, kAbilityGroupTalentsId, kTalentLeadershipLabel);
+const Ability kTalentStreetwise = Ability(kTalentStreetwiseId, kAbilityGroupTalentsId, kTalentStreetwiseLabel);
+const Ability kTalentSubterfuge = Ability(kTalentSubterfugeId, kAbilityGroupTalentsId, kTalentSubterfugeLabel);
+const vector<Ability> kTalents = {
+    kTalentActing,
+    kTalentAlertness,
+    kTalentAthletics,
+    kTalentBrawl,
+    kTalentDodge,
+    kTalentEmpathy,
+    kTalentIntimidation,
+    kTalentLeadership,
+    kTalentStreetwise,
+    kTalentSubterfuge,
+};
+
 const std::string kSkillAnimalKenLabel = "Animal Ken";
 const std::string kSkillDriveLabel = "Drive";
 const std::string kSkillEtiquetteLabel = "Etiquette";
@@ -60,6 +76,29 @@ const std::string kSkillRepairLabel = "Repair";
 const std::string kSkillSecurityLabel = "Security";
 const std::string kSkillStealthLabel = "Stealth";
 const std::string kSkillSurvivalLabel = "Survival";
+const Ability kSkillAnimalKen = Ability(kSkillAnimalKenId, kAbilityGroupSkillsId, kSkillAnimalKenLabel);
+const Ability kSkillDrive = Ability(kSkillDriveId, kAbilityGroupSkillsId, kSkillDriveLabel);
+const Ability kSkillEtiquette = Ability(kSkillEtiquetteId, kAbilityGroupSkillsId, kSkillEtiquetteLabel);
+const Ability kSkillFirearms = Ability(kSkillFirearmsId, kAbilityGroupSkillsId, kSkillFirearmsLabel);
+const Ability kSkillMelee = Ability(kSkillMeleeId, kAbilityGroupSkillsId, kSkillMeleeLabel);
+const Ability kSkillMusic = Ability(kSkillMusicId, kAbilityGroupSkillsId, kSkillMusicLabel);
+const Ability kSkillRepair = Ability(kSkillRepairId, kAbilityGroupSkillsId, kSkillRepairLabel);
+const Ability kSkillSecurity = Ability(kSkillSecurityId, kAbilityGroupSkillsId, kSkillSecurityLabel);
+const Ability kSkillStealth = Ability(kSkillStealthId, kAbilityGroupSkillsId, kSkillStealthLabel);
+const Ability kSkillSurvival = Ability(kSkillSurvivalId, kAbilityGroupSkillsId, kSkillSurvivalLabel);
+const vector<Ability> kSkills = {
+    kSkillAnimalKen,
+    kSkillDrive,
+    kSkillEtiquette,
+    kSkillFirearms,
+    kSkillMelee,
+    kSkillMusic,
+    kSkillRepair,
+    kSkillSecurity,
+    kSkillStealth,
+    kSkillSurvival,
+};
+
 const std::string kKnowledgeBureaucracyLabel = "Bureaucracy";
 const std::string kKnowledgeComputerLabel = "Computer";
 const std::string kKnowledgeFinanceLabel = "Finance";
@@ -70,210 +109,269 @@ const std::string kKnowledgeMedicineLabel = "Medicine";
 const std::string kKnowledgeOccultLabel = "Occult";
 const std::string kKnowledgePoliticsLabel = "Politics";
 const std::string kKnowledgeScienceLabel = "Science";
-const int kTalentsCount = 10;
-const int kSkillsCount = 10;
-const int kKnowledgesCount = 10;
-const std::string kSkills[] = {
-    kAbilityUnknownLabel,
-    kSkillAnimalKenLabel,
-    kSkillDriveLabel,
-    kSkillEtiquetteLabel,
-    kSkillFirearmsLabel,
-    kSkillMeleeLabel,
-    kSkillMusicLabel,
-    kSkillRepairLabel,
-    kSkillSecurityLabel,
-    kSkillStealthLabel,
-    kSkillSurvivalLabel,
-};
-const std::string kTalents[] = {
-    kAbilityUnknownLabel,
-    kTalentActingLabel,
-    kTalentAlertnessLabel,
-    kTalentAthleticsLabel,
-    kTalentBrawlLabel,
-    kTalentDodgeLabel,
-    kTalentEmpathyLabel,
-    kTalentIntimidationLabel,
-    kTalentLeadershipLabel,
-    kTalentStreetwiseLabel,
-    kTalentSubterfugeLabel,
-};
-const std::string kKnowledges[] = {
-    kAbilityUnknownLabel,
-    kKnowledgeBureaucracyLabel,
-    kKnowledgeComputerLabel,
-    kKnowledgeFinanceLabel,
-    kKnowledgeInvestigationLabel,
-    kKnowledgeLawLabel,
-    kKnowledgeLinguisticsLabel,
-    kKnowledgeMedicineLabel,
-    kKnowledgeOccultLabel,
-    kKnowledgePoliticsLabel,
-    kKnowledgeScienceLabel,
+const Ability kKnowledgeBureaucracy =
+    Ability(kKnowledgeBureaucracyId, kAbilityGroupKnowledgesId, kKnowledgeBureaucracyLabel);
+const Ability kKnowledgeComputer = Ability(kKnowledgeComputerId, kAbilityGroupKnowledgesId, kKnowledgeComputerLabel);
+const Ability kKnowledgeFinance = Ability(kKnowledgeFinanceId, kAbilityGroupKnowledgesId, kKnowledgeFinanceLabel);
+const Ability kKnowledgeInvestigation =
+    Ability(kKnowledgeInvestigationId, kAbilityGroupKnowledgesId, kKnowledgeInvestigationLabel);
+const Ability kKnowledgeLaw = Ability(kKnowledgeLawId, kAbilityGroupKnowledgesId, kKnowledgeLawLabel);
+const Ability kKnowledgeLinguistics =
+    Ability(kKnowledgeLinguisticsId, kAbilityGroupKnowledgesId, kKnowledgeLinguisticsLabel);
+const Ability kKnowledgeMedicine = Ability(kKnowledgeMedicineId, kAbilityGroupKnowledgesId, kKnowledgeMedicineLabel);
+const Ability kKnowledgeOccult = Ability(kKnowledgeOccultId, kAbilityGroupKnowledgesId, kKnowledgeOccultLabel);
+const Ability kKnowledgePolitics = Ability(kKnowledgePoliticsId, kAbilityGroupKnowledgesId, kKnowledgePoliticsLabel);
+const Ability kKnowledgeScience = Ability(kKnowledgeScienceId, kAbilityGroupKnowledgesId, kKnowledgeScienceLabel);
+const vector<Ability> kKnowledges = {
+    kKnowledgeBureaucracy,
+    kKnowledgeComputer,
+    kKnowledgeFinance,
+    kKnowledgeInvestigation,
+    kKnowledgeLaw,
+    kKnowledgeLinguistics,
+    kKnowledgeMedicine,
+    kKnowledgeOccult,
+    kKnowledgePolitics,
+    kKnowledgeScience,
 };
 
-ostream& operator<<(ostream& os, const AbilityType& ability) {
-  os << "AbilityGroup: {id: " << ability.id << ", singular: \"" << ability.singular << "\", plural: \""
-     << ability.plural << "\"}";
-  return os;
+vector<string> AbilityGroup::GetAbilityLabels() const {
+  return AbilityGroup::GetAbilityLabels(id_);
 }
 
-bool operator==(const AbilityType& left, const AbilityType& right) {
-  return left.id == right.id && left.singular == right.singular && left.plural == right.plural;
-}
-
-bool operator!=(const AbilityType& left, const AbilityType& right) {
-  return !(left == right);
-}
-
-void FillAbilities(vector<AbilityType>& abilities) {
-  abilities.clear();
-  abilities.push_back(kAbilityGroupTalents);
-  abilities.push_back(kAbilityGroupSkills);
-  abilities.push_back(kAbilityGroupKnowledges);
-}
-
-vector<string> GetAbilityGroupPluralLabels() {
-  vector<string> labels;
-
-  for (int id = 1; id <= kAbilitiesCount; id++) {
-    labels.push_back(GetAbility(id).plural);
-  }
-
-  return labels;
-}
-
-void FillAbilitiesForAbilityGroup(vector<string>& abilities, int id) {
-  abilities.clear();
-  int numAbilities = GetNumItemsForAbilityGroup(id);
+vector<string> AbilityGroup::GetAbilityLabels(int id) {
   switch (id) {
-    case kAbilityTalentsId:
-      for (int talent_id = 1; talent_id <= numAbilities; talent_id++) {
-        abilities.push_back(GetTalentLabel(talent_id));
-      }
-      break;
-    case kAbilitySkillsId:
-      for (int skill_id = 1; skill_id <= numAbilities; skill_id++) {
-        abilities.push_back(GetSkillLabel(skill_id));
-      }
-      break;
-    case kAbilityKnowledgesId:
-      for (int knowledge_id = 1; knowledge_id <= numAbilities; knowledge_id++) {
-        abilities.push_back(GetKnowledgeLabel(knowledge_id));
-      }
-      break;
-  }
-}
-
-vector<string> GetAbilityLabelsForAbilityGroup(int group_id) {
-  vector<string> labels;
-
-  int count = GetNumItemsForAbilityGroup(group_id);
-  for (int id = 1; id <= count; id++) {
-    labels.push_back(GetAbilityLabel(group_id, id));
+    case kAbilityGroupKnowledgesId:
+      return Ability::GetKnowledgeLabels();
+    case kAbilityGroupSkillsId:
+      return Ability::GetSkillLabels();
+    case kAbilityGroupTalentsId:
+      return Ability::GetTalentLabels();
   }
 
-  return labels;
-}
-
-void FillAbilityLabels(vector<string>& labels, int id) {
-  labels.clear();
-  switch (id) {
-    case kAbilityTalentsId:
-      FillTalentLabels(labels);
-      break;
-    case kAbilitySkillsId:
-      FillSkillLabels(labels);
-      break;
-    case kAbilityKnowledgesId:
-      FillKnowledgeLabels(labels);
-      break;
-  }
-}
-
-void FillKnowledgeLabels(vector<string>& labels) {
-  labels.clear();
-  int numAbilities = GetNumItemsForAbilityGroup(kAbilityKnowledgesId);
-  for (int knowledge_id = 1; knowledge_id <= numAbilities; knowledge_id++) {
-    labels.push_back(GetKnowledgeLabel(knowledge_id));
-  }
-}
-
-void FillSkillLabels(vector<string>& labels) {
-  labels.clear();
-  int numAbilities = GetNumItemsForAbilityGroup(kAbilitySkillsId);
-  for (int skill_id = 1; skill_id <= numAbilities; skill_id++) {
-    labels.push_back(GetSkillLabel(skill_id));
-  }
-}
-
-void FillTalentLabels(vector<string>& labels) {
-  labels.clear();
-  int numAbilities = GetNumItemsForAbilityGroup(kAbilityTalentsId);
-  for (int talent_id = 1; talent_id <= numAbilities; talent_id++) {
-    labels.push_back(GetTalentLabel(talent_id));
-  }
-}
-
-const AbilityType& GetAbility(int ability_group_id) {
-  switch (ability_group_id) {
-    case kAbilityTalentsId:
-      return kAbilityGroupTalents;
-    case kAbilitySkillsId:
-      return kAbilityGroupSkills;
-    case kAbilityKnowledgesId:
-      return kAbilityGroupKnowledges;
-  };
-  return kAbilityGroupUnknown;
-}
-
-const string GetAbilityLabel(int ability_group_id, int ability_id) {
-  switch (ability_group_id) {
-    case kAbilityTalentsId:
-      return GetTalentLabel(ability_id);
-    case kAbilitySkillsId:
-      return GetSkillLabel(ability_id);
-    case kAbilityKnowledgesId:
-      return GetKnowledgeLabel(ability_id);
-  };
-  return "";
-}
-
-const std::string GetKnowledgeLabel(int talent_id) {
-  if (talent_id > 0 && talent_id <= kKnowledgesCount) {
-    return kKnowledges[talent_id];
-  }
-  return "";
+  return vector<string>();
 }
 
 int GetNumItemsForAbilityGroup(int ability_group_id) {
   switch (ability_group_id) {
-    case kAbilityTalentsId:
-      return kTalentsCount;
-    case kAbilitySkillsId:
-      return kSkillsCount;
-    case kAbilityKnowledgesId:
-      return kKnowledgesCount;
+    case kAbilityGroupTalentsId:
+      return kTalents.size();
+    case kAbilityGroupSkillsId:
+      return kSkills.size();
+    case kAbilityGroupKnowledgesId:
+      return kKnowledges.size();
   }
   return 0;
 }
 
-const std::string GetSkillLabel(int skill_id) {
-  if (skill_id > 0 && skill_id <= kSkillsCount) {
-    return kSkills[skill_id];
-  }
-  return "";
+int AbilityGroup::GetCount() {
+  return kAbilityGroups.size();
 }
 
-const std::string GetTalentLabel(int talent_id) {
-  if (talent_id > 0 && talent_id <= kTalentsCount) {
-    return kTalents[talent_id];
+int AbilityGroup::GetAbilityCount() const {
+  switch (id_) {
+    case kAbilityGroupKnowledgesId:
+      return kTalents.size();
+    case kAbilityGroupSkillsId:
+      return kSkills.size();
+    case kAbilityGroupTalentsId:
+      return kTalents.size();
   }
-  return "";
+  return 0;
 }
 
-int GetNumAbilityGroups() {
-  return kAbilitiesCount;
+AbilityGroup::AbilityGroup() : id_(0), singular_(""), plural_("") {}
+
+AbilityGroup::AbilityGroup(int id, const string& singular, const string& plural)
+    : id_(id), singular_(singular), plural_(plural) {}
+
+int AbilityGroup::id() const {
+  return id_;
+}
+
+void AbilityGroup::id(int id) {
+  id_ = id;
+}
+
+string AbilityGroup::plural() const {
+  return plural_;
+}
+
+void AbilityGroup::plural(const string& plural) {
+  plural_ = plural;
+}
+
+string AbilityGroup::singular() const {
+  return singular_;
+}
+
+void AbilityGroup::singular(const string& singular) {
+  singular_ = singular;
+}
+
+vector<string> AbilityGroup::GetPluralLabels() {
+  vector<string> labels;
+
+  for_each(kAbilityGroups.begin(), kAbilityGroups.end(), [&labels](const auto& ability) {
+    labels.push_back(ability.plural());
+  });
+
+  return labels;
+}
+
+Ability::Ability() : id_(0), group_id_(0), label_("") {}
+
+Ability::Ability(int id, int group_id, const string& label) : id_(id), group_id_(group_id), label_(label) {}
+
+int Ability::id() const {
+  return id_;
+}
+
+void Ability::id(int id) {
+  id_ = id;
+}
+
+int Ability::group_id() const {
+  return group_id_;
+}
+
+void Ability::group_id(int group_id) {
+  group_id_ = group_id;
+}
+
+string Ability::label() const {
+  return label_;
+}
+
+void Ability::label(const string& label) {
+  label_ = label;
+}
+
+AbilityGroup AbilityGroup::FromId(int id) {
+  switch (id) {
+    case kAbilityGroupTalentsId:
+      return kAbilityGroupTalents;
+    case kAbilityGroupSkillsId:
+      return kAbilityGroupSkills;
+    case kAbilityGroupKnowledgesId:
+      return kAbilityGroupKnowledges;
+  }
+  return kAbilityGroupUnknown;
+}
+
+ostream& operator<<(ostream& os, const AbilityGroup& ability_group) {
+  os << "AbilityGroup: {id: " << ability_group.id_ << ", singular: \"" << ability_group.singular_ << "\", plural: \""
+     << ability_group.plural_ << "\"}";
+  return os;
+}
+
+bool AbilityGroup::operator==(const AbilityGroup& other) const {
+  return id_ == other.id_ && singular_ == other.singular_ && plural_ == other.plural_;
+}
+
+bool AbilityGroup::operator!=(const AbilityGroup& other) const {
+  return !(*this == other);
+}
+
+ostream& operator<<(ostream& os, const Ability& ability) {
+  os << "Ability: {id: " << ability.id_ << ", group_id: " << ability.group_id_ << ", label: \"" << ability.label_
+     << "\"}";
+  return os;
+}
+
+bool Ability::operator==(const Ability& other) const {
+  return id_ == other.id_ && group_id_ == other.group_id_ && label_ == other.label_;
+}
+
+bool Ability::operator!=(const Ability& other) const {
+  return !(*this == other);
+}
+
+string Ability::GetSkillLabel(int id) {
+  return Ability::FromSkillId(id).label();
+}
+
+vector<string> Ability::GetSkillLabels() {
+  vector<string> labels;
+  for_each(kSkills.begin(), kSkills.end(), [&labels](const auto& ability) { labels.push_back(ability.label()); });
+  return labels;
+}
+
+string Ability::GetTalentLabel(int id) {
+  return Ability::FromTalentId(id).label();
+}
+
+vector<string> Ability::GetTalentLabels() {
+  vector<string> labels;
+  for_each(kTalents.begin(), kTalents.end(), [&labels](const auto& ability) { labels.push_back(ability.label()); });
+  return labels;
+}
+
+string Ability::GetKnowledgeLabel(int id) {
+  return Ability::FromKnowledgeId(id).label();
+}
+
+vector<string> Ability::GetKnowledgeLabels() {
+  vector<string> labels;
+  for_each(
+      kKnowledges.begin(), kKnowledges.end(), [&labels](const auto& ability) { labels.push_back(ability.label()); });
+  return labels;
+}
+
+Ability Ability::FromKnowledgeId(int id) {
+  if (id > 0 && id <= kKnowledges.size()) {
+    return kKnowledges.at(id - 1);
+  }
+  return kAbilityUnknown;
+}
+
+Ability Ability::FromSkillId(int id) {
+  if (id > 0 && id <= kSkills.size()) {
+    return kSkills.at(id - 1);
+  }
+  return kAbilityUnknown;
+}
+
+Ability Ability::FromTalentId(int id) {
+  if (id > 0 && id <= kTalents.size()) {
+    return kTalents.at(id - 1);
+  }
+  return kAbilityUnknown;
+}
+
+Ability Ability::FromIds(int id, int group_id) {
+  switch (group_id) {
+    case kAbilityGroupKnowledgesId:
+      return Ability::FromKnowledgeId(id);
+    case kAbilityGroupSkillsId:
+      return Ability::FromSkillId(id);
+    case kAbilityGroupTalentsId:
+      return Ability::FromTalentId(id);
+  }
+  return kAbilityUnknown;
+}
+
+int Ability::GetCount(int group_id) {
+  switch (group_id) {
+    case kAbilityGroupKnowledgesId:
+      return kKnowledges.size();
+    case kAbilityGroupSkillsId:
+      return kSkills.size();
+    case kAbilityGroupTalentsId:
+      return kTalents.size();
+  }
+  return 0;
+}
+
+int Ability::GetKnowledgesCount() {
+  return kKnowledges.size();
+}
+
+int Ability::GetSkillsCount() {
+  return kSkills.size();
+}
+
+int Ability::GetTalentsCount() {
+  return kTalents.size();
 }
 }  // End namespace SBF

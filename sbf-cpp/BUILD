@@ -14,6 +14,7 @@ cc_library(
 
 cc_test(
     name = "abilities_test",
+    size = "small",
     srcs = ["Abilities_test.cpp"],
     deps = [
         ":abilities",
@@ -29,6 +30,7 @@ cc_library(
 
 cc_test(
     name = "archetypes_test",
+    size = "small",
     srcs = ["Archetypes_test.cpp"],
     deps = [
         ":archetypes",
@@ -44,6 +46,7 @@ cc_library(
 
 cc_test(
     name = "attributes_test",
+    size = "small",
     srcs = ["Attributes_test.cpp"],
     deps = [
         ":attributes",
@@ -59,6 +62,7 @@ cc_library(
 
 cc_test(
     name = "backgrounds_test",
+    size = "small",
     srcs = ["Backgrounds_test.cpp"],
     deps = [
         ":backgrounds",
@@ -85,6 +89,7 @@ cc_library(
 
 cc_test(
     name = "character_test",
+    size = "small",
     srcs = ["Character_test.cpp"],
     deps = [
         ":character",
@@ -100,6 +105,7 @@ cc_library(
 
 cc_test(
     name = "clans_test",
+    size = "small",
     srcs = ["Clans_test.cpp"],
     deps = [
         ":clans",
@@ -115,6 +121,7 @@ cc_library(
 
 cc_test(
     name = "colors_test",
+    size = "small",
     srcs = ["Colors_test.cpp"],
     deps = [
         ":colors",
@@ -131,6 +138,7 @@ cc_library(
 
 cc_test(
     name = "derangements_test",
+    size = "small",
     srcs = ["Derangements_test.cpp"],
     deps = [
         ":derangements",
@@ -146,6 +154,7 @@ cc_library(
 
 cc_test(
     name = "disciplines_test",
+    size = "small",
     srcs = ["Disciplines_test.cpp"],
     deps = [
         ":disciplines",
@@ -161,6 +170,7 @@ cc_library(
 
 cc_test(
     name = "freebies_test",
+    size = "small",
     srcs = ["Freebies_test.cpp"],
     deps = [
         ":freebies",
@@ -176,6 +186,7 @@ cc_library(
 
 cc_test(
     name = "genders_test",
+    size = "small",
     srcs = ["Genders_test.cpp"],
     deps = [
         ":genders",
@@ -198,6 +209,7 @@ cc_library(
 
 cc_test(
     name = "character_generator_test",
+    size = "small",
     srcs = ["CharacterGenerator_test.cpp"],
     deps = [
         ":character_generator",
@@ -233,6 +245,7 @@ cc_library(
 
 cc_test(
     name = "menus_test",
+    size = "small",
     srcs = ["Menus_test.cpp"],
     deps = [
         ":menus",
@@ -248,6 +261,7 @@ cc_library(
 
 cc_test(
     name = "random_test",
+    size = "small",
     srcs = ["Random_test.cpp"],
     deps = [
         ":random",
@@ -263,6 +277,7 @@ cc_library(
 
 cc_test(
     name = "ranks_test",
+    size = "small",
     srcs = ["Ranks_test.cpp"],
     deps = [
         ":ranks",
@@ -299,6 +314,7 @@ cc_library(
 
 cc_test(
     name = "utils_test",
+    size = "small",
     srcs = ["Utils_test.cpp"],
     deps = [
         ":tinytest",
@@ -314,6 +330,7 @@ cc_library(
 
 cc_test(
     name = "virtues_test",
+    size = "small",
     srcs = ["Virtues_test.cpp"],
     deps = [
         ":tinytest",
