@@ -10,6 +10,10 @@
  * Licensed under the MIT license see the LICENSE file for details.
  ***************************************************************************************/
 
+#if !defined(DEBUG)
+#include <iostream>
+#endif
+
 #include "Colors.h"
 
 namespace SBF {
@@ -122,7 +126,7 @@ void WaitForKeypress();
 /// Clears the screen if not a debug build.
 inline void MaybeClearScreen() {
 #if !defined(DEBUG)
-  cout << "\033[1;1H\033[2J";
+  std::cout << "\033[1;1H\033[2J";
 #endif
 }
 }  // End namespace SBF

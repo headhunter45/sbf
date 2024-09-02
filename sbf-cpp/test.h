@@ -10,11 +10,13 @@
  ***************************************************************************************/
 
 #include <cstdint>
+#include <functional>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <tuple>
 #include <utility>
+#include <vector>
 
 // Test lifecycle
 // suite_setup_function(); - This is called to allocate any suite level resources. This is called once when the suite
