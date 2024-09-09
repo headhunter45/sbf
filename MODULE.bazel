@@ -4,6 +4,7 @@
 #
 # For more details, please check https://github.com/bazelbuild/bazel/issues/18958
 ###############################################################################
+"DocString to avoid warning. Yeah, yeah, I'll figure this out later."
 
 module(name = "sbf")
 
